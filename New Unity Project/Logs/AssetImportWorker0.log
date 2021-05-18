@@ -1,6 +1,6 @@
 Using pre-set license
 Built from '2020.3/release' branch; Version is '2020.3.1f1 (77a89f25062f) revision 7841951'; Using compiler version '192528614'; Build Type 'Release'
-OS: 'Windows 10 Pro; OS build 19042.906; Version 2009; 64bit' Language: 'en' Physical Memory: 16328 MB
+OS: 'Windows 10 Pro; OS build 19042.928; Version 2009; 64bit' Language: 'en' Physical Memory: 16328 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
 
  COMMAND LINE ARGUMENTS:
@@ -15,11 +15,11 @@ C:/Users/Jonathan/Documents/GitHub/Project-Luna/New Unity Project
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-60737
+50053
 Successfully changed project path to: C:/Users/Jonathan/Documents/GitHub/Project-Luna/New Unity Project
 C:/Users/Jonathan/Documents/GitHub/Project-Luna/New Unity Project
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 28.00 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 31.94 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.1f1 (77a89f25062f)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.1f1/Editor/Data/Resources/UnitySubsystems
@@ -35,63 +35,231 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.1f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.1f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.1f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56436
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56056
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.1f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.1f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.1f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll
-Registered in 0.003456 seconds.
+Registered in 0.004331 seconds.
 Native extension for LinuxStandalone target not found
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 22.25 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 32.07 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.337 seconds
+- Completed reload, in  1.714 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.000799 seconds.
+Registered in 0.000784 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for LinuxStandalone target not found
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 0.21 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 0.32 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.830 seconds
+- Completed reload, in  1.096 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
-Refreshing native plugins compatible for Editor in 0.20 ms, found 0 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
+Refreshing native plugins compatible for Editor in 0.32 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 1117 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 69.5 MB.
-System memory in use after: 69.6 MB.
+System memory in use before: 69.4 MB.
+System memory in use after: 69.5 MB.
 
-Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 1580.
-Total: 1.676400 ms (FindLiveObjects: 0.169000 ms CreateObjectMapping: 0.027000 ms MarkObjects: 1.393200 ms  DeleteObjects: 0.085600 ms)
+Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 1581.
+Total: 2.970000 ms (FindLiveObjects: 0.273800 ms CreateObjectMapping: 0.049500 ms MarkObjects: 2.512500 ms  DeleteObjects: 0.132000 ms)
 
 ========================================================================
 Received Import Request.
-  path: Assets/MainMenuScene.unity
+  path: Assets/Scenes/SampleScene
+  artifactKey: Guid(a5fbf11d78eea9e4d9744a3efd4c89ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/SampleScene using Guid(a5fbf11d78eea9e4d9744a3efd4c89ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '706d83ecc6d5f1f5a20faa6b8ae93baa') in 0.014963 seconds
+  Import took 0.017352 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 7.252858 seconds.
+  path: Assets/Scenes/MainMenuScene.unity
   artifactKey: Guid(79f2e3a0b0dece14194da055ebe2d5b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/MainMenuScene.unity using Guid(79f2e3a0b0dece14194da055ebe2d5b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e7ddb6fe1a8cacc08f550271c55e2a48') in 0.015660 seconds
-  Import took 0.017714 seconds .
+Start importing Assets/Scenes/MainMenuScene.unity using Guid(79f2e3a0b0dece14194da055ebe2d5b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fb9327da8de84b999a5fabadf0b88f28') in 0.017435 seconds
+  Import took 0.019850 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 9.974591 seconds.
-  path: Assets/Scenes/SampleScene.unity
-  artifactKey: Guid(9fc0d4010bbf28b4594072e72b8655ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scenes/SampleScene.unity using Guid(9fc0d4010bbf28b4594072e72b8655ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '94bf325c4c670725c628fb815f4ff632') in 0.007483 seconds
-  Import took 0.009596 seconds .
+  Time since last request: 1.176553 seconds.
+  path: Assets/Scenes/SampleScene/NavMesh.asset
+  artifactKey: Guid(fba1f5e8643ac9d48b6a938571b49ce7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/SampleScene/NavMesh.asset using Guid(fba1f5e8643ac9d48b6a938571b49ce7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '40eeb55e27023db5eba78e653165ac95') in 0.045700 seconds
+  Import took 0.048092 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.907832 seconds.
+  path: Assets/Scenes/_Scripts
+  artifactKey: Guid(e13477d69fa1d704ca20846491adedd8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/_Scripts using Guid(e13477d69fa1d704ca20846491adedd8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ccfb3ad4dfda7c42a2c9f83920c11936') in 0.008107 seconds
+  Import took 0.009988 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 31.868665 seconds.
+  path: Assets/MenuAssets
+  artifactKey: Guid(38729b18ec3e72c4f97c523059d582dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MenuAssets using Guid(38729b18ec3e72c4f97c523059d582dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0a22ae9876964c1208a88d75e29a770e') in 0.008713 seconds
+  Import took 0.010936 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 9.929586 seconds.
+  path: Assets/MenuAssets/ShopMenuIcon.png
+  artifactKey: Guid(43c8a2571f50a6741a5104a520963e28) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MenuAssets/ShopMenuIcon.png using Guid(43c8a2571f50a6741a5104a520963e28) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7f34ac06ef6ff6271a67f1b896ec91d8') in 0.073166 seconds
+  Import took 0.075682 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 370.260156 seconds.
+  path: Assets/_images
+  artifactKey: Guid(9305bc51ae6bf20468b106b4c32886b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_images using Guid(9305bc51ae6bf20468b106b4c32886b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9b622a5788035eb2c87c4c8bdf915859') in 0.007587 seconds
+  Import took 0.009569 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 334.649785 seconds.
+  path: Assets/_images/Materials
+  artifactKey: Guid(65b9b8a9bed16ba45882e56d37ed53da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_images/Materials using Guid(65b9b8a9bed16ba45882e56d37ed53da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd35777c59dadfbb042e89fb0bbe76282') in 0.009530 seconds
+  Import took 0.012102 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1991.111425 seconds.
+  path: Assets/_images/FantasyMonster/Skeleton/Texture/Skeleton_D.tif
+  artifactKey: Guid(943f3c476130c4f4f8ae55ef3ccd38ba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_images/FantasyMonster/Skeleton/Texture/Skeleton_D.tif using Guid(943f3c476130c4f4f8ae55ef3ccd38ba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dd086bf4a5aea4078b2dd335e4852a35') in 0.088572 seconds
+  Import took 0.091672 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.941929 seconds.
+  path: Assets/_images/FantasyMonster/Skeleton/Character/Skeleton@Skin.FBX
+  artifactKey: Guid(5a35c5f0a89b9654d897ccd7c8f81bd0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_images/FantasyMonster/Skeleton/Character/Skeleton@Skin.FBX using Guid(5a35c5f0a89b9654d897ccd7c8f81bd0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '530626d02f0c4e9ded3db8c7e871826c') in 0.326556 seconds
+  Import took 0.330505 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.461928 seconds.
+  path: Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Attack.FBX
+  artifactKey: Guid(dfc15c633f0d98141920018f79a042a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Attack.FBX using Guid(dfc15c633f0d98141920018f79a042a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '587318dc599071ac70776ad1f2867ec1') in 0.072319 seconds
+  Import took 0.075333 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000255 seconds.
+  path: Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Skill.FBX
+  artifactKey: Guid(1e768688017709245aed3bb86453c364) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Skill.FBX using Guid(1e768688017709245aed3bb86453c364) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c43640601edab7702b4a8cf01a8cd0c4') in 0.068529 seconds
+  Import took 0.071706 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000231 seconds.
+  path: Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Death.FBX
+  artifactKey: Guid(a749f4485b342b7469956010abf2ab25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Death.FBX using Guid(a749f4485b342b7469956010abf2ab25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8a7ed7c9b6de61ab098ce7940b48b22c') in 0.067842 seconds
+  Import took 0.070675 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000247 seconds.
+  path: Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Run.FBX
+  artifactKey: Guid(f57ee821486cd7b488adf1063a8dd207) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Run.FBX using Guid(f57ee821486cd7b488adf1063a8dd207) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '14f1f44025024e290da1bd50f8c760d4') in 0.067096 seconds
+  Import took 0.070063 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000262 seconds.
+  path: Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Idle.FBX
+  artifactKey: Guid(a5ea117a2b123564a83a2dbd1c9ea4cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Idle.FBX using Guid(a5ea117a2b123564a83a2dbd1c9ea4cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b817400b9e7b19531638bc6d9e31c996') in 0.064765 seconds
+  Import took 0.067573 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000253 seconds.
+  path: Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Damage.FBX
+  artifactKey: Guid(81d4af5a5190e3d4d88c97161d881bf3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Damage.FBX using Guid(81d4af5a5190e3d4d88c97161d881bf3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '643c1e796715e14046cb775643e145c2') in 0.063439 seconds
+  Import took 0.066184 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000242 seconds.
+  path: Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Knockback.FBX
+  artifactKey: Guid(6e0b4a05932877a4b89fb3fb32c3e72b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Knockback.FBX using Guid(6e0b4a05932877a4b89fb3fb32c3e72b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f84b002eb9ffb9c2643735970879b882') in 0.067005 seconds
+  Import took 0.069934 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000247 seconds.
+  path: Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Walk.FBX
+  artifactKey: Guid(188f1042b5ff4644389fad5df1f98d7c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Walk.FBX using Guid(188f1042b5ff4644389fad5df1f98d7c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'af07d8189d9173f7c56bf408baae0eaa') in 0.074046 seconds
+  Import took 0.076971 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000290 seconds.
+  path: Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Stand.FBX
+  artifactKey: Guid(6f61bc53c41ba664fa527d3386ecfd1e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_images/FantasyMonster/Skeleton/Ani/Skeleton@Stand.FBX using Guid(6f61bc53c41ba664fa527d3386ecfd1e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '897497869291e1dd8d2887cdab40bdb5') in 0.062777 seconds
+  Import took 0.065663 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3243.737877 seconds.
+  path: Assets/_prefabs/BaseUnit.prefab
+  artifactKey: Guid(740ba89a3c96fe24b902c8f228ca9969) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_prefabs/BaseUnit.prefab using Guid(740ba89a3c96fe24b902c8f228ca9969) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2427f33ba0a516db4c3bc43b6a93672e') in 0.060122 seconds
+  Import took 0.065444 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000224 seconds.
+  path: Assets/_sounds/bensound-sunny.mp3
+  artifactKey: Guid(ccf965ddace116049af2b7a81d91b973) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_sounds/bensound-sunny.mp3 using Guid(ccf965ddace116049af2b7a81d91b973) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a04043328c69398bfec50e40f0cd211e') in 0.104277 seconds
+  Import took 0.106568 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.644986 seconds.
+  path: Assets/_images/FantasyMonster/Skeleton/Character/Materials/skeleton_D.mat
+  artifactKey: Guid(ed14df0368fe53543907335c0e3902c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_images/FantasyMonster/Skeleton/Character/Materials/skeleton_D.mat using Guid(ed14df0368fe53543907335c0e3902c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5cee02c6275bc4be8e8cbbcab6bad1ba') in 0.068652 seconds
+  Import took 0.071666 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000238 seconds.
+  path: Assets/_images/FantasyMonster/Skeleton/Ani/Materials/skeleton_D.mat
+  artifactKey: Guid(b1494958bf9856a479bec1767c02878e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_images/FantasyMonster/Skeleton/Ani/Materials/skeleton_D.mat using Guid(b1494958bf9856a479bec1767c02878e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c1c06e3118fc042042b26c7f529f6c75') in 0.035495 seconds
+  Import took 0.038025 seconds .
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file
