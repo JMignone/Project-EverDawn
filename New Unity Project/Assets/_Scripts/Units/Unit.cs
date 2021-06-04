@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit : MonoBehaviour
+public class Unit : MonoBehaviour, IDamageable
 {
     [SerializeField]
     private Actor3D agent;
@@ -13,6 +13,18 @@ public class Unit : MonoBehaviour
     [SerializeField]
     private GameObject target;
 
+    [SerializeField]
+    private BaseStats stats;
+
+    [SerializeField]
+    private List<GameObject> hitTargets;
+
+    public BaseStats Stats
+    {
+        get { return stats; }
+        //set { stats = value; }
+    }
+
     public Actor3D Agent
     {
         get { return agent; }
@@ -22,7 +34,7 @@ public class Unit : MonoBehaviour
     public Actor2D UnitSprite
     {
         get { return unitSprite; }
-        //set { agent = value; }
+        //set { unitSprite = value; }
     }
 
     public GameObject Target
@@ -31,10 +43,25 @@ public class Unit : MonoBehaviour
         set { target = value; }
     }
 
-    private void Update()
+    public List<GameObject> HitTargets
     {
-        if(target != null)
-            agent.Agent.SetDestination(target.transform.position);
+        get { return hitTargets; }
+        //set { hitTargets = value; }
     }
 
+    private void Update()
+    {
+        if(stats.CurrHealth > 0) {
+            agent.Agent.speed = stats.MoveSpeed;
+            stats.UpdateStats();
+
+            if(target != null)
+            agent.Agent.SetDestination(target.transform.position);
+        }
+
+    }
+
+    void IDamageable.TakeDamage(float amount) {
+        stats.CurrHealth -= amount;
+    }
 }
