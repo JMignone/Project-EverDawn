@@ -23,6 +23,8 @@ public class BaseStats
     [SerializeField]
     private SphereCollider detectionObject;
     [SerializeField]
+    private SphereCollider visionObject;
+    [SerializeField]
     private GameConstants.OBJECT_TYPE objectType;
     [SerializeField]
     private GameConstants.OBJECT_ATTACKABLE objectAttackable;
@@ -37,6 +39,12 @@ public class BaseStats
     {
         get { return objectType; }
         //set { myVar = value; }
+    }
+
+    public SphereCollider VisionObject
+    {
+        get { return visionObject; }
+        //set { visionObject = value; }
     }
     
     public SphereCollider DetectionObject

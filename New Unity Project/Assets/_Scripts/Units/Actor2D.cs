@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Actor2D : MonoBehaviour
 {
+
+    //this just sets the game art to follow the agent
+
     [SerializeField]
     GameObject followTarget;
     [SerializeField]
