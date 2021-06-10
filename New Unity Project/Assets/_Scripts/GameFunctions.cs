@@ -23,67 +23,26 @@ public static class GameFunctions
             (damageable as IDamageable).TakeDamage(baseDamage);
         }
     }
-    /* !! His doesnt seem to take into account whether or not the unit can attack it, so a ground unit will end up following a flying unit but not attack it !!
-    public static GameObject GetNearestTarget(List<GameObject> hitTargets, SphereCollider mySc, string tag, float range) {
+
+    public static GameObject GetNearestTarget(List<GameObject> hitTargets, string tag, BaseStats stats) {
         if(hitTargets.Count > 0) {
-            GameObject go = hitTargets[0];
-
-            Component targetComponent = hitTargets[0].GetComponent(typeof(IDamageable));
-            SphereCollider targetSc = (targetComponent as IDamageable).Stats.DetectionObject;
-
-            float dist = Vector3.Distance(mySc.transform.position, targetSc.transform.position);
-
-            foreach (GameObject hitTarget in hitTargets)
-            {
-                targetComponent = hitTarget.GetComponent(typeof(IDamageable));
-
-                if(targetComponent) {
-                    targetSc = (targetComponent as IDamageable).Stats.DetectionObject;
-
-                    float newDist = Vector3.Distance(mySc.transform.position, targetSc.transform.position);
-
-                    if(dist > newDist && newDist <= range) {
-                        if(!hitTarget.CompareTag(tag)){
-                            dist = newDist;
-                            go = hitTarget;
-                        }
-                    }
-                }
-            }
-            return go;
-        }
-        return null;
-    }
-    */
-
-    public static GameObject GetNearestTarget(List<GameObject> hitTargets, SphereCollider mySc, string tag, BaseStats stats) {
-        if(hitTargets.Count > 0) {
-            //GameObject go = hitTargets[0];
-
-            GameObject go = null; //
-
-            //Component targetComponent = hitTargets[0].GetComponent(typeof(IDamageable));
-            //SphereCollider targetSc = (targetComponent as IDamageable).Stats.DetectionObject;
+            GameObject go = null; 
             Component targetComponent;
             SphereCollider targetSc;
 
-            //float dist = Vector3.Distance(mySc.transform.position, targetSc.transform.position);
-            float dist = 10000;
+            float dist = 10000; //Arbitrary large number
 
             foreach (GameObject hitTarget in hitTargets)
             {
                 targetComponent = hitTarget.GetComponent(typeof(IDamageable));
 
                 if(targetComponent) {
-                    if(GameFunctions.CanAttack(tag, hitTarget.tag, targetComponent, stats)) {//
-
+                    if(GameFunctions.CanAttack(tag, hitTarget.tag, targetComponent, stats)) {
                         targetSc = (targetComponent as IDamageable).Stats.DetectionObject;
+                        float newDist = Vector3.Distance(stats.DetectionObject.transform.position, targetSc.transform.position);
 
-                        float newDist = Vector3.Distance(mySc.transform.position, targetSc.transform.position);
-
-                        //if(dist > newDist && newDist <= stats.Range) {
-                        if(dist > newDist) {
-                            if(!hitTarget.CompareTag(tag)){
+                        if(dist > newDist) { //if we found a closer target
+                            if(!hitTarget.CompareTag(tag)){ //and its not on the same team (sanity check, shouldnt ever occur)
                                 dist = newDist;
                                 go = hitTarget;
                             }

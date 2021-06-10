@@ -2053,6 +2053,7 @@ MonoBehaviour:
     visionObject: {fileID: 1908118749}
     objectType: 0
     objectAttackable: 0
+    unitRange: 0
   hitTargets: []
 --- !u!4 &367080428
 Transform:
@@ -2489,6 +2490,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 424be38610f6852419a68371e645f134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  target: {fileID: 0}
+  inRange: 0
   stats:
     currHealth: 500
     maxHealth: 500
@@ -2502,9 +2506,8 @@ MonoBehaviour:
     visionObject: {fileID: 0}
     objectType: 0
     objectAttackable: 2
+    unitRange: 0
   hitTargets: []
-  target: {fileID: 0}
-  inRange: 0
 --- !u!1 &418045717
 GameObject:
   m_ObjectHideFlags: 0
@@ -3198,6 +3201,7 @@ MonoBehaviour:
     visionObject: {fileID: 1610743824}
     objectType: 0
     objectAttackable: 0
+    unitRange: 0
   hitTargets: []
 --- !u!4 &483495842
 Transform:
@@ -5246,6 +5250,7 @@ Transform:
   m_Children:
   - {fileID: 869959471}
   - {fileID: 179946908}
+  - {fileID: 1325472928}
   - {fileID: 846891509}
   m_Father: {fileID: 1114531619}
   m_RootOrder: 1
@@ -5689,7 +5694,7 @@ RectTransform:
   m_Children:
   - {fileID: 1040936823}
   m_Father: {fileID: 781495026}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6179,6 +6184,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 424be38610f6852419a68371e645f134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  target: {fileID: 0}
+  inRange: 0
   stats:
     currHealth: 470
     maxHealth: 500
@@ -6192,9 +6200,8 @@ MonoBehaviour:
     visionObject: {fileID: 0}
     objectType: 0
     objectAttackable: 2
+    unitRange: 0
   hitTargets: []
-  target: {fileID: 0}
-  inRange: 0
 --- !u!1 &911404127
 GameObject:
   m_ObjectHideFlags: 0
@@ -7995,9 +8002,10 @@ MonoBehaviour:
     moveSpeed: 20
     healthBar: {fileID: 1040936824}
     detectionObject: {fileID: 179946909}
-    visionObject: {fileID: 0}
+    visionObject: {fileID: 1325472929}
     objectType: 1
     objectAttackable: 2
+    unitRange: 0
   hitTargets: []
 --- !u!4 &1114531619
 Transform:
@@ -8586,6 +8594,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03abcf466a8ffc4419eabd0c0c52cad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  target: {fileID: 0}
+  inRange: 0
   stats:
     currHealth: 1000
     maxHealth: 1000
@@ -8599,9 +8610,8 @@ MonoBehaviour:
     visionObject: {fileID: 0}
     objectType: 0
     objectAttackable: 2
+    unitRange: 0
   hitTargets: []
-  target: {fileID: 0}
-  inRange: 0
 --- !u!1 &1227000354
 GameObject:
   m_ObjectHideFlags: 0
@@ -9140,6 +9150,101 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followTarget: {fileID: 829696480}
   anim: {fileID: 0}
+--- !u!1 &1325472927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1325472928}
+  - component: {fileID: 1325472931}
+  - component: {fileID: 1325472930}
+  - component: {fileID: 1325472929}
+  m_Layer: 0
+  m_Name: VisionDetectionObject
+  m_TagString: Vision
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1325472928
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325472927}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: -0, z: -20}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 781495026}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1325472929
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325472927}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 35
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1325472930
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325472927}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1325472931
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325472927}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1352459725
 GameObject:
   m_ObjectHideFlags: 0
@@ -9423,12 +9528,13 @@ MonoBehaviour:
     baseDamage: 10
     attackDelay: 2
     currAttackDelay: 0
-    moveSpeed: 15
+    moveSpeed: 1
     healthBar: {fileID: 2127388520}
     detectionObject: {fileID: 2008451027}
     visionObject: {fileID: 1435175064}
     objectType: 0
     objectAttackable: 0
+    unitRange: 0
   hitTargets: []
 --- !u!54 &1390792291
 Rigidbody:
@@ -10650,8 +10756,8 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!65 &1574630166
-BoxCollider:
+--- !u!135 &1574630166
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -10661,8 +10767,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 6
+  m_Center: {x: 0, y: -20, z: 0}
 --- !u!23 &1574630167
 MeshRenderer:
   m_ObjectHideFlags: 0
