@@ -59,8 +59,18 @@ public class Structure : MonoBehaviour, IDamageable
     private void Update()
     {
         if(stats.CurrHealth > 0) {
-            stats.UpdateStats(inRange);
+            stats.UpdateStats(inRange, agent, hitTargets, target);
             Attack();
+
+            if(inRange > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) //is in range, OR is 90% thru attack cycle -
+                lookAtTarget();
+            else 
+                resetToCenter();
+        }
+        else {
+            print(gameObject.name + "has died!");
+            GameManager.RemoveObjectsFromList(gameObject);
+            Destroy(gameObject);
         }
     }
 
@@ -88,8 +98,10 @@ public class Structure : MonoBehaviour, IDamageable
             Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
             if(damageable) {
                 Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
-                if(other.tag == "Range") //Are we in their range detection object?
-                    (unit as IDamageable).InRange++;
+                if(other.tag == "Range") {//Are we in their range detection object?
+                    //if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) towers can attack anything, ill leave it hear incase somthing with an ability gives a need for this
+                        (unit as IDamageable).InRange++;
+                }
                 else if(other.tag == "Vision") { //Are we in their vision detection object?
                     if(!(unit as IDamageable).HitTargets.Contains(gameObject))
                         (unit as IDamageable).HitTargets.Add(gameObject);
@@ -104,9 +116,11 @@ public class Structure : MonoBehaviour, IDamageable
             if(damageable) {
                 Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                 if(other.tag == "Range") { //Are we in their Range detection object?
-                    (unit as IDamageable).InRange--;
-                    if((unit as IDamageable).Target == gameObject)
-                        (unit as IDamageable).Target = null;
+                    //if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
+                        (unit as IDamageable).InRange--;
+                        if((unit as IDamageable).Target == gameObject)
+                            (unit as IDamageable).Target = null;
+                    //}
                 }
                 else if(other.tag == "Vision") { //Are we in their vision detection object?
                     if((unit as IDamageable).HitTargets.Contains(gameObject))
@@ -137,6 +151,25 @@ public class Structure : MonoBehaviour, IDamageable
                 }
             }
         }
+    }
+
+    void lookAtTarget() {
+        var targetPosition = target.transform.GetChild(0).position;
+        Vector3 direction = targetPosition - agent.Agent.transform.position; //EDIT: RIGHT IS NO LONGER TRUE! - This line was flipped becuse the model of the turret needs to look in the oppisite direction as the model is flipped. This will likly be removed later
+        direction.y = 0; // Ignore Y
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+        // encase somthing here such that the base of the turret does not rotate
+        agent.Agent.transform.rotation = Quaternion.RotateTowards(agent.Agent.transform.rotation, targetRotation, GameConstants.ROTATION_SPEED * Time.deltaTime); //the number is degrees/second, maybe differnt per unit
+         //
+    }
+
+    void resetToCenter() { //resets a towers direction
+        var targetPosition = agent.Agent.transform.position;
+        targetPosition.z = 0;
+        Vector3 direction = targetPosition - agent.Agent.transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        agent.Agent.transform.rotation = Quaternion.RotateTowards(agent.Agent.transform.rotation, targetRotation, GameConstants.ROTATION_SPEED * Time.deltaTime);
     }
 
     void IDamageable.TakeDamage(float amount) {

@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,9 +27,13 @@ public class BaseStats
     [SerializeField]
     private SphereCollider visionObject;
     [SerializeField]
-    private GameConstants.OBJECT_TYPE objectType;
+    private GameConstants.MOVEMENT_TYPE movementType;
     [SerializeField]
     private GameConstants.OBJECT_ATTACKABLE objectAttackable;
+    [SerializeField]
+    private GameConstants.UNIT_TYPE unitType;
+    [SerializeField]
+    private GameConstants.ATTACK_PRIORITY attackPriority;
     [SerializeField]
     private GameConstants.UNIT_RANGE unitRange;
     
@@ -100,10 +106,10 @@ public class BaseStats
         //set { visionObject = value; }
     }
 
-    public GameConstants.OBJECT_TYPE ObjectType
+    public GameConstants.MOVEMENT_TYPE MovementType
     {
-        get { return objectType; }
-        //set { objectType = value; }
+        get { return movementType; }
+        //set { movementType = value; }
     }
     
     public GameConstants.OBJECT_ATTACKABLE ObjectAttackable
@@ -112,13 +118,25 @@ public class BaseStats
         //set { objectAttackable = value; }
     }
 
+    public GameConstants.UNIT_TYPE UnitType
+    {
+        get { return unitType; }
+        //set { unitType = value; }
+    }
+
+    public GameConstants.ATTACK_PRIORITY AttackPriority
+    {
+        get { return attackPriority; }
+        //set { attackPriority = value; }
+    }
+
     public GameConstants.UNIT_RANGE UnitRange
     {
         get { return unitRange; }
         //set { unitRange = value; }
     }
-
-    public void UpdateStats(int inRange) {
+    /*
+    public void UpdateStats(int inRange, bool inVision) {
         if(PercentHealth == 1) {
             HealthBar.enabled = false;
             HealthBar.transform.GetChild(0).gameObject.SetActive(false); //this is the image border
@@ -130,11 +148,53 @@ public class BaseStats
         HealthBar.fillAmount = PercentHealth;
 
         detectionObject.radius = range;
-        if(inRange > 0) {
+        
+        if(inRange > 0 || (currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && inVision)) {
             if(currAttackDelay < attackDelay) 
                 currAttackDelay += Time.deltaTime;
         }
-        else
+        else 
+            currAttackDelay = 0;
+            
+    }*/
+
+    public void UpdateStats(int inRange, Actor3D unitAgent, List<GameObject> hitTargets, GameObject target) {
+        if(PercentHealth == 1) {
+            HealthBar.enabled = false;
+            HealthBar.transform.GetChild(0).gameObject.SetActive(false); //this is the image border
+        }
+        else {
+            HealthBar.enabled = true;
+            HealthBar.transform.GetChild(0).gameObject.SetActive(true);
+        }
+        HealthBar.fillAmount = PercentHealth;
+
+        detectionObject.radius = range;
+
+        bool inVision = false;
+        if(target != null)
+            inVision = hitTargets.Contains(target);       
+        
+        // ??? Should units 'charge' their attack up to their "attack_ready_percentage" (or halfway point) if a unit is within vision but not within range ???
+        if(inRange > 0 || (currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && inVision)) {
+
+            Vector3 directionToTarget = unitAgent.transform.position - target.transform.GetChild(0).position;
+            directionToTarget.y = 0; // Ignore Y, usful for airborne units
+            float angle = Vector3.Angle(unitAgent.transform.forward, directionToTarget); 
+
+            //180 - *** might be the source of an error later on, depends on the angle of a unit agent at the start, right now they are all 180
+            if(180-Mathf.Abs(angle) < GameConstants.MAXIMUM_ATTACK_ANGLE) {
+                if(currAttackDelay < attackDelay) 
+                    currAttackDelay += Time.deltaTime;
+                else
+                    currAttackDelay = 0;
+            }
+            else {
+                if(currAttackDelay < attackDelay*GameConstants.ATTACK_READY_PERCENTAGE) 
+                    currAttackDelay += Time.deltaTime;
+            }
+        }
+        else 
             currAttackDelay = 0;
             
     }

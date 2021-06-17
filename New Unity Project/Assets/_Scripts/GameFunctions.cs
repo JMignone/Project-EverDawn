@@ -7,12 +7,19 @@ public static class GameFunctions
     public static bool CanAttack(string playerTag, string enemyTag, Component damageable, BaseStats stats) {
         if(damageable) {
             if(playerTag != enemyTag) {
-                if(stats.ObjectAttackable == GameConstants.OBJECT_ATTACKABLE.BOTH)
-                    return true;
-                else if(stats.ObjectAttackable == GameConstants.OBJECT_ATTACKABLE.GROUND && (damageable as IDamageable).Stats.ObjectType == GameConstants.OBJECT_TYPE.GROUND)
-                    return true;
-                else if(stats.ObjectAttackable == GameConstants.OBJECT_ATTACKABLE.FLYING && (damageable as IDamageable).Stats.ObjectType == GameConstants.OBJECT_TYPE.FLYING)
-                    return true;
+                bool objectAttackable = false;
+                if(stats.ObjectAttackable == GameConstants.OBJECT_ATTACKABLE.BOTH) //If the unit can attack the flying or ground unit, continue
+                    objectAttackable = true;
+                else if(stats.ObjectAttackable == GameConstants.OBJECT_ATTACKABLE.GROUND && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND)
+                    objectAttackable = true;
+                else if(stats.ObjectAttackable == GameConstants.OBJECT_ATTACKABLE.FLYING && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
+                    objectAttackable = true;
+                if(objectAttackable) { //the inside of this if block tests if the units priority matches the unit, then return true
+                    if(stats.AttackPriority == GameConstants.ATTACK_PRIORITY.EVERYTHING) //If the units priority is anything, return true
+                        return true;
+                    else if(stats.AttackPriority == GameConstants.ATTACK_PRIORITY.STRUCTURE && (damageable as IDamageable).Stats.UnitType == GameConstants.UNIT_TYPE.STRUCTURE)
+                        return true;
+                }
             }   
         }
         return false;
