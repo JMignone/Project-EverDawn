@@ -34,7 +34,10 @@ public class GameManager : MonoBehaviour
     public static void RemoveObjectsFromList(GameObject objectToRemove)
     {
         Vector3 objectToRemovePosition = objectToRemove.transform.GetChild(0).position;
-        Actor3D objectToRemoveAgent = (objectToRemove.GetComponent(typeof(IDamageable)).gameObject.GetComponent(typeof(IDamageable)) as IDamageable).Agent; //again, there must be a better way to get the agent...
+        Component objectToRemoveComponent = objectToRemove.GetComponent(typeof(IDamageable));
+
+        Actor3D objectToRemoveAgent = (objectToRemoveComponent as IDamageable).Agent; 
+        //Actor3D objectToRemoveAgent = (objectToRemove.GetComponent(typeof(IDamageable)).gameObject.GetComponent(typeof(IDamageable)) as IDamageable).Agent; //again, there must be a better way to get the agent...
         float objectToRemoveAgentRadius = objectToRemoveAgent.HitBox.radius;
 
         foreach (GameObject go in Instance.Objects) { //  The trigger exit doesnt get trigger if the object suddenly dies, so we need this do do it manually 
@@ -54,6 +57,30 @@ public class GameManager : MonoBehaviour
             Instance.TowerObjects.Remove(objectToRemove);
     }
 
+
+    public static void AddObjectToList(GameObject objectToAdd){
+        /*Vector3 objectToAddPosition = objectToAdd.transform.GetChild(0).position;
+        Component objectToAddComponent = objectToAdd.GetComponent(typeof(IDamageable));
+
+        Actor3D objectToAddAgent = (objectToAddComponent as IDamageable).Agent;
+        float objectToAddAgentRadius = objectToAddAgent.HitBox.radius;
+
+        foreach (GameObject go in Instance.Objects) { //  The trigger exit doesnt get trigger if the object suddenly dies, so we need this do do it manually 
+            Component component = go.GetComponent(typeof(IDamageable));
+            if(component) {
+                if( Vector3.Distance(objectToAddPosition, go.transform.GetChild(0).position) <= ((component as IDamageable).Stats.VisionRange + objectToAddAgentRadius) ) //If the unit that is added is within vision
+                    (component as IDamageable).HitTargets.Add(objectToAdd); 
+                if( Vector3.Distance(objectToAddPosition, go.transform.GetChild(0).position) <= ((component as IDamageable).Stats.Range + objectToAddAgentRadius) )       //If the unit that is added is within range
+                    (component as IDamageable).InRange++;
+            }
+        }*/
+        Instance.Objects.Add(objectToAdd);       
+    }
+
+    public static Transform GetUnitsFolder() {
+        return Instance.transform.parent.GetChild(1);
+    }
+
     //this is mainly used, if not only used for locating towers, maybe usful for ability targeting later on
     public static List<GameObject> GetAllEnemies(Vector3 pos, List<GameObject> objects, string tag) {
         List<GameObject> listOfEnemies = new List<GameObject>();
@@ -67,7 +94,6 @@ public class GameManager : MonoBehaviour
         return listOfEnemies;
     }
 
-    //curently unused
     public static bool isTowerActive(string tag, float percHp) {
         List<GameObject> listOfFriendlyTowers = new List<GameObject>();
 
@@ -77,7 +103,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if(listOfFriendlyTowers.Count == 3)
+        if(listOfFriendlyTowers.Count == 3 && percHp == 1)
             return false;
         else
             return true;

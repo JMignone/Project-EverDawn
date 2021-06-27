@@ -9,7 +9,11 @@ using UnityEngine;
 
 public class AimAtCamera : MonoBehaviour
 {
-    public Camera my_camera;
+    Camera my_camera;
+
+    void Awake() {
+        my_camera = Camera.main;
+    }
 
     void Update() {
         transform.LookAt(transform.position + my_camera.transform.rotation * Vector3.back,

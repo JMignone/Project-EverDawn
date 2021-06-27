@@ -17,8 +17,9 @@ public class Actor2D : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        if(agent != null) //temporary so tower doesnt scream errors for lack of animation
+        if(agent != null) { //temporary so tower doesnt scream errors for lack of animation
             agent = followTarget.GetComponent<NavMeshAgent>();
+        }
     }
 
     private void Update()
@@ -28,7 +29,7 @@ public class Actor2D : MonoBehaviour
 
                 Component damageable = followTarget.transform.parent.GetComponent(typeof(IDamageable));
                 Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
-                //print((unit as IDamageable).InRange);
+
                 anim.SetBool("IsAttacking", (unit as IDamageable).InRange > 0 || ((unit as IDamageable).Stats.CurrAttackDelay/(unit as IDamageable).Stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && (unit as IDamageable).HitTargets.Contains((unit as IDamageable).Target)) ? true : false); //is in range, OR (is nearly done with attack and within vision)?
             }
         }

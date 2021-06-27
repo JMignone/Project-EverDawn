@@ -69,7 +69,7 @@ public class Unit : MonoBehaviour, IDamageable
     {
         if(stats.CurrHealth > 0) {
             agent.Agent.speed = stats.MoveSpeed;
-            agent.Agent.stoppingDistance = stats.Range; //this may no longer be needed, and should be set to a small number for all units
+            //agent.Agent.stoppingDistance = stats.Range; //this may no longer be needed, and should be set to a small number for all units
             if(target != null) {
                 Actor3D targetAgent = (target.GetComponent(typeof(IDamageable)).gameObject.GetComponent(typeof(IDamageable)) as IDamageable).Agent; // this is to get the targets agent... there must be a better way
                 //agent.Agent.stoppingDistance = agent.Agent.stoppingDistance + targetAgent.HitBox.radius;  -
@@ -136,8 +136,14 @@ public class Unit : MonoBehaviour, IDamageable
             if(damageable) {
                 Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                 if(other.tag == "Range") {//Are we in their range detection object?
-                    if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) //only if the unit can actually target this one should we adjust this value
+                    if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) { //only if the unit can actually target this one should we adjust this value
                         (unit as IDamageable).InRange++;
+                        if((unit as IDamageable).InRange == 1 || (unit as IDamageable).Target == null) { //we need this block here as well as stay in the case that a unit is placed inside a units range
+                            GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
+                            if(go != null)
+                                (unit as IDamageable).Target = go;
+                        }
+                    }
                 }
                 else if(other.tag == "Vision") { //Are we in their vision detection object?
                     if(!(unit as IDamageable).HitTargets.Contains(gameObject))
