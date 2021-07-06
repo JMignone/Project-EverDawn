@@ -5,15 +5,15 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637550453855740340
-    m_Hash: 2644104806
+      ticks: 637603579366700243
+    m_Hash: 2765025674
   m_LockFileStatus:
     m_FilePath: D:/GitHub/Project-Luna/New Unity Project/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637550453860339712
+      ticks: 637604152802201282
     m_Hash: 2299672840
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
@@ -794,6 +794,7 @@ m_PackageAssets:
         - 0.1.17-preview
         - 0.1.18-preview
         - 0.1.19-preview
+        - 0.1.20-preview
         compatible:
         - 0.1.4-preview
         - 0.1.5-preview
@@ -810,6 +811,7 @@ m_PackageAssets:
         - 0.1.17-preview
         - 0.1.18-preview
         - 0.1.19-preview
+        - 0.1.20-preview
         verified: 
       dependencies:
       - name: com.unity.sysroot

@@ -35,6 +35,8 @@ public class BaseStats
     [SerializeField]
     private GameConstants.UNIT_TYPE unitType;
     [SerializeField]
+    private GameConstants.UNIT_GROUPING unitGrouping;
+    [SerializeField]
     private GameConstants.ATTACK_PRIORITY attackPriority;
     [SerializeField]
     private GameConstants.UNIT_RANGE unitRange;
@@ -130,6 +132,12 @@ public class BaseStats
     {
         get { return unitType; }
         //set { unitType = value; }
+    }
+
+    public GameConstants.UNIT_GROUPING UnitGrouping
+    {
+        get { return unitGrouping; }
+        //set { unitGrouping = value; }
     }
 
     public GameConstants.ATTACK_PRIORITY AttackPriority

@@ -31,6 +31,13 @@ public class Actor2D : MonoBehaviour
                 Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
 
                 anim.SetBool("IsAttacking", (unit as IDamageable).InRange > 0 || ((unit as IDamageable).Stats.CurrAttackDelay/(unit as IDamageable).Stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && (unit as IDamageable).HitTargets.Contains((unit as IDamageable).Target)) ? true : false); //is in range, OR (is nearly done with attack and within vision)?
+                
+                //anim.SetBool("IsReady", ((unit as IDamageable).Stats.CurrAttackDelay/(unit as IDamageable).Stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && (unit as IDamageable).HitTargets.Contains((unit as IDamageable).Target)) ? true : false); //is nearly done with attack and within vision?
+                /*
+                    We may need a seperate value for all units, as their animations for attacking might take longer, even tho we may want them to attack at similar speeds.
+                    This way they can properly do their entire attack animation
+                */
+                
             }
         }
     }

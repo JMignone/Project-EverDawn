@@ -26,7 +26,16 @@ public class PlayerStats : MonoBehaviour
     [SerializeField]
     private Card nextCard;
     [SerializeField]
+    private GameObject topArea;
+    [SerializeField]
+    private GameObject leftArea;
+    [SerializeField]
+    private GameObject rightArea;
     private bool onDragging;
+    private bool spawnZone;
+    private bool topZone;
+    private bool leftZone;
+    private bool rightZone;
 
     public Deck PlayersDeck
     {
@@ -89,15 +98,58 @@ public class PlayerStats : MonoBehaviour
     }
     //
 
+    public GameObject TopArea
+    {
+        get { return topArea; }
+        set { topArea = value; }
+    }
+
+    public GameObject LeftArea
+    {
+        get { return leftArea; }
+        set { leftArea = value; }
+    }
+
+    public GameObject RightArea
+    {
+        get { return rightArea; }
+        set { rightArea = value; }
+    }
+
     public bool OnDragging
     {
         get { return onDragging; }
         set { onDragging = value; }
     }
 
+    public bool SpawnZone
+    {
+        get { return spawnZone; }
+        set { spawnZone = value; }
+    }
+
+    public bool TopZone
+    {
+        get { return topZone; }
+        set { topZone = value; }
+    }
+
+    public bool LeftZone
+    {
+        get { return leftZone; }
+        set { leftZone = value; }
+    }
+
+    public bool RightZone
+    {
+        get { return rightZone; }
+        set { rightZone = value; }
+    }
+
     private void Start()
     {
         playersDeck.Start();
+        //spawnZone = false;
     }
 
     private void Update()
@@ -107,6 +159,17 @@ public class PlayerStats : MonoBehaviour
             currResource += Time.deltaTime * GameConstants.RESOURCE_SPEED;
         }
         //Could add somthing here to make sure that we dont overflow over 10 by somthing like 0.001, but is it worth the extra computation?
+
+        if(spawnZone) {
+            topArea.SetActive(!topZone);
+            leftArea.SetActive(!leftZone);
+            rightArea.SetActive(!rightZone);
+        }
+        else {
+            topArea.SetActive(false);
+            leftArea.SetActive(false);
+            rightArea.SetActive(false);
+        }
 
         UpdateText();
         UpdateDeck();

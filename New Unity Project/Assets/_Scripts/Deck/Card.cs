@@ -27,6 +27,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     private bool canDrag;
     private GameObject preview;
     private bool isFlying;
+    private RectTransform cardCanvasDim;
 
     public PlayerStats PlayerInfo
     {
@@ -94,6 +95,17 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         set { isFlying = value; }
     }
 
+    public RectTransform CardCanvasDim
+    {
+        get { return cardCanvasDim; }
+        set { cardCanvasDim = value; }
+    }
+
+    private void Start() 
+    {
+        cardCanvasDim = GameFunctions.GetCanvas().GetChild(0).GetComponent<RectTransform>();;
+    }
+
     private void Update()
     {
         icon.sprite = cardInfo.Icon;
@@ -110,12 +122,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(!playerInfo.OnDragging) {
             if(canDrag) {
                 playerInfo.OnDragging = true;
-                //transform.SetParent(GameFunctions.GetCanvas());
-                
-                //GameObject go = Instantiate(playerInfo.CardPrefab, playerInfo.HandParent);
-                //Card c = go.GetComponent<Card>();
-                //c.PlayerInfo = this.playerInfo;
-                //c.CardInfo = this.cardInfo;
+                playerInfo.SpawnZone = true;
 
                 GameObject go = Instantiate(cardInfo.PreviewPrefab);
                 preview = go;
@@ -138,8 +145,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(playerInfo.OnDragging) {
             transform.GetChild(3).position = Input.mousePosition;
 
-            //The below only works at a specific resolution, but its a proof of concept
-            float scale = (85 - Input.mousePosition.y)/30;
+            float scale = (cardCanvasDim.rect.height - Input.mousePosition.y)/(cardCanvasDim.rect.height - transform.position.y); 
             if(scale > 1)
                 scale = 1;
             else if(scale < 0)
@@ -150,15 +156,22 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 The function SamplePosition takes in a point, and it will swarch for the closest point on the navmesh to it.
                 For a preview unit, this is very useful. If the preview is aleady on the navmesh, then it takes that point,
                 but if the user has placed the unit over the river, it will place the preview to the closest position
-                it should be. Tihs will also be used for placing the actual unit as well. It works exactly how we want it to.
+                it should be. This will also be used for placing the actual unit as well. It works exactly how we want it to.
+
+                The '9' in the function is the area mask, as a binary number. This mask includes 'walkable=1' and 'flyable=8'
             */
-            if(Input.mousePosition.y > 100)
+            if(Input.mousePosition.y > cardCanvasDim.rect.height)
                 preview.SetActive(true);
             else
                 preview.SetActive(false);
+
             UnityEngine.AI.NavMeshHit hit;
-            if(UnityEngine.AI.NavMesh.SamplePosition(getPosition(), out hit, 6.0f, UnityEngine.AI.NavMesh.AllAreas))
-				preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(hit.position);
+            Vector3 position = adjustForSpawnZones(getPosition());
+            position = adjustForTowers(position);
+            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 6.1f, 9))
+                preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(hit.position);
+            else
+                preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(position);
         }
     }
 
@@ -166,9 +179,13 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         if(playerInfo.OnDragging) {
             UnityEngine.AI.NavMeshHit hit;
-            if (UnityEngine.AI.NavMesh.SamplePosition(getPosition(), out hit, 6.0f, UnityEngine.AI.NavMesh.AllAreas))
-				preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(hit.position);
-            if(Input.mousePosition.y > 100 && playerInfo.GetCurrResource >= cardInfo.Cost) //only works at a specific resolution, but its a proof of concept
+            Vector3 position = adjustForSpawnZones(getPosition());
+            position = adjustForTowers(position);
+            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 6.1f, 9))
+                preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(hit.position);
+            else
+                preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(position);
+            if(Input.mousePosition.y > cardCanvasDim.rect.height && playerInfo.GetCurrResource >= cardInfo.Cost) //only works at a specific resolution, but its a proof of concept
                 SpawnUnit();
             else {
                 transform.GetChild(3).localPosition = new Vector3(0,0,0);
@@ -176,6 +193,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 Destroy(preview);
             }
             playerInfo.OnDragging = false;
+            playerInfo.SpawnZone = false;
         }
     }
 
@@ -187,10 +205,13 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             playerInfo.RemoveResource(cardInfo.Cost);
 
             UnityEngine.AI.NavMeshHit hit;
-            if(UnityEngine.AI.NavMesh.SamplePosition(getPosition(), out hit, 6.0f, UnityEngine.AI.NavMesh.AllAreas))//This should be true, but the else part is a backup
+            Vector3 position = adjustForSpawnZones(getPosition());
+            position = adjustForTowers(position);
+            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 6.1f, 9))
                 GameFunctions.SpawnUnit(cardInfo.Prefab, GameManager.GetUnitsFolder(), hit.position);
             else
-                GameFunctions.SpawnUnit(cardInfo.Prefab, GameManager.GetUnitsFolder(), getPosition());
+                GameFunctions.SpawnUnit(cardInfo.Prefab, GameManager.GetUnitsFolder(), position);
+
             Destroy(gameObject);
             Destroy(preview);
         }
@@ -209,6 +230,73 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         float distance;
         xy.Raycast(ray, out distance);
         return ray.GetPoint(distance);
+    }
+
+    //this function will fix the position of unit placment and the preview with the addition of the no place zones
+    //The values will likely need to be adjusted for diffent arenas and things like that, have to figure that out later
+    private Vector3 adjustForSpawnZones(Vector3 position) {
+        float unitOffset = 4; //This is just a number that moves the units away from the red area slighlty
+        float firstAreaBottom = playerInfo.LeftArea.transform.position.z - unitOffset;
+        float secondAreaBottom = playerInfo.TopArea.transform.position.z - unitOffset;
+
+        if(!playerInfo.LeftZone && !playerInfo.RightZone) { //If both zones are active
+            if(position.z > firstAreaBottom)
+                position = new Vector3(position.x, position.y, firstAreaBottom);
+        }
+        else if(!playerInfo.LeftZone){ //If only the left zone is active
+            if(position.x < 0 && position.z > firstAreaBottom) { //AND the cursor is in the zone
+                float distanceToBottom = Math.Abs(position.z - firstAreaBottom);
+                float distanceToCenter = Math.Abs(position.x);
+                if(distanceToBottom < distanceToCenter) //if the cursor is closer to the bottom edge of the no place zone
+                    position = new Vector3(position.x, position.y, firstAreaBottom);
+                else
+                    position = new Vector3(0, position.y, position.z);
+            }
+        }
+        else if(!playerInfo.RightZone) { //If only the right zone is active
+            if(position.x > 0 && position.z > firstAreaBottom) { //AND the cursor is in the zone
+                float distanceToBottom = Math.Abs(position.z - firstAreaBottom);
+                float distanceToCenter = Math.Abs(position.x);
+                if(distanceToBottom < distanceToCenter) //if the cursor is closer to the bottom edge of the no place zone
+                    position = new Vector3(position.x, position.y, firstAreaBottom);
+                else
+                    position = new Vector3(0, position.y, position.z);
+            }
+        }
+        if(position.z > secondAreaBottom)
+            position = new Vector3(position.x, position.y, secondAreaBottom);
+        return position;
+    }
+
+    private Vector3 adjustForTowers(Vector3 position) {
+        foreach(GameObject go in GameManager.Instance.TowerObjects) {
+            Component component = go.GetComponent(typeof(IDamageable));
+            float towerRadius = (component as IDamageable).Agent.HitBox.radius;
+            Vector3 towerPosition = go.transform.position;
+            
+            if(position.y < 1 &&    //If our position is currently inside a tower
+               position.x < towerPosition.x + towerRadius &&
+               position.x > towerPosition.x - towerRadius &&
+               position.z < towerPosition.z + towerRadius &&
+               position.z > towerPosition.z - towerRadius ) 
+                {
+                    float distFromLeft   = Math.Abs(position.x - towerPosition.x + towerRadius);
+                    float distFromRight  = Math.Abs(position.x - towerPosition.x - towerRadius);
+                    float distFromBottom = Math.Abs(position.z - towerPosition.z + towerRadius);
+                    float distFromTop    = Math.Abs(position.z - towerPosition.z - towerRadius);
+
+                    if( distFromLeft < distFromRight && distFromLeft < distFromBottom && distFromLeft < distFromTop) //If we are closest to the left side of the tower
+                        position = new Vector3(towerPosition.x - towerRadius, position.y, position.z);
+                    else if( distFromRight < distFromLeft && distFromRight < distFromBottom && distFromRight < distFromTop)
+                        position = new Vector3(towerPosition.x + towerRadius, position.y, position.z);
+                    else if( distFromBottom < distFromLeft && distFromBottom < distFromRight && distFromBottom < distFromTop)
+                        position = new Vector3(position.x, position.y, towerPosition.z - towerRadius);
+                    else 
+                        position = new Vector3(position.x, position.y, towerPosition.z + towerRadius);
+                    break;
+               }        
+        }
+        return position;
     }
 
 }

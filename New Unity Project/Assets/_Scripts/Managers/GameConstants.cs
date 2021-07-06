@@ -8,10 +8,11 @@ public static class GameConstants
     public static float MAXIMUM_ATTACK_ANGLE = 70.0f;  //to what extend can the unit be not rotated on target before the attack is delayed? Think airship
     public static float ROTATION_SPEED = 120.0f;       //How fast does a unit rotate when tracking a target, unit is in degrees/second
 
-    public static float RESOURCE_SPEED = 0.75f;         //How fast the resource generates
-    public static int RESOURCE_MAX = 9;                //The cap on the resource (9 means 10)
-    public static int MAX_HAND_SIZE = 4;               //size of the player hand
-    public static string HUD_CANVAS = "HUD - Canvas";      //The name of the gameObject that holds the UI
+    public static float RESOURCE_SPEED = 0.75f;             //How fast the resource generates
+    public static int RESOURCE_MAX = 9;                     //The cap on the resource (9 means 10)
+    public static int MAX_HAND_SIZE = 4;                    //size of the player hand
+    public static string HUD_CANVAS = "HUD - Canvas";       //The name of the gameObject that holds the UI
+    public static string PLAYER_TAG = "Player";
 
     public enum MOVEMENT_TYPE {
         GROUND,
@@ -27,6 +28,11 @@ public static class GameConstants
     public enum UNIT_TYPE {
         UNIT,
         STRUCTURE
+    }
+
+    public enum UNIT_GROUPING {
+        SOLO,
+        GROUP,
     }
 
     public enum BUILDING_TYPE {

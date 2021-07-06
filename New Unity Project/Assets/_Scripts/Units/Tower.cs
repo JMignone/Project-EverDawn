@@ -22,6 +22,9 @@ public class Tower : MonoBehaviour, IDamageable
     [SerializeField]
     protected List<GameObject> hitTargets;
 
+    [SerializeField]
+    protected bool leftTower;
+
     public Actor3D Agent
     {
         get { return agent; }
@@ -56,6 +59,12 @@ public class Tower : MonoBehaviour, IDamageable
         get { return hitTargets; }
     }
 
+    public bool LeftTower
+    {
+        get { return leftTower; }
+        set { leftTower = value; }
+    }
+
     protected virtual void Update()
     {
         if(stats.CurrHealth > 0) {
@@ -69,7 +78,7 @@ public class Tower : MonoBehaviour, IDamageable
         }
         else {
             print(gameObject.name + "has died!");
-            GameManager.RemoveObjectsFromList(gameObject);
+            GameManager.RemoveObjectsFromList(gameObject, leftTower);
             Destroy(gameObject);
         }
     }

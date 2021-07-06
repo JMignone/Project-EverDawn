@@ -1036,6 +1036,7 @@ MonoBehaviour:
     movementType: 0
     objectAttackable: 0
     unitType: 0
+    unitGrouping: 0
     attackPriority: 0
     unitRange: 0
   hitTargets: []
@@ -1570,7 +1571,7 @@ NavMeshAgent:
   m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 100
-  m_StoppingDistance: 10
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1

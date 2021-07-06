@@ -82,9 +82,21 @@ public class Unit : MonoBehaviour, IDamageable
                 */
             }
             else {
-                List<GameObject> towers = GameManager.Instance.TowerObjects;
-                towers = GameManager.GetAllEnemies(transform.GetChild(0).position, towers, gameObject.tag); //sending in only towers
-                target = GameFunctions.GetNearestTarget(towers, gameObject.tag, stats);
+                if(hitTargets.Count > 0) {
+                    GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
+                    if(go != null)
+                        target = go;
+                    else {
+                        List<GameObject> towers = GameManager.Instance.TowerObjects;
+                        towers = GameManager.GetAllEnemies(transform.GetChild(0).position, towers, gameObject.tag); //sending in only towers
+                        target = GameFunctions.GetNearestTarget(towers, gameObject.tag, stats);
+                    }
+                }
+                else {
+                    List<GameObject> towers = GameManager.Instance.TowerObjects;
+                    towers = GameManager.GetAllEnemies(transform.GetChild(0).position, towers, gameObject.tag); //sending in only towers
+                    target = GameFunctions.GetNearestTarget(towers, gameObject.tag, stats);
+                }
             }
             stats.UpdateStats(inRange, agent, hitTargets, target);
             Attack();

@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     private List<GameObject> objects;
     [SerializeField]
     private List<GameObject> towerObjects;
+    [SerializeField]
+    private List<PlayerStats> players;
 
     public static GameManager Instance
     {
@@ -25,6 +27,12 @@ public class GameManager : MonoBehaviour
         get { return towerObjects; }
     }
 
+    public List<PlayerStats> Players
+    {
+        get { return players; }
+        //set { players = value; }
+    }
+
     private void Awake()
     {
         if(instance != this)
@@ -34,6 +42,7 @@ public class GameManager : MonoBehaviour
     public static void RemoveObjectsFromList(GameObject objectToRemove)
     {
         Vector3 objectToRemovePosition = objectToRemove.transform.GetChild(0).position;
+        objectToRemovePosition = new Vector3(objectToRemovePosition.x, 0 ,objectToRemovePosition.z); // Setting the y to 0 to avoid increased distances with flying units
         Component objectToRemoveComponent = objectToRemove.GetComponent(typeof(IDamageable));
 
         Actor3D objectToRemoveAgent = (objectToRemoveComponent as IDamageable).Agent; 
@@ -47,11 +56,55 @@ public class GameManager : MonoBehaviour
                     (component as IDamageable).HitTargets.Remove(objectToRemove);    //remove it from their possible targets
                     if((component as IDamageable).Target == objectToRemove)          //if an object has this now dead unit as a target ...
                         (component as IDamageable).Target = null;                    //make target null
-                    if( Vector3.Distance(objectToRemovePosition, go.transform.GetChild(0).position) <= ((component as IDamageable).Stats.Range + objectToRemoveAgentRadius) ) //If the unit that died is within range
+                    if( Vector3.Distance(objectToRemovePosition, new Vector3(go.transform.GetChild(0).position.x, 0, go.transform.GetChild(0).position.z)) <= ((component as IDamageable).Stats.Range + objectToRemoveAgent.HitBox.radius) ) //If the unit that died is within range
                         (component as IDamageable).InRange--;
                 }
             }
         }
+        Instance.Objects.Remove(objectToRemove);
+        if(Instance.TowerObjects.Contains(objectToRemove))
+            Instance.TowerObjects.Remove(objectToRemove);
+    }
+
+    public static void RemoveObjectsFromList(GameObject objectToRemove, bool leftTower)
+    {
+        Vector3 objectToRemovePosition = objectToRemove.transform.GetChild(0).position;
+        objectToRemovePosition = new Vector3(objectToRemovePosition.x, 0 ,objectToRemovePosition.z); // Setting the y to 0 to avoid increased distances with flying units
+        Component objectToRemoveComponent = objectToRemove.GetComponent(typeof(IDamageable));
+
+        Actor3D objectToRemoveAgent = (objectToRemoveComponent as IDamageable).Agent; 
+        //Actor3D objectToRemoveAgent = (objectToRemove.GetComponent(typeof(IDamageable)).gameObject.GetComponent(typeof(IDamageable)) as IDamageable).Agent; //again, there must be a better way to get the agent...
+        float objectToRemoveAgentRadius = objectToRemoveAgent.HitBox.radius;
+
+        foreach (GameObject go in Instance.Objects) { //  The trigger exit doesnt get trigger if the object suddenly dies, so we need this do do it manually 
+            Component component = go.GetComponent(typeof(IDamageable));
+            if(component) {
+                if((component as IDamageable).HitTargets.Contains(objectToRemove)) { //if an object has this now dead unit as a hit target ...
+                    (component as IDamageable).HitTargets.Remove(objectToRemove);    //remove it from their possible targets
+                    if((component as IDamageable).Target == objectToRemove)          //if an object has this now dead unit as a target ...
+                        (component as IDamageable).Target = null;                    //make target null
+                    if( Vector3.Distance(objectToRemovePosition, new Vector3(go.transform.GetChild(0).position.x, 0, go.transform.GetChild(0).position.z)) <= ((component as IDamageable).Stats.Range + objectToRemoveAgent.HitBox.radius) ) //If the unit that died is within range
+                        (component as IDamageable).InRange--;
+                }
+            }
+        }
+
+        if(!objectToRemove.CompareTag(GameConstants.PLAYER_TAG)) {
+            if(leftTower) 
+                Instance.Players[0].LeftZone = true;
+            else 
+                Instance.Players[0].RightZone = true;
+            Instance.Players[0].Score++;
+        }
+    /*  else {
+            if(leftTower) 
+                Instance.Players[1].LeftZone = true;
+            else 
+                Instance.Players[1].RightZone = true;
+            Instance.Players[1].Score++;
+        }
+    */
+
         Instance.Objects.Remove(objectToRemove);
         if(Instance.TowerObjects.Contains(objectToRemove))
             Instance.TowerObjects.Remove(objectToRemove);
@@ -74,7 +127,13 @@ public class GameManager : MonoBehaviour
                     (component as IDamageable).InRange++;
             }
         }*/
-        Instance.Objects.Add(objectToAdd);       
+        Component component = objectToAdd.GetComponent(typeof(IDamageable));
+        if((component as IDamageable).Stats.UnitGrouping == GameConstants.UNIT_GROUPING.SOLO)
+            Instance.Objects.Add(objectToAdd);
+        else {
+            foreach(Transform go in objectToAdd.transform)
+                Instance.Objects.Add(go.gameObject);
+        }
     }
 
     public static Transform GetUnitsFolder() {
