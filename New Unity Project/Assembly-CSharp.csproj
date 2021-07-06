@@ -80,6 +80,7 @@
     <Compile Include="Assets\MenuAssets\LeanTween\Examples\Scripts\PathBezier2d.cs" />
     <Compile Include="Assets\MenuAssets\LeanTween\Examples\Scripts\GeneralSimpleUI.cs" />
     <Compile Include="Assets\MenuAssets\LeanTween\Examples\Scripts\PathSplineEndless.cs" />
+    <Compile Include="Assets\MenuAssets\UI_Anim_Test_1.cs" />
     <Compile Include="Assets\MenuAssets\LeanTween\Examples\Scripts\PathBezier.cs" />
     <Compile Include="Assets\MenuAssets\LeanTween\Examples\Scripts\PathSpline.cs" />
     <Compile Include="Assets\MenuAssets\LeanTween\Framework\LTDescrOptional.cs" />
