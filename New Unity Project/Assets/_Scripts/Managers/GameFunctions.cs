@@ -78,5 +78,19 @@ public static class GameFunctions
         GameManager.AddObjectToList(go);
     }
 
+    //This code was found from https://answers.unity.com/questions/566519/camerascreentoworldpoint-in-perspective.html
+    //It finds the position in the game space relative to where the cursor is on the screen.
+    public static Vector3 getPosition(bool isFlying) {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane xy;
+        if(isFlying)
+            xy = new Plane(Vector3.up, new Vector3(0, 20, 0));
+        else
+            xy = new Plane(Vector3.up, new Vector3(0, 0, 0));
+        
+        float distance;
+        xy.Raycast(ray, out distance);
+        return ray.GetPoint(distance);
+    }
 
 }

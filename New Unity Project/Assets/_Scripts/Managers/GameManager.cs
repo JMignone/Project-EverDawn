@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -61,6 +62,9 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        if((objectToRemoveComponent as IDamageable).IsHoveringAbility)
+            removeAbililtyIndicators();
+
         Instance.Objects.Remove(objectToRemove);
         if(Instance.TowerObjects.Contains(objectToRemove))
             Instance.TowerObjects.Remove(objectToRemove);
@@ -104,6 +108,12 @@ public class GameManager : MonoBehaviour
             Instance.Players[1].Score++;
         }
     */
+
+        /*
+            We would only need this if towers have abilities.
+        if((objectToRemoveComponent as IDamageable).IsHoveringAbility)
+            removeAbililtyIndicators();
+        */
 
         Instance.Objects.Remove(objectToRemove);
         if(Instance.TowerObjects.Contains(objectToRemove))
@@ -166,5 +176,17 @@ public class GameManager : MonoBehaviour
             return false;
         else
             return true;
+    }
+
+    public static void removeAbililtyIndicators() {
+        foreach (GameObject go in Instance.Objects) {
+            Component component = go.GetComponent(typeof(IDamageable));
+            if((component as IDamageable).IndicatorNum > 0) {
+                (component as IDamageable).AbilityIndicator.enabled = false;
+                (component as IDamageable).IndicatorNum = 0;
+            }
+        }
+        GameObject hud = GameObject.Find(GameConstants.HUD_CANVAS);
+        hud.transform.GetChild(2).GetComponent<Image>().enabled = false;
     }
 }

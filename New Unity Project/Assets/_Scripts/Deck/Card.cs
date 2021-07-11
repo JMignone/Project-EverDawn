@@ -103,7 +103,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     private void Start() 
     {
-        cardCanvasDim = GameFunctions.GetCanvas().GetChild(0).GetComponent<RectTransform>();;
+        cardCanvasDim = GameFunctions.GetCanvas().GetChild(0).GetComponent<RectTransform>();
     }
 
     private void Update()
@@ -166,7 +166,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 preview.SetActive(false);
 
             UnityEngine.AI.NavMeshHit hit;
-            Vector3 position = adjustForSpawnZones(getPosition());
+            Vector3 position = adjustForSpawnZones(GameFunctions.getPosition(isFlying));
             position = adjustForTowers(position);
             if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 6.1f, 9))
                 preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(hit.position);
@@ -179,13 +179,13 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         if(playerInfo.OnDragging) {
             UnityEngine.AI.NavMeshHit hit;
-            Vector3 position = adjustForSpawnZones(getPosition());
+            Vector3 position = adjustForSpawnZones(GameFunctions.getPosition(isFlying));
             position = adjustForTowers(position);
             if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 6.1f, 9))
                 preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(hit.position);
             else
                 preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(position);
-            if(Input.mousePosition.y > cardCanvasDim.rect.height && playerInfo.GetCurrResource >= cardInfo.Cost) //only works at a specific resolution, but its a proof of concept
+            if(Input.mousePosition.y > cardCanvasDim.rect.height && playerInfo.GetCurrResource >= cardInfo.Cost)
                 SpawnUnit();
             else {
                 transform.GetChild(3).localPosition = new Vector3(0,0,0);
@@ -205,7 +205,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             playerInfo.RemoveResource(cardInfo.Cost);
 
             UnityEngine.AI.NavMeshHit hit;
-            Vector3 position = adjustForSpawnZones(getPosition());
+            Vector3 position = adjustForSpawnZones(GameFunctions.getPosition(isFlying));
             position = adjustForTowers(position);
             if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 6.1f, 9))
                 GameFunctions.SpawnUnit(cardInfo.Prefab, GameManager.GetUnitsFolder(), hit.position);
@@ -215,21 +215,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             Destroy(gameObject);
             Destroy(preview);
         }
-    }
-
-    //This code was found from https://answers.unity.com/questions/566519/camerascreentoworldpoint-in-perspective.html
-    //It finds the position in the game space relative to where the cursor is on the screen.
-    private Vector3 getPosition() {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane xy;
-        if(isFlying)
-            xy = new Plane(Vector3.up, new Vector3(0, 20, 0));
-        else
-            xy = new Plane(Vector3.up, new Vector3(0, 0, 0));
-        
-        float distance;
-        xy.Raycast(ray, out distance);
-        return ray.GetPoint(distance);
     }
 
     //this function will fix the position of unit placment and the preview with the addition of the no place zones
