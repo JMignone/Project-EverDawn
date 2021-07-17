@@ -9,6 +9,9 @@ public class Building : MonoBehaviour, IDamageable
     private Actor3D agent;
 
     [SerializeField]
+    private Actor2D unitSprite;
+
+    [SerializeField]
     private GameObject target;
 
     [SerializeField]
@@ -31,11 +34,18 @@ public class Building : MonoBehaviour, IDamageable
     private List<GameObject> hitTargets;
 
     private bool isHoveringAbility;
+    private bool isCastingAbility;
 
     public Actor3D Agent
     {
         get { return agent; }
         //set { agent = value; }
+    }
+
+    public Actor2D UnitSprite
+    {
+        get { return unitSprite; }
+        //set { unitSprite = value; }
     }
 
     public Image AbilityIndicator
@@ -89,6 +99,12 @@ public class Building : MonoBehaviour, IDamageable
     {
         get { return isHoveringAbility; }
         set { isHoveringAbility = value; }
+    }
+
+    public bool IsCastingAbility
+    {
+        get { return isCastingAbility; }
+        set { isCastingAbility = value; }
     }
 
     private void Start()

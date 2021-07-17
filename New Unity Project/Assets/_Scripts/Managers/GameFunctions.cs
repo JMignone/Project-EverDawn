@@ -78,6 +78,27 @@ public static class GameFunctions
         GameManager.AddObjectToList(go);
     }
 
+    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, Unit unit) {
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        float distance = Vector3.Distance(startPosition, mousePosition);
+        Vector3 endPosition = mousePosition;
+        Projectile projectile = prefab.GetComponent<Projectile>();
+
+        float range = projectile.Range;
+        float radius = projectile.Radius;
+        bool isGrenade = projectile.GrenadeStats.IsGrenade;
+        bool selfDestructs = projectile.SelfDestructStats.SelfDestructs;
+        if(distance > range)
+            endPosition = startPosition + (direction.normalized * range);
+        else if(distance < range && !isGrenade && !selfDestructs)
+            endPosition = startPosition + (direction.normalized * range);
+        startPosition += direction.normalized * radius;
+        GameObject go = GameObject.Instantiate(prefab, startPosition, targetRotation, GameManager.GetUnitsFolder());
+        //go.GetComponent<Projectile>().Agent.Agent.SetDestination(endPosition);
+        go.GetComponent<Projectile>().TargetLocation = endPosition;
+        go.GetComponent<Projectile>().Unit = unit;
+    }
+
     //This code was found from https://answers.unity.com/questions/566519/camerascreentoworldpoint-in-perspective.html
     //It finds the position in the game space relative to where the cursor is on the screen.
     public static Vector3 getPosition(bool isFlying) {

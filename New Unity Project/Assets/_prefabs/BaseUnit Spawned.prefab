@@ -1207,6 +1207,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 7
+    rotationSpeed: 120
     healthBar: {fileID: 3543785169402312273}
     detectionObject: {fileID: 8304181129418167361}
     visionObject: {fileID: 4698014183429173447}
@@ -1216,6 +1217,10 @@ MonoBehaviour:
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
+    aoeStats:
+      areaOfEffect: 0
+      explosionEffect: {fileID: 0}
+      explosionRadius: 0
   hitTargets: []
 --- !u!54 &6825281274548537870
 Rigidbody:

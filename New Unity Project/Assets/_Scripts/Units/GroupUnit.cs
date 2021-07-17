@@ -11,10 +11,12 @@ public class GroupUnit : MonoBehaviour, IDamageable
     private BaseStats stats;
 
     private Actor3D agent;
+    private Actor2D unitSprite;
     private GameObject target;
     private int inRange;
     private List<GameObject> hitTargets;
     private bool isHoveringAbility;
+    private bool isCastingAbility;
     private Image abilityIndicator;
     private int indicatorNum;
     //Right now I need these so it has the interface. I need the interface because other parts of the code retrieve values by looknig for the interface component.
@@ -30,6 +32,12 @@ public class GroupUnit : MonoBehaviour, IDamageable
     {
         get { return agent; }
         //set { agent = value; }
+    }
+
+    public Actor2D UnitSprite
+    {
+        get { return unitSprite; }
+        //set { unitSprite = value; }
     }
 
     public GameObject Target
@@ -54,6 +62,12 @@ public class GroupUnit : MonoBehaviour, IDamageable
     {
         get { return isHoveringAbility; }
         set { isHoveringAbility = value; }
+    }
+
+    public bool IsCastingAbility
+    {
+        get { return isCastingAbility; }
+        set { isCastingAbility = value; }
     }
 
     public Image AbilityIndicator

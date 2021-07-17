@@ -28,6 +28,7 @@ public class Unit : MonoBehaviour, IDamageable
     private List<GameObject> hitTargets;
 
     private bool isHoveringAbility;
+    private bool isCastingAbility;
 
     public Actor3D Agent
     {
@@ -81,38 +82,28 @@ public class Unit : MonoBehaviour, IDamageable
         get { return isHoveringAbility; }
         set { isHoveringAbility = value; }
     }
+    
+    public bool IsCastingAbility
+    {
+        get { return isCastingAbility; }
+        set { isCastingAbility = value; }
+    }
 
     private void Start()
     {
+        agent.Agent.stoppingDistance = 0; //Set to be zero, incase someone forgets or accidently changes this value to be a big number
         isHoveringAbility = false;
         indicatorNum = 0;
         abilityIndicator.enabled = false;
         abilityIndicator.rectTransform.sizeDelta = new Vector2(2*agent.HitBox.radius + 1, 2*agent.HitBox.radius + 1); 
         // + 1 is better for the knob UI, if we get our own UI image, we may want to remove it
-
-        /* This is probably not needed, and is actually not good
-        List<GameObject> towers = GameManager.Instance.TowerObjects;
-        towers = GameManager.GetAllEnemies(transform.GetChild(0).position, towers, gameObject.tag); //sending in only towers
-        target = GameFunctions.GetNearestTarget(towers, gameObject.tag, stats);
-        */
     }
 
     private void Update()
     {
         if(stats.CurrHealth > 0) {
             agent.Agent.speed = stats.MoveSpeed;
-            //agent.Agent.stoppingDistance = stats.Range; //this may no longer be needed, and should be set to a small number for all units
-            /*if(target != null) {
-                Actor3D targetAgent = (target.GetComponent(typeof(IDamageable)).gameObject.GetComponent(typeof(IDamageable)) as IDamageable).Agent; // this is to get the targets agent... there must be a better way
-                //agent.Agent.stoppingDistance = agent.Agent.stoppingDistance + targetAgent.HitBox.radius;  -
-                /*
-                    This makes it so the target stops when its range reaches the edge of the targets collision, not its center.
-                    However, if the unit is chasing a target, no mater how slow the target is, currently the unit will never attack,
-                    which is why we may need to subtract 1 from this, BUT if we do that, in the animations we must set it so while
-                    a unit is in the attack animation, it does NOT move.
-                    Perhaps in the animation, we can set it so the attack will not stop unless the unit as left a certain distance away from the range, then we don't have to subtract 1
-            }
-            else {*/
+            if(target == null && !stats.FrozenStats.IsFrozen) { //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                 if(hitTargets.Count > 0) {
                     GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
                     if(go != null)
@@ -128,7 +119,7 @@ public class Unit : MonoBehaviour, IDamageable
                     towers = GameManager.GetAllEnemies(transform.GetChild(0).position, towers, gameObject.tag); //sending in only towers
                     target = GameFunctions.GetNearestTarget(towers, gameObject.tag, stats);
                 }
-            //}
+            }
             stats.UpdateStats(inRange, agent, hitTargets, target);
             Attack();
             if(target != null) {
@@ -157,20 +148,23 @@ public class Unit : MonoBehaviour, IDamageable
 
                 if(damageable) { //is the target damageable
                     if(hitTargets.Contains(target)) {  //this is needed for the rare occurance that a unit is 90% done with attack delay and the target leaves its range. It can still do its attack if its within vision given that its attack was already *90% thru
-                        if(inRange > 0) {
-                            GameFunctions.Attack(damageable, stats.BaseDamage);
+                        //if(inRange > 0) { removed because this prevented the above rare occurance from happening
+                            if(stats.AOEStats.AreaOfEffect)
+                                stats.AOEStats.Explode(gameObject, target);
+                            else
+                                GameFunctions.Attack(damageable, stats.BaseDamage);
                             stats.CurrAttackDelay = 0;
-                        }
+                        //}
 
                     }
                 }
             }
-        }
+        } /* I dont believe this is needed, nor should it be here
         else { //if target is null, it means there is no valid target within vision, so we will set its target to the closest tower
             List<GameObject> towers = GameManager.Instance.TowerObjects;
             towers = GameManager.GetAllEnemies(transform.GetChild(0).position, towers, gameObject.tag); //sending in only towers
             target = GameFunctions.GetNearestTarget(towers, gameObject.tag, stats);
-        }
+        }*/
     }
 
     public void OnTriggerEnter(Collider other) {
@@ -191,7 +185,7 @@ public class Unit : MonoBehaviour, IDamageable
                     if(other.tag == "Range") {//Are we in their range detection object?
                         if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) { //only if the unit can actually target this one should we adjust this value
                             (unit as IDamageable).InRange++;
-                            if((unit as IDamageable).InRange == 1 || (unit as IDamageable).Target == null) { //we need this block here as well as stay in the case that a unit is placed inside a units range
+                            if( ((unit as IDamageable).InRange == 1 || (unit as IDamageable).Target == null)  && !(unit as IDamageable).Stats.FrozenStats.IsFrozen) { //we need this block here as well as stay in the case that a unit is placed inside a units range
                                 GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
                                 if(go != null)
                                     (unit as IDamageable).Target = go;
@@ -249,7 +243,7 @@ public class Unit : MonoBehaviour, IDamageable
                 }
                 else if(other.tag == "Vision") { //Are we in their vision detection object?
                     if((unit as IDamageable).HitTargets.Count > 0) {
-                        if((unit as IDamageable).InRange == 0 || (unit as IDamageable).Target == null) {
+                        if( ((unit as IDamageable).InRange == 0 || (unit as IDamageable).Target == null) && !(unit as IDamageable).Stats.FrozenStats.IsFrozen) {
                             GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
                             if(go != null)
                                 (unit as IDamageable).Target = go;
@@ -272,7 +266,7 @@ public class Unit : MonoBehaviour, IDamageable
         Vector3 direction = targetPosition - agent.Agent.transform.position;
         direction.y = 0; // Ignore Y, usful for airborne units
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        agent.Agent.transform.rotation = Quaternion.RotateTowards(agent.Agent.transform.rotation, targetRotation, GameConstants.ROTATION_SPEED * Time.deltaTime); //the number is degrees/second, maybe differnt per unit
+        agent.Agent.transform.rotation = Quaternion.RotateTowards(agent.Agent.transform.rotation, targetRotation, stats.RotationSpeed * Time.deltaTime); //the number is degrees/second, maybe differnt per unit
     }
 
     void IDamageable.TakeDamage(float amount) {

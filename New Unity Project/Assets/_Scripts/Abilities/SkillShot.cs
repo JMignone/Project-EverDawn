@@ -31,7 +31,6 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField]
     private Canvas abilityPreviewCanvas;
 
-    [SerializeField]
     private List<GameObject> abilityPreviews;
 
     [SerializeField]
@@ -124,12 +123,18 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     void Start()
     {
+        abilityPreviews = new List<GameObject>();
         createAbilityPreviews();
         currentDelay = 0;
         isFiring = false;
         AbilityUI.CardCanvasDim = GameFunctions.GetCanvas().GetChild(0).GetComponent<RectTransform>();
     }
 
+
+    /*
+        At the moment, a boomerang that selfdestructs and lingers at the end does not have the preview that id like (the linger circle around the unit wont be there,
+        as the selfdestruct location takes precidence). But this kind of projectile is probably unlikely to happen anyway
+    */
     private void Update() {
         abilityUI.UpdateStats();
         if(playerInfo.OnDragging && abilityPreviews[0].GetComponent<Image>().enabled == true) {
@@ -142,15 +147,28 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             position.y++;
             foreach(GameObject preview in abilityPreviews) {
                 if(preview.GetComponent<SphereCollider>()) {
+                    Vector3 newPosition = position;
                     GameObject projectile = abilityPrefabs.Find(go => go.name == preview.name);
-                    float range = projectile.GetComponent<Projectile>().Range;
+                    Projectile proj = projectile.GetComponent<Projectile>();
+                    float range = proj.Range;
+                    float radius = proj.Radius;
+                    bool previewCircleAtEnd = !proj.GrenadeStats.IsGrenade && !proj.SelfDestructStats.SelfDestructs && 
+                                              (proj.LingeringStats.Lingering && proj.LingeringStats.LingerAtEnd);
+                                              //if its not a grenade, doesnt selfdestruct, and lingers at the end its true
+
+                    bool previewCircleAtBeginning = previewCircleAtEnd && proj.BoomerangStats.IsBoomerang;
+
                     float distance = Vector3.Distance(position, abilityPreviewCanvas.transform.position);
-                    if(distance > range) {
+                    if(previewCircleAtEnd && !previewCircleAtBeginning)
+                        newPosition = abilityPreviewCanvas.transform.position + (direction.normalized * (range - radius) * -1); //locks the circle at the furthest position
+                    else if(previewCircleAtBeginning)
+                        newPosition = abilityPreviewCanvas.transform.position;
+                    else if(distance > range - radius) {
                         Vector3 distFromRadius = position - abilityPreviewCanvas.transform.position;
-                        distFromRadius *= range/distance;
-                        position = abilityPreviewCanvas.transform.position + distFromRadius;
+                        distFromRadius *= (range - radius)/distance;
+                        newPosition = abilityPreviewCanvas.transform.position + distFromRadius;
                     }
-                    preview.GetComponent<RectTransform>().position = position;
+                    preview.GetComponent<RectTransform>().position = newPosition;
                 }       
             }
         }
@@ -166,9 +184,10 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             isFiring = false;
             currentProjectileIndex = 0;
             currentDelay = 0;
+            unit.IsCastingAbility = false;
         }
         else { //if we completed a delay
-            abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>().Fire(fireStartPosition, fireMousePosition, fireDirection);
+            GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], fireStartPosition, fireMousePosition, fireDirection, unit);
             currentDelay = 0;
             currentProjectileIndex++;
         }
@@ -221,9 +240,11 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             if(abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y) {
                 fireStartPosition = abilityPreviewCanvas.transform.position;
                 fireMousePosition = GameFunctions.getPosition(false);
-                fireMousePosition.y = 5.1f; //
-                fireDirection = fireStartPosition - fireMousePosition;
+                fireStartPosition.y = 0;
+                fireMousePosition.y = 0;
+                fireDirection = fireMousePosition - fireStartPosition;
                 isFiring = true;
+                unit.IsCastingAbility = true;
                 abilityUI.resetAbility();
             }
         }
@@ -233,21 +254,23 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         List<GameObject> uniqueProjectiles = new List<GameObject>();
 
-        foreach(GameObject projectile in abilityPrefabs) {
-            if(!uniqueProjectiles.Contains(projectile)) {
-                if(!projectile.GetComponent<Projectile>().IsGrenade) {
-                    uniqueProjectiles.Add(projectile);
+        foreach(GameObject goProj in abilityPrefabs) {
+            if(!uniqueProjectiles.Contains(goProj)) {
+                Projectile projectile = goProj.GetComponent<Projectile>();
+                if(!projectile.GrenadeStats.IsGrenade) {
+                    uniqueProjectiles.Add(goProj);
+
 
                     GameObject go = new GameObject(); //Create the GameObject
-                    go.name = projectile.name;
+                    go.name = goProj.name;
 
                     Image previewImage = go.AddComponent<Image>(); //Add the Image Component script
                     previewImage.color = new Color32(255,255,255,100);
                     previewImage.sprite = abilityPreviewLine; //Set the Sprite of the Image Component on the new GameObject
                     previewImage.enabled = false;
 
-                    float range = projectile.GetComponent<Projectile>().Range;
-                    float width = projectile.GetComponent<Projectile>().Radius * 2;
+                    float range = projectile.Range;
+                    float width = projectile.Radius * 2;
 
                     BoxCollider previewHitBox = go.AddComponent<BoxCollider>();
                     previewHitBox.size = new Vector3(width, range, 1);
@@ -268,16 +291,23 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                     abilityPreviews.Add(go);
                 }
 
-                if(projectile.GetComponent<Projectile>().SelfDestructs || projectile.GetComponent<Projectile>().IsGrenade) { //we must also add the blow up range
+                if(projectile.SelfDestructStats.SelfDestructs || projectile.GrenadeStats.IsGrenade || 
+                  (projectile.LingeringStats.Lingering && projectile.LingeringStats.LingerAtEnd)) { //we must also add the blow up range
                     GameObject goBoom = new GameObject(); //Create the GameObject
-                    goBoom.name = projectile.name;
+                    goBoom.name = goProj.name;
 
                     Image previewImageBoom = goBoom.AddComponent<Image>(); //Add the Image Component script
                     previewImageBoom.GetComponent<Image>().color = new Color32(255,255,255,100);
                     previewImageBoom.sprite = abilityPreviewBomb; //Set the Sprite of the Image Component on the new GameObject
                     previewImageBoom.enabled = false;
 
-                    float radius = projectile.GetComponent<Projectile>().ExplosionRadius;
+                    float radius;
+                    if(projectile.SelfDestructStats.SelfDestructs)
+                        radius = projectile.SelfDestructStats.ExplosionRadius;
+                    else if(projectile.GrenadeStats.IsGrenade)
+                        radius = projectile.GrenadeStats.ExplosionRadius;
+                    else
+                        radius = projectile.LingeringStats.LingeringRadius;
 
                     SphereCollider previewHitBoxBoom = goBoom.AddComponent<SphereCollider>();
                     previewHitBoxBoom.radius = radius;

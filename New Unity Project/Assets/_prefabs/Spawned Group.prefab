@@ -2325,6 +2325,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 7
+    rotationSpeed: 120
     healthBar: {fileID: 5622258786078970682}
     detectionObject: {fileID: 870931936664826154}
     visionObject: {fileID: 4475162151694177708}
@@ -2334,6 +2335,12 @@ MonoBehaviour:
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
+    aoeStats:
+      areaOfEffect: 0
+      explosionEffect: {fileID: 0}
+      explosionRadius: 0
+    frozenStats:
+      damageableComponent: {fileID: 0}
   hitTargets: []
 --- !u!54 &2418448866591158117
 Rigidbody:
@@ -3223,6 +3230,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 7
+    rotationSpeed: 120
     healthBar: {fileID: 4489671065649466500}
     detectionObject: {fileID: 4489671067256449205}
     visionObject: {fileID: 4489671067601574622}
@@ -3232,6 +3240,12 @@ MonoBehaviour:
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
+    aoeStats:
+      areaOfEffect: 0
+      explosionEffect: {fileID: 0}
+      explosionRadius: 0
+    frozenStats:
+      damageableComponent: {fileID: 0}
   hitTargets: []
 --- !u!54 &4489671065623934148
 Rigidbody:
@@ -4958,6 +4972,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 7
+    rotationSpeed: 120
     healthBar: {fileID: 4489671065978627439}
     detectionObject: {fileID: 4489671066232511034}
     visionObject: {fileID: 4489671066204701867}
@@ -4967,6 +4982,12 @@ MonoBehaviour:
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
+    aoeStats:
+      areaOfEffect: 0
+      explosionEffect: {fileID: 0}
+      explosionRadius: 0
+    frozenStats:
+      damageableComponent: {fileID: 0}
   hitTargets: []
 --- !u!54 &4489671065756337581
 Rigidbody:
@@ -5726,6 +5747,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 7
+    rotationSpeed: 120
     healthBar: {fileID: 4489671067201627272}
     detectionObject: {fileID: 4489671067102217219}
     visionObject: {fileID: 4489671067359352700}
@@ -5735,6 +5757,12 @@ MonoBehaviour:
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
+    aoeStats:
+      areaOfEffect: 0
+      explosionEffect: {fileID: 0}
+      explosionRadius: 0
+    frozenStats:
+      damageableComponent: {fileID: 0}
   hitTargets: []
 --- !u!54 &4489671065803115546
 Rigidbody:
@@ -6191,6 +6219,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 7
+    rotationSpeed: 120
     healthBar: {fileID: 4489671067303787707}
     detectionObject: {fileID: 4489671066967646346}
     visionObject: {fileID: 4489671065875963720}
@@ -6200,6 +6229,12 @@ MonoBehaviour:
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
+    aoeStats:
+      areaOfEffect: 0
+      explosionEffect: {fileID: 0}
+      explosionRadius: 0
+    frozenStats:
+      damageableComponent: {fileID: 0}
   hitTargets: []
 --- !u!54 &4489671065841678828
 Rigidbody:
@@ -10451,6 +10486,7 @@ MonoBehaviour:
     attackDelay: 0
     currAttackDelay: 0
     moveSpeed: 0
+    rotationSpeed: 0
     healthBar: {fileID: 0}
     detectionObject: {fileID: 0}
     visionObject: {fileID: 0}
@@ -10460,6 +10496,12 @@ MonoBehaviour:
     unitGrouping: 1
     attackPriority: 0
     unitRange: 0
+    aoeStats:
+      areaOfEffect: 0
+      explosionEffect: {fileID: 0}
+      explosionRadius: 0
+    frozenStats:
+      damageableComponent: {fileID: 0}
 --- !u!1 &4489671066157551708
 GameObject:
   m_ObjectHideFlags: 0
@@ -12061,6 +12103,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 7
+    rotationSpeed: 120
     healthBar: {fileID: 4489671067657225785}
     detectionObject: {fileID: 4489671066845460561}
     visionObject: {fileID: 4489671066709608801}
@@ -12070,6 +12113,12 @@ MonoBehaviour:
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
+    aoeStats:
+      areaOfEffect: 0
+      explosionEffect: {fileID: 0}
+      explosionRadius: 0
+    frozenStats:
+      damageableComponent: {fileID: 0}
   hitTargets: []
 --- !u!54 &4489671066267809237
 Rigidbody:
@@ -16384,6 +16433,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 7
+    rotationSpeed: 120
     healthBar: {fileID: 4489671066631235070}
     detectionObject: {fileID: 4489671065924366034}
     visionObject: {fileID: 4489671066883336212}
@@ -16393,6 +16443,12 @@ MonoBehaviour:
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
+    aoeStats:
+      areaOfEffect: 0
+      explosionEffect: {fileID: 0}
+      explosionRadius: 0
+    frozenStats:
+      damageableComponent: {fileID: 0}
   hitTargets: []
 --- !u!54 &4489671066593494593
 Rigidbody:
@@ -17719,6 +17775,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 7
+    rotationSpeed: 120
     healthBar: {fileID: 4489671066889881896}
     detectionObject: {fileID: 4489671066964217657}
     visionObject: {fileID: 4489671067094608328}
@@ -17728,6 +17785,12 @@ MonoBehaviour:
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
+    aoeStats:
+      areaOfEffect: 0
+      explosionEffect: {fileID: 0}
+      explosionRadius: 0
+    frozenStats:
+      damageableComponent: {fileID: 0}
   hitTargets: []
 --- !u!54 &4489671066702715478
 Rigidbody:
@@ -18120,6 +18183,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 7
+    rotationSpeed: 120
     healthBar: {fileID: 4489671067677268712}
     detectionObject: {fileID: 4489671065723067194}
     visionObject: {fileID: 4489671066552150738}
@@ -18129,6 +18193,12 @@ MonoBehaviour:
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
+    aoeStats:
+      areaOfEffect: 0
+      explosionEffect: {fileID: 0}
+      explosionRadius: 0
+    frozenStats:
+      damageableComponent: {fileID: 0}
   hitTargets: []
 --- !u!54 &4489671066735133983
 Rigidbody:
@@ -19300,6 +19370,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 7
+    rotationSpeed: 120
     healthBar: {fileID: 4489671067532645397}
     detectionObject: {fileID: 4489671065714986912}
     visionObject: {fileID: 4489671067446610601}
@@ -19309,6 +19380,12 @@ MonoBehaviour:
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
+    aoeStats:
+      areaOfEffect: 0
+      explosionEffect: {fileID: 0}
+      explosionRadius: 0
+    frozenStats:
+      damageableComponent: {fileID: 0}
   hitTargets: []
 --- !u!54 &4489671066807926417
 Rigidbody:
@@ -19477,6 +19554,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 7
+    rotationSpeed: 120
     healthBar: {fileID: 4489671066061806611}
     detectionObject: {fileID: 4489671067356271442}
     visionObject: {fileID: 4489671065707903898}
@@ -19486,6 +19564,12 @@ MonoBehaviour:
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
+    aoeStats:
+      areaOfEffect: 0
+      explosionEffect: {fileID: 0}
+      explosionRadius: 0
+    frozenStats:
+      damageableComponent: {fileID: 0}
   hitTargets: []
 --- !u!54 &4489671066835727425
 Rigidbody:
@@ -22399,6 +22483,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 7
+    rotationSpeed: 120
     healthBar: {fileID: 4489671066978676774}
     detectionObject: {fileID: 4489671067449580316}
     visionObject: {fileID: 4489671067296790136}
@@ -22408,6 +22493,12 @@ MonoBehaviour:
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
+    aoeStats:
+      areaOfEffect: 0
+      explosionEffect: {fileID: 0}
+      explosionRadius: 0
+    frozenStats:
+      damageableComponent: {fileID: 0}
   hitTargets: []
 --- !u!54 &4489671067000586478
 Rigidbody:
@@ -28868,6 +28959,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 7
+    rotationSpeed: 120
     healthBar: {fileID: 4489671065679376148}
     detectionObject: {fileID: 4489671067433334794}
     visionObject: {fileID: 4489671067180521833}
@@ -28877,6 +28969,12 @@ MonoBehaviour:
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
+    aoeStats:
+      areaOfEffect: 0
+      explosionEffect: {fileID: 0}
+      explosionRadius: 0
+    frozenStats:
+      damageableComponent: {fileID: 0}
   hitTargets: []
 --- !u!54 &4489671067461063342
 Rigidbody:
@@ -29793,6 +29891,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 7
+    rotationSpeed: 120
     healthBar: {fileID: 4489671066620169983}
     detectionObject: {fileID: 4489671065636763356}
     visionObject: {fileID: 4489671066966572400}
@@ -29802,6 +29901,12 @@ MonoBehaviour:
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
+    aoeStats:
+      areaOfEffect: 0
+      explosionEffect: {fileID: 0}
+      explosionRadius: 0
+    frozenStats:
+      damageableComponent: {fileID: 0}
   hitTargets: []
 --- !u!54 &4489671067536259775
 Rigidbody:
@@ -32602,6 +32707,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 7
+    rotationSpeed: 120
     healthBar: {fileID: 4489671066987208668}
     detectionObject: {fileID: 4489671065880224173}
     visionObject: {fileID: 4489671066714865097}
@@ -32611,6 +32717,12 @@ MonoBehaviour:
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
+    aoeStats:
+      areaOfEffect: 0
+      explosionEffect: {fileID: 0}
+      explosionRadius: 0
+    frozenStats:
+      damageableComponent: {fileID: 0}
   hitTargets: []
 --- !u!54 &4489671067695297467
 Rigidbody:

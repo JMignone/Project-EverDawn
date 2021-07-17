@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-//using System;
+
 public class Tower : MonoBehaviour, IDamageable
 {
     [SerializeField]
     protected Actor3D agent;
 
-    
-
+    [SerializeField]
+    private Actor2D unitSprite;
 
     [SerializeField]
     protected Image abilityIndicator;
@@ -31,6 +31,7 @@ public class Tower : MonoBehaviour, IDamageable
     protected bool leftTower;
 
     protected bool isHoveringAbility;
+    private bool isCastingAbility;
 
     public Actor3D Agent
     {
@@ -38,8 +39,11 @@ public class Tower : MonoBehaviour, IDamageable
         //set { agent = value; }
     }
 
-
-
+    public Actor2D UnitSprite
+    {
+        get { return unitSprite; }
+        //set { unitSprite = value; }
+    }
 
     public Image AbilityIndicator
     {
@@ -86,8 +90,17 @@ public class Tower : MonoBehaviour, IDamageable
         set { isHoveringAbility = value; }
     }
 
+    public bool IsCastingAbility
+    {
+        get { return isCastingAbility; }
+        set { isCastingAbility = value; }
+    }
+
     protected void Start()
     {
+        stats.HealthBar.enabled = false;
+        stats.HealthBar.transform.GetChild(0).gameObject.SetActive(false);
+
         isHoveringAbility = false;
         abilityIndicator.enabled = false;
         abilityIndicator.rectTransform.sizeDelta = new Vector2(2*agent.HitBox.radius + 1, 2*agent.HitBox.radius + 1); 
@@ -100,10 +113,12 @@ public class Tower : MonoBehaviour, IDamageable
             stats.UpdateStats(inRange, agent, hitTargets, target);
             Attack();
 
-            if((inRange > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) && target != null) //is in range, OR is 90% thru attack cycle -
-                lookAtTarget();
-            else 
-                resetToCenter();
+            if(!stats.FrozenStats.IsFrozen) { //if its frozen, we want to keep the tower looking in the same direction
+                if((inRange > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) && target != null) //is in range, OR is 90% thru attack cycle -
+                    lookAtTarget();
+                else 
+                    resetToCenter();
+            }
         }
         else {
             print(gameObject.name + "has died!");
@@ -201,7 +216,7 @@ public class Tower : MonoBehaviour, IDamageable
                 }
                 else if(other.tag == "Vision") { //Are we in their vision detection object?
                     if((unit as IDamageable).HitTargets.Count > 0) {
-                        if((unit as IDamageable).InRange == 0 || (unit as IDamageable).Target == null) {
+                        if( ((unit as IDamageable).InRange == 0 || (unit as IDamageable).Target == null) && !(unit as IDamageable).Stats.FrozenStats.IsFrozen) {
                             GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats); //
                             if(go != null)
                                 (unit as IDamageable).Target = go;
@@ -219,7 +234,7 @@ public class Tower : MonoBehaviour, IDamageable
         Quaternion targetRotation = Quaternion.LookRotation(direction);
 
         // encase somthing here such that the base of the turret does not rotate
-        agent.Agent.transform.rotation = Quaternion.RotateTowards(agent.Agent.transform.rotation, targetRotation, GameConstants.ROTATION_SPEED * Time.deltaTime); //the number is degrees/second, maybe differnt per unit
+        agent.Agent.transform.rotation = Quaternion.RotateTowards(agent.Agent.transform.rotation, targetRotation, stats.RotationSpeed * Time.deltaTime); //the number is degrees/second, maybe differnt per unit
          //
     }
 
@@ -228,7 +243,7 @@ public class Tower : MonoBehaviour, IDamageable
         targetPosition.z = 0;
         Vector3 direction = targetPosition - agent.Agent.transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        agent.Agent.transform.rotation = Quaternion.RotateTowards(agent.Agent.transform.rotation, targetRotation, GameConstants.ROTATION_SPEED * Time.deltaTime);
+        agent.Agent.transform.rotation = Quaternion.RotateTowards(agent.Agent.transform.rotation, targetRotation, stats.RotationSpeed * Time.deltaTime);
     }
 
     void IDamageable.TakeDamage(float amount) {

@@ -23,6 +23,8 @@ public class BaseStats
     [SerializeField]
     private float moveSpeed;
     [SerializeField]
+    private float rotationSpeed;
+    [SerializeField]
     private Image healthBar;
     [SerializeField]
     private SphereCollider detectionObject;
@@ -40,6 +42,10 @@ public class BaseStats
     private GameConstants.ATTACK_PRIORITY attackPriority;
     [SerializeField]
     private GameConstants.UNIT_RANGE unitRange;
+    [SerializeField]
+    private UAOEStats aoeStats;
+    [SerializeField]
+    private FrozenStats frozenStats;
     
     public float PercentHealth {
         get { return currHealth/maxHealth; }
@@ -98,6 +104,12 @@ public class BaseStats
         set { moveSpeed = value; }
     }
 
+    public float RotationSpeed
+    {
+        get { return rotationSpeed; }
+        set { rotationSpeed = value; }
+    }
+
     public Image HealthBar
     {
         get { return healthBar; }
@@ -152,6 +164,16 @@ public class BaseStats
         //set { unitRange = value; }
     }
 
+    public UAOEStats AOEStats
+    {
+        get { return aoeStats; }
+    }
+
+    public FrozenStats FrozenStats 
+    {
+        get { return frozenStats; }
+    }
+
     public void UpdateStats(int inRange, Actor3D unitAgent, List<GameObject> hitTargets, GameObject target) {
         if(PercentHealth == 1) {
             HealthBar.enabled = false;
@@ -163,6 +185,8 @@ public class BaseStats
         }
         HealthBar.fillAmount = PercentHealth;
 
+        frozenStats.UpdateFrozenStats();
+
         detectionObject.radius = range;
         visionObject.radius = visionRange;
 
@@ -170,7 +194,7 @@ public class BaseStats
         if(target != null)
             inVision = hitTargets.Contains(target);       
         
-        if(inRange > 0 || (currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && inVision)) { //if target is inRange, or the attack is nearly ready and their within vision
+        if( ( inRange > 0 || (currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && inVision) ) && !frozenStats.IsFrozen ) { //if target is inRange, or the attack is nearly ready and their within vision AND not frozen
             
             if(target != null) {
                 Vector3 directionToTarget = unitAgent.transform.position - target.transform.GetChild(0).position;
@@ -214,8 +238,12 @@ public class BaseStats
         HealthBar.fillAmount = PercentHealth;
         currHealth -= .05f*maxHealth * Time.deltaTime ; // lowers hp by 5% of maxHp every second ?? should this line be at the top ??
 
-        if(currAttackDelay < attackDelay) 
-            currAttackDelay += Time.deltaTime;
+        frozenStats.UpdateFrozenStats();
+
+        if(currAttackDelay < attackDelay ) {
+            if(!frozenStats.IsFrozen)
+                currAttackDelay += Time.deltaTime;
+        }
         else
             currAttackDelay = 0;
     }

@@ -14,6 +14,11 @@ public class Actor2D : MonoBehaviour
     [SerializeField]
     bool isFlying;
 
+    public Animator Animator
+    {
+        get { return anim; }
+    }
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -30,6 +35,7 @@ public class Actor2D : MonoBehaviour
                 Component damageable = followTarget.transform.parent.GetComponent(typeof(IDamageable));
                 Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
 
+                anim.SetBool("IsCasting", (unit as IDamageable).IsCastingAbility);
                 anim.SetBool("IsAttacking", (unit as IDamageable).InRange > 0 || ((unit as IDamageable).Stats.CurrAttackDelay/(unit as IDamageable).Stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && (unit as IDamageable).HitTargets.Contains((unit as IDamageable).Target)) ? true : false); //is in range, OR (is nearly done with attack and within vision)?
                 
                 //anim.SetBool("IsReady", ((unit as IDamageable).Stats.CurrAttackDelay/(unit as IDamageable).Stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && (unit as IDamageable).HitTargets.Contains((unit as IDamageable).Target)) ? true : false); //is nearly done with attack and within vision?
