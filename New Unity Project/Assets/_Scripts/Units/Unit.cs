@@ -27,6 +27,9 @@ public class Unit : MonoBehaviour, IDamageable
     [SerializeField]
     private List<GameObject> hitTargets;
 
+    [SerializeField]
+    private List<GameObject> inRangeTargets;
+
     private bool isHoveringAbility;
     private bool isCastingAbility;
 
@@ -77,6 +80,12 @@ public class Unit : MonoBehaviour, IDamageable
         //set { hitTargets = value; }
     }
 
+    public List<GameObject> InRangeTargets
+    {
+        get { return inRangeTargets; }
+        //set { hitTargets = value; }
+    }
+
     public bool IsHoveringAbility
     {
         get { return isHoveringAbility; }
@@ -92,6 +101,9 @@ public class Unit : MonoBehaviour, IDamageable
     private void Start()
     {
         agent.Agent.stoppingDistance = 0; //Set to be zero, incase someone forgets or accidently changes this value to be a big number
+
+        stats.FrozenStats.StartFrozenStats(gameObject);
+
         isHoveringAbility = false;
         indicatorNum = 0;
         abilityIndicator.enabled = false;
@@ -123,7 +135,8 @@ public class Unit : MonoBehaviour, IDamageable
             stats.UpdateStats(inRange, agent, hitTargets, target);
             Attack();
             if(target != null) {
-                agent.Agent.SetDestination(target.transform.GetChild(0).position);
+                Vector3 direction = target.transform.GetChild(0).position - agent.transform.position;
+                agent.Agent.SetDestination(target.transform.GetChild(0).position - (direction.normalized * .25f));
                 if(hitTargets.Contains(target)) {
                     if(inRange > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) { //is in range, OR is 90% thru attack cycle -
                         lookAtTarget();
@@ -133,6 +146,10 @@ public class Unit : MonoBehaviour, IDamageable
             }
             else
                 agent.Agent.SetDestination(agent.transform.position); //have the agent target itself, meaning don't move as there is no target
+
+            if(stats.FrozenStats.IsFrozen){
+                //getAbilityObjects();
+            }
         }
         else {
             print(gameObject.name + " has died!");
@@ -169,7 +186,7 @@ public class Unit : MonoBehaviour, IDamageable
 
     public void OnTriggerEnter(Collider other) {
         if(!other.transform.parent.parent.CompareTag(gameObject.tag)) { //checks to make sure the target isnt on the same team
-            if(other.tag == "SkillShot") { //Did we get hit by a skill shot?
+            if(other.tag == "Projectile") { //Did we get hit by a skill shot?
                 Projectile projectile = other.transform.parent.parent.GetComponent<Projectile>();
                 Component unit = this.GetComponent(typeof(IDamageable));
                 projectile.hit(unit);
@@ -185,6 +202,8 @@ public class Unit : MonoBehaviour, IDamageable
                     if(other.tag == "Range") {//Are we in their range detection object?
                         if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) { //only if the unit can actually target this one should we adjust this value
                             (unit as IDamageable).InRange++;
+                            if(!(unit as IDamageable).InRangeTargets.Contains(gameObject))
+                                (unit as IDamageable).InRangeTargets.Add(gameObject);
                             if( ((unit as IDamageable).InRange == 1 || (unit as IDamageable).Target == null)  && !(unit as IDamageable).Stats.FrozenStats.IsFrozen) { //we need this block here as well as stay in the case that a unit is placed inside a units range
                                 GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
                                 if(go != null)
@@ -203,8 +222,8 @@ public class Unit : MonoBehaviour, IDamageable
 
     public void OnTriggerExit(Collider other) {
         if(!other.transform.parent.parent.CompareTag(gameObject.tag)) { //checks to make sure the target isnt on the same team
-            if(other.tag == "SkillShot") { //Did we get hit by a skill shot?
-                //print("SKILLSHOT");
+            if(other.tag == "Projectile") { //Did we get hit by a skill shot?
+                //print("Projectile");
             }
             else if(other.tag == "AbilityHighlight") { //Our we getting previewed for an abililty?
                 indicatorNum--;
@@ -218,6 +237,8 @@ public class Unit : MonoBehaviour, IDamageable
                     if(other.tag == "Range") { //Are we in their Range detection object?
                         if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
                             (unit as IDamageable).InRange--;
+                            if((unit as IDamageable).InRangeTargets.Contains(gameObject))
+                                (unit as IDamageable).InRangeTargets.Remove(gameObject);
                             if((unit as IDamageable).Target == gameObject)
                                 (unit as IDamageable).Target = null;
                         }
@@ -260,8 +281,6 @@ public class Unit : MonoBehaviour, IDamageable
 
     void lookAtTarget() {
         var targetPosition = target.transform.GetChild(0).position;  //
-        //targetPosition.y = agent.Agent.transform.position.y;       //look at your target when your attacking !! This part was removed because it was not lifelike, 
-        //agent.Agent.transform.LookAt(targetPosition);              //the unit was ALWAYS in the right direction instantly. Below rotates the unit at a degrees/second speed
 
         Vector3 direction = targetPosition - agent.Agent.transform.position;
         direction.y = 0; // Ignore Y, usful for airborne units

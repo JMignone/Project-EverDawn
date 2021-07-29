@@ -16,7 +16,8 @@ public class PreviewActor2D : MonoBehaviour
 
     private void Awake()
     {
-        anim = GetComponent<Animator>();
+        if(anim != null)
+            anim = GetComponent<Animator>();
         if(agent != null) { //temporary so tower doesnt scream errors for lack of animation
             agent = followTarget.GetComponent<NavMeshAgent>();
         }

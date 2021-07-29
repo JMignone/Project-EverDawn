@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     private List<GameObject> towerObjects;
     [SerializeField]
     private List<PlayerStats> players;
+    [SerializeField]
+    private GameObject ground;
 
     public static GameManager Instance
     {
@@ -32,6 +34,11 @@ public class GameManager : MonoBehaviour
     {
         get { return players; }
         //set { players = value; }
+    }
+
+    public GameObject Ground
+    {
+        get { return ground; }
     }
 
     private void Awake()
@@ -57,13 +64,17 @@ public class GameManager : MonoBehaviour
                     (component as IDamageable).HitTargets.Remove(objectToRemove);    //remove it from their possible targets
                     if((component as IDamageable).Target == objectToRemove)          //if an object has this now dead unit as a target ...
                         (component as IDamageable).Target = null;                    //make target null
-                    if( Vector3.Distance(objectToRemovePosition, new Vector3(go.transform.GetChild(0).position.x, 0, go.transform.GetChild(0).position.z)) <= ((component as IDamageable).Stats.Range + objectToRemoveAgent.HitBox.radius) ) //If the unit that died is within range
+                    if((component as IDamageable).InRangeTargets.Contains(objectToRemove)) {
                         (component as IDamageable).InRange--;
+                        (component as IDamageable).InRangeTargets.Remove(objectToRemove); 
+                    }
                 }
             }
         }
-        if((objectToRemoveComponent as IDamageable).IsHoveringAbility)
+        if((objectToRemoveComponent as IDamageable).IsHoveringAbility) {
             removeAbililtyIndicators();
+            Instance.Players[0].OnDragging = false;
+        }
 
         Instance.Objects.Remove(objectToRemove);
         if(Instance.TowerObjects.Contains(objectToRemove))
@@ -122,27 +133,14 @@ public class GameManager : MonoBehaviour
 
 
     public static void AddObjectToList(GameObject objectToAdd){
-        /*Vector3 objectToAddPosition = objectToAdd.transform.GetChild(0).position;
-        Component objectToAddComponent = objectToAdd.GetComponent(typeof(IDamageable));
-
-        Actor3D objectToAddAgent = (objectToAddComponent as IDamageable).Agent;
-        float objectToAddAgentRadius = objectToAddAgent.HitBox.radius;
-
-        foreach (GameObject go in Instance.Objects) { //  The trigger exit doesnt get trigger if the object suddenly dies, so we need this do do it manually 
-            Component component = go.GetComponent(typeof(IDamageable));
-            if(component) {
-                if( Vector3.Distance(objectToAddPosition, go.transform.GetChild(0).position) <= ((component as IDamageable).Stats.VisionRange + objectToAddAgentRadius) ) //If the unit that is added is within vision
-                    (component as IDamageable).HitTargets.Add(objectToAdd); 
-                if( Vector3.Distance(objectToAddPosition, go.transform.GetChild(0).position) <= ((component as IDamageable).Stats.Range + objectToAddAgentRadius) )       //If the unit that is added is within range
-                    (component as IDamageable).InRange++;
-            }
-        }*/
         Component component = objectToAdd.GetComponent(typeof(IDamageable));
         if((component as IDamageable).Stats.UnitGrouping == GameConstants.UNIT_GROUPING.SOLO)
             Instance.Objects.Add(objectToAdd);
         else {
-            foreach(Transform go in objectToAdd.transform)
-                Instance.Objects.Add(go.gameObject);
+            foreach(Transform go in objectToAdd.transform){
+                if(go.name != "Agent")
+                    Instance.Objects.Add(go.gameObject);
+            }
         }
     }
 

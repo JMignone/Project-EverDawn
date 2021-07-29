@@ -15,6 +15,7 @@ public class GroupUnit : MonoBehaviour, IDamageable
     private GameObject target;
     private int inRange;
     private List<GameObject> hitTargets;
+    private List<GameObject> inRangeTargets;
     private bool isHoveringAbility;
     private bool isCastingAbility;
     private Image abilityIndicator;
@@ -55,7 +56,11 @@ public class GroupUnit : MonoBehaviour, IDamageable
     public List<GameObject> HitTargets
     {
         get { return hitTargets; }
-        //set { hitTargets = value; }
+    }
+
+    public List<GameObject> InRangeTargets
+    {
+        get { return inRangeTargets; }
     }
 
     public bool IsHoveringAbility
@@ -83,6 +88,7 @@ public class GroupUnit : MonoBehaviour, IDamageable
 
     private void Start() {
         isHoveringAbility = false;
+        indicatorNum = 0;
     }
 
     private void Update()

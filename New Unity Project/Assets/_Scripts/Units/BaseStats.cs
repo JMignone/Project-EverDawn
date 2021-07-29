@@ -11,6 +11,8 @@ public class BaseStats
     [SerializeField]
     private float maxHealth;
     [SerializeField]
+    private float healthDecay;
+    [SerializeField]
     private float range;
     [SerializeField]
     private float visionRange;
@@ -65,7 +67,12 @@ public class BaseStats
 
     public float MaxHealth {
         get { return maxHealth; }
-        //set { maxHealth = value; }
+        set { maxHealth = value; }
+    }
+
+    public float HealthDecay {
+        get { return healthDecay; }
+        //set { healthDecay = value; }
     }
 
     public float Range
@@ -184,6 +191,8 @@ public class BaseStats
             HealthBar.transform.GetChild(0).gameObject.SetActive(true);
         }
         HealthBar.fillAmount = PercentHealth;
+        if(healthDecay > 0)
+            currHealth -= healthDecay*maxHealth * Time.deltaTime ; // lowers hp by 5% of maxHp every second ?? should this line be at the top ??
 
         frozenStats.UpdateFrozenStats();
 
@@ -193,7 +202,8 @@ public class BaseStats
         bool inVision = false;
         if(target != null)
             inVision = hitTargets.Contains(target);       
-        
+        //if(inRange < 0)
+        //    inRange = 0;
         if( ( inRange > 0 || (currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && inVision) ) && !frozenStats.IsFrozen ) { //if target is inRange, or the attack is nearly ready and their within vision AND not frozen
             
             if(target != null) {
@@ -236,7 +246,7 @@ public class BaseStats
             HealthBar.transform.GetChild(0).gameObject.SetActive(true);
         }
         HealthBar.fillAmount = PercentHealth;
-        currHealth -= .05f*maxHealth * Time.deltaTime ; // lowers hp by 5% of maxHp every second ?? should this line be at the top ??
+        currHealth -= healthDecay*maxHealth * Time.deltaTime ; // lowers hp by 5% of maxHp every second ?? should this line be at the top ??
 
         frozenStats.UpdateFrozenStats();
 

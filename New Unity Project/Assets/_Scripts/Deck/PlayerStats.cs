@@ -13,6 +13,7 @@ public class PlayerStats : MonoBehaviour
     private int score;
     [SerializeField]
     private float currResource;
+    private float dueResource;
     [SerializeField]
     private Text textCurrResource;
     //[SerializeField]
@@ -59,6 +60,12 @@ public class PlayerStats : MonoBehaviour
     {
         get { return currResource; }
         set { currResource = value; }
+    }
+
+    public float DueResource
+    {
+        get { return dueResource; }
+        set { dueResource = value; }
     }
 
     public int GetCurrResource 
@@ -149,6 +156,7 @@ public class PlayerStats : MonoBehaviour
     private void Start()
     {
         playersDeck.Start();
+        dueResource = 0;
         //spawnZone = false;
     }
 

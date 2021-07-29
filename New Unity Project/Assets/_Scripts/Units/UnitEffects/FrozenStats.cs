@@ -6,10 +6,13 @@ using UnityEngine;
 public class FrozenStats
 {
     private bool isFrozen;
-    private float frozenDelay;
-    private float currentFrozenDelay;
 
     [SerializeField]
+    private float frozenDelay;
+
+    [SerializeField]
+    private float currentFrozenDelay;
+
     private Component damageableComponent;
 
     public bool IsFrozen
@@ -36,6 +39,12 @@ public class FrozenStats
         set { damageableComponent = value; }
     }
 
+    public void StartFrozenStats(GameObject go) {
+        damageableComponent = go.GetComponent(typeof(IDamageable));
+        frozenDelay = 0;
+        currentFrozenDelay = 0;
+    }
+
     public void UpdateFrozenStats() {
         if(isFrozen) {
             if(currentFrozenDelay < frozenDelay) 
@@ -45,7 +54,7 @@ public class FrozenStats
         }
     }
 
-    void Freeze(float time) {
+    public void Freeze(float time) {
         isFrozen = true;
         frozenDelay = time;
         currentFrozenDelay = 0;
@@ -54,7 +63,7 @@ public class FrozenStats
         (damageableComponent as IDamageable).Stats.CurrAttackDelay = 0;
     }
 
-    void unFreeze() {
+    public void unFreeze() {
         isFrozen = false;
         (damageableComponent as IDamageable).UnitSprite.Animator.enabled = true;
     }

@@ -9,6 +9,9 @@ public class UAOEStats
     private bool areaOfEffect;
 
     [SerializeField]
+    private bool unitCentered;
+
+    [SerializeField]
     private GameObject explosionEffect;
 
     [SerializeField]
@@ -17,6 +20,11 @@ public class UAOEStats
     public bool AreaOfEffect
     {
         get { return areaOfEffect; }
+    }
+
+    public bool UnitCentered
+    {
+        get { return unitCentered; }
     }
 
     public GameObject ExplosionEffect
@@ -31,7 +39,11 @@ public class UAOEStats
 
     public void Explode(GameObject go, GameObject target) {
         //Instantiate(explosionEffect, go.transform.position, go.transform.rotation);
-        Collider[] colliders = Physics.OverlapSphere(target.transform.GetChild(0).position, explosionRadius);
+        Collider[] colliders;
+        if(unitCentered)
+            colliders = Physics.OverlapSphere(go.transform.GetChild(0).position, explosionRadius);
+        else
+            colliders = Physics.OverlapSphere(target.transform.GetChild(0).position, explosionRadius);
         Component unit = go.gameObject.GetComponent(typeof(IDamageable));
         float damage = (unit as IDamageable).Stats.BaseDamage;
 

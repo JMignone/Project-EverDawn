@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour, IAbility
 {
     [SerializeField]
     private SphereCollider hitBox;
@@ -30,6 +30,9 @@ public class Projectile : MonoBehaviour
 
     [SerializeField]
     private AOEStats aoeStats;
+
+    [SerializeField]
+    private FreezeStats freezeStats;
 
     [SerializeField]
     private BoomerangStats boomerangStats;
@@ -93,6 +96,11 @@ public class Projectile : MonoBehaviour
     public AOEStats AOEStats
     {
         get { return aoeStats; }
+    }
+
+    public FreezeStats FreezeStats
+    {
+        get { return freezeStats; }
     }
 
     public BoomerangStats BoomerangStats
@@ -205,10 +213,12 @@ public class Projectile : MonoBehaviour
         if(WillHit(damageable)) {
             if(aoeStats.AreaOfEffect)
                 aoeStats.Explode(gameObject);
-            else
+            else {
                 GameFunctions.Attack(damageable, baseDamage);
+                applyAffects(damageable);
+            }
             if(!canPierce) {
-                if(selfDestructStats.SelfDestructs && !aoeStats.AreaOfEffect) //if the projectile is does not do AOE, but rather self destructs
+                if(selfDestructStats.SelfDestructs && !aoeStats.AreaOfEffect) //if the projectile does not do AOE, but rather self destructs
                     selfDestructStats.Explode(gameObject);
                 if(lingeringStats.Lingering && lingeringStats.LingerAtEnd) {
                     lingeringStats.CurrentlyLingering = true;
@@ -220,5 +230,10 @@ public class Projectile : MonoBehaviour
                     Destroy(gameObject);
             }
         }
+    }
+
+    public void applyAffects(Component damageable) {
+        if(freezeStats.CanFreeze)
+            (damageable as IDamageable).Stats.FrozenStats.Freeze(freezeStats.FreezeDuration);
     }
 }

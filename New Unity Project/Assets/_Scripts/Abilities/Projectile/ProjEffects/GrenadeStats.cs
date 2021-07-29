@@ -81,12 +81,15 @@ public class GrenadeStats
     public void Explode(GameObject go) {
         //Instantiate(explosionEffect, go.transform.position, go.transform.rotation);
         Collider[] colliders = Physics.OverlapSphere(go.transform.position, explosionRadius);
+        Projectile projectile = go.GetComponent<Projectile>();
 
         foreach(Collider collider in colliders) {
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                 Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-                if(go.GetComponent<Projectile>().WillHit(damageable))
+                if(projectile.WillHit(damageable)) {
                     GameFunctions.Attack(damageable, explosionDamage);
+                    projectile.applyAffects(damageable);
+                }
             }
         }
     }

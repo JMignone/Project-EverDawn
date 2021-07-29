@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public static class GameFunctions
 {
@@ -66,7 +68,7 @@ public static class GameFunctions
         return GameObject.Find(GameConstants.HUD_CANVAS).transform;
     }
 
-    public static void SpawnUnit(GameObject prefab, Transform parent, Vector3 position) 
+    public static GameObject SpawnUnit(GameObject prefab, Transform parent, Vector3 position) 
     {
         var targetPosition = position;
         targetPosition.z = 100; //What about the enemy player? Does this need to be -100?
@@ -76,6 +78,7 @@ public static class GameFunctions
 
         GameObject go = GameObject.Instantiate(prefab, position, targetRotation, parent);
         GameManager.AddObjectToList(go);
+        return go;
     }
 
     public static void FireProjectile(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, Unit unit) {
@@ -88,15 +91,37 @@ public static class GameFunctions
         float radius = projectile.Radius;
         bool isGrenade = projectile.GrenadeStats.IsGrenade;
         bool selfDestructs = projectile.SelfDestructStats.SelfDestructs;
-        if(distance > range)
+        if(distance > (range - radius))
             endPosition = startPosition + (direction.normalized * range);
         else if(distance < range && !isGrenade && !selfDestructs)
             endPosition = startPosition + (direction.normalized * range);
         startPosition += direction.normalized * radius;
         GameObject go = GameObject.Instantiate(prefab, startPosition, targetRotation, GameManager.GetUnitsFolder());
-        //go.GetComponent<Projectile>().Agent.Agent.SetDestination(endPosition);
         go.GetComponent<Projectile>().TargetLocation = endPosition;
         go.GetComponent<Projectile>().Unit = unit;
+    }
+
+    public static void FireCAL(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, Unit unit) {
+        Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
+        float distance = Vector3.Distance(startPosition, mousePosition);
+        Vector3 endPosition = mousePosition;
+        CreateAtLocation cal = prefab.GetComponent<CreateAtLocation>();
+
+        float range = cal.Range;
+        float radius = cal.Radius;
+        if(distance > (range - radius))
+            endPosition = startPosition + (direction.normalized * (range - radius));
+
+        if(prefab.GetComponent<CreateAtLocation>().SummonStats.IsSummon) { //if its a summon, check to see if its colliding with anything
+            //endPosition = GameFunctions.adjustForTowers(endPosition, prefab.GetComponent<CreateAtLocation>().Radius);
+
+            NavMeshHit hit;
+            if(NavMesh.SamplePosition(mousePosition, out hit, 6.1f, 9))
+                endPosition = hit.position;
+        }
+        GameObject go = GameObject.Instantiate(prefab, endPosition, targetRotation, GameManager.GetUnitsFolder());
+        go.GetComponent<CreateAtLocation>().TargetLocation = endPosition;
+        go.GetComponent<CreateAtLocation>().Unit = unit;
     }
 
     //This code was found from https://answers.unity.com/questions/566519/camerascreentoworldpoint-in-perspective.html
@@ -112,6 +137,57 @@ public static class GameFunctions
         float distance;
         xy.Raycast(ray, out distance);
         return ray.GetPoint(distance);
+    }
+
+    public static Vector3 adjustForTowers(Vector3 position, float radius) {
+        foreach(GameObject go in GameManager.Instance.TowerObjects) {
+            Component component = go.GetComponent(typeof(IDamageable));
+            float towerRadius = (component as IDamageable).Agent.HitBox.radius;
+            Vector3 towerPosition = go.transform.position;
+            
+            if(position.y < 1 &&    //If our position is currently inside a tower
+               position.x - radius < towerPosition.x + towerRadius &&
+               position.x + radius > towerPosition.x - towerRadius &&
+               position.z - radius  < towerPosition.z + towerRadius &&
+               position.z + radius  > towerPosition.z - towerRadius ) 
+                {
+                    float distFromLeft   = Math.Abs((position.x + radius) - towerPosition.x + towerRadius);
+                    float distFromRight  = Math.Abs((position.x - radius) - towerPosition.x - towerRadius);
+                    float distFromBottom = Math.Abs((position.z + radius) - towerPosition.z + towerRadius);
+                    float distFromTop    = Math.Abs((position.z - radius) - towerPosition.z - towerRadius);
+
+                    if( distFromLeft < distFromRight && distFromLeft < distFromBottom && distFromLeft < distFromTop) //If we are closest to the left side of the tower
+                        position = new Vector3(towerPosition.x - towerRadius - radius, position.y, position.z);
+                    else if( distFromRight < distFromLeft && distFromRight < distFromBottom && distFromRight < distFromTop)
+                        position = new Vector3(towerPosition.x + towerRadius + radius , position.y, position.z);
+                    else if( distFromBottom < distFromLeft && distFromBottom < distFromRight && distFromBottom < distFromTop)
+                        position = new Vector3(position.x, position.y, towerPosition.z - towerRadius - radius );
+                    else 
+                        position = new Vector3(position.x, position.y, towerPosition.z + towerRadius + radius );
+                    break;
+               }        
+        }
+        return position;
+    }
+
+    public static Vector3 adjustForBoundary(Vector3 position) {
+        Vector3 scale = GameManager.Instance.Ground.transform.localScale;
+
+        float right = scale.x * 5.0f;
+        float left = right * -1.0f;
+        float top = scale.z * 5.0f;
+        float bottom = top * -1.0f;
+
+        if(position.x < left)
+            position.x = left;
+        else if(position.x > right)
+            position.x = right;
+        if(position.z < bottom)
+            position.z = bottom;
+        else if(position.z > top)
+            position.z = top;
+        
+        return position;
     }
 
 }

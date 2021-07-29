@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
 public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
@@ -25,9 +26,15 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     private Text cost;
     [SerializeField]
     private bool canDrag;
+    private bool isDragging;
     private GameObject preview;
+    private NavMeshAgent previewAgent;
+    private int navMask; //determines what areas are sent into the function sample position
     private bool isFlying;
+    private float radius;
     private RectTransform cardCanvasDim;
+    private bool isBuffering;
+    private Vector3 bufferingPosition;
 
     public PlayerStats PlayerInfo
     {
@@ -95,15 +102,36 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         set { isFlying = value; }
     }
 
+    public float Radius
+    {
+        get { return radius; }
+        set { radius = value; }
+    }
+
     public RectTransform CardCanvasDim
     {
         get { return cardCanvasDim; }
         set { cardCanvasDim = value; }
     }
 
+    public bool IsBuffering
+    {
+        get { return isBuffering; }
+        set { isBuffering = value; }
+    }
+
+    public Vector3 BufferingPosition
+    {
+        get { return bufferingPosition; }
+        set { bufferingPosition = value; }
+    }
+
     private void Start() 
     {
         cardCanvasDim = GameFunctions.GetCanvas().GetChild(0).GetComponent<RectTransform>();
+
+        isBuffering = false;
+        isDragging = false;
     }
 
     private void Update()
@@ -115,17 +143,32 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         transparentIcon.sprite = cardInfo.Icon;
         transparentCardName.text = cardInfo.Name;
         transparentCost.text = cardInfo.Cost.ToString();
+
+        if(isBuffering && playerInfo.GetCurrResource >= cardInfo.Cost) { //if the player was buffering a card and now has enough resource
+            SpawnUnit(bufferingPosition);
+            isBuffering = false;
+            playerInfo.DueResource -= cardInfo.Cost;
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(!playerInfo.OnDragging) {
+        if(!playerInfo.OnDragging && !isDragging) {
             if(canDrag) {
-                playerInfo.OnDragging = true;
-                playerInfo.SpawnZone = true;
+                if(isBuffering) {
+                    isBuffering = false;
+                    playerInfo.DueResource -= cardInfo.Cost;
+                    Destroy(preview);
+                }
 
                 GameObject go = Instantiate(cardInfo.PreviewPrefab);
                 preview = go;
+                previewAgent = preview.transform.GetChild(0).GetComponent<NavMeshAgent>();
+                radius = previewAgent.radius;
+
+                isDragging = true;
+                playerInfo.OnDragging = true;
+                playerInfo.SpawnZone = true;
 
                 preview.SetActive(false);
 
@@ -136,13 +179,22 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 else
                     IsFlying = false;
 
+                navMask = 9;
+                if((unit as IDamageable).Stats.UnitType == GameConstants.UNIT_TYPE.STRUCTURE) {
+                    if(previewAgent.agentTypeID == 287145453) //the agent type id for big building
+                        navMask = 32;
+                    else
+                        navMask = 16;
+                }
+
+
             }
         }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if(playerInfo.OnDragging) {
+        if(playerInfo.OnDragging && !isBuffering && isDragging) {
             transform.GetChild(3).position = Input.mousePosition;
 
             float scale = (cardCanvasDim.rect.height - Input.mousePosition.y)/(cardCanvasDim.rect.height - transform.position.y); 
@@ -152,65 +204,59 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 scale = 0;
             transform.GetChild(3).localScale = new Vector3(scale, scale, 1);
 
-            /* 
-                The function SamplePosition takes in a point, and it will swarch for the closest point on the navmesh to it.
-                For a preview unit, this is very useful. If the preview is aleady on the navmesh, then it takes that point,
-                but if the user has placed the unit over the river, it will place the preview to the closest position
-                it should be. This will also be used for placing the actual unit as well. It works exactly how we want it to.
-
-                The '9' in the function is the area mask, as a binary number. This mask includes 'walkable=1' and 'flyable=8'
-            */
             if(Input.mousePosition.y > cardCanvasDim.rect.height)
                 preview.SetActive(true);
             else
                 preview.SetActive(false);
 
-            UnityEngine.AI.NavMeshHit hit;
+            NavMeshHit hit;
             Vector3 position = adjustForSpawnZones(GameFunctions.getPosition(isFlying));
-            position = adjustForTowers(position);
-            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 6.1f, 9))
-                preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(hit.position);
+            position = GameFunctions.adjustForBoundary(position);
+            position = GameFunctions.adjustForTowers(position, radius);
+
+            if(NavMesh.SamplePosition(position, out hit, 12f, navMask))
+                previewAgent.Warp(hit.position);
             else
-                preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(position);
+                previewAgent.Warp(position);
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if(playerInfo.OnDragging) {
-            UnityEngine.AI.NavMeshHit hit;
+        if(playerInfo.OnDragging && !isBuffering && isDragging) {
+            NavMeshHit hit;
             Vector3 position = adjustForSpawnZones(GameFunctions.getPosition(isFlying));
-            position = adjustForTowers(position);
-            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 6.1f, 9))
-                preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(hit.position);
-            else
-                preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(position);
-            if(Input.mousePosition.y > cardCanvasDim.rect.height && playerInfo.GetCurrResource >= cardInfo.Cost)
-                SpawnUnit();
+            position = GameFunctions.adjustForBoundary(position);
+            position = GameFunctions.adjustForTowers(position, radius);
+            if(NavMesh.SamplePosition(position, out hit, 12f, navMask))
+                position = hit.position;
+            previewAgent.Warp(position);
+            if(Input.mousePosition.y > cardCanvasDim.rect.height && playerInfo.GetCurrResource >= (cardInfo.Cost + playerInfo.DueResource)) //if the player isnt hovering the cancel zone and has enough resource
+                SpawnUnit(position);
+            else if(Input.mousePosition.y > cardCanvasDim.rect.height && playerInfo.GetCurrResource >= ( (cardInfo.Cost + playerInfo.DueResource) - 1) ) { //if the player isnt hovering the cancel zone and has 1 under enough resource
+                isBuffering = true;
+                bufferingPosition = position;
+                playerInfo.DueResource += cardInfo.Cost;
+            }
             else {
                 transform.GetChild(3).localPosition = new Vector3(0,0,0);
                 transform.GetChild(3).localScale = new Vector3(1,1,1);
                 Destroy(preview);
             }
+            isDragging = false;
             playerInfo.OnDragging = false;
             playerInfo.SpawnZone = false;
         }
     }
 
-    private void SpawnUnit()
+    private void SpawnUnit(Vector3 position)
     {
         if(playerInfo.GetCurrResource >= cardInfo.Cost) //do I need this if the call to this function requires this anyway? Just a santiy check maybe?
         {
             playerInfo.PlayersDeck.RemoveHand(cardInfo.Index);
             playerInfo.RemoveResource(cardInfo.Cost);
 
-            UnityEngine.AI.NavMeshHit hit;
-            Vector3 position = adjustForSpawnZones(GameFunctions.getPosition(isFlying));
-            position = adjustForTowers(position);
-            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 6.1f, 9))
-                GameFunctions.SpawnUnit(cardInfo.Prefab, GameManager.GetUnitsFolder(), hit.position);
-            else
-                GameFunctions.SpawnUnit(cardInfo.Prefab, GameManager.GetUnitsFolder(), position);
+            GameFunctions.SpawnUnit(cardInfo.Prefab, GameManager.GetUnitsFolder(), position);
 
             Destroy(gameObject);
             Destroy(preview);
@@ -250,37 +296,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
         if(position.z > secondAreaBottom)
             position = new Vector3(position.x, position.y, secondAreaBottom);
-        return position;
-    }
-
-    private Vector3 adjustForTowers(Vector3 position) {
-        foreach(GameObject go in GameManager.Instance.TowerObjects) {
-            Component component = go.GetComponent(typeof(IDamageable));
-            float towerRadius = (component as IDamageable).Agent.HitBox.radius;
-            Vector3 towerPosition = go.transform.position;
-            
-            if(position.y < 1 &&    //If our position is currently inside a tower
-               position.x < towerPosition.x + towerRadius &&
-               position.x > towerPosition.x - towerRadius &&
-               position.z < towerPosition.z + towerRadius &&
-               position.z > towerPosition.z - towerRadius ) 
-                {
-                    float distFromLeft   = Math.Abs(position.x - towerPosition.x + towerRadius);
-                    float distFromRight  = Math.Abs(position.x - towerPosition.x - towerRadius);
-                    float distFromBottom = Math.Abs(position.z - towerPosition.z + towerRadius);
-                    float distFromTop    = Math.Abs(position.z - towerPosition.z - towerRadius);
-
-                    if( distFromLeft < distFromRight && distFromLeft < distFromBottom && distFromLeft < distFromTop) //If we are closest to the left side of the tower
-                        position = new Vector3(towerPosition.x - towerRadius, position.y, position.z);
-                    else if( distFromRight < distFromLeft && distFromRight < distFromBottom && distFromRight < distFromTop)
-                        position = new Vector3(towerPosition.x + towerRadius, position.y, position.z);
-                    else if( distFromBottom < distFromLeft && distFromBottom < distFromRight && distFromBottom < distFromTop)
-                        position = new Vector3(position.x, position.y, towerPosition.z - towerRadius);
-                    else 
-                        position = new Vector3(position.x, position.y, towerPosition.z + towerRadius);
-                    break;
-               }        
-        }
         return position;
     }
 

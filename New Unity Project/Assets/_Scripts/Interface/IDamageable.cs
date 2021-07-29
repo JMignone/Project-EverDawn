@@ -6,6 +6,7 @@ public interface IDamageable
 {
     BaseStats Stats { get; }
     List<GameObject> HitTargets { get; }
+    List<GameObject> InRangeTargets { get; }
     GameObject Target { get; set; }
     int InRange { get; set; }
     Actor3D Agent { get; }

@@ -7,8 +7,9 @@ TagManager:
   - Enemy
   - Range
   - Vision
-  - SkillShot
   - AbilityHighlight
+  - Projectile
+  - CreateAtLocation
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Towers
   - 
   - 
   - 

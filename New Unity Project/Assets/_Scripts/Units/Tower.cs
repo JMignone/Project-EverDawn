@@ -28,6 +28,9 @@ public class Tower : MonoBehaviour, IDamageable
     protected List<GameObject> hitTargets;
 
     [SerializeField]
+    private List<GameObject> inRangeTargets;
+
+    [SerializeField]
     protected bool leftTower;
 
     protected bool isHoveringAbility;
@@ -78,6 +81,11 @@ public class Tower : MonoBehaviour, IDamageable
         get { return hitTargets; }
     }
 
+    public List<GameObject> InRangeTargets
+    {
+        get { return inRangeTargets; }
+    }
+
     public bool LeftTower
     {
         get { return leftTower; }
@@ -100,6 +108,8 @@ public class Tower : MonoBehaviour, IDamageable
     {
         stats.HealthBar.enabled = false;
         stats.HealthBar.transform.GetChild(0).gameObject.SetActive(false);
+
+        stats.FrozenStats.StartFrozenStats(gameObject);
 
         isHoveringAbility = false;
         abilityIndicator.enabled = false;
@@ -148,7 +158,7 @@ public class Tower : MonoBehaviour, IDamageable
 
     public void OnTriggerEnter(Collider other) {
         if(!other.transform.parent.parent.CompareTag(gameObject.tag)) { //checks to make sure the target isnt on the same team
-            if(other.tag == "SkillShot") { //Did we get hit by a skill shot?
+            if(other.tag == "Projectile") { //Did we get hit by a skill shot?
                 Projectile projectile = other.transform.parent.parent.GetComponent<Projectile>();
                 Component unit = this.GetComponent(typeof(IDamageable));
                 projectile.hit(unit);
@@ -164,6 +174,8 @@ public class Tower : MonoBehaviour, IDamageable
                     if(other.tag == "Range") {//Are we in their range detection object?
                         //if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) anything can attack a tower, ill leave it hear incase somthing with an ability gives a need for this
                             (unit as IDamageable).InRange++;
+                            if(!(unit as IDamageable).InRangeTargets.Contains(gameObject))
+                                (unit as IDamageable).InRangeTargets.Add(gameObject);
                     }
                     else if(other.tag == "Vision") { //Are we in their vision detection object?
                         if(!(unit as IDamageable).HitTargets.Contains(gameObject))
@@ -176,8 +188,8 @@ public class Tower : MonoBehaviour, IDamageable
 
     public void OnTriggerExit(Collider other) {
         if(!other.transform.parent.parent.CompareTag(gameObject.tag)) { //checks to make sure the target isnt on the same team
-            if(other.tag == "SkillShot") { //Did we get hit by a skill shot?
-                print("SKILLSHOT");
+            if(other.tag == "Projectile") { //Did we get hit by a skill shot?
+                //print("Projectile");
             }
             else if(other.tag == "AbilityHighlight") { //Our we getting previewed for an abililty?
                 indicatorNum--;
@@ -191,6 +203,8 @@ public class Tower : MonoBehaviour, IDamageable
                     if(other.tag == "Range") { //Are we in their Range detection object?
                         //if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
                             (unit as IDamageable).InRange--;
+                            if((unit as IDamageable).InRangeTargets.Contains(gameObject))
+                                (unit as IDamageable).InRangeTargets.Remove(gameObject);
                             if((unit as IDamageable).Target == gameObject)
                                 (unit as IDamageable).Target = null;
                         //}
