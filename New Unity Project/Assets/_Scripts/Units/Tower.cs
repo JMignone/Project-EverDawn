@@ -110,6 +110,8 @@ public class Tower : MonoBehaviour, IDamageable
         stats.HealthBar.transform.GetChild(0).gameObject.SetActive(false);
 
         stats.FrozenStats.StartFrozenStats(gameObject);
+        stats.SlowedStats.StartSlowedStats(gameObject);
+        stats.PoisonedStats.StartPoisonedStats(gameObject);
 
         isHoveringAbility = false;
         abilityIndicator.enabled = false;
@@ -132,7 +134,7 @@ public class Tower : MonoBehaviour, IDamageable
         }
         else {
             print(gameObject.name + "has died!");
-            GameManager.RemoveObjectsFromList(gameObject, leftTower);
+            GameManager.RemoveObjectsFromList(gameObject, leftTower, false);
             Destroy(gameObject);
         }
     }

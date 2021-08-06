@@ -422,7 +422,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2059212613}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -3746,6 +3746,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 798979439}
+  - {fileID: 1119950269}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3765,60 +3766,100 @@ MonoBehaviour:
     cards:
     - index: 0
       name: Unit 1
-      icon: {fileID: 21300000, guid: a3615353b88c90a448ef598d9e2409e7, type: 3}
+      icon: {fileID: 21300000, guid: 78cd5f19747f13a4895c5a28e72a73d1, type: 3}
+      cost: 2
+      isSpell: 1
+      prefab:
+      - {fileID: 4332999100709516610, guid: 4d38356404b172542bbbb06b5950ec16, type: 3}
+      previewPrefab: []
+      previewDelays:
+      - 0
+    - index: 0
+      name: Unit 1
+      icon: {fileID: 21300000, guid: 78cd5f19747f13a4895c5a28e72a73d1, type: 3}
       cost: 3
-      prefab: {fileID: 3415333900699297907, guid: 88d8d05153de23e43a8727beab575034, type: 3}
-      previewPrefab: {fileID: 2091876083188452919, guid: ef0564141109bcb4281b5660d1246051, type: 3}
+      isSpell: 1
+      prefab:
+      - {fileID: 2538035110669741027, guid: 13a17977caf49464a90a86e954b0a79e, type: 3}
+      - {fileID: 2538035110669741027, guid: 13a17977caf49464a90a86e954b0a79e, type: 3}
+      - {fileID: 2538035110669741027, guid: 13a17977caf49464a90a86e954b0a79e, type: 3}
+      - {fileID: 2538035110669741027, guid: 13a17977caf49464a90a86e954b0a79e, type: 3}
+      previewPrefab: []
+      previewDelays:
+      - 0
+      - 0.25
+      - 0.25
+      - 0.25
     - index: 1
       name: Unit 2
-      icon: {fileID: 21300000, guid: a3615353b88c90a448ef598d9e2409e7, type: 3}
+      icon: {fileID: 21300000, guid: 04d58490ded8c4c4aa64bca7867d7969, type: 3}
       cost: 3
-      prefab: {fileID: 3415333900699297907, guid: 88d8d05153de23e43a8727beab575034, type: 3}
-      previewPrefab: {fileID: 2091876083188452919, guid: ef0564141109bcb4281b5660d1246051, type: 3}
+      isSpell: 1
+      prefab:
+      - {fileID: 1224647179923901261, guid: 9f95a636396da294c8b3f8bf1ae79e27, type: 3}
+      previewPrefab: []
+      previewDelays:
+      - 0.5
     - index: 2
       name: Unit Group
       icon: {fileID: 21300000, guid: 616f99a5a0da8bc4696cec0e5e538437, type: 3}
       cost: 2
-      prefab: {fileID: 4489671066153867563, guid: cbc231736edf9454caa0c4feed18afc2, type: 3}
-      previewPrefab: {fileID: 9061750350620061380, guid: 13fdda68d34ea614ba84e5ec9ad6a2ee, type: 3}
+      isSpell: 0
+      prefab:
+      - {fileID: 4489671066153867563, guid: cbc231736edf9454caa0c4feed18afc2, type: 3}
+      previewPrefab:
+      - {fileID: 9061750350620061380, guid: 13fdda68d34ea614ba84e5ec9ad6a2ee, type: 3}
+      previewDelays: []
     - index: 3
       name: Unit 4
       icon: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
-      cost: 8
-      prefab: {fileID: 1701868425468477452, guid: 2bedcad420ef25749bc48f0b7524c165, type: 3}
-      previewPrefab: {fileID: 881476954545742613, guid: 5186c23a5998e7d4d90f336cba1d6aba, type: 3}
-    - index: 4
-      name: Unit 5
-      icon: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
-      cost: 2
-      prefab: {fileID: 1701868425468477452, guid: 2bedcad420ef25749bc48f0b7524c165, type: 3}
-      previewPrefab: {fileID: 881476954545742613, guid: 5186c23a5998e7d4d90f336cba1d6aba, type: 3}
+      cost: 4
+      isSpell: 0
+      prefab:
+      - {fileID: 1701868425468477452, guid: 2bedcad420ef25749bc48f0b7524c165, type: 3}
+      previewPrefab:
+      - {fileID: 881476954545742613, guid: 5186c23a5998e7d4d90f336cba1d6aba, type: 3}
+      previewDelays: []
     - index: 5
       name: Unit 6
       icon: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
       cost: 1
-      prefab: {fileID: 3887690281620728188, guid: f33c3c6d021417745a6999784b7030e5, type: 3}
-      previewPrefab: {fileID: 1401404796868230813, guid: c302e0fd1b2fabc4ea2aa8c0abbc667c, type: 3}
+      isSpell: 0
+      prefab:
+      - {fileID: 3887690281620728188, guid: f33c3c6d021417745a6999784b7030e5, type: 3}
+      previewPrefab:
+      - {fileID: 1401404796868230813, guid: c302e0fd1b2fabc4ea2aa8c0abbc667c, type: 3}
+      previewDelays: []
     - index: 6
       name: Unit 7
       icon: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
       cost: 2
-      prefab: {fileID: 1701868425468477452, guid: 2bedcad420ef25749bc48f0b7524c165, type: 3}
-      previewPrefab: {fileID: 881476954545742613, guid: 5186c23a5998e7d4d90f336cba1d6aba, type: 3}
+      isSpell: 0
+      prefab:
+      - {fileID: 1701868425468477452, guid: 2bedcad420ef25749bc48f0b7524c165, type: 3}
+      previewPrefab:
+      - {fileID: 881476954545742613, guid: 5186c23a5998e7d4d90f336cba1d6aba, type: 3}
+      previewDelays: []
     - index: 7
       name: Unit 8
       icon: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
       cost: 2
-      prefab: {fileID: 1701868425468477452, guid: 2bedcad420ef25749bc48f0b7524c165, type: 3}
-      previewPrefab: {fileID: 881476954545742613, guid: 5186c23a5998e7d4d90f336cba1d6aba, type: 3}
+      isSpell: 0
+      prefab:
+      - {fileID: 1701868425468477452, guid: 2bedcad420ef25749bc48f0b7524c165, type: 3}
+      previewPrefab:
+      - {fileID: 881476954545742613, guid: 5186c23a5998e7d4d90f336cba1d6aba, type: 3}
+      previewDelays: []
     hand: []
     nextCard:
       index: 0
       name: Unit 1
       icon: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
       cost: 2
-      prefab: {fileID: 1701868425468477452, guid: 2bedcad420ef25749bc48f0b7524c165, type: 3}
-      previewPrefab: {fileID: 0}
+      isSpell: 0
+      prefab: []
+      previewPrefab: []
+      previewDelays: []
   resources:
   - {fileID: 1840495692}
   - {fileID: 64291947}
@@ -3830,13 +3871,16 @@ MonoBehaviour:
   - {fileID: 1653762970}
   - {fileID: 461507697}
   - {fileID: 98790728}
-  score: 0
   currResource: 6
   textCurrResource: {fileID: 589465482}
+  textTimer: {fileID: 1922791558}
   textScore: {fileID: 568690039}
   cardPrefab: {fileID: 8713341601375373046, guid: 54e466b045fd0fe4b8ffb9df03b19928, type: 3}
+  spellPrefab: {fileID: 4364230948485823133, guid: 7b9afc314faa8c64a8965afc3d681360, type: 3}
   handParent: {fileID: 552016016}
   nextCard: {fileID: 3621631404865028884}
+  playerCanvas: {fileID: 798979442}
+  quedSpells: {fileID: 1119950269}
   topArea: {fileID: 1393908569}
   leftArea: {fileID: 478460013}
   rightArea: {fileID: 320920543}
@@ -4180,11 +4224,20 @@ MonoBehaviour:
     unitRange: 0
     aoeStats:
       areaOfEffect: 0
+      unitCentered: 0
       explosionEffect: {fileID: 0}
       explosionRadius: 0
     frozenStats:
       frozenDelay: 0
       currentFrozenDelay: 0
+    slowedStats:
+      slowDelay: 0
+      currentSlowDelay: 0
+      currentSlowIntensity: 0
+    poisonedStats:
+      poisonedDuration: 0
+      poisonedTick: 0
+      currentPoisonDelay: 0
   hitTargets: []
   inRangeTargets: []
 --- !u!4 &367080428
@@ -4791,11 +4844,20 @@ MonoBehaviour:
     unitRange: 1
     aoeStats:
       areaOfEffect: 0
+      unitCentered: 0
       explosionEffect: {fileID: 0}
       explosionRadius: 0
     frozenStats:
       frozenDelay: 0
       currentFrozenDelay: 0
+    slowedStats:
+      slowDelay: 0
+      currentSlowDelay: 0
+      currentSlowIntensity: 0
+    poisonedStats:
+      poisonedDuration: 0
+      poisonedTick: 0
+      currentPoisonDelay: 0
   hitTargets: []
   inRangeTargets: []
   leftTower: 0
@@ -4889,11 +4951,20 @@ MonoBehaviour:
     unitRange: 1
     aoeStats:
       areaOfEffect: 0
+      unitCentered: 0
       explosionEffect: {fileID: 0}
       explosionRadius: 0
     frozenStats:
       frozenDelay: 0
       currentFrozenDelay: 0
+    slowedStats:
+      slowDelay: 0
+      currentSlowDelay: 0
+      currentSlowIntensity: 0
+    poisonedStats:
+      poisonedDuration: 0
+      poisonedTick: 0
+      currentPoisonDelay: 0
   hitTargets: []
   inRangeTargets: []
   leftTower: 0
@@ -6003,11 +6074,20 @@ MonoBehaviour:
     unitRange: 0
     aoeStats:
       areaOfEffect: 1
+      unitCentered: 0
       explosionEffect: {fileID: 0}
       explosionRadius: 5
     frozenStats:
       frozenDelay: 0
       currentFrozenDelay: 0
+    slowedStats:
+      slowDelay: 0
+      currentSlowDelay: 0
+      currentSlowIntensity: 0
+    poisonedStats:
+      poisonedDuration: 0
+      poisonedTick: 0
+      currentPoisonDelay: 0
   hitTargets: []
   inRangeTargets: []
 --- !u!4 &483495842
@@ -6042,6 +6122,82 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &497895811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 497895812}
+  - component: {fileID: 497895814}
+  - component: {fileID: 497895813}
+  m_Layer: 5
+  m_Name: Time Text Background
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &497895812
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497895811}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1496209479}
+  m_Father: {fileID: 1880567920}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 35}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &497895813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497895811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.13333334, g: 0.4392157, b: 0.7843138, a: 0.88235295}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &497895814
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497895811}
+  m_CullTransparentMesh: 1
 --- !u!1 &498353700
 GameObject:
   m_ObjectHideFlags: 0
@@ -6427,7 +6583,7 @@ RectTransform:
   m_Children:
   - {fileID: 981755473}
   m_Father: {fileID: 1722957325}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6622,7 +6778,7 @@ RectTransform:
   m_Children:
   - {fileID: 88194677}
   m_Father: {fileID: 1728403370}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -10358,7 +10514,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 10
+  m_SortingOrder: -26
   m_TargetDisplay: 0
 --- !u!1 &807895475
 GameObject:
@@ -10986,7 +11142,7 @@ RectTransform:
   m_Children:
   - {fileID: 49292947}
   m_Father: {fileID: 1728403370}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 100, y: 0, z: 180}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -11098,6 +11254,7 @@ MonoBehaviour:
   abilityPreviewCanvas: {fileID: 1404963360}
   abilityPreviews: []
   abilityPreviewLine: {fileID: 21300000, guid: d24184dab2f7f3d418f3a20dc032fa78, type: 3}
+  abilityPreviewLinear: {fileID: 0}
   abilityPreviewBomb: {fileID: 21300000, guid: 68c0303b57e53ce4188ea1bbcf918c1a, type: 3}
   abilityPreviewRange: {fileID: 21300000, guid: 658bc1bba667d16429506ad48b1602a0, type: 3}
   playerInfo: {fileID: 335821902}
@@ -11716,11 +11873,20 @@ MonoBehaviour:
     unitRange: 1
     aoeStats:
       areaOfEffect: 0
+      unitCentered: 0
       explosionEffect: {fileID: 0}
       explosionRadius: 0
     frozenStats:
       frozenDelay: 0
       currentFrozenDelay: 0
+    slowedStats:
+      slowDelay: 0
+      currentSlowDelay: 0
+      currentSlowIntensity: 0
+    poisonedStats:
+      poisonedDuration: 0
+      poisonedTick: 0
+      currentPoisonDelay: 0
   hitTargets: []
   inRangeTargets: []
   leftTower: 1
@@ -13043,7 +13209,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1722957325}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -14263,11 +14429,20 @@ MonoBehaviour:
     unitRange: 0
     aoeStats:
       areaOfEffect: 0
+      unitCentered: 0
       explosionEffect: {fileID: 0}
       explosionRadius: 0
     frozenStats:
       frozenDelay: 0
       currentFrozenDelay: 0
+    slowedStats:
+      slowDelay: 0
+      currentSlowDelay: 0
+      currentSlowIntensity: 0
+    poisonedStats:
+      poisonedDuration: 0
+      poisonedTick: 0
+      currentPoisonDelay: 0
   hitTargets: []
   inRangeTargets: []
 --- !u!4 &1114531619
@@ -14302,6 +14477,41 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &1119950267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1119950269}
+  m_Layer: 0
+  m_Name: Qued Spells
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1119950269
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119950267}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 335821901}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1139660075
 GameObject:
   m_ObjectHideFlags: 0
@@ -15052,11 +15262,20 @@ MonoBehaviour:
     unitRange: 1
     aoeStats:
       areaOfEffect: 0
+      unitCentered: 0
       explosionEffect: {fileID: 0}
       explosionRadius: 0
     frozenStats:
       frozenDelay: 0
       currentFrozenDelay: 0
+    slowedStats:
+      slowDelay: 0
+      currentSlowDelay: 0
+      currentSlowIntensity: 0
+    poisonedStats:
+      poisonedDuration: 0
+      poisonedTick: 0
+      currentPoisonDelay: 0
   hitTargets: []
   inRangeTargets: []
   leftTower: 0
@@ -16152,7 +16371,7 @@ RectTransform:
   m_Children:
   - {fileID: 1148473037}
   m_Father: {fileID: 1722957325}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 100, y: 0, z: 180}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -16246,7 +16465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 1114531618}
   abilityPrefabs:
-  - {fileID: 2595308172099207993, guid: 6667197b7cc916e44812a4a04ab4bc7e, type: 3}
+  - {fileID: 1224647179923901261, guid: 9f95a636396da294c8b3f8bf1ae79e27, type: 3}
   abilityDelays:
   - 0.25
   - 2.25
@@ -16260,6 +16479,7 @@ MonoBehaviour:
   abilityPreviewCanvas: {fileID: 1014129661}
   abilityPreviews: []
   abilityPreviewLine: {fileID: 21300000, guid: d24184dab2f7f3d418f3a20dc032fa78, type: 3}
+  abilityPreviewLinear: {fileID: 21300000, guid: 3d46296629f72914da3ffeb630c82832, type: 3}
   abilityPreviewBomb: {fileID: 21300000, guid: 68c0303b57e53ce4188ea1bbcf918c1a, type: 3}
   abilityPreviewRange: {fileID: 21300000, guid: 658bc1bba667d16429506ad48b1602a0, type: 3}
   playerInfo: {fileID: 335821902}
@@ -16637,11 +16857,20 @@ MonoBehaviour:
     unitRange: 0
     aoeStats:
       areaOfEffect: 0
+      unitCentered: 0
       explosionEffect: {fileID: 0}
       explosionRadius: 0
     frozenStats:
       frozenDelay: 0
       currentFrozenDelay: 0
+    slowedStats:
+      slowDelay: 0
+      currentSlowDelay: 0
+      currentSlowIntensity: 0
+    poisonedStats:
+      poisonedDuration: 0
+      poisonedTick: 0
+      currentPoisonDelay: 0
   hitTargets: []
   inRangeTargets: []
 --- !u!54 &1390792291
@@ -17044,7 +17273,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1728403370}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -18197,6 +18426,85 @@ Transform:
   m_Father: {fileID: 1315974519}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1496209478
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1496209479}
+  - component: {fileID: 1496209481}
+  - component: {fileID: 1496209480}
+  m_Layer: 5
+  m_Name: Time Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1496209479
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496209478}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 497895812}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 130, y: 35}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1496209480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496209478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.121568635, g: 0.81568635, b: 0.854902, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 26
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 287
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Time Left
+--- !u!222 &1496209481
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496209478}
+  m_CullTransparentMesh: 1
 --- !u!1 &1497369940
 GameObject:
   m_ObjectHideFlags: 0
@@ -19424,11 +19732,20 @@ MonoBehaviour:
     unitRange: 0
     aoeStats:
       areaOfEffect: 0
+      unitCentered: 0
       explosionEffect: {fileID: 0}
       explosionRadius: 0
     frozenStats:
       frozenDelay: 0
       currentFrozenDelay: 0
+    slowedStats:
+      slowDelay: 0
+      currentSlowDelay: 0
+      currentSlowIntensity: 0
+    poisonedStats:
+      poisonedDuration: 0
+      poisonedTick: 0
+      currentPoisonDelay: 0
   spawnStats:
     unitToSpawn: {fileID: 5726148247449163227, guid: 304a4c69c2fd919499f930a64e2fda40, type: 3}
   hitTargets: []
@@ -20257,9 +20574,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 525315577}
   - {fileID: 1347901588}
   - {fileID: 1014129658}
-  - {fileID: 525315577}
   m_Father: {fileID: 781495026}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20323,9 +20640,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 527906298}
   - {fileID: 855631261}
   - {fileID: 1404963357}
-  - {fileID: 527906298}
   m_Father: {fileID: 2075605730}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22153,6 +22470,83 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1874085642}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1880567919
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1880567920}
+  - component: {fileID: 1880567922}
+  - component: {fileID: 1880567921}
+  m_Layer: 5
+  m_Name: Timer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1880567920
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880567919}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 497895812}
+  - {fileID: 1922791557}
+  m_Father: {fileID: 2059212613}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -65, y: 0}
+  m_SizeDelta: {x: 130, y: 100}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!222 &1880567921
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880567919}
+  m_CullTransparentMesh: 1
+--- !u!114 &1880567922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880567919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 0.5019608}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1880817927
 GameObject:
   m_ObjectHideFlags: 0
@@ -22618,6 +23012,85 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1908118747}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1922791556
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1922791557}
+  - component: {fileID: 1922791559}
+  - component: {fileID: 1922791558}
+  m_Layer: 5
+  m_Name: Time
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1922791557
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922791556}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1880567920}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 65}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &1922791558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922791556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 45
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 159
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 9:99
+--- !u!222 &1922791559
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922791556}
+  m_CullTransparentMesh: 1
 --- !u!1 &1926027428
 GameObject:
   m_ObjectHideFlags: 0
@@ -23310,11 +23783,20 @@ MonoBehaviour:
     unitRange: 0
     aoeStats:
       areaOfEffect: 0
+      unitCentered: 0
       explosionEffect: {fileID: 0}
       explosionRadius: 0
     frozenStats:
       frozenDelay: 0
       currentFrozenDelay: 0
+    slowedStats:
+      slowDelay: 0
+      currentSlowDelay: 0
+      currentSlowIntensity: 0
+    poisonedStats:
+      poisonedDuration: 0
+      poisonedTick: 0
+      currentPoisonDelay: 0
   hitTargets: []
   inRangeTargets: []
 --- !u!1 &1995637123
@@ -23590,11 +24072,20 @@ MonoBehaviour:
     unitRange: 1
     aoeStats:
       areaOfEffect: 0
+      unitCentered: 0
       explosionEffect: {fileID: 0}
       explosionRadius: 0
     frozenStats:
       frozenDelay: 0
       currentFrozenDelay: 0
+    slowedStats:
+      slowDelay: 0
+      currentSlowDelay: 0
+      currentSlowIntensity: 0
+    poisonedStats:
+      poisonedDuration: 0
+      poisonedTick: 0
+      currentPoisonDelay: 0
   hitTargets: []
   inRangeTargets: []
   leftTower: 0
@@ -24030,11 +24521,20 @@ MonoBehaviour:
     unitRange: 1
     aoeStats:
       areaOfEffect: 0
+      unitCentered: 0
       explosionEffect: {fileID: 0}
       explosionRadius: 0
     frozenStats:
       frozenDelay: 0
       currentFrozenDelay: 0
+    slowedStats:
+      slowDelay: 0
+      currentSlowDelay: 0
+      currentSlowIntensity: 0
+    poisonedStats:
+      poisonedDuration: 0
+      poisonedTick: 0
+      currentPoisonDelay: 0
   hitTargets: []
   inRangeTargets: []
   leftTower: 1
@@ -24131,6 +24631,7 @@ RectTransform:
   m_Children:
   - {fileID: 369354825}
   - {fileID: 1071770892}
+  - {fileID: 1880567920}
   - {fileID: 63724458}
   m_Father: {fileID: 0}
   m_RootOrder: 8

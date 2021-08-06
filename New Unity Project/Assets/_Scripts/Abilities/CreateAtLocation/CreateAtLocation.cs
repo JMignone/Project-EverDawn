@@ -20,10 +20,19 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     private FreezeStats freezeStats;
 
     [SerializeField]
+    private SlowStats slowStats;
+
+    [SerializeField]
+    private PoisonStats poisonStats;
+
+    [SerializeField]
     private LingeringStats lingeringStats;
 
     [SerializeField]
     private SelfDestructStats selfDestructStats;
+
+    [SerializeField]
+    private LinearStats linearStats;
     private bool hasExploded;
 
     [SerializeField]
@@ -53,6 +62,21 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         get { return objectAttackable; }
     }
 
+    public FreezeStats FreezeStats
+    {
+        get { return freezeStats; }
+    }
+
+    public SlowStats SlowStats
+    {
+        get { return slowStats; }
+    }
+
+    public PoisonStats PoisonStats
+    {
+        get { return poisonStats; }
+    }
+
     public LingeringStats LingeringStats
     {
         get { return lingeringStats; }
@@ -61,6 +85,11 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     public SelfDestructStats SelfDestructStats
     {
         get { return selfDestructStats; }
+    }
+
+    public LinearStats LinearStats
+    {
+        get { return linearStats; }
     }
 
     public SummonStats SummonStats
@@ -83,10 +112,11 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     private void Start() 
     {
         hitBox.radius = radius;
-        if(selfDestructStats.SelfDestructs) {
+        slowStats.StartSlowStats();
+        
+        if(selfDestructStats.SelfDestructs)
             selfDestructStats.ExplosionRadius = radius;
-            hasExploded = false;
-        }
+        hasExploded = false;
         if(lingeringStats.Lingering) {
             lingeringStats.StartLingeringStats();
             lingeringStats.CurrentlyLingering = true;
@@ -96,10 +126,11 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     }
 
     private void Update() {
-        if(selfDestructStats.SelfDestructs && !hasExploded){
+        if(selfDestructStats.SelfDestructs && !hasExploded)
             selfDestructStats.Explode(gameObject);
-            hasExploded = true;
-        }
+        if(linearStats.IsLinear && !hasExploded)
+            linearStats.Explode(gameObject);
+        hasExploded = true;
         if(lingeringStats.Lingering)
             lingeringStats.UpdateLingeringStats(gameObject);
         if(SummonStats.IsSummon) {
@@ -127,5 +158,9 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     public void applyAffects(Component damageable) {
         if(freezeStats.CanFreeze)
             (damageable as IDamageable).Stats.FrozenStats.Freeze(freezeStats.FreezeDuration);
+        if(slowStats.CanSlow)
+            (damageable as IDamageable).Stats.SlowedStats.Slow(slowStats.SlowDuration, slowStats.SlowIntensity);
+        if(poisonStats.CanPoison)
+            (damageable as IDamageable).Stats.PoisonedStats.Poison(poisonStats.PoisonDuration, poisonStats.PoisonTick, poisonStats.PoisonDamage);
     }
 }

@@ -48,7 +48,11 @@ public class BaseStats
     private UAOEStats aoeStats;
     [SerializeField]
     private FrozenStats frozenStats;
-    
+    [SerializeField]
+    private SlowedStats slowedStats;
+    [SerializeField]
+    private PoisonedStats poisonedStats;
+
     public float PercentHealth {
         get { return currHealth/maxHealth; }
     }
@@ -181,6 +185,16 @@ public class BaseStats
         get { return frozenStats; }
     }
 
+    public SlowedStats SlowedStats 
+    {
+        get { return slowedStats; }
+    }
+
+    public PoisonedStats PoisonedStats
+    {
+        get { return poisonedStats; }
+    }
+
     public void UpdateStats(int inRange, Actor3D unitAgent, List<GameObject> hitTargets, GameObject target) {
         if(PercentHealth == 1) {
             HealthBar.enabled = false;
@@ -195,6 +209,8 @@ public class BaseStats
             currHealth -= healthDecay*maxHealth * Time.deltaTime ; // lowers hp by 5% of maxHp every second ?? should this line be at the top ??
 
         frozenStats.UpdateFrozenStats();
+        slowedStats.UpdateSlowedStats();
+        poisonedStats.UpdatePoisonedStats();
 
         detectionObject.radius = range;
         visionObject.radius = visionRange;
@@ -202,8 +218,6 @@ public class BaseStats
         bool inVision = false;
         if(target != null)
             inVision = hitTargets.Contains(target);       
-        //if(inRange < 0)
-        //    inRange = 0;
         if( ( inRange > 0 || (currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && inVision) ) && !frozenStats.IsFrozen ) { //if target is inRange, or the attack is nearly ready and their within vision AND not frozen
             
             if(target != null) {
@@ -214,23 +228,23 @@ public class BaseStats
                 //180 - *** might be the source of an error later on, depends on the angle of a unit agent at the start, right now they are all 180
                 if(180-Mathf.Abs(angle) < GameConstants.MAXIMUM_ATTACK_ANGLE) {
                     if(currAttackDelay < attackDelay) 
-                        currAttackDelay += Time.deltaTime;
+                        currAttackDelay += Time.deltaTime * slowedStats.CurrentSlowIntensity;
                     else
                         currAttackDelay = 0;
                 }
                 else {
                     if(currAttackDelay < attackDelay*GameConstants.ATTACK_READY_PERCENTAGE) 
-                        currAttackDelay += Time.deltaTime;
+                        currAttackDelay += Time.deltaTime * slowedStats.CurrentSlowIntensity;
                 }
             }
             else { //this may occur for a few frames when a units target dies, but there are still other units it can target, it just has not updated to the new target yet
                 if(currAttackDelay < attackDelay*GameConstants.ATTACK_READY_PERCENTAGE) 
-                    currAttackDelay += Time.deltaTime;
+                    currAttackDelay += Time.deltaTime * slowedStats.CurrentSlowIntensity;
             }
         }
         else if(inVision) { //if the target is within vision
             if(currAttackDelay < attackDelay*GameConstants.ATTACK_CHARGE_LIMITER) 
-                currAttackDelay += Time.deltaTime;
+                currAttackDelay += Time.deltaTime * slowedStats.CurrentSlowIntensity;
         }
         else 
             currAttackDelay = 0;
@@ -252,7 +266,7 @@ public class BaseStats
 
         if(currAttackDelay < attackDelay ) {
             if(!frozenStats.IsFrozen)
-                currAttackDelay += Time.deltaTime;
+                currAttackDelay += Time.deltaTime * slowedStats.CurrentSlowIntensity;
         }
         else
             currAttackDelay = 0;

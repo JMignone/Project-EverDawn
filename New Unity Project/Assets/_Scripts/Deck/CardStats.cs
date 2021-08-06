@@ -14,9 +14,13 @@ public class CardStats
     [SerializeField]
     private int cost;
     [SerializeField]
-    private GameObject prefab;
+    private bool isSpell;
     [SerializeField]
-    private GameObject previewPrefab;
+    private List<GameObject> prefab;
+    [SerializeField]
+    private List<GameObject> previewPrefab;
+    [SerializeField]
+    private List<float> previewDelays; //only used for spells
     //[SerializeField] uncomment for debug purposes
     private int layoutIndex;
 
@@ -44,16 +48,27 @@ public class CardStats
         set { cost = value; }
     }
 
-    public GameObject Prefab
+    public bool IsSpell
+    {
+        get { return isSpell; }
+    }
+
+    public List<GameObject> Prefab
     {
         get { return prefab; }
         set { prefab = value; }
     }
 
-    public GameObject PreviewPrefab
+    public List<GameObject> PreviewPrefab
     {
         get { return previewPrefab; }
         set { previewPrefab = value; }
+    }
+
+    public List<float> PreviewDelays
+    {
+        get { return previewDelays; }
+        set { previewDelays = value; }
     }
 
     public int LayoutIndex

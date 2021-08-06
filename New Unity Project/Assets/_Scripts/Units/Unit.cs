@@ -101,8 +101,11 @@ public class Unit : MonoBehaviour, IDamageable
     private void Start()
     {
         agent.Agent.stoppingDistance = 0; //Set to be zero, incase someone forgets or accidently changes this value to be a big number
+        agent.Agent.speed = stats.MoveSpeed;
 
         stats.FrozenStats.StartFrozenStats(gameObject);
+        stats.SlowedStats.StartSlowedStats(gameObject);
+        stats.PoisonedStats.StartPoisonedStats(gameObject);
 
         isHoveringAbility = false;
         indicatorNum = 0;
@@ -114,8 +117,7 @@ public class Unit : MonoBehaviour, IDamageable
     private void Update()
     {
         if(stats.CurrHealth > 0) {
-            agent.Agent.speed = stats.MoveSpeed;
-            if(target == null && !stats.FrozenStats.IsFrozen) { //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
+            if(target == null && !stats.FrozenStats.IsFrozen && !isCastingAbility) { //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                 if(hitTargets.Count > 0) {
                     GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
                     if(go != null)
@@ -146,10 +148,6 @@ public class Unit : MonoBehaviour, IDamageable
             }
             else
                 agent.Agent.SetDestination(agent.transform.position); //have the agent target itself, meaning don't move as there is no target
-
-            if(stats.FrozenStats.IsFrozen){
-                //getAbilityObjects();
-            }
         }
         else {
             print(gameObject.name + " has died!");

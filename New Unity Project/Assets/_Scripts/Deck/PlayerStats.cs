@@ -9,7 +9,7 @@ public class PlayerStats : MonoBehaviour
     private Deck playersDeck;
     [SerializeField]
     private List<Image> resources;
-    [SerializeField]
+    private float timeLeft;
     private int score;
     [SerializeField]
     private float currResource;
@@ -19,13 +19,21 @@ public class PlayerStats : MonoBehaviour
     //[SerializeField]
     //private Text textMaxResource;
     [SerializeField]
+    private Text textTimer;
+    [SerializeField]
     private Text textScore;
     [SerializeField]
     private GameObject cardPrefab;
     [SerializeField]
+    private GameObject spellPrefab;
+    [SerializeField]
     private Transform handParent;
     [SerializeField]
     private Card nextCard;
+    [SerializeField]
+    private Canvas playerCanvas;
+    [SerializeField]
+    private Transform quedSpells;
     [SerializeField]
     private GameObject topArea;
     [SerializeField]
@@ -48,6 +56,12 @@ public class PlayerStats : MonoBehaviour
     {
         get { return resources; }
         //set { resources = value; }
+    }
+
+    public float TimeLeft
+    {
+        get { return timeLeft; }
+        set { timeLeft = value; }
     }
 
     public int Score
@@ -76,7 +90,6 @@ public class PlayerStats : MonoBehaviour
     public Text TextCurrResource
     {
         get { return textCurrResource; }
-        //set { textCurrResource = value; }
     }
     /*
     public Text TextMaxResource
@@ -85,17 +98,24 @@ public class PlayerStats : MonoBehaviour
         //set { textMaxResource = value; }
     }
     */
+    public Text TextTimer
+    {
+        get { return textTimer; }
+    }
+
     public Text TextScore
     {
         get { return textScore; }
-        //set { textScore = value; }
     }
 
-    //I added these 2 so far
     public GameObject CardPrefab
     {
         get { return cardPrefab; }
-        //set { cardPrefab = value; }
+    }
+
+    public GameObject SpellPrefab
+    {
+        get { return spellPrefab; }
     }
 
     public Transform HandParent
@@ -103,7 +123,17 @@ public class PlayerStats : MonoBehaviour
         get { return handParent; }
         //set { handParent = value; }
     }
-    //
+
+    public Canvas PlayerCanvas
+    {
+        get { return playerCanvas; }
+        set { playerCanvas = value; }
+    }
+
+    public Transform QuedSpells
+    {
+        get { return quedSpells; }
+    }
 
     public GameObject TopArea
     {
@@ -157,6 +187,8 @@ public class PlayerStats : MonoBehaviour
     {
         playersDeck.Start();
         dueResource = 0;
+        score = 0;
+        timeLeft = 181; // 180 seconds is 3 minutes
         //spawnZone = false;
     }
 
@@ -188,17 +220,36 @@ public class PlayerStats : MonoBehaviour
         textCurrResource.text = GetCurrResource.ToString();
         //textMaxResource.text = (GameConstants.RESOURCE_MAX + 1).toString(); currently not using this
         textScore.text = score.ToString();
+
+        //below updates the timer
+        timeLeft -= Time.deltaTime;
+        if(timeLeft > 0) {
+            string text = ((int) timeLeft/60).ToString();
+            text += ":" + ((int) timeLeft%60).ToString();
+            if(text.Length != 4)
+                text = text.Substring(0, 2) + "0" + text.Substring(2);
+            textTimer.text = text;
+        }
     }
 
     private void UpdateDeck()
     {
         if(playersDeck.Hand.Count < GameConstants.MAX_HAND_SIZE) {
             CardStats cs = playersDeck.DrawCard();
-            GameObject go = Instantiate(cardPrefab, handParent);
-            go.transform.SetSiblingIndex(cs.LayoutIndex);
-            Card c = go.GetComponent<Card>();
-            c.PlayerInfo = this;
-            c.CardInfo = cs;
+            if(cs.IsSpell) {
+                GameObject go = Instantiate(spellPrefab, handParent);
+                go.transform.SetSiblingIndex(cs.LayoutIndex);
+                Spell c = go.GetComponent<Spell>();
+                c.PlayerInfo = this;
+                c.CardInfo = cs;
+            }
+            else {
+                GameObject go = Instantiate(cardPrefab, handParent);
+                go.transform.SetSiblingIndex(cs.LayoutIndex);
+                Card c = go.GetComponent<Card>();
+                c.PlayerInfo = this;
+                c.CardInfo = cs;
+            }
         }
 
         nextCard.CardInfo = playersDeck.NextCard;
@@ -215,5 +266,4 @@ public class PlayerStats : MonoBehaviour
             }
         }
     }
-
 }

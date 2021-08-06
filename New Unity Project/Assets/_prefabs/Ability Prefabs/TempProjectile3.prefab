@@ -232,6 +232,10 @@ MonoBehaviour:
   freezeStats:
     canFreeze: 0
     freezeDuration: 1
+  slowStats:
+    canSlow: 0
+    slowDuration: 0
+    slowIntensity: 0
   lingeringStats:
     lingering: 0
     lingerAtEnd: 0

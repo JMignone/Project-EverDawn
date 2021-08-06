@@ -96,9 +96,15 @@ public static class GameFunctions
         else if(distance < range && !isGrenade && !selfDestructs)
             endPosition = startPosition + (direction.normalized * range);
         startPosition += direction.normalized * radius;
+        if(isGrenade && projectile.GrenadeStats.IsAirStrike)
+            startPosition = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
         GameObject go = GameObject.Instantiate(prefab, startPosition, targetRotation, GameManager.GetUnitsFolder());
-        go.GetComponent<Projectile>().TargetLocation = endPosition;
-        go.GetComponent<Projectile>().Unit = unit;
+        if(unit == null && !isGrenade) //if units = null, then this is casted as a spell
+            go.GetComponent<Projectile>().TargetLocation = endPosition;
+        else {
+            go.GetComponent<Projectile>().TargetLocation = endPosition;
+            go.GetComponent<Projectile>().Unit = unit;
+        }
     }
 
     public static void FireCAL(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, Unit unit) {

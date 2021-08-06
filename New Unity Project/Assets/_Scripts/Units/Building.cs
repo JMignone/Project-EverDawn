@@ -122,6 +122,9 @@ public class Building : MonoBehaviour, IDamageable
 
     private void Start()
     {
+        stats.FrozenStats.StartFrozenStats(gameObject);
+        stats.SlowedStats.StartSlowedStats(gameObject);
+        
         isHoveringAbility = false;
         indicatorNum = 0;
         abilityIndicator.enabled = false;

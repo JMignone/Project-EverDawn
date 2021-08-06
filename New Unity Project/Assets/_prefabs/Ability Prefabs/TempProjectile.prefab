@@ -47,9 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBox: {fileID: 4332999102053800178}
   unitSprite: {fileID: 4332999101628587706}
-  radius: 2.5
-  speed: 65
-  range: 60
+  radius: 5
+  speed: 35
+  range: 40
   baseDamage: 100
   objectAttackable: 0
   canPierce: 1
@@ -58,10 +58,14 @@ MonoBehaviour:
     explosionEffect: {fileID: 0}
     explosionRadius: 10
   freezeStats:
-    canFreeze: 1
+    canFreeze: 0
     freezeDuration: 4
+  slowStats:
+    canSlow: 0
+    slowDuration: 3
+    slowIntensity: 0.5
   boomerangStats:
-    isBoomerang: 0
+    isBoomerang: 1
     percentToSlow: 0.6
   lingeringStats:
     lingering: 0
@@ -80,6 +84,8 @@ MonoBehaviour:
     explosionRadius: 5
   grenadeStats:
     isGrenade: 0
+    isAirStrike: 0
+    startLocation: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 0
     explosionRadius: 0

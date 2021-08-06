@@ -161,7 +161,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                     Destroy(preview);
                 }
 
-                GameObject go = Instantiate(cardInfo.PreviewPrefab);
+                GameObject go = Instantiate(cardInfo.PreviewPrefab[0]);
                 preview = go;
                 previewAgent = preview.transform.GetChild(0).GetComponent<NavMeshAgent>();
                 radius = previewAgent.radius;
@@ -172,7 +172,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
                 preview.SetActive(false);
 
-                Component damageable = cardInfo.Prefab.GetComponent(typeof(IDamageable));
+                Component damageable = cardInfo.Prefab[0].GetComponent(typeof(IDamageable));
                 Component unit = damageable.gameObject.GetComponent(typeof(IDamageable));
                 if((unit as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
                     IsFlying = true;
@@ -186,8 +186,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                     else
                         navMask = 16;
                 }
-
-
             }
         }
     }
@@ -256,7 +254,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             playerInfo.PlayersDeck.RemoveHand(cardInfo.Index);
             playerInfo.RemoveResource(cardInfo.Cost);
 
-            GameFunctions.SpawnUnit(cardInfo.Prefab, GameManager.GetUnitsFolder(), position);
+            GameFunctions.SpawnUnit(cardInfo.Prefab[0], GameManager.GetUnitsFolder(), position);
 
             Destroy(gameObject);
             Destroy(preview);

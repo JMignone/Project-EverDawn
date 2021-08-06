@@ -49,4 +49,9 @@ public static class GameConstants
         MELEE,
         RANGE
     }
+
+    public enum AIR_STRIKE_LOCATION {
+        BOTTOM,
+        SIDE
+    }
 }

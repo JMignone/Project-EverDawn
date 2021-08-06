@@ -9,6 +9,12 @@ public class GrenadeStats
     private bool isGrenade;
 
     [SerializeField]
+    private bool isAirStrike;
+
+    [SerializeField]
+    private GameConstants.AIR_STRIKE_LOCATION startLocation;
+
+    [SerializeField]
     private GameObject explosionEffect;
 
     [SerializeField]
@@ -23,6 +29,16 @@ public class GrenadeStats
     public bool IsGrenade
     {
         get { return isGrenade; }
+    }
+
+    public bool IsAirStrike
+    {
+        get { return isAirStrike; }
+    }
+
+    public GameConstants.AIR_STRIKE_LOCATION StartLocation
+    {
+        get { return startLocation; }
     }
 
     public GameObject ExplosionEffect
@@ -58,11 +74,22 @@ public class GrenadeStats
             Projectile projectile = go.GetComponent<Projectile>();
             projectile.Radius = 0;
             projectile.HitBox.enabled = false;
+            
             if(grenadeArcMultiplier < .1) //preventing divide by zero
                 grenadeArcMultiplier = .1f;
-            arcStart = go.transform.position;
             arcEnd = projectile.TargetLocation;
-            arcApex = arcStart + (arcEnd - arcStart)/2 + Vector3.up * Vector3.Distance(arcStart, arcEnd) * grenadeArcMultiplier;
+            if(isAirStrike) {
+                if(startLocation == GameConstants.AIR_STRIKE_LOCATION.BOTTOM)
+                    arcStart = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
+                else
+                    arcStart = new Vector3(GameManager.Instance.Ground.transform.localScale.x*-5 - 20, 0, 0);
+                arcStart = new Vector3(arcStart.x, 15, arcStart.z);
+                arcApex = arcStart + (arcEnd - arcStart)/6 + Vector3.up * Vector3.Distance(arcStart, arcEnd) * grenadeArcMultiplier;
+            }
+            else {
+                arcStart = go.transform.position;
+                arcApex = arcStart + (arcEnd - arcStart)/2 + Vector3.up * Vector3.Distance(arcStart, arcEnd) * grenadeArcMultiplier;
+            }
         }
     }
 

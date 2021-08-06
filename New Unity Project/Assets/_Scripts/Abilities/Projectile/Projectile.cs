@@ -35,6 +35,12 @@ public class Projectile : MonoBehaviour, IAbility
     private FreezeStats freezeStats;
 
     [SerializeField]
+    private SlowStats slowStats;
+
+    [SerializeField]
+    private PoisonStats poisonStats;
+
+    [SerializeField]
     private BoomerangStats boomerangStats;
 
     [SerializeField]
@@ -103,6 +109,16 @@ public class Projectile : MonoBehaviour, IAbility
         get { return freezeStats; }
     }
 
+    public SlowStats SlowStats
+    {
+        get { return slowStats; }
+    }
+
+    public PoisonStats PoisonStats
+    {
+        get { return poisonStats; }
+    }
+
     public BoomerangStats BoomerangStats
     {
         get { return boomerangStats; }
@@ -155,14 +171,16 @@ public class Projectile : MonoBehaviour, IAbility
         boomerangStats.StartBoomerangStats(gameObject);
         grenadeStats.StartGrenadeStats(gameObject);
         lingeringStats.StartLingeringStats();
+        slowStats.StartSlowStats();
 
         //we cant have a grenade and a boomerang
         if(boomerangStats.IsBoomerang && grenadeStats.IsGrenade)
             boomerangStats.IsBoomerang = false;
+
     }
 
     private void Update() {
-        if(unit.Agent.transform.position != null) { //This is currently only used for boomerang
+        if(unit != null) { //This is currently only used for boomerang
             lastKnownLocation = unit.Agent.transform.position;
             lastKnownLocation.y = 0;
         }
@@ -180,11 +198,12 @@ public class Projectile : MonoBehaviour, IAbility
                     Quaternion targetRotation = Quaternion.LookRotation(direction);
                     transform.rotation = targetRotation;
                     transform.position -= transform.forward * speed * speedReduction * Time.deltaTime;
+                    boomerangStats.UpdateBoomerangStats();
                 }
                 else
                     transform.position += transform.forward * speed * speedReduction * Time.deltaTime;
             }
-            if(Vector3.Distance(transform.position, targetLocation) <= radius || (Vector3.Distance(transform.position, lastKnownLocation) <= radius) && boomerangStats.IsBoomerang && boomerangStats.GoingBack){ //if the projectile is at the end of its flight
+            if(Vector3.Distance(transform.position, targetLocation) <= radius || ( (Vector3.Distance(transform.position, lastKnownLocation) <= radius) && boomerangStats.IsBoomerang && boomerangStats.GoingBack) ){ //if the projectile is at the end of its flight
                 if(grenadeStats.IsGrenade)
                     grenadeStats.Explode(gameObject);
                 else if(selfDestructStats.SelfDestructs)
@@ -206,7 +225,6 @@ public class Projectile : MonoBehaviour, IAbility
                 }
             }
         }
-        
     }
 
     public void hit(Component damageable) {
@@ -235,5 +253,9 @@ public class Projectile : MonoBehaviour, IAbility
     public void applyAffects(Component damageable) {
         if(freezeStats.CanFreeze)
             (damageable as IDamageable).Stats.FrozenStats.Freeze(freezeStats.FreezeDuration);
+        if(slowStats.CanSlow)
+            (damageable as IDamageable).Stats.SlowedStats.Slow(slowStats.SlowDuration, slowStats.SlowIntensity);
+        if(poisonStats.CanPoison)
+            (damageable as IDamageable).Stats.PoisonedStats.Poison(poisonStats.PoisonDuration, poisonStats.PoisonTick, poisonStats.PoisonDamage);
     }
 }

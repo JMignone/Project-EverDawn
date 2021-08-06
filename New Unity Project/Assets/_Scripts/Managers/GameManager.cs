@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
             Instance.TowerObjects.Remove(objectToRemove);
     }
 
-    public static void RemoveObjectsFromList(GameObject objectToRemove, bool leftTower)
+    public static void RemoveObjectsFromList(GameObject objectToRemove, bool leftTower, bool isKeep)
     {
         Vector3 objectToRemovePosition = objectToRemove.transform.GetChild(0).position;
         objectToRemovePosition = new Vector3(objectToRemovePosition.x, 0 ,objectToRemovePosition.z); // Setting the y to 0 to avoid increased distances with flying units
@@ -105,13 +105,20 @@ public class GameManager : MonoBehaviour
         }
 
         if(!objectToRemove.CompareTag(GameConstants.PLAYER_TAG)) {
-            if(leftTower) 
-                Instance.Players[0].LeftZone = true;
-            else 
-                Instance.Players[0].RightZone = true;
-            Instance.Players[0].Score++;
+            if(isKeep) {
+                Instance.Players[0].Score = 3;
+                //END THE GAME
+            }
+            else {
+                if(leftTower) 
+                    Instance.Players[0].LeftZone = true;
+                else 
+                    Instance.Players[0].RightZone = true;
+                if(Instance.Players[0].Score < 3)
+                    Instance.Players[0].Score++;
+            }
         }
-    /*  else {
+    /*  else { //we may send the enemy score information over the internet rather than the players side instead
             if(leftTower) 
                 Instance.Players[1].LeftZone = true;
             else 
