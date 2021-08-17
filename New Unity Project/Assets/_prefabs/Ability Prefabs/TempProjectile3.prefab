@@ -236,6 +236,14 @@ MonoBehaviour:
     canSlow: 0
     slowDuration: 0
     slowIntensity: 0
+  rootStats:
+    canRoot: 0
+    rootDuration: 0
+  poisonStats:
+    canPoison: 0
+    poisonDamage: 0
+    poisonDuration: 0
+    poisonTick: 0
   lingeringStats:
     lingering: 0
     lingerAtEnd: 0
@@ -250,13 +258,21 @@ MonoBehaviour:
     selfDestructs: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 100
-    explosionRadius: 0
+    explosionRadius: 5.45
+  linearStats:
+    isLinear: 0
+    isVertical: 0
+    isHorizontal: 0
+    explosionEffect: {fileID: 0}
+    explosionDamage: 0
+    explosionWidth: 0
   summonStats:
     isSummon: 1
     summonEffect: {fileID: 0}
     summonUnit: {fileID: 6233150844707143716, guid: d7c397a1cb858434a8225ba56741ec23, type: 3}
+    size: 2
     summonPreview: {fileID: 4409346719447776896, guid: 545779cf297333045a5ad086e79fd511, type: 3}
-    timeToSummon: 6
+    timeToSummon: 3
     currentSummonTime: 0
 --- !u!54 &2595308172099207988
 Rigidbody:

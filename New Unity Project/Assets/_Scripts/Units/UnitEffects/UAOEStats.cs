@@ -50,8 +50,10 @@ public class UAOEStats
         foreach(Collider collider in colliders) {
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                 Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-                if(GameFunctions.CanAttack(go.tag, damageable.tag, damageable.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats))
+                if(GameFunctions.CanAttack(go.tag, damageable.tag, damageable.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
                     GameFunctions.Attack(damageable, damage);
+                    (unit as IDamageable).Stats.ApplyAffects(damageable);
+                }
             }
         }
     }

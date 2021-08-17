@@ -187,7 +187,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2538035110209570739}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2538035109743312921}
@@ -295,6 +295,7 @@ MonoBehaviour:
   baseDamage: 0
   objectAttackable: 2
   canPierce: 0
+  blockable: 0
   aoeStats:
     areaOfEffect: 0
     explosionEffect: {fileID: 0}
@@ -306,6 +307,18 @@ MonoBehaviour:
     canSlow: 0
     slowDuration: 0
     slowIntensity: 0
+  rootStats:
+    canRoot: 0
+    rootDuration: 0
+  poisonStats:
+    canPoison: 0
+    poisonDamage: 0
+    poisonDuration: 0
+    poisonTick: 0
+  knockbackStats:
+    canKnockback: 1
+    knockbackDuration: 1
+    initialSpeed: 30
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0
@@ -332,6 +345,7 @@ MonoBehaviour:
     explosionDamage: 100
     explosionRadius: 15
     grenadeArcMultiplier: 0.2
+  chosenTarget: {fileID: 0}
 --- !u!54 &2538035110669741038
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -28,6 +28,9 @@ public class Building : MonoBehaviour, IDamageable
     private GameConstants.BUILDING_TYPE buildingType; //might not need this as a building that can attack might be better off labeled as a unit
 
     [SerializeField]
+    private GameConstants.BUILDING_SIZE buildingSize;
+
+    [SerializeField]
     private BaseStats stats;
 
     [SerializeField]
@@ -87,6 +90,11 @@ public class Building : MonoBehaviour, IDamageable
         get { return buildingType; } 
     }
 
+    public GameConstants.BUILDING_SIZE BuildingSize
+    {
+        get { return buildingSize; } 
+    }
+
     public BaseStats Stats
     {
         get { return stats; }
@@ -122,8 +130,7 @@ public class Building : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        stats.FrozenStats.StartFrozenStats(gameObject);
-        stats.SlowedStats.StartSlowedStats(gameObject);
+        stats.StartStats(gameObject);
         
         isHoveringAbility = false;
         indicatorNum = 0;
@@ -142,7 +149,7 @@ public class Building : MonoBehaviour, IDamageable
                 Spawn();
             }
             else if(buildingType == GameConstants.BUILDING_TYPE.ATTACK) {
-                if(target == null && !stats.FrozenStats.IsFrozen) { //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
+                if(target == null && stats.CanAct() && stats.IsReady()) { //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                     if(hitTargets.Count > 0) {
                         GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
                         if(go != null)
@@ -180,7 +187,7 @@ public class Building : MonoBehaviour, IDamageable
     }
 
     void Spawn() {
-        if(stats.CurrAttackDelay >= stats.AttackDelay) {
+        if(stats.CurrAttackDelay >= stats.AttackDelay && stats.IsReady()) {
             Vector3 position = agent.transform.position;
             position += transform.forward * -7;
             Quaternion rotation = agent.transform.rotation;
@@ -202,6 +209,7 @@ public class Building : MonoBehaviour, IDamageable
                             stats.AOEStats.Explode(gameObject, target);
                         else
                             GameFunctions.Attack(damageable, stats.BaseDamage);
+                        stats.ApplyAffects(damageable);
                         stats.CurrAttackDelay = 0;
                     }
                 }
@@ -227,8 +235,11 @@ public class Building : MonoBehaviour, IDamageable
                 projectile.hit(unit);
             }
             else if(other.tag == "AbilityHighlight") { //Our we getting previewed for an abililty?
-                indicatorNum++;
-                abilityIndicator.enabled = true;
+                AbilityPreview ability = other.GetComponent<AbilityPreview>();
+                if(GameFunctions.WillHit(ability.ObjectAttackable, this.GetComponent(typeof(IDamageable)))) {
+                    indicatorNum++;
+                    abilityIndicator.enabled = true;
+                }
             }
             else { //is it another units vision/range?
                 Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
@@ -239,7 +250,7 @@ public class Building : MonoBehaviour, IDamageable
                             (unit as IDamageable).InRange++;
                             if(!(unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Add(gameObject);
-                            if((unit as IDamageable).InRange == 1 || (unit as IDamageable).Target == null) {
+                            if(((unit as IDamageable).InRange == 1 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct()) {
                                 GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
                                 if(go != null)
                                     (unit as IDamageable).Target = go;
@@ -261,9 +272,12 @@ public class Building : MonoBehaviour, IDamageable
                 //print("Projectile");
             }
             else if(other.tag == "AbilityHighlight") { //Our we getting previewed for an abililty?
-                indicatorNum--;
-                if(indicatorNum == 0)
-                    abilityIndicator.enabled = false;
+                AbilityPreview ability = other.GetComponent<AbilityPreview>();
+                if(GameFunctions.WillHit(ability.ObjectAttackable, this.GetComponent(typeof(IDamageable)))) {
+                    indicatorNum--;
+                    if(indicatorNum == 0)
+                        abilityIndicator.enabled = false;
+                }
             }
             else { //is it another units vision/range?
                 Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
@@ -299,7 +313,7 @@ public class Building : MonoBehaviour, IDamageable
                 }
                 else if(other.tag == "Vision") { //Are we in their vision detection object?
                     if((unit as IDamageable).HitTargets.Count > 0) {
-                        if((unit as IDamageable).InRange == 0 || (unit as IDamageable).Target == null) {
+                        if(((unit as IDamageable).InRange == 0 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct()) {
                             GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
                             if(go != null)
                                 (unit as IDamageable).Target = go;

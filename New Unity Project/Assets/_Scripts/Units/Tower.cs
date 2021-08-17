@@ -109,9 +109,7 @@ public class Tower : MonoBehaviour, IDamageable
         stats.HealthBar.enabled = false;
         stats.HealthBar.transform.GetChild(0).gameObject.SetActive(false);
 
-        stats.FrozenStats.StartFrozenStats(gameObject);
-        stats.SlowedStats.StartSlowedStats(gameObject);
-        stats.PoisonedStats.StartPoisonedStats(gameObject);
+        stats.StartStats(gameObject);
 
         isHoveringAbility = false;
         abilityIndicator.enabled = false;
@@ -125,7 +123,7 @@ public class Tower : MonoBehaviour, IDamageable
             stats.UpdateStats(inRange, agent, hitTargets, target);
             Attack();
 
-            if(!stats.FrozenStats.IsFrozen) { //if its frozen, we want to keep the tower looking in the same direction
+            if(stats.CanAct()) { //if its stunned, we want to keep the tower looking in the same direction
                 if((inRange > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) && target != null) //is in range, OR is 90% thru attack cycle -
                     lookAtTarget();
                 else 
@@ -166,8 +164,11 @@ public class Tower : MonoBehaviour, IDamageable
                 projectile.hit(unit);
             }
             else if(other.tag == "AbilityHighlight") { //Our we getting previewed for an abililty?
-                indicatorNum++;
-                abilityIndicator.enabled = true;
+                AbilityPreview ability = other.GetComponent<AbilityPreview>();
+                if(GameFunctions.WillHit(ability.ObjectAttackable, this.GetComponent(typeof(IDamageable)))) {
+                    indicatorNum++;
+                    abilityIndicator.enabled = true;
+                }
             }
             else { //is it another units vision/range?
                 Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
@@ -194,9 +195,12 @@ public class Tower : MonoBehaviour, IDamageable
                 //print("Projectile");
             }
             else if(other.tag == "AbilityHighlight") { //Our we getting previewed for an abililty?
-                indicatorNum--;
-                if(indicatorNum == 0)
-                    abilityIndicator.enabled = false;
+                AbilityPreview ability = other.GetComponent<AbilityPreview>();
+                if(GameFunctions.WillHit(ability.ObjectAttackable, this.GetComponent(typeof(IDamageable)))) {
+                    indicatorNum--;
+                    if(indicatorNum == 0)
+                        abilityIndicator.enabled = false;
+                }
             }
             else { //is it another units vision/range?
                 Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
@@ -232,7 +236,7 @@ public class Tower : MonoBehaviour, IDamageable
                 }
                 else if(other.tag == "Vision") { //Are we in their vision detection object?
                     if((unit as IDamageable).HitTargets.Count > 0) {
-                        if( ((unit as IDamageable).InRange == 0 || (unit as IDamageable).Target == null) && !(unit as IDamageable).Stats.FrozenStats.IsFrozen) {
+                        if( ((unit as IDamageable).InRange == 0 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct()) {
                             GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats); //
                             if(go != null)
                                 (unit as IDamageable).Target = go;

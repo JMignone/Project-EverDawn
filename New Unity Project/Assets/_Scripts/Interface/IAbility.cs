@@ -3,7 +3,8 @@ using UnityEngine;
 
 public interface IAbility
 {
+    float Range { get; }
+    int AreaMask();
     GameConstants.OBJECT_ATTACKABLE ObjectAttackable { get; }
-    bool WillHit(Component damageable);
-    void applyAffects(Component damageable);
+    void ApplyAffects(Component damageable);
 }

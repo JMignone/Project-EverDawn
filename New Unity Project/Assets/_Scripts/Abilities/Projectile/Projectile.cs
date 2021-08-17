@@ -29,6 +29,9 @@ public class Projectile : MonoBehaviour, IAbility
     private bool canPierce;
 
     [SerializeField]
+    private bool blockable; //simply means that a projectile can hit somthing that it didnt nessesarly target. Automatically set to true if there is no specific target
+
+    [SerializeField]
     private AOEStats aoeStats;
 
     [SerializeField]
@@ -38,7 +41,13 @@ public class Projectile : MonoBehaviour, IAbility
     private SlowStats slowStats;
 
     [SerializeField]
+    private RootStats rootStats;
+
+    [SerializeField]
     private PoisonStats poisonStats;
+
+    [SerializeField]
+    private KnockbackStats knockbackStats;
 
     [SerializeField]
     private BoomerangStats boomerangStats;
@@ -53,6 +62,10 @@ public class Projectile : MonoBehaviour, IAbility
     private GrenadeStats grenadeStats;
 
     private Vector3 targetLocation;
+
+    [SerializeField]
+    private Actor3D chosenTarget;
+
     //Below 2 are currently only used for boomerang, but may be needed for others
     private Unit unit;
     private Vector3 lastKnownLocation;
@@ -114,9 +127,19 @@ public class Projectile : MonoBehaviour, IAbility
         get { return slowStats; }
     }
 
+    public RootStats RootStats
+    {
+        get { return rootStats; }
+    }
+
     public PoisonStats PoisonStats
     {
         get { return poisonStats; }
+    }
+
+    public KnockbackStats KnockbackStats
+    {
+        get { return knockbackStats; }
     }
 
     public BoomerangStats BoomerangStats
@@ -149,22 +172,34 @@ public class Projectile : MonoBehaviour, IAbility
         set { targetLocation = value; }
     }
 
+    public Actor3D ChosenTarget
+    {
+        get { return chosenTarget; }
+        set { chosenTarget = value; }
+    }
+
+    public bool Blockable
+    {
+        get { return blockable; }
+    }
+
     public Unit Unit
     {
         get { return unit; }
         set { unit = value; }
     }
 
-    public bool WillHit(Component damageable) {
-        bool willHit = false;
-        if(objectAttackable == GameConstants.OBJECT_ATTACKABLE.BOTH) //If the unit can attack the flying or ground unit, continue
-            willHit = true;
-        else if(objectAttackable == GameConstants.OBJECT_ATTACKABLE.GROUND && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND)
-            willHit = true;
-        else if(objectAttackable == GameConstants.OBJECT_ATTACKABLE.FLYING && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
-            willHit = true;
-        return willHit;
+    public int AreaMask() //this function is only needed in cal, however we need it in the interface
+    {
+        return 1;
     }
+
+    /*public Vector3 Target() {
+        if(chosenTarget != null)
+            return chosenTarget.transform.position;
+        else
+            return targetLocation;
+    }*/
 
     private void Start() {
         hitBox.radius = radius;
@@ -177,6 +212,9 @@ public class Projectile : MonoBehaviour, IAbility
         if(boomerangStats.IsBoomerang && grenadeStats.IsGrenade)
             boomerangStats.IsBoomerang = false;
 
+        if(chosenTarget == null)
+            blockable = true;
+
     }
 
     private void Update() {
@@ -184,14 +222,21 @@ public class Projectile : MonoBehaviour, IAbility
             lastKnownLocation = unit.Agent.transform.position;
             lastKnownLocation.y = 0;
         }
+        if(chosenTarget != null && !boomerangStats.GoingBack) {//this is only used if the projectile was fired at a specified target. Must check if its a boomerang and already going back
+            targetLocation = chosenTarget.transform.position;
+            
+            Vector3 direction = targetLocation - transform.position;
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = targetRotation;
+        }
         if(lingeringStats.CurrentlyLingering) //if currently lingering
             lingeringStats.UpdateLingeringStats(gameObject);
         float speedReduction = 1; //a multiply used by boomerang projectiles to slow down near the end of flight
         if(boomerangStats.IsBoomerang)
-            speedReduction = boomerangStats.SpeedReduction(gameObject, lastKnownLocation);
+            speedReduction = boomerangStats.SpeedReduction(gameObject, targetLocation, lastKnownLocation);
         if(!lingeringStats.CurrentlyLingering || (lingeringStats.LingerDuringFlight && lingeringStats.IsInFlight)) { //if the projectile doesnt linger or lingers during flight
             if(grenadeStats.IsGrenade)
-                grenadeStats.UpdateGrenadeStats(gameObject, speed);
+                grenadeStats.UpdateGrenadeStats(gameObject, targetLocation, speed);
             else {
                 if(boomerangStats.IsBoomerang && boomerangStats.GoingBack) {
                     Vector3 direction = transform.position - lastKnownLocation;
@@ -228,34 +273,40 @@ public class Projectile : MonoBehaviour, IAbility
     }
 
     public void hit(Component damageable) {
-        if(WillHit(damageable)) {
-            if(aoeStats.AreaOfEffect)
-                aoeStats.Explode(gameObject);
-            else {
-                GameFunctions.Attack(damageable, baseDamage);
-                applyAffects(damageable);
-            }
-            if(!canPierce) {
-                if(selfDestructStats.SelfDestructs && !aoeStats.AreaOfEffect) //if the projectile does not do AOE, but rather self destructs
-                    selfDestructStats.Explode(gameObject);
-                if(lingeringStats.Lingering && lingeringStats.LingerAtEnd) {
-                    lingeringStats.CurrentlyLingering = true;
-                    lingeringStats.IsInFlight = false;
-                    lingeringStats.CurrentLingeringTime = 0;
-                    hitBox.enabled = false;
+        if(blockable || (damageable as IDamageable).Agent == chosenTarget) { //if the projectile is blockable, or this is infact the chosen target
+            if(GameFunctions.WillHit(objectAttackable, damageable)) {
+                if(aoeStats.AreaOfEffect)
+                    aoeStats.Explode(gameObject);
+                else {
+                    GameFunctions.Attack(damageable, baseDamage);
+                    ApplyAffects(damageable);
                 }
-                else
-                    Destroy(gameObject);
+                if(!canPierce) {
+                    if(selfDestructStats.SelfDestructs && !aoeStats.AreaOfEffect) //if the projectile does not do AOE, but rather self destructs
+                        selfDestructStats.Explode(gameObject);
+                    if(lingeringStats.Lingering && lingeringStats.LingerAtEnd) {
+                        lingeringStats.CurrentlyLingering = true;
+                        lingeringStats.IsInFlight = false;
+                        lingeringStats.CurrentLingeringTime = 0;
+                        hitBox.enabled = false;
+                    }
+                    else
+                        Destroy(gameObject);
+                }
             }
         }
     }
 
-    public void applyAffects(Component damageable) {
+    public void ApplyAffects(Component damageable) {
         if(freezeStats.CanFreeze)
             (damageable as IDamageable).Stats.FrozenStats.Freeze(freezeStats.FreezeDuration);
         if(slowStats.CanSlow)
             (damageable as IDamageable).Stats.SlowedStats.Slow(slowStats.SlowDuration, slowStats.SlowIntensity);
+        if(rootStats.CanRoot)
+            (damageable as IDamageable).Stats.RootedStats.Root(RootStats.RootDuration);
         if(poisonStats.CanPoison)
             (damageable as IDamageable).Stats.PoisonedStats.Poison(poisonStats.PoisonDuration, poisonStats.PoisonTick, poisonStats.PoisonDamage);
+        if(knockbackStats.CanKnockback)
+            (damageable as IDamageable).Stats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position);
     }
 }

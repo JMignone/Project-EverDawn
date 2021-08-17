@@ -5,6 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class SlowedStats
 {
+    [SerializeField]
+    private bool cantBeSlowed;
+
+    [SerializeField]
     private bool isSlowed;
 
     [SerializeField]
@@ -18,6 +22,12 @@ public class SlowedStats
 
     private Component damageableComponent;
     private float speed;
+
+    public bool CantBeSlowed
+    {
+        get { return cantBeSlowed; }
+        set { cantBeSlowed = value; }
+    }
 
     public bool IsSlowed
     {
@@ -58,6 +68,7 @@ public class SlowedStats
     public void StartSlowedStats(GameObject go) {
         damageableComponent = go.GetComponent(typeof(IDamageable));
         speed = (damageableComponent as IDamageable).Stats.MoveSpeed;
+        isSlowed = false;
         slowDelay = 0;
         currentSlowDelay = 0;
         currentSlowIntensity = 1;
@@ -73,13 +84,15 @@ public class SlowedStats
     }
 
     public void Slow(float duration, float intensity) {
-        isSlowed = true;
-        slowDelay = duration;
-        currentSlowDelay = 0;
-        currentSlowIntensity = intensity;
-        (damageableComponent as IDamageable).UnitSprite.Animator.speed = intensity;
-        (damageableComponent as IDamageable).Stats.CurrAttackDelay = 0;
-        (damageableComponent as IDamageable).Stats.MoveSpeed = speed*intensity;
+        if(!cantBeSlowed) {
+            isSlowed = true;
+            slowDelay = duration;
+            currentSlowDelay = 0;
+            currentSlowIntensity = intensity;
+            (damageableComponent as IDamageable).UnitSprite.Animator.speed = intensity;
+            (damageableComponent as IDamageable).Stats.CurrAttackDelay = 0;
+            (damageableComponent as IDamageable).Stats.MoveSpeed = speed*intensity;
+        }
     }
 
     public void unSlow() {

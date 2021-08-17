@@ -6,6 +6,10 @@ using UnityEngine.UI;
 [System.Serializable]
 public class FrozenStats
 {
+    [SerializeField]
+    private bool cantBeFrozen;
+
+    [SerializeField]
     private bool isFrozen;
 
     [SerializeField]
@@ -15,6 +19,12 @@ public class FrozenStats
     private float currentFrozenDelay;
 
     private Component damageableComponent;
+
+    public bool CantBeFrozen
+    {
+        get { return cantBeFrozen; }
+        set { cantBeFrozen = value; }
+    }
 
     public bool IsFrozen
     {
@@ -42,6 +52,7 @@ public class FrozenStats
 
     public void StartFrozenStats(GameObject go) {
         damageableComponent = go.GetComponent(typeof(IDamageable));
+        isFrozen = false;
         frozenDelay = 0;
         currentFrozenDelay = 0;
     }
@@ -56,28 +67,29 @@ public class FrozenStats
     }
 
     public void Freeze(float duration) {
-        isFrozen = true;
-        frozenDelay = duration;
-        currentFrozenDelay = 0;
-        (damageableComponent as IDamageable).UnitSprite.Animator.enabled = false;
-        (damageableComponent as IDamageable).Target = null;
-        (damageableComponent as IDamageable).Stats.CurrAttackDelay = 0;
-        if(damageableComponent.transform.GetChild(1).GetChild(4).childCount > 1) { //if the unit has an ability, set its image colors to red
-            foreach(Transform child in damageableComponent.transform.GetChild(1).GetChild(4).GetChild(2)) {
-                if(child.childCount > 0) //this means its a complicated summon preview
-                    child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,0,0,50);
-                else
-                    child.GetComponent<Image>().color = new Color32(255,0,0,50);
+        if(!cantBeFrozen) {
+            isFrozen = true;
+            frozenDelay = duration;
+            currentFrozenDelay = 0;
+            (damageableComponent as IDamageable).UnitSprite.Animator.enabled = false;
+            (damageableComponent as IDamageable).Target = null;
+            (damageableComponent as IDamageable).Stats.CurrAttackDelay = 0;
+            if(damageableComponent.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors to red
+                foreach(Transform child in damageableComponent.transform.GetChild(1).GetChild(5).GetChild(2)) {
+                    if(child.childCount > 0) //this means its a complicated summon preview
+                        child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,0,0,50);
+                    else
+                        child.GetComponent<Image>().color = new Color32(255,0,0,50);
+                }
             }
-        }
-            
+        }   
     }
 
     public void unFreeze() {
         isFrozen = false;
         (damageableComponent as IDamageable).UnitSprite.Animator.enabled = true;
-        if(damageableComponent.transform.GetChild(1).GetChild(4).childCount > 1) { //if the unit has an ability, set its image colors back to green
-            foreach(Transform child in damageableComponent.transform.GetChild(1).GetChild(4).GetChild(2)) {
+        if(damageableComponent.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors back to green
+            foreach(Transform child in damageableComponent.transform.GetChild(1).GetChild(5).GetChild(2)) {
                 if(child.childCount > 0) //this means its a complicated summon preview
                     child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,255,255,100);
                 else

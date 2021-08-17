@@ -68,9 +68,9 @@ public class LinearStats
                 foreach(Collider collider in collidersVert) {
                     if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-                        if((ability as IAbility).WillHit(damageable)) {
+                        if(GameFunctions.WillHit((ability as IAbility).ObjectAttackable, damageable)) {
                             GameFunctions.Attack(damageable, explosionDamage);
-                            (ability as IAbility).applyAffects(damageable);
+                            (ability as IAbility).ApplyAffects(damageable);
                         }
                     }
                 }
@@ -80,9 +80,9 @@ public class LinearStats
                 foreach(Collider collider in collidersHorz) {
                     if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-                        if((ability as IAbility).WillHit(damageable)) {
+                        if(GameFunctions.WillHit((ability as IAbility).ObjectAttackable, damageable)) {
                             GameFunctions.Attack(damageable, explosionDamage);
-                            (ability as IAbility).applyAffects(damageable);
+                            (ability as IAbility).ApplyAffects(damageable);
                         }
                     }
                 }

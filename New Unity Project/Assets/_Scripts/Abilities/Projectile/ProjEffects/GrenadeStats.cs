@@ -67,7 +67,7 @@ public class GrenadeStats
     */
     private Vector3 arcStart;
     private Vector3 arcApex;
-    private Vector3 arcEnd;
+    //private Vector3 arcEnd;
     private float distanceCovered = 0.0f;
     public void StartGrenadeStats(GameObject go) {
         if(isGrenade) {
@@ -77,7 +77,7 @@ public class GrenadeStats
             
             if(grenadeArcMultiplier < .1) //preventing divide by zero
                 grenadeArcMultiplier = .1f;
-            arcEnd = projectile.TargetLocation;
+            Vector3 arcEnd = projectile.TargetLocation;
             if(isAirStrike) {
                 if(startLocation == GameConstants.AIR_STRIKE_LOCATION.BOTTOM)
                     arcStart = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
@@ -93,7 +93,7 @@ public class GrenadeStats
         }
     }
 
-    public void UpdateGrenadeStats(GameObject go, float speed) {
+    public void UpdateGrenadeStats(GameObject go, Vector3 arcEnd, float speed) {
         if(isGrenade) {//do some kind of arcing here
             distanceCovered += speed/Vector3.Distance(arcStart, arcEnd) * Time.deltaTime;
 
@@ -113,9 +113,9 @@ public class GrenadeStats
         foreach(Collider collider in colliders) {
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                 Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-                if(projectile.WillHit(damageable)) {
+                if(GameFunctions.WillHit(projectile.ObjectAttackable, damageable)) {
                     GameFunctions.Attack(damageable, explosionDamage);
-                    projectile.applyAffects(damageable);
+                    projectile.ApplyAffects(damageable);
                 }
             }
         }

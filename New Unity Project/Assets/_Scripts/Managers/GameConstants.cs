@@ -40,6 +40,17 @@ public static class GameConstants
         SPAWN
     }
 
+    public enum BUILDING_SIZE {
+        SMALL,
+        BIG
+    }
+
+    public enum SUMMON_SIZE {
+        NONE,
+        SMALL,
+        BIG
+    }
+
     public enum ATTACK_PRIORITY {
         EVERYTHING,
         STRUCTURE

@@ -27,6 +27,8 @@ public class BaseStats
     [SerializeField]
     private float rotationSpeed;
     [SerializeField]
+    private SummoningSicknessUI summoningSicknessUI;
+    [SerializeField]
     private Image healthBar;
     [SerializeField]
     private SphereCollider detectionObject;
@@ -49,9 +51,17 @@ public class BaseStats
     [SerializeField]
     private FrozenStats frozenStats;
     [SerializeField]
+    private SlowStats slowStats;
+    [SerializeField]
     private SlowedStats slowedStats;
     [SerializeField]
+    private RootedStats rootedStats;
+    [SerializeField]
     private PoisonedStats poisonedStats;
+    [SerializeField]
+    private UKnockbackStats knockbackStats;
+    [SerializeField]
+    private KnockbackedStats knockbackedStats;
 
     public float PercentHealth {
         get { return currHealth/maxHealth; }
@@ -185,14 +195,53 @@ public class BaseStats
         get { return frozenStats; }
     }
 
+    public SlowStats SlowStats
+    {
+        get { return slowStats; }
+    }
+
     public SlowedStats SlowedStats 
     {
         get { return slowedStats; }
     }
 
+    public RootedStats RootedStats 
+    {
+        get { return rootedStats; }
+    }
+
     public PoisonedStats PoisonedStats
     {
         get { return poisonedStats; }
+    }
+
+    public UKnockbackStats KnockbackStats
+    {
+        get { return knockbackStats; }
+    }
+
+    public KnockbackedStats KnockbackedStats
+    {
+        get { return knockbackedStats; }
+    }
+
+    public bool IsReady() { return summoningSicknessUI.IsReady; }
+
+    public bool CanAct() {
+        if(frozenStats.IsFrozen)
+            return false;
+        if(knockbackedStats.IsKnockbacked)
+            return false;
+        return true;
+    }
+
+    public void StartStats(GameObject go) {
+        frozenStats.StartFrozenStats(go);
+        slowedStats.StartSlowedStats(go);
+        poisonedStats.StartPoisonedStats(go);
+        rootedStats.StartRootedStats(go);
+        knockbackedStats.StartKnockbackedStats(go);
+        knockbackStats.StartKnockbackStats(go);
     }
 
     public void UpdateStats(int inRange, Actor3D unitAgent, List<GameObject> hitTargets, GameObject target) {
@@ -205,49 +254,55 @@ public class BaseStats
             HealthBar.transform.GetChild(0).gameObject.SetActive(true);
         }
         HealthBar.fillAmount = PercentHealth;
-        if(healthDecay > 0)
-            currHealth -= healthDecay*maxHealth * Time.deltaTime ; // lowers hp by 5% of maxHp every second ?? should this line be at the top ??
 
+        summoningSicknessUI.UpdateStats();
         frozenStats.UpdateFrozenStats();
         slowedStats.UpdateSlowedStats();
         poisonedStats.UpdatePoisonedStats();
+        rootedStats.UpdateRootedStats();
+        knockbackedStats.UpdateKnockbackedStats();
 
         detectionObject.radius = range;
         visionObject.radius = visionRange;
 
-        bool inVision = false;
-        if(target != null)
-            inVision = hitTargets.Contains(target);       
-        if( ( inRange > 0 || (currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && inVision) ) && !frozenStats.IsFrozen ) { //if target is inRange, or the attack is nearly ready and their within vision AND not frozen
-            
-            if(target != null) {
-                Vector3 directionToTarget = unitAgent.transform.position - target.transform.GetChild(0).position;
-                directionToTarget.y = 0; // Ignore Y, usful for airborne units
-                float angle = Vector3.Angle(unitAgent.transform.forward, directionToTarget); 
+        if(IsReady()) {
+            if(healthDecay > 0)
+                currHealth -= healthDecay*maxHealth * Time.deltaTime ; // lowers hp by 5% of maxHp every second ?? should this line be at the top ??
 
-                //180 - *** might be the source of an error later on, depends on the angle of a unit agent at the start, right now they are all 180
-                if(180-Mathf.Abs(angle) < GameConstants.MAXIMUM_ATTACK_ANGLE) {
-                    if(currAttackDelay < attackDelay) 
-                        currAttackDelay += Time.deltaTime * slowedStats.CurrentSlowIntensity;
-                    else
-                        currAttackDelay = 0;
+            bool inVision = false;
+            if(target != null)
+                inVision = hitTargets.Contains(target);       
+            if( ( inRange > 0 || (currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && inVision) ) && CanAct() ) { //if target is inRange, or the attack is nearly ready and their within vision AND not stunned
+                
+                if(target != null) {
+                    Vector3 directionToTarget = unitAgent.transform.position - target.transform.GetChild(0).position;
+                    directionToTarget.y = 0; // Ignore Y, usful for airborne units
+                    float angle = Vector3.Angle(unitAgent.transform.forward, directionToTarget); 
+
+                    //180 - *** might be the source of an error later on, depends on the angle of a unit agent at the start, right now they are all 180
+                    if(180-Mathf.Abs(angle) < GameConstants.MAXIMUM_ATTACK_ANGLE) {
+                        if(currAttackDelay < attackDelay) 
+                            currAttackDelay += Time.deltaTime * slowedStats.CurrentSlowIntensity;
+                        else
+                            currAttackDelay = 0;
+                    }
+                    else {
+                        if(currAttackDelay < attackDelay*GameConstants.ATTACK_READY_PERCENTAGE) 
+                            currAttackDelay += Time.deltaTime * slowedStats.CurrentSlowIntensity;
+                    }
                 }
-                else {
+                else { //this may occur for a few frames when a units target dies, but there are still other units it can target, it just has not updated to the new target yet
                     if(currAttackDelay < attackDelay*GameConstants.ATTACK_READY_PERCENTAGE) 
                         currAttackDelay += Time.deltaTime * slowedStats.CurrentSlowIntensity;
                 }
             }
-            else { //this may occur for a few frames when a units target dies, but there are still other units it can target, it just has not updated to the new target yet
-                if(currAttackDelay < attackDelay*GameConstants.ATTACK_READY_PERCENTAGE) 
+            else if(inVision) { //if the target is within vision
+                if(currAttackDelay < attackDelay*GameConstants.ATTACK_CHARGE_LIMITER) 
                     currAttackDelay += Time.deltaTime * slowedStats.CurrentSlowIntensity;
             }
+            else 
+                currAttackDelay = 0;
         }
-        else if(inVision) { //if the target is within vision
-            if(currAttackDelay < attackDelay*GameConstants.ATTACK_CHARGE_LIMITER) 
-                currAttackDelay += Time.deltaTime * slowedStats.CurrentSlowIntensity;
-        }
-        else 
-            currAttackDelay = 0;
     }
 
     public void UpdateBuildingStats() {
@@ -260,16 +315,29 @@ public class BaseStats
             HealthBar.transform.GetChild(0).gameObject.SetActive(true);
         }
         HealthBar.fillAmount = PercentHealth;
-        currHealth -= healthDecay*maxHealth * Time.deltaTime ; // lowers hp by 5% of maxHp every second ?? should this line be at the top ??
 
+        summoningSicknessUI.UpdateStats();
         frozenStats.UpdateFrozenStats();
+        slowedStats.UpdateSlowedStats();
+        poisonedStats.UpdatePoisonedStats();
+        rootedStats.UpdateRootedStats();
 
-        if(currAttackDelay < attackDelay ) {
-            if(!frozenStats.IsFrozen)
-                currAttackDelay += Time.deltaTime * slowedStats.CurrentSlowIntensity;
+        if(IsReady()) {
+            if(healthDecay > 0)
+                currHealth -= healthDecay*maxHealth * Time.deltaTime ; // lowers hp by 5% of maxHp every second ?? should this line be at the top ??
+            if(currAttackDelay < attackDelay ) {
+                if(CanAct())
+                    currAttackDelay += Time.deltaTime * slowedStats.CurrentSlowIntensity;
+            }
+            else
+                currAttackDelay = 0;
         }
-        else
-            currAttackDelay = 0;
     }
-    
+
+    public void ApplyAffects(Component damageable) {
+        if(slowStats.CanSlow)
+            (damageable as IDamageable).Stats.SlowedStats.Slow(slowStats.SlowDuration, slowStats.SlowIntensity);
+        if(knockbackStats.CanKnockback)
+            (damageable as IDamageable).Stats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, knockbackStats.UnitPosition);
+    }
 }

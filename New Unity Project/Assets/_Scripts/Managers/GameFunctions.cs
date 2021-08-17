@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public static class GameFunctions
 {
-    public static bool CanAttack(string playerTag, string enemyTag, Component damageable, BaseStats stats) {
+    public static bool CanAttack(string playerTag, string enemyTag, Component damageable, BaseStats stats) { //returns if a unit can attack another
         if(damageable) {
             if(playerTag != enemyTag) {
                 bool objectAttackable = false;
@@ -25,6 +25,17 @@ public static class GameFunctions
             }   
         }
         return false;
+    }
+
+    public static bool WillHit(GameConstants.OBJECT_ATTACKABLE objectAttackable, Component damageable) { //returns if an ability will hit its target
+        bool willHit = false;
+        if(objectAttackable == GameConstants.OBJECT_ATTACKABLE.BOTH) //If the unit can attack the flying or ground unit, continue
+            willHit = true;
+        else if(objectAttackable == GameConstants.OBJECT_ATTACKABLE.GROUND && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND)
+            willHit = true;
+        else if(objectAttackable == GameConstants.OBJECT_ATTACKABLE.FLYING && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
+            willHit = true;
+        return willHit;
     }
 
     public static void Attack(Component damageable, float baseDamage) {
@@ -98,13 +109,29 @@ public static class GameFunctions
         startPosition += direction.normalized * radius;
         if(isGrenade && projectile.GrenadeStats.IsAirStrike)
             startPosition = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
+
         GameObject go = GameObject.Instantiate(prefab, startPosition, targetRotation, GameManager.GetUnitsFolder());
-        if(unit == null && !isGrenade) //if units = null, then this is casted as a spell
-            go.GetComponent<Projectile>().TargetLocation = endPosition;
-        else {
-            go.GetComponent<Projectile>().TargetLocation = endPosition;
-            go.GetComponent<Projectile>().Unit = unit;
-        }
+        go.GetComponent<Projectile>().TargetLocation = endPosition;
+        go.GetComponent<Projectile>().Unit = unit;
+    }
+
+    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, Unit unit) {
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        float distance = Vector3.Distance(startPosition, chosenTarget.transform.position);
+        Vector3 endPosition = chosenTarget.transform.position;
+        Projectile projectile = prefab.GetComponent<Projectile>();
+
+        float radius = projectile.Radius;
+        bool isGrenade = projectile.GrenadeStats.IsGrenade;
+
+        startPosition += direction.normalized * radius;
+        if(isGrenade && projectile.GrenadeStats.IsAirStrike)
+            startPosition = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
+
+        GameObject go = GameObject.Instantiate(prefab, startPosition, targetRotation, GameManager.GetUnitsFolder());
+        go.GetComponent<Projectile>().TargetLocation = endPosition;
+        go.GetComponent<Projectile>().ChosenTarget = chosenTarget;
+        go.GetComponent<Projectile>().Unit = unit;
     }
 
     public static void FireCAL(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, Unit unit) {
@@ -127,6 +154,23 @@ public static class GameFunctions
         }
         GameObject go = GameObject.Instantiate(prefab, endPosition, targetRotation, GameManager.GetUnitsFolder());
         go.GetComponent<CreateAtLocation>().TargetLocation = endPosition;
+        go.GetComponent<CreateAtLocation>().Unit = unit;
+    }
+
+    public static void FireCAL(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, Unit unit) {
+        Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
+        float distance = Vector3.Distance(startPosition, chosenTarget.transform.position);
+        Vector3 endPosition = chosenTarget.transform.position;
+        CreateAtLocation cal = prefab.GetComponent<CreateAtLocation>();
+
+        float range = cal.Range;
+        float radius = cal.Radius;
+        if(distance > (range - radius))
+            endPosition = startPosition + (direction.normalized * (range - radius));
+
+        GameObject go = GameObject.Instantiate(prefab, endPosition, targetRotation, GameManager.GetUnitsFolder());
+        go.GetComponent<CreateAtLocation>().TargetLocation = endPosition;
+        go.GetComponent<CreateAtLocation>().ChosenTarget = chosenTarget;
         go.GetComponent<CreateAtLocation>().Unit = unit;
     }
 

@@ -15,6 +15,9 @@ public class SummonStats
     private GameObject summonUnit;
 
     [SerializeField]
+    private GameConstants.SUMMON_SIZE size;
+
+    [SerializeField]
     private GameObject summonPreview;
 
     [SerializeField]
@@ -38,6 +41,11 @@ public class SummonStats
         get { return summonUnit; }
     }
 
+    public GameConstants.SUMMON_SIZE Size
+    {
+        get { return size; }
+    }
+
     public GameObject SummonPreview
     {
         get { return summonPreview; }
@@ -53,19 +61,27 @@ public class SummonStats
         get { return currentSummonTime; }
     }
 
+    public int AreaMask()
+    {
+        if(size == GameConstants.SUMMON_SIZE.BIG)
+            return 32; //32 = Big Building area
+        else if(size == GameConstants.SUMMON_SIZE.SMALL)
+            return 16; //16 = Small Building area
+        else
+            return 1; //1 = Walkable area
+    }
+
     public void StartSummonStats()
     {
         currentSummonTime = 0;
     }
 
-    public void UpdateSummonStats(GameObject go, bool isFrozen) 
+    public void UpdateSummonStats(GameObject go, bool isStunned) 
     {
-        if(currentSummonTime < timeToSummon && !isFrozen) 
+        if(currentSummonTime < timeToSummon && !isStunned) 
             currentSummonTime += Time.deltaTime;
-        else {
+        else
             Summon(go, currentSummonTime/timeToSummon);
-            //MonoBehaviour.Destroy(go);
-        }
     }
 
     private void Summon(GameObject go, float percentHealth) {

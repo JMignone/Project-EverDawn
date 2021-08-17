@@ -5,6 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class PoisonedStats
 {
+    [SerializeField]
+    private bool cantBePoisoned;
+
+    [SerializeField]
     private bool isPoisoned;
     private float poisonedDamage;
 
@@ -18,6 +22,12 @@ public class PoisonedStats
     private float currentPoisonDelay;
 
     private Component damageableComponent;
+
+    public bool CantBePoisoned
+    {
+        get { return cantBePoisoned; }
+        set { cantBePoisoned = value; }
+    }
 
     public bool IsPoisoned
     {
@@ -56,7 +66,7 @@ public class PoisonedStats
 
     public void StartPoisonedStats(GameObject go) {
         damageableComponent = go.GetComponent(typeof(IDamageable));
-        currentPoisonDelay = 0;
+        isPoisoned = false;
     }
 
     public void UpdatePoisonedStats() {
@@ -76,14 +86,12 @@ public class PoisonedStats
     }
 
     public void Poison(float duration, float tick, float damage) {
-        isPoisoned = true;
-        poisonedDuration = duration;
-        poisonedTick = tick;
-        currentPoisonDelay = 0;
-        poisonedDamage = damage;
-    }
-
-    public void unSlow() {
-        isPoisoned = false;
+        if(!cantBePoisoned) {
+            isPoisoned = true;
+            poisonedDuration = duration;
+            poisonedTick = tick;
+            currentPoisonDelay = 0;
+            poisonedDamage = damage;
+        }
     }
 }

@@ -10,7 +10,7 @@ public class BoomerangStats
     private bool isBoomerang;
 
     private Vector3 startLocation;
-    private Vector3 reboundLocation;
+    //private Vector3 reboundLocation;
     private bool goingBack;
     private float speedModifier;
 
@@ -28,12 +28,12 @@ public class BoomerangStats
         get { return startLocation; }
         set { startLocation = value; }
     }
-
+/*
     public Vector3 ReboundLocation
     {
         get { return reboundLocation; }
         set { reboundLocation = value; }
-    }
+    }*/
 
     public bool GoingBack
     {
@@ -49,7 +49,7 @@ public class BoomerangStats
     public void StartBoomerangStats(GameObject go) {
         goingBack = false;
         startLocation = go.transform.position;
-        reboundLocation = go.GetComponent<Projectile>().TargetLocation;
+        //reboundLocation = go.GetComponent<Projectile>().TargetLocation;
         if(percentToSlow == 0) //0 will cause the projectile to not move
             percentToSlow = .05f;
         speedModifier = 1; //this value is to increase the speed as the projectile goes back to prevent it from chasing the unit if the unit gets knocked away
@@ -60,7 +60,7 @@ public class BoomerangStats
         speedModifier += Time.deltaTime * 1f;
     }
 
-    public float SpeedReduction(GameObject go, Vector3 lastKnownLocation) {
+    public float SpeedReduction(GameObject go, Vector3 reboundLocation, Vector3 lastKnownLocation) {
         Vector3 currentPostion = go.transform.position;
         float totalDistance;
         float distance;

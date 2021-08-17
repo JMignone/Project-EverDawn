@@ -38,9 +38,9 @@ public class AOEStats
         foreach(Collider collider in colliders) {
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                 Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-                if(projectile.WillHit(damageable)) {
+                if(GameFunctions.WillHit(projectile.ObjectAttackable, damageable)) {
                     GameFunctions.Attack(damageable, damage);
-                    projectile.applyAffects(damageable);
+                    projectile.ApplyAffects(damageable);
                 }
             }
         }

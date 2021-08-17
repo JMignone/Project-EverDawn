@@ -16,6 +16,9 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     [SerializeField]
     private GameConstants.OBJECT_ATTACKABLE objectAttackable;
 
+    //[SerializeField]
+    //private bool blockable; //currently not sure if we will need this for CAL's. Description of this var is in Projectile
+
     [SerializeField]
     private FreezeStats freezeStats;
 
@@ -23,7 +26,13 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     private SlowStats slowStats;
 
     [SerializeField]
+    private RootStats rootStats;
+
+    [SerializeField]
     private PoisonStats poisonStats;
+
+    [SerializeField]
+    private KnockbackStats knockbackStats;
 
     [SerializeField]
     private LingeringStats lingeringStats;
@@ -40,6 +49,9 @@ public class CreateAtLocation : MonoBehaviour, IAbility
 
     private Vector3 targetLocation;
     private Unit unit;
+
+    [SerializeField]
+    private Actor3D chosenTarget;
 
     public SphereCollider HitBox
     {
@@ -72,9 +84,19 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         get { return slowStats; }
     }
 
+    public RootStats RootStats
+    {
+        get { return rootStats; }
+    }
+
     public PoisonStats PoisonStats
     {
         get { return poisonStats; }
+    }
+
+    public KnockbackStats KnockbackStats
+    {
+        get { return knockbackStats; }
     }
 
     public LingeringStats LingeringStats
@@ -103,10 +125,24 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         set { targetLocation = value; }
     }
 
+    public Actor3D ChosenTarget
+    {
+        get { return chosenTarget; }
+        set { chosenTarget = value; }
+    }
+
     public Unit Unit
     {
         get { return unit; }
         set { unit = value; }
+    }
+
+    public int AreaMask()
+    {
+        if(summonStats.IsSummon)
+            return summonStats.AreaMask();
+        else
+            return 1;
     }
 
     private void Start() 
@@ -123,6 +159,9 @@ public class CreateAtLocation : MonoBehaviour, IAbility
             lingeringStats.IsInFlight = false;
             lingeringStats.LingeringRadius = radius;
         }
+
+        //if(chosenTarget == null)
+        //    blockable = true;
     }
 
     private void Update() {
@@ -134,8 +173,8 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         if(lingeringStats.Lingering)
             lingeringStats.UpdateLingeringStats(gameObject);
         if(SummonStats.IsSummon) {
-            if(unit != null) //if the unit is alive, then check if its frozen
-                SummonStats.UpdateSummonStats(gameObject, unit.Stats.FrozenStats.IsFrozen);
+            if(unit != null) //if the unit is alive, then check if its stunned
+                SummonStats.UpdateSummonStats(gameObject, !unit.Stats.CanAct());
             else
                 SummonStats.UpdateSummonStats(gameObject, true);
         }
@@ -144,23 +183,16 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         }
     }
 
-    public bool WillHit(Component damageable) {
-        bool willHit = false;
-        if(objectAttackable == GameConstants.OBJECT_ATTACKABLE.BOTH) //If the unit can attack the flying or ground unit, continue
-            willHit = true;
-        else if(objectAttackable == GameConstants.OBJECT_ATTACKABLE.GROUND && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND)
-            willHit = true;
-        else if(objectAttackable == GameConstants.OBJECT_ATTACKABLE.FLYING && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
-            willHit = true;
-        return willHit;
-    }
-
-    public void applyAffects(Component damageable) {
+    public void ApplyAffects(Component damageable) {
         if(freezeStats.CanFreeze)
             (damageable as IDamageable).Stats.FrozenStats.Freeze(freezeStats.FreezeDuration);
         if(slowStats.CanSlow)
             (damageable as IDamageable).Stats.SlowedStats.Slow(slowStats.SlowDuration, slowStats.SlowIntensity);
+        if(rootStats.CanRoot)
+            (damageable as IDamageable).Stats.RootedStats.Root(RootStats.RootDuration);
         if(poisonStats.CanPoison)
             (damageable as IDamageable).Stats.PoisonedStats.Poison(poisonStats.PoisonDuration, poisonStats.PoisonTick, poisonStats.PoisonDamage);
+        if(knockbackStats.CanKnockback)
+            (damageable as IDamageable).Stats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position);
     }
 }

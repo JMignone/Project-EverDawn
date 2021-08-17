@@ -262,11 +262,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     }
 
     //this function will fix the position of unit placment and the preview with the addition of the no place zones
-    //The values will likely need to be adjusted for diffent arenas and things like that, have to figure that out later
     private Vector3 adjustForSpawnZones(Vector3 position) {
-        float unitOffset = 4; //This is just a number that moves the units away from the red area slighlty
-        float firstAreaBottom = playerInfo.LeftArea.transform.position.z - unitOffset;
-        float secondAreaBottom = playerInfo.TopArea.transform.position.z - unitOffset;
+        float firstAreaBottom = playerInfo.LeftArea.transform.position.z - radius*2;
+        float secondAreaBottom = playerInfo.TopArea.transform.position.z - radius*2;
 
         if(!playerInfo.LeftZone && !playerInfo.RightZone) { //If both zones are active
             if(position.z > firstAreaBottom)

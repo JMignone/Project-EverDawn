@@ -357,6 +357,9 @@ public class Spell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             GameObject go = new GameObject(); //Create the GameObject
             go.name = goProj.name;
 
+            AbilityPreview aPrev = go.AddComponent<AbilityPreview>();
+            aPrev.ObjectAttackable = projectile.ObjectAttackable;
+
             Image previewImage = go.AddComponent<Image>(); //Add the Image Component script
             previewImage.color = new Color32(255,255,255,100);
             previewImage.sprite = abilityPreviewLine; //Set the Sprite of the Image Component on the new GameObject
@@ -388,6 +391,9 @@ public class Spell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
           (projectile.LingeringStats.Lingering && projectile.LingeringStats.LingerAtEnd)) { //we must also add the blow up range
             GameObject goBoom = new GameObject(); //Create the GameObject
             goBoom.name = goProj.name;
+
+            AbilityPreview aPrev = goBoom.AddComponent<AbilityPreview>();
+            aPrev.ObjectAttackable = projectile.ObjectAttackable;
 
             Image previewImageBoom = goBoom.AddComponent<Image>(); //Add the Image Component script
             previewImageBoom.GetComponent<Image>().color = new Color32(255,255,255,100);
@@ -431,14 +437,15 @@ public class Spell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
 
             Image previewImageBoom = go.transform.GetChild(1).GetChild(0).GetComponent<Image>();
             RectTransform previewBoomTransform = go.transform.GetChild(1).GetChild(0).GetComponent<RectTransform>();
-            SphereCollider previewHitBoxBoom = go.transform.GetChild(1).GetChild(0).GetComponent<SphereCollider>();
 
-            float radius = cal.Radius;
+            float radius;
+            if(cal.SummonStats.Size == GameConstants.SUMMON_SIZE.BIG)
+                radius = 6;
+            else 
+                radius = 3;
 
             previewImageBoom.enabled = false;
             previewBoomTransform.sizeDelta = new Vector2(radius*2, radius*2);
-            previewHitBoxBoom.radius = radius;
-            previewHitBoxBoom.enabled = false;
 
             go.transform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
 
@@ -451,6 +458,9 @@ public class Spell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             if(cal.LinearStats.IsVertical || (!cal.LinearStats.IsVertical && !cal.LinearStats.IsHorizontal) ) {//if the linear attack has the vertical component
                 GameObject goLinearVert = new GameObject();
                 goLinearVert.name = goCAL.name;
+
+                AbilityPreview aPrev = goLinearVert.AddComponent<AbilityPreview>();
+                aPrev.ObjectAttackable = cal.ObjectAttackable;
 
                 Image previewImageLinearVert = goLinearVert.AddComponent<Image>(); //Add the Image Component script
                 previewImageLinearVert.GetComponent<Image>().color = new Color32(255,255,255,100);
@@ -477,6 +487,9 @@ public class Spell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
                 GameObject goLinearHorz = new GameObject();
                 goLinearHorz.name = goCAL.name;
 
+                AbilityPreview aPrev = goLinearHorz.AddComponent<AbilityPreview>();
+                aPrev.ObjectAttackable = cal.ObjectAttackable;
+
                 Image previewImageLinearHorz = goLinearHorz.AddComponent<Image>(); //Add the Image Component script
                 previewImageLinearHorz.GetComponent<Image>().color = new Color32(255,255,255,100);
                 previewImageLinearHorz.sprite = abilityPreviewLinear;
@@ -499,16 +512,19 @@ public class Spell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
                 abilityPreviews.Add(goLinearHorz);
             }      
         }
-        else {
+        else if(cal.LingeringStats.Lingering || cal.SelfDestructStats.SelfDestructs) {
             GameObject goBoom = new GameObject(); //Create the GameObject
             goBoom.name = goCAL.name;
+
+            AbilityPreview aPrev = goBoom.AddComponent<AbilityPreview>();
+            aPrev.ObjectAttackable = cal.ObjectAttackable;
 
             Image previewImageBoom = goBoom.AddComponent<Image>(); //Add the Image Component script
             previewImageBoom.GetComponent<Image>().color = new Color32(255,255,255,100);
             previewImageBoom.sprite = abilityPreviewBomb; //Set the Sprite of the Image Component on the new GameObject
             previewImageBoom.enabled = false;
 
-            float radius = cal.Radius;
+            float radius = Math.Max(cal.LingeringStats.LingeringRadius, cal.SelfDestructStats.ExplosionRadius);
 
             SphereCollider previewHitBoxBoom = goBoom.AddComponent<SphereCollider>();
             previewHitBoxBoom.radius = radius;
