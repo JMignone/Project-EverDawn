@@ -182,7 +182,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 abilityUI.AbilityCancel.enabled = true;
 
                 foreach(GameObject preview in abilityPreviews) {
-                    if(preview.tag == "Player") { //this is a summon preview, as its more complicated
+                    if(preview.CompareTag("Player")) { //this is a summon preview, as its more complicated
                         preview.transform.GetChild(1).GetChild(0).GetComponent<Image>().enabled = true;
                         //preview.transform.GetChild(1).GetChild(0).GetComponent<Collider>().enabled = true;
                     }
@@ -245,7 +245,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             abilityUI.AbilityCancel.enabled = false;
 
             foreach(GameObject preview in abilityPreviews) {
-                if(preview.tag == "Player") { //this is a summon preview, as its more complicated
+                if(preview.CompareTag("Player")) { //this is a summon preview, as its more complicated
                     fireMousePosition = preview.transform.GetChild(0).position;
                     preview.transform.GetChild(1).GetChild(0).GetComponent<Image>().enabled = false;
                     //preview.transform.GetChild(1).GetChild(0).GetComponent<Collider>().enabled = false;

@@ -50,6 +50,9 @@ public class Projectile : MonoBehaviour, IAbility
     private KnockbackStats knockbackStats;
 
     [SerializeField]
+    private PullStats pullStats;
+
+    [SerializeField]
     private BoomerangStats boomerangStats;
 
     [SerializeField]
@@ -142,6 +145,16 @@ public class Projectile : MonoBehaviour, IAbility
         get { return knockbackStats; }
     }
 
+    public PullStats PullStats
+    {
+        get { return pullStats; }
+    }
+
+    public Vector3 Position()
+    {
+        return transform.position;
+    }
+
     public BoomerangStats BoomerangStats
     {
         get { return boomerangStats; }
@@ -205,8 +218,9 @@ public class Projectile : MonoBehaviour, IAbility
         hitBox.radius = radius;
         boomerangStats.StartBoomerangStats(gameObject);
         grenadeStats.StartGrenadeStats(gameObject);
-        lingeringStats.StartLingeringStats();
+        lingeringStats.StartLingeringStats(gameObject);
         slowStats.StartSlowStats();
+        pullStats.StartPullStats(gameObject);
 
         //we cant have a grenade and a boomerang
         if(boomerangStats.IsBoomerang && grenadeStats.IsGrenade)

@@ -35,6 +35,9 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     private KnockbackStats knockbackStats;
 
     [SerializeField]
+    private PullStats pullStats;
+
+    [SerializeField]
     private LingeringStats lingeringStats;
 
     [SerializeField]
@@ -99,6 +102,16 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         get { return knockbackStats; }
     }
 
+    public PullStats PullStats
+    {
+        get { return pullStats; }
+    }
+
+    public Vector3 Position()
+    {
+        return transform.position;
+    }
+
     public LingeringStats LingeringStats
     {
         get { return lingeringStats; }
@@ -154,7 +167,7 @@ public class CreateAtLocation : MonoBehaviour, IAbility
             selfDestructStats.ExplosionRadius = radius;
         hasExploded = false;
         if(lingeringStats.Lingering) {
-            lingeringStats.StartLingeringStats();
+            lingeringStats.StartLingeringStats(gameObject);
             lingeringStats.CurrentlyLingering = true;
             lingeringStats.IsInFlight = false;
             lingeringStats.LingeringRadius = radius;

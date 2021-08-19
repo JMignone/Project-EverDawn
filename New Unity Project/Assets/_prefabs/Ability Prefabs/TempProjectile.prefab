@@ -48,8 +48,8 @@ MonoBehaviour:
   hitBox: {fileID: 4332999102053800178}
   unitSprite: {fileID: 4332999101628587706}
   radius: 2.5
-  speed: 40
-  range: 70
+  speed: 30
+  range: 50
   baseDamage: 100
   objectAttackable: 0
   canPierce: 0
@@ -75,8 +75,12 @@ MonoBehaviour:
     poisonTick: 0
   knockbackStats:
     canKnockback: 1
-    knockbackDuration: 1
-    initialSpeed: 30
+    knockbackDuration: 0.75
+    initialSpeed: 20
+  pullStats:
+    canPull: 0
+    radius: 0
+    speed: 50
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0.6
@@ -85,10 +89,10 @@ MonoBehaviour:
     lingerAtEnd: 0
     lingerDuringFlight: 0
     lingeringEffect: {fileID: 0}
-    lingeringDamage: 30
+    lingeringDamage: 3
     lingeringRadius: 7.5
     lingeringDuration: 4
-    lingeringTick: 1
+    lingeringTick: 0.1
     currentLingeringTime: 0
   selfDestructStats:
     selfDestructs: 0

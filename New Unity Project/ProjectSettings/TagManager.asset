@@ -10,6 +10,7 @@ TagManager:
   - AbilityHighlight
   - Projectile
   - CreateAtLocation
+  - Pull
   layers:
   - Default
   - TransparentFX

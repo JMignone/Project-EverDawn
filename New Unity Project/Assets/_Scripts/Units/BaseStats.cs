@@ -62,6 +62,8 @@ public class BaseStats
     private UKnockbackStats knockbackStats;
     [SerializeField]
     private KnockbackedStats knockbackedStats;
+    [SerializeField]
+    private PulledStats pulledStats;
 
     public float PercentHealth {
         get { return currHealth/maxHealth; }
@@ -225,12 +227,19 @@ public class BaseStats
         get { return knockbackedStats; }
     }
 
+    public PulledStats PulledStats
+    {
+        get { return pulledStats; }
+    }
+
     public bool IsReady() { return summoningSicknessUI.IsReady; }
 
     public bool CanAct() {
         if(frozenStats.IsFrozen)
             return false;
         if(knockbackedStats.IsKnockbacked)
+            return false;
+        if(!summoningSicknessUI.IsReady)
             return false;
         return true;
     }
@@ -242,6 +251,7 @@ public class BaseStats
         rootedStats.StartRootedStats(go);
         knockbackedStats.StartKnockbackedStats(go);
         knockbackStats.StartKnockbackStats(go);
+        pulledStats.StartPulledStats(go);
     }
 
     public void UpdateStats(int inRange, Actor3D unitAgent, List<GameObject> hitTargets, GameObject target) {
@@ -261,6 +271,7 @@ public class BaseStats
         poisonedStats.UpdatePoisonedStats();
         rootedStats.UpdateRootedStats();
         knockbackedStats.UpdateKnockbackedStats();
+        pulledStats.UpdatePulledStats();
 
         detectionObject.radius = range;
         visionObject.radius = visionRange;

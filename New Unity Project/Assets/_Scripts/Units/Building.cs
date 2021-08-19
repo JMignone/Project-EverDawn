@@ -149,7 +149,7 @@ public class Building : MonoBehaviour, IDamageable
                 Spawn();
             }
             else if(buildingType == GameConstants.BUILDING_TYPE.ATTACK) {
-                if(target == null && stats.CanAct() && stats.IsReady()) { //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
+                if((target == null || inRange == 0) && stats.CanAct()) { //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                     if(hitTargets.Count > 0) {
                         GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
                         if(go != null)
@@ -207,9 +207,10 @@ public class Building : MonoBehaviour, IDamageable
                     if(hitTargets.Contains(target)) {  //this is needed for the rare occurance that a unit is 90% done with attack delay and the target leaves its range. It can still do its attack if its within vision given that its attack was already *90% thru
                         if(stats.AOEStats.AreaOfEffect)
                             stats.AOEStats.Explode(gameObject, target);
-                        else
+                        else {
                             GameFunctions.Attack(damageable, stats.BaseDamage);
-                        stats.ApplyAffects(damageable);
+                            stats.ApplyAffects(damageable);
+                        }
                         stats.CurrAttackDelay = 0;
                     }
                 }
@@ -229,12 +230,12 @@ public class Building : MonoBehaviour, IDamageable
 
     public void OnTriggerEnter(Collider other) {
         if(!other.transform.parent.parent.CompareTag(gameObject.tag)) { //checks to make sure the target isnt on the same team
-            if(other.tag == "Projectile") { //Did we get hit by a skill shot?
+            if(other.CompareTag("Projectile")) { //Did we get hit by a skill shot?
                 Projectile projectile = other.transform.parent.parent.GetComponent<Projectile>();
                 Component unit = this.GetComponent(typeof(IDamageable));
                 projectile.hit(unit);
             }
-            else if(other.tag == "AbilityHighlight") { //Our we getting previewed for an abililty?
+            else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an abililty?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
                 if(GameFunctions.WillHit(ability.ObjectAttackable, this.GetComponent(typeof(IDamageable)))) {
                     indicatorNum++;
@@ -245,7 +246,7 @@ public class Building : MonoBehaviour, IDamageable
                 Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
                 if(damageable) {
                     Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
-                    if(other.tag == "Range") {//Are we in their range detection object?
+                    if(other.CompareTag("Range")) {//Are we in their range detection object?
                         if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) { //only if the unit can actually target this one should we adjust this value
                             (unit as IDamageable).InRange++;
                             if(!(unit as IDamageable).InRangeTargets.Contains(gameObject))
@@ -257,7 +258,7 @@ public class Building : MonoBehaviour, IDamageable
                             }
                         }
                     }
-                    else if(other.tag == "Vision") { //Are we in their vision detection object?
+                    else if(other.CompareTag("Vision")) { //Are we in their vision detection object?
                         if(!(unit as IDamageable).HitTargets.Contains(gameObject))
                             (unit as IDamageable).HitTargets.Add(gameObject);
                     }
@@ -268,10 +269,10 @@ public class Building : MonoBehaviour, IDamageable
 
     public void OnTriggerExit(Collider other) {
         if(!other.transform.parent.parent.CompareTag(gameObject.tag)) { //checks to make sure the target isnt on the same team
-            if(other.tag == "Projectile") { //Did we get hit by a skill shot?
+            if(other.CompareTag("Projectile")) { //Did we get hit by a skill shot?
                 //print("Projectile");
             }
-            else if(other.tag == "AbilityHighlight") { //Our we getting previewed for an abililty?
+            else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an abililty?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
                 if(GameFunctions.WillHit(ability.ObjectAttackable, this.GetComponent(typeof(IDamageable)))) {
                     indicatorNum--;
@@ -283,7 +284,7 @@ public class Building : MonoBehaviour, IDamageable
                 Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
                 if(damageable) {
                     Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
-                    if(other.tag == "Range") { //Are we in their Range detection object?
+                    if(other.CompareTag("Range")) { //Are we in their Range detection object?
                         if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
                             (unit as IDamageable).InRange--;
                             if((unit as IDamageable).InRangeTargets.Contains(gameObject))
@@ -292,7 +293,7 @@ public class Building : MonoBehaviour, IDamageable
                                 (unit as IDamageable).Target = null;
                         }
                     }
-                    else if(other.tag == "Vision") { //Are we in their vision detection object?
+                    else if(other.CompareTag("Vision")) { //Are we in their vision detection object?
                         if((unit as IDamageable).HitTargets.Contains(gameObject))
                             (unit as IDamageable).HitTargets.Remove(gameObject);
                         if((unit as IDamageable).Target == gameObject) //if the units target was the one who left the vision
@@ -302,7 +303,7 @@ public class Building : MonoBehaviour, IDamageable
             }
         }
     }
-
+    /*
     public void OnTriggerStay(Collider other) {
         if(!other.transform.parent.parent.gameObject.CompareTag(gameObject.tag)) {
             Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
@@ -322,7 +323,7 @@ public class Building : MonoBehaviour, IDamageable
                 }
             }
         }
-    }
+    }*/
 
     void IDamageable.TakeDamage(float amount) {
         stats.CurrHealth -= amount;

@@ -35,6 +35,8 @@ public class LingeringStats
     [SerializeField]
     private float currentLingeringTime;
 
+    private Component abilityComponent;
+
     public bool Lingering
     {
         get { return lingering; }
@@ -89,9 +91,10 @@ public class LingeringStats
         set { currentLingeringTime = value; }
     }
 
-    public void StartLingeringStats() {
+    public void StartLingeringStats(GameObject go) {
         isInFlight = true;
         currentLingeringTime = 0;
+        abilityComponent = go.GetComponent(typeof(IAbility));
         if(lingerDuringFlight)
             currentlyLingering = true;
         else
@@ -121,15 +124,13 @@ public class LingeringStats
     public void LingerDamage(GameObject go) {
         //Instantiate(lingeringEffect, go.transform.position, go.transform.rotation);
         Collider[] colliders = Physics.OverlapSphere(go.transform.position, lingeringRadius);
-        Component ability = go.GetComponent(typeof(IAbility));
-        //ability = ability.gameObject.GetComponent(typeof(IAbility)); 
 
         foreach(Collider collider in colliders) {
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                 Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-                if(GameFunctions.WillHit((ability as IAbility).ObjectAttackable, damageable)) {
+                if(GameFunctions.WillHit((abilityComponent as IAbility).ObjectAttackable, damageable)) {
                     GameFunctions.Attack(damageable, lingeringDamage);
-                    (ability as IAbility).ApplyAffects(damageable);
+                    (abilityComponent as IAbility).ApplyAffects(damageable);
                 }
             }
         }

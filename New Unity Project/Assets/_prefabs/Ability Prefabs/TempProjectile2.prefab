@@ -290,7 +290,7 @@ MonoBehaviour:
   hitBox: {fileID: 2538035109296080467}
   unitSprite: {fileID: 2538035109743312923}
   radius: 0
-  speed: 50
+  speed: 70
   range: 80
   baseDamage: 0
   objectAttackable: 2
@@ -316,20 +316,24 @@ MonoBehaviour:
     poisonDuration: 0
     poisonTick: 0
   knockbackStats:
-    canKnockback: 1
+    canKnockback: 0
     knockbackDuration: 1
-    initialSpeed: 30
+    initialSpeed: 12
+  pullStats:
+    canPull: 1
+    radius: 15
+    speed: 13
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0
   lingeringStats:
-    lingering: 0
-    lingerAtEnd: 0
+    lingering: 1
+    lingerAtEnd: 1
     lingerDuringFlight: 0
     lingeringEffect: {fileID: 0}
-    lingeringDamage: 30
-    lingeringRadius: 7
-    lingeringDuration: 8
+    lingeringDamage: 10
+    lingeringRadius: 15
+    lingeringDuration: 6
     lingeringTick: 1
     currentLingeringTime: 0
   selfDestructStats:
@@ -342,7 +346,7 @@ MonoBehaviour:
     isAirStrike: 1
     startLocation: 0
     explosionEffect: {fileID: 0}
-    explosionDamage: 100
+    explosionDamage: 0
     explosionRadius: 15
     grenadeArcMultiplier: 0.2
   chosenTarget: {fileID: 0}

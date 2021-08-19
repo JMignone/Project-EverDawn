@@ -120,6 +120,14 @@ public class Tower : MonoBehaviour, IDamageable
     protected virtual void Update()
     {
         if(stats.CurrHealth > 0) {
+            if((target == null || inRange == 0) && stats.CanAct()) { //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
+                if(hitTargets.Count > 0) {
+                    GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
+                    if(go != null)
+                        target = go;
+                }
+            }
+
             stats.UpdateStats(inRange, agent, hitTargets, target);
             Attack();
 
@@ -155,15 +163,14 @@ public class Tower : MonoBehaviour, IDamageable
     }
 
     /* I dont think structres need a vision radius */
-
     public void OnTriggerEnter(Collider other) {
         if(!other.transform.parent.parent.CompareTag(gameObject.tag)) { //checks to make sure the target isnt on the same team
-            if(other.tag == "Projectile") { //Did we get hit by a skill shot?
+            if(other.CompareTag("Projectile")) { //Did we get hit by a skill shot?
                 Projectile projectile = other.transform.parent.parent.GetComponent<Projectile>();
                 Component unit = this.GetComponent(typeof(IDamageable));
                 projectile.hit(unit);
             }
-            else if(other.tag == "AbilityHighlight") { //Our we getting previewed for an abililty?
+            else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an abililty?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
                 if(GameFunctions.WillHit(ability.ObjectAttackable, this.GetComponent(typeof(IDamageable)))) {
                     indicatorNum++;
@@ -174,13 +181,13 @@ public class Tower : MonoBehaviour, IDamageable
                 Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
                 if(damageable) {
                     Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
-                    if(other.tag == "Range") {//Are we in their range detection object?
+                    if(other.CompareTag("Range")) {//Are we in their range detection object?
                         //if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) anything can attack a tower, ill leave it hear incase somthing with an ability gives a need for this
                             (unit as IDamageable).InRange++;
                             if(!(unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Add(gameObject);
                     }
-                    else if(other.tag == "Vision") { //Are we in their vision detection object?
+                    else if(other.CompareTag("Vision")) { //Are we in their vision detection object?
                         if(!(unit as IDamageable).HitTargets.Contains(gameObject))
                             (unit as IDamageable).HitTargets.Add(gameObject);
                     }
@@ -191,10 +198,10 @@ public class Tower : MonoBehaviour, IDamageable
 
     public void OnTriggerExit(Collider other) {
         if(!other.transform.parent.parent.CompareTag(gameObject.tag)) { //checks to make sure the target isnt on the same team
-            if(other.tag == "Projectile") { //Did we get hit by a skill shot?
+            if(other.CompareTag("Projectile")) { //Did we get hit by a skill shot?
                 //print("Projectile");
             }
-            else if(other.tag == "AbilityHighlight") { //Our we getting previewed for an abililty?
+            else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an abililty?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
                 if(GameFunctions.WillHit(ability.ObjectAttackable, this.GetComponent(typeof(IDamageable)))) {
                     indicatorNum--;
@@ -206,7 +213,7 @@ public class Tower : MonoBehaviour, IDamageable
                 Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
                 if(damageable) {
                     Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
-                    if(other.tag == "Range") { //Are we in their Range detection object?
+                    if(other.CompareTag("Range")) { //Are we in their Range detection object?
                         //if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
                             (unit as IDamageable).InRange--;
                             if((unit as IDamageable).InRangeTargets.Contains(gameObject))
@@ -215,7 +222,7 @@ public class Tower : MonoBehaviour, IDamageable
                                 (unit as IDamageable).Target = null;
                         //}
                     }
-                    else if(other.tag == "Vision") { //Are we in their vision detection object?
+                    else if(other.CompareTag("Vision")) { //Are we in their vision detection object?
                         if((unit as IDamageable).HitTargets.Contains(gameObject))
                             (unit as IDamageable).HitTargets.Remove(gameObject);
                         if((unit as IDamageable).Target == gameObject) //if the units target was the one who left the vision
@@ -225,7 +232,7 @@ public class Tower : MonoBehaviour, IDamageable
             }
         }
     }
-
+/*
     public void OnTriggerStay(Collider other) {
         if(!other.transform.parent.parent.gameObject.CompareTag(gameObject.tag)) {
             Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
@@ -245,7 +252,7 @@ public class Tower : MonoBehaviour, IDamageable
                 }
             }
         }
-    }
+    }*/
 
     protected void lookAtTarget() {
         var targetPosition = target.transform.GetChild(0).position;
