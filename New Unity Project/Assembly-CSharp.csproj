@@ -61,8 +61,9 @@
     <Compile Include="Assets\MenuAssets\LeanTween\Framework\LTDescr.cs" />
     <Compile Include="Assets\MenuAssets\LeanTween\Examples\Scripts\PathSplineTrack.cs" />
     <Compile Include="Assets\MenuAssets\LeanTween\Framework\LeanTweenExt.cs" />
+    <Compile Include="Assets\MenuAssets\Scene_Loader_Unloader.cs" />
     <Compile Include="Assets\Scenes\_Scripts\Units\Actor3D.cs" />
-    <Compile Include="Assets\MenuAssets\Tap_Animation.cs" />
+    <Compile Include="Assets\MenuAssets\Input_Animator.cs" />
     <Compile Include="Assets\MenuAssets\Cursor_Tracker.cs" />
     <Compile Include="Assets\MenuAssets\LeanTween\Examples\Scripts\TestingUnitTests.cs" />
     <Compile Include="Assets\MenuAssets\LeanTween\Examples\Archived\TestingPunch.cs" />
