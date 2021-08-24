@@ -30,6 +30,12 @@ public class Unit : MonoBehaviour, IDamageable
     [SerializeField]
     private List<GameObject> inRangeTargets;
 
+    [SerializeField]
+    private List<GameObject> enemyHitTargets;
+
+    [SerializeField]
+    private float enemySoonestKill;
+
     public Actor3D Agent
     {
         get { return agent; }
@@ -83,6 +89,17 @@ public class Unit : MonoBehaviour, IDamageable
         //set { hitTargets = value; }
     }
 
+    public List<GameObject> EnemyHitTargets
+    {
+        get { return enemyHitTargets; }
+    }
+
+    public float EnemySoonestKill
+    {
+        get { return enemySoonestKill; }
+        set { enemySoonestKill = value; }
+    }
+
     private void Start()
     {
         agent.Agent.stoppingDistance = 0; //Set to be zero, incase someone forgets or accidently changes this value to be a big number
@@ -104,17 +121,17 @@ public class Unit : MonoBehaviour, IDamageable
                 if(hitTargets.Count > 0) {
                     GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
                     if(go != null)
-                        target = go;
+                        SetTarget(go);
                     else {
                         List<GameObject> towers = GameManager.Instance.TowerObjects;
                         towers = GameManager.GetAllEnemies(transform.GetChild(0).position, towers, gameObject.tag); //sending in only towers
-                        target = GameFunctions.GetNearestTarget(towers, gameObject.tag, stats);
+                        SetTarget(GameFunctions.GetNearestTarget(towers, gameObject.tag, stats));
                     }
                 }
                 else {
                     List<GameObject> towers = GameManager.Instance.TowerObjects;
                     towers = GameManager.GetAllEnemies(transform.GetChild(0).position, towers, gameObject.tag); //sending in only towers
-                    target = GameFunctions.GetNearestTarget(towers, gameObject.tag, stats);
+                    SetTarget(GameFunctions.GetNearestTarget(towers, gameObject.tag, stats));
                 }
             }
             stats.UpdateStats(inRange, agent, hitTargets, target);
@@ -161,6 +178,16 @@ public class Unit : MonoBehaviour, IDamageable
         }
     }
 
+    public void SetTarget(GameObject newTarget) {
+        if(newTarget != target) {
+            if(target != null)
+                (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
+            if(newTarget != null)
+                (newTarget.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Add(gameObject);
+            target = newTarget;
+        }
+    }
+
     public void OnTriggerEnter(Collider other) {
         if(!other.transform.parent.parent.CompareTag(gameObject.tag)) { //checks to make sure the target isnt on the same team
             if(other.CompareTag("Projectile")) { //Did we get hit by a skill shot?
@@ -191,7 +218,7 @@ public class Unit : MonoBehaviour, IDamageable
                             if( ((unit as IDamageable).InRange == 1 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct) { //we need this block here as well as stay in the case that a unit is placed inside a units range
                                 GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
                                 if(go != null)
-                                    (unit as IDamageable).Target = go;
+                                    (unit as IDamageable).SetTarget(go);
                             }
                         }
                     }
@@ -231,47 +258,19 @@ public class Unit : MonoBehaviour, IDamageable
                             if((unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Remove(gameObject);
                             if((unit as IDamageable).Target == gameObject)
-                                (unit as IDamageable).Target = null;
+                                (unit as IDamageable).SetTarget(null);
                         }
                     }
                     else if(other.CompareTag("Vision")) { //Are we in their vision detection object?
                         if((unit as IDamageable).HitTargets.Contains(gameObject))
                             (unit as IDamageable).HitTargets.Remove(gameObject);
                         if((unit as IDamageable).Target == gameObject) //if the units target was the one who left the vision
-                            (unit as IDamageable).Target = null; 
+                            (unit as IDamageable).SetTarget(null); 
                     }
                 }
             }
         }
     }
-/*
-    public void OnTriggerStay(Collider other) {
-        if(!other.transform.parent.parent.gameObject.CompareTag(gameObject.tag)) {
-            if(other.tag == "CreateAtLocation") { //Did we get hit by a skill shot?
-                Vector3 direction = (other.transform.position - agent.Agent.transform.position).normalized;
-                direction.y = 0;
-                agent.Agent.transform.position += direction * 12 * Time.deltaTime;
-            }
-            else {
-                Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
-                if(damageable) {
-                    Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
-                    if(other.tag == "Range") { // I dont think this actually needs to be here
-                        // placeholder
-                    }
-                    else if(other.tag == "Vision") { //Are we in their vision detection object?
-                        if((unit as IDamageable).HitTargets.Count > 0) {
-                            if( ((unit as IDamageable).InRange == 0 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct) {
-                                GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
-                                if(go != null)
-                                    (unit as IDamageable).Target = go;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }*/
 
     void lookAtTarget() {
         var targetPosition = target.transform.GetChild(0).position;  //

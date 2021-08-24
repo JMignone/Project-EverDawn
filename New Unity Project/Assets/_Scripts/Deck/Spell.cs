@@ -30,6 +30,7 @@ public class Spell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     private bool isDragging;
     private List<GameObject> abilityPreviews;
     private RectTransform cardCanvasDim;
+    private float cardCanvasScale;
     private bool isBuffering;
     private Vector3 bufferingPosition;
 
@@ -113,6 +114,12 @@ public class Spell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         set { cardCanvasDim = value; }
     }
 
+    public float CardCanvaScale
+    {
+        get { return cardCanvasScale; }
+        set { cardCanvasScale = value; }
+    }
+
     public bool IsBuffering
     {
         get { return isBuffering; }
@@ -177,6 +184,7 @@ public class Spell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             preview.SetActive(false);
 
         cardCanvasDim = GameFunctions.GetCanvas().GetChild(0).GetComponent<RectTransform>();
+        cardCanvasScale = GameFunctions.GetCanvas().GetComponent<RectTransform>().localScale.x;
 
         isBuffering = false;
         isDragging = false;
@@ -286,14 +294,14 @@ public class Spell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         if(playerInfo.OnDragging && !isBuffering && isDragging) {
             transform.GetChild(3).position = Input.mousePosition;
 
-            float scale = (cardCanvasDim.rect.height - Input.mousePosition.y)/(cardCanvasDim.rect.height - transform.position.y); 
+            float scale = (cardCanvasDim.rect.height*cardCanvasScale - Input.mousePosition.y)/(cardCanvasDim.rect.height*cardCanvasScale - transform.position.y); 
             if(scale > 1)
                 scale = 1;
             else if(scale < 0)
                 scale = 0;
             transform.GetChild(3).localScale = new Vector3(scale, scale, 1);
 
-            if(Input.mousePosition.y > cardCanvasDim.rect.height) {
+            if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale) {
                 foreach(GameObject preview in abilityPreviews)
                     preview.SetActive(true);
             }
@@ -329,9 +337,9 @@ public class Spell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             Vector3 position = GameFunctions.adjustForBoundary(GameFunctions.getPosition(false));
             foreach(GameObject preview in abilityPreviews)
                 preview.GetComponent<RectTransform>().position = position;
-            if(Input.mousePosition.y > cardCanvasDim.rect.height && playerInfo.GetCurrResource >= (cardInfo.Cost + playerInfo.DueResource)) //if the player isnt hovering the cancel zone and has enough resource
+            if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= (cardInfo.Cost + playerInfo.DueResource)) //if the player isnt hovering the cancel zone and has enough resource
                 QueSpells(position);
-            else if(Input.mousePosition.y > cardCanvasDim.rect.height && playerInfo.GetCurrResource >= ( (cardInfo.Cost + playerInfo.DueResource) - 1) ) { //if the player isnt hovering the cancel zone and has 1 under enough resource
+            else if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= ( (cardInfo.Cost + playerInfo.DueResource) - 1) ) { //if the player isnt hovering the cancel zone and has 1 under enough resource
                 isBuffering = true;
                 bufferingPosition = position;
                 playerInfo.DueResource += cardInfo.Cost;

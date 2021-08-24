@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
         if((objectToRemoveComponent as IDamageable).Stats.IsHoveringAbility) {
             removeAbililtyIndicators();
             Instance.Players[0].OnDragging = false;
+            GameFunctions.GetCanvas().GetChild(3).GetComponent<Image>().enabled = false;
         }
 
         Instance.Objects.Remove(objectToRemove);

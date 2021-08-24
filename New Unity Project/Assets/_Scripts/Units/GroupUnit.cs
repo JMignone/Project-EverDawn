@@ -16,6 +16,8 @@ public class GroupUnit : MonoBehaviour, IDamageable
     private int inRange;
     private List<GameObject> hitTargets;
     private List<GameObject> inRangeTargets;
+    private List<GameObject> enemyHitTargets;
+    private float enemySoonestKill;
     private bool isHoveringAbility;
     private bool isCastingAbility;
     private Image abilityIndicator;
@@ -63,6 +65,17 @@ public class GroupUnit : MonoBehaviour, IDamageable
         get { return inRangeTargets; }
     }
 
+    public List<GameObject> EnemyHitTargets
+    {
+        get { return enemyHitTargets; }
+    }
+
+    public float EnemySoonestKill
+    {
+        get { return enemySoonestKill; }
+        set { enemySoonestKill = value; }
+    }
+
     public bool IsHoveringAbility
     {
         get { return isHoveringAbility; }
@@ -100,6 +113,10 @@ public class GroupUnit : MonoBehaviour, IDamageable
     }
 
     void IDamageable.TakeDamage(float amount) {
+        //pass
+    }
+
+    public void SetTarget(GameObject newTarget) {
         //pass
     }
 }

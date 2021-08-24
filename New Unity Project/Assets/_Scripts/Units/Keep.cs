@@ -12,7 +12,7 @@ public class Keep : Tower
                     if(hitTargets.Count > 0) {
                         GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
                         if(go != null)
-                            target = go;
+                            SetTarget(go);
                     }
                 }
 

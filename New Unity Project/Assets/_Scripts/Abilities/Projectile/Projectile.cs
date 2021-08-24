@@ -248,7 +248,7 @@ public class Projectile : MonoBehaviour, IAbility
     }
 
     private void Update() {
-        if(unit.Agent != null) { //This is currently only used for boomerang
+        if(unit != null && unit.Agent != null) { //This is currently only used for boomerang
             lastKnownLocation = unit.Agent.transform.position;
             lastKnownLocation.y = 0;
         }

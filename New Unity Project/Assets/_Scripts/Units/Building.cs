@@ -42,6 +42,12 @@ public class Building : MonoBehaviour, IDamageable
     [SerializeField]
     private List<GameObject> inRangeTargets;
 
+    [SerializeField]
+    private List<GameObject> enemyHitTargets;
+
+    [SerializeField]
+    private float enemySoonestKill;
+
     public Actor3D Agent
     {
         get { return agent; }
@@ -113,6 +119,17 @@ public class Building : MonoBehaviour, IDamageable
         get { return inRangeTargets; }
     }
 
+    public List<GameObject> EnemyHitTargets
+    {
+        get { return enemyHitTargets; }
+    }
+
+    public float EnemySoonestKill
+    {
+        get { return enemySoonestKill; }
+        set { enemySoonestKill = value; }
+    }
+
     private void Start()
     {
         stats.EffectStats.StartStats(gameObject);
@@ -138,7 +155,7 @@ public class Building : MonoBehaviour, IDamageable
                     if(hitTargets.Count > 0) {
                         GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
                         if(go != null)
-                            target = go;
+                            SetTarget(go);
                         else {
                             List<GameObject> towers = GameManager.Instance.TowerObjects;
                             towers = GameManager.GetAllEnemies(transform.GetChild(0).position, towers, gameObject.tag); //sending in only towers
@@ -203,6 +220,16 @@ public class Building : MonoBehaviour, IDamageable
         } 
     }
 
+    public void SetTarget(GameObject newTarget) {
+        if(newTarget != target) {
+            if(target != null)
+                (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
+            if(newTarget != null)
+                (newTarget.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Add(gameObject);
+            target = newTarget;
+        }
+    }
+
     // !! THIS WILL LIKELY NEED TO BE CHANGED SUCH THAT ONLY THE TOP OF THE BUILDING ROTATES !!
     void lookAtTarget() {
         var targetPosition = target.transform.GetChild(0).position;  //
@@ -239,7 +266,7 @@ public class Building : MonoBehaviour, IDamageable
                             if(((unit as IDamageable).InRange == 1 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct) {
                                 GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
                                 if(go != null)
-                                    (unit as IDamageable).Target = go;
+                                    (unit as IDamageable).SetTarget(go);
                             }
                         }
                     }
@@ -275,7 +302,7 @@ public class Building : MonoBehaviour, IDamageable
                             if((unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Remove(gameObject);
                             if((unit as IDamageable).Target == gameObject)
-                                (unit as IDamageable).Target = null;
+                                (unit as IDamageable).SetTarget(null);
                         }
                     }
                     else if(other.CompareTag("Vision")) { //Are we in their vision detection object?
@@ -288,27 +315,6 @@ public class Building : MonoBehaviour, IDamageable
             }
         }
     }
-    /*
-    public void OnTriggerStay(Collider other) {
-        if(!other.transform.parent.parent.gameObject.CompareTag(gameObject.tag)) {
-            Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
-            if(damageable) {
-                Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
-                if(other.tag == "Range") { // I dont think this actually needs to be here
-                    // placeholder
-                }
-                else if(other.tag == "Vision") { //Are we in their vision detection object?
-                    if((unit as IDamageable).HitTargets.Count > 0) {
-                        if(((unit as IDamageable).InRange == 0 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct) {
-                            GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
-                            if(go != null)
-                                (unit as IDamageable).Target = go;
-                        }
-                    }
-                }
-            }
-        }
-    }*/
 
     void IDamageable.TakeDamage(float amount) {
         stats.CurrHealth -= amount;

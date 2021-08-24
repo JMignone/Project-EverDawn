@@ -7,6 +7,7 @@ public interface IDamageable
     BaseStats Stats { get; }
     List<GameObject> HitTargets { get; }
     List<GameObject> InRangeTargets { get; }
+    List<GameObject> EnemyHitTargets { get; }
     GameObject Target { get; set; }
     int InRange { get; set; }
     Actor3D Agent { get; }
@@ -15,5 +16,6 @@ public interface IDamageable
     int IndicatorNum { get; set; }
 
     void TakeDamage(float amount);
+    void SetTarget(GameObject newTarget);
 
 } 

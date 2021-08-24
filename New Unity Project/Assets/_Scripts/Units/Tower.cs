@@ -31,6 +31,12 @@ public class Tower : MonoBehaviour, IDamageable
     private List<GameObject> inRangeTargets;
 
     [SerializeField]
+    private List<GameObject> enemyHitTargets;
+
+    [SerializeField]
+    private float enemySoonestKill;
+
+    [SerializeField]
     protected bool leftTower;
 
     public Actor3D Agent
@@ -83,6 +89,17 @@ public class Tower : MonoBehaviour, IDamageable
         get { return inRangeTargets; }
     }
 
+    public List<GameObject> EnemyHitTargets
+    {
+        get { return enemyHitTargets; }
+    }
+
+    public float EnemySoonestKill
+    {
+        get { return enemySoonestKill; }
+        set { enemySoonestKill = value; }
+    }
+
     public bool LeftTower
     {
         get { return leftTower; }
@@ -109,7 +126,7 @@ public class Tower : MonoBehaviour, IDamageable
                 if(hitTargets.Count > 0) {
                     GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
                     if(go != null)
-                        target = go;
+                        SetTarget(go);
                 }
             }
 
@@ -144,6 +161,16 @@ public class Tower : MonoBehaviour, IDamageable
                     }
                 }
             }
+        }
+    }
+
+    public void SetTarget(GameObject newTarget) {
+        if(newTarget != target) {
+            if(target != null)
+                (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
+            if(newTarget != null)
+                (newTarget.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Add(gameObject);
+            target = newTarget;
         }
     }
 
@@ -204,40 +231,19 @@ public class Tower : MonoBehaviour, IDamageable
                             if((unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Remove(gameObject);
                             if((unit as IDamageable).Target == gameObject)
-                                (unit as IDamageable).Target = null;
+                                (unit as IDamageable).SetTarget(null);
                         //}
                     }
                     else if(other.CompareTag("Vision")) { //Are we in their vision detection object?
                         if((unit as IDamageable).HitTargets.Contains(gameObject))
                             (unit as IDamageable).HitTargets.Remove(gameObject);
                         if((unit as IDamageable).Target == gameObject) //if the units target was the one who left the vision
-                            (unit as IDamageable).Target = null; 
+                            (unit as IDamageable).SetTarget(null); 
                     }
                 }
             }
         }
     }
-/*
-    public void OnTriggerStay(Collider other) {
-        if(!other.transform.parent.parent.gameObject.CompareTag(gameObject.tag)) {
-            Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
-            if(damageable) {
-                Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
-                if(other.tag == "Range") { // I dont think this actually needs to be here
-                    // placeholder
-                }
-                else if(other.tag == "Vision") { //Are we in their vision detection object?
-                    if((unit as IDamageable).HitTargets.Count > 0) {
-                        if( ((unit as IDamageable).InRange == 0 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct) {
-                            GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats); //
-                            if(go != null)
-                                (unit as IDamageable).Target = go;
-                        }
-                    }
-                }
-            }
-        }
-    }*/
 
     protected void lookAtTarget() {
         var targetPosition = target.transform.GetChild(0).position;

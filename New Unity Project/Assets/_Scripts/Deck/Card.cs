@@ -33,6 +33,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     private bool isFlying;
     private float radius;
     private RectTransform cardCanvasDim;
+    private float cardCanvasScale;
     private bool isBuffering;
     private Vector3 bufferingPosition;
 
@@ -114,6 +115,12 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         set { cardCanvasDim = value; }
     }
 
+    public float CardCanvasScale
+    {
+        get { return cardCanvasScale; }
+        set { cardCanvasScale = value; }
+    }
+
     public bool IsBuffering
     {
         get { return isBuffering; }
@@ -129,6 +136,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     private void Start() 
     {
         cardCanvasDim = GameFunctions.GetCanvas().GetChild(0).GetComponent<RectTransform>();
+        cardCanvasScale = GameFunctions.GetCanvas().GetComponent<RectTransform>().localScale.x; //this is used to compensate for differing resolutions
 
         isBuffering = false;
         isDragging = false;
@@ -195,14 +203,14 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(playerInfo.OnDragging && !isBuffering && isDragging) {
             transform.GetChild(3).position = Input.mousePosition;
 
-            float scale = (cardCanvasDim.rect.height - Input.mousePosition.y)/(cardCanvasDim.rect.height - transform.position.y); 
+            float scale = (cardCanvasDim.rect.height*cardCanvasScale - Input.mousePosition.y)/(cardCanvasDim.rect.height*cardCanvasScale - transform.position.y); 
             if(scale > 1)
                 scale = 1;
             else if(scale < 0)
                 scale = 0;
             transform.GetChild(3).localScale = new Vector3(scale, scale, 1);
 
-            if(Input.mousePosition.y > cardCanvasDim.rect.height)
+            if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale)
                 preview.SetActive(true);
             else
                 preview.SetActive(false);
@@ -229,9 +237,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             if(NavMesh.SamplePosition(position, out hit, 12f, navMask))
                 position = hit.position;
             previewAgent.Warp(position);
-            if(Input.mousePosition.y > cardCanvasDim.rect.height && playerInfo.GetCurrResource >= (cardInfo.Cost + playerInfo.DueResource)) //if the player isnt hovering the cancel zone and has enough resource
+            if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= (cardInfo.Cost + playerInfo.DueResource)) //if the player isnt hovering the cancel zone and has enough resource
                 SpawnUnit(position);
-            else if(Input.mousePosition.y > cardCanvasDim.rect.height && playerInfo.GetCurrResource >= ( (cardInfo.Cost + playerInfo.DueResource) - 1) ) { //if the player isnt hovering the cancel zone and has 1 under enough resource
+            else if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= ( (cardInfo.Cost + playerInfo.DueResource) - 1) ) { //if the player isnt hovering the cancel zone and has 1 under enough resource
                 isBuffering = true;
                 bufferingPosition = position;
                 playerInfo.DueResource += cardInfo.Cost;
