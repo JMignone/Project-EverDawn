@@ -14,7 +14,10 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     private float range;
 
     [SerializeField]
-    private GameConstants.OBJECT_ATTACKABLE objectAttackable;
+    private GameConstants.HEIGHT_ATTACKABLE heightAttackable;
+
+    [SerializeField]
+    private GameConstants.TYPE_ATTACKABLE typeAttackable;
 
     //[SerializeField]
     //private bool blockable; //currently not sure if we will need this for CAL's. Description of this var is in Projectile
@@ -51,7 +54,7 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     private SummonStats summonStats;
 
     private Vector3 targetLocation;
-    private Unit unit;
+    private IDamageable unit;
 
     [SerializeField]
     private Actor3D chosenTarget;
@@ -72,9 +75,14 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         get { return range; }
     }
 
-    public GameConstants.OBJECT_ATTACKABLE ObjectAttackable
+    public GameConstants.HEIGHT_ATTACKABLE HeightAttackable
     {
-        get { return objectAttackable; }
+        get { return heightAttackable; }
+    }
+
+    public GameConstants.TYPE_ATTACKABLE TypeAttackable
+    {
+        get { return typeAttackable; }
     }
 
     public FreezeStats FreezeStats
@@ -144,7 +152,7 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         set { chosenTarget = value; }
     }
 
-    public Unit Unit
+    public IDamageable Unit
     {
         get { return unit; }
         set { unit = value; }
@@ -186,8 +194,8 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         if(lingeringStats.Lingering)
             lingeringStats.UpdateLingeringStats(gameObject);
         if(SummonStats.IsSummon) {
-            if(unit != null) //if the unit is alive, then check if its stunned
-                SummonStats.UpdateSummonStats(gameObject, !unit.Stats.CanAct());
+            if(unit.Agent != null) //if the unit is alive, then check if its stunned
+                SummonStats.UpdateSummonStats(gameObject, !unit.Stats.CanAct);
             else
                 SummonStats.UpdateSummonStats(gameObject, true);
         }
@@ -198,14 +206,14 @@ public class CreateAtLocation : MonoBehaviour, IAbility
 
     public void ApplyAffects(Component damageable) {
         if(freezeStats.CanFreeze)
-            (damageable as IDamageable).Stats.FrozenStats.Freeze(freezeStats.FreezeDuration);
+            (damageable as IDamageable).Stats.EffectStats.FrozenStats.Freeze(freezeStats.FreezeDuration);
         if(slowStats.CanSlow)
-            (damageable as IDamageable).Stats.SlowedStats.Slow(slowStats.SlowDuration, slowStats.SlowIntensity);
+            (damageable as IDamageable).Stats.EffectStats.SlowedStats.Slow(slowStats.SlowDuration, slowStats.SlowIntensity);
         if(rootStats.CanRoot)
-            (damageable as IDamageable).Stats.RootedStats.Root(RootStats.RootDuration);
+            (damageable as IDamageable).Stats.EffectStats.RootedStats.Root(RootStats.RootDuration);
         if(poisonStats.CanPoison)
-            (damageable as IDamageable).Stats.PoisonedStats.Poison(poisonStats.PoisonDuration, poisonStats.PoisonTick, poisonStats.PoisonDamage);
+            (damageable as IDamageable).Stats.EffectStats.PoisonedStats.Poison(poisonStats.PoisonDuration, poisonStats.PoisonTick, poisonStats.PoisonDamage);
         if(knockbackStats.CanKnockback)
-            (damageable as IDamageable).Stats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position);
+            (damageable as IDamageable).Stats.EffectStats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position);
     }
 }

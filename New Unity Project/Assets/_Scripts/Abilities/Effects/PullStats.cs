@@ -30,17 +30,19 @@ public class PullStats
     }
 
     public void StartPullStats(GameObject go) {
-        GameObject pullGo = new GameObject();
-        pullGo.name = "PullBox";
-        pullGo.tag = "Pull";
+        if(canPull) {
+            GameObject pullGo = new GameObject();
+            pullGo.name = "PullBox";
+            pullGo.tag = "Pull";
 
-        SphereCollider pullBox = pullGo.AddComponent<SphereCollider>();
-        pullBox.radius = radius;
-        pullBox.center = new Vector3(0, 0, 0);
-        pullBox.enabled = true;
+            SphereCollider pullBox = pullGo.AddComponent<SphereCollider>();
+            pullBox.radius = radius;
+            pullBox.center = new Vector3(0, 0, 0);
+            pullBox.enabled = true;
 
-        pullGo.SetActive(true);
-        pullGo.transform.SetParent(go.transform.GetChild(0));
-        pullGo.transform.localPosition = Vector3.zero;
+            pullGo.SetActive(true);
+            pullGo.transform.SetParent(go.transform.GetChild(0));
+            pullGo.transform.localPosition = Vector3.zero;
+        }
     }
 }

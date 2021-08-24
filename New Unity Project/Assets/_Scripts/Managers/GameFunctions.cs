@@ -9,14 +9,14 @@ public static class GameFunctions
     public static bool CanAttack(string playerTag, string enemyTag, Component damageable, BaseStats stats) { //returns if a unit can attack another
         if(damageable) {
             if(playerTag != enemyTag) {
-                bool objectAttackable = false;
-                if(stats.ObjectAttackable == GameConstants.OBJECT_ATTACKABLE.BOTH) //If the unit can attack the flying or ground unit, continue
-                    objectAttackable = true;
-                else if(stats.ObjectAttackable == GameConstants.OBJECT_ATTACKABLE.GROUND && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND)
-                    objectAttackable = true;
-                else if(stats.ObjectAttackable == GameConstants.OBJECT_ATTACKABLE.FLYING && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
-                    objectAttackable = true;
-                if(objectAttackable) { //the inside of this if block tests if the units priority matches the unit, then return true
+                bool heightAttackable = false;
+                if(stats.HeightAttackable == GameConstants.HEIGHT_ATTACKABLE.BOTH) //If the unit can attack the flying or ground unit, continue
+                    heightAttackable = true;
+                else if(stats.HeightAttackable == GameConstants.HEIGHT_ATTACKABLE.GROUND && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND)
+                    heightAttackable = true;
+                else if(stats.HeightAttackable == GameConstants.HEIGHT_ATTACKABLE.FLYING && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
+                    heightAttackable = true;
+                if(heightAttackable) { //the inside of this if block tests if the units priority matches the unit, then return true
                     if(stats.AttackPriority == GameConstants.ATTACK_PRIORITY.EVERYTHING) //If the units priority is anything, return true
                         return true;
                     else if(stats.AttackPriority == GameConstants.ATTACK_PRIORITY.STRUCTURE && (damageable as IDamageable).Stats.UnitType == GameConstants.UNIT_TYPE.STRUCTURE)
@@ -27,15 +27,23 @@ public static class GameFunctions
         return false;
     }
 
-    public static bool WillHit(GameConstants.OBJECT_ATTACKABLE objectAttackable, Component damageable) { //returns if an ability will hit its target
+    public static bool WillHit(GameConstants.HEIGHT_ATTACKABLE heightAttackable, GameConstants.TYPE_ATTACKABLE typeAttackable, Component damageable) { //returns if an ability will hit its target
         bool willHit = false;
-        if(objectAttackable == GameConstants.OBJECT_ATTACKABLE.BOTH) //If the unit can attack the flying or ground unit, continue
+        if(heightAttackable == GameConstants.HEIGHT_ATTACKABLE.BOTH) //If the unit can attack the flying or ground unit, continue
             willHit = true;
-        else if(objectAttackable == GameConstants.OBJECT_ATTACKABLE.GROUND && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND)
+        else if(heightAttackable == GameConstants.HEIGHT_ATTACKABLE.GROUND && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND)
             willHit = true;
-        else if(objectAttackable == GameConstants.OBJECT_ATTACKABLE.FLYING && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
+        else if(heightAttackable == GameConstants.HEIGHT_ATTACKABLE.FLYING && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
             willHit = true;
-        return willHit;
+        if(willHit) {
+            if(typeAttackable == GameConstants.TYPE_ATTACKABLE.BOTH)
+                return true;
+            else if(typeAttackable == GameConstants.TYPE_ATTACKABLE.UNIT && (damageable as IDamageable).Stats.UnitType == GameConstants.UNIT_TYPE.UNIT)
+                return true;
+            else if(typeAttackable == GameConstants.TYPE_ATTACKABLE.STRUCTURE && (damageable as IDamageable).Stats.UnitType == GameConstants.UNIT_TYPE.STRUCTURE)
+                return true;
+        }
+        return false;
     }
 
     public static void Attack(Component damageable, float baseDamage) {

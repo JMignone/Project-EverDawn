@@ -30,9 +30,6 @@ public class Unit : MonoBehaviour, IDamageable
     [SerializeField]
     private List<GameObject> inRangeTargets;
 
-    private bool isHoveringAbility;
-    private bool isCastingAbility;
-
     public Actor3D Agent
     {
         get { return agent; }
@@ -86,26 +83,14 @@ public class Unit : MonoBehaviour, IDamageable
         //set { hitTargets = value; }
     }
 
-    public bool IsHoveringAbility
-    {
-        get { return isHoveringAbility; }
-        set { isHoveringAbility = value; }
-    }
-    
-    public bool IsCastingAbility
-    {
-        get { return isCastingAbility; }
-        set { isCastingAbility = value; }
-    }
-
     private void Start()
     {
         agent.Agent.stoppingDistance = 0; //Set to be zero, incase someone forgets or accidently changes this value to be a big number
         agent.Agent.speed = stats.MoveSpeed;
 
-        stats.StartStats(gameObject);
+        stats.EffectStats.StartStats(gameObject);
 
-        isHoveringAbility = false;
+        stats.IsHoveringAbility = false;
         indicatorNum = 0;
         abilityIndicator.enabled = false;
         abilityIndicator.rectTransform.sizeDelta = new Vector2(2*agent.HitBox.radius + 1, 2*agent.HitBox.radius + 1); 
@@ -115,7 +100,7 @@ public class Unit : MonoBehaviour, IDamageable
     private void Update()
     {
         if(stats.CurrHealth > 0) {
-            if((target == null || inRange == 0) && stats.CanAct() && !isCastingAbility) { //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
+            if((target == null || inRange == 0) && stats.CanAct && !stats.IsCastingAbility) { //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                 if(hitTargets.Count > 0) {
                     GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
                     if(go != null)
@@ -146,7 +131,7 @@ public class Unit : MonoBehaviour, IDamageable
                     }
                 }
             }
-            else
+            else if(agent.Agent.enabled == true) //prevents errors being thrown when a units agent is temporarily disabled by being grabbed
                 agent.Agent.isStopped = true;
         }
         else {
@@ -163,8 +148,8 @@ public class Unit : MonoBehaviour, IDamageable
 
                 if(damageable) { //is the target damageable
                     if(hitTargets.Contains(target)) {  //this is needed for the rare occurance that a unit is 90% done with attack delay and the target leaves its range. It can still do its attack if its within vision given that its attack was already *90% thru
-                        if(stats.AOEStats.AreaOfEffect)
-                            stats.AOEStats.Explode(gameObject, target);
+                        if(stats.EffectStats.AOEStats.AreaOfEffect)
+                            stats.EffectStats.AOEStats.Explode(gameObject, target);
                         else {
                             GameFunctions.Attack(damageable, stats.BaseDamage);
                             stats.ApplyAffects(damageable);
@@ -185,14 +170,14 @@ public class Unit : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(GameFunctions.WillHit(ability.ObjectAttackable, this.GetComponent(typeof(IDamageable)))) {
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {
                     indicatorNum++;
                     abilityIndicator.enabled = true;
                 }
             }
             else if(other.CompareTag("Pull")) {
                 Component IAbility = other.transform.parent.parent.GetComponent(typeof(IAbility));
-                stats.PulledStats.AddPull(IAbility);
+                stats.EffectStats.PulledStats.AddPull(IAbility);
             }
             else { //is it another units vision/range?
                 Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
@@ -203,7 +188,7 @@ public class Unit : MonoBehaviour, IDamageable
                             (unit as IDamageable).InRange++;
                             if(!(unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Add(gameObject);
-                            if( ((unit as IDamageable).InRange == 1 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct()) { //we need this block here as well as stay in the case that a unit is placed inside a units range
+                            if( ((unit as IDamageable).InRange == 1 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct) { //we need this block here as well as stay in the case that a unit is placed inside a units range
                                 GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
                                 if(go != null)
                                     (unit as IDamageable).Target = go;
@@ -226,7 +211,7 @@ public class Unit : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(GameFunctions.WillHit(ability.ObjectAttackable, this.GetComponent(typeof(IDamageable)))) {
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {
                     indicatorNum--;
                     if(indicatorNum == 0)
                         abilityIndicator.enabled = false;
@@ -234,7 +219,7 @@ public class Unit : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("Pull")) {
                 Component IAbility = other.transform.parent.parent.GetComponent(typeof(IAbility));
-                stats.PulledStats.RemovePull(IAbility);
+                stats.EffectStats.PulledStats.RemovePull(IAbility);
             }
             else { //is it another units vision/range?
                 Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
@@ -276,7 +261,7 @@ public class Unit : MonoBehaviour, IDamageable
                     }
                     else if(other.tag == "Vision") { //Are we in their vision detection object?
                         if((unit as IDamageable).HitTargets.Count > 0) {
-                            if( ((unit as IDamageable).InRange == 0 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct()) {
+                            if( ((unit as IDamageable).InRange == 0 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct) {
                                 GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
                                 if(go != null)
                                     (unit as IDamageable).Target = go;

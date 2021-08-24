@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AbilityPreview : MonoBehaviour
 {
-    private GameConstants.OBJECT_ATTACKABLE objectAttackable;
-    public GameConstants.OBJECT_ATTACKABLE ObjectAttackable { get { return objectAttackable; } set { objectAttackable = value; } }
+    private GameConstants.HEIGHT_ATTACKABLE heightAttackable;
+    public GameConstants.HEIGHT_ATTACKABLE HeightAttackable { get { return heightAttackable; } set { heightAttackable = value; } }
+    private GameConstants.TYPE_ATTACKABLE typeAttackable;
+    public GameConstants.TYPE_ATTACKABLE TypeAttackable { get { return typeAttackable; } set { typeAttackable = value; } }
 }

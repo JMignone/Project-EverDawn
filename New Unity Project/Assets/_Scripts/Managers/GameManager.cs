@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        if((objectToRemoveComponent as IDamageable).IsHoveringAbility) {
+        if((objectToRemoveComponent as IDamageable).Stats.IsHoveringAbility) {
             removeAbililtyIndicators();
             Instance.Players[0].OnDragging = false;
         }

@@ -358,7 +358,8 @@ public class Spell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             go.name = goProj.name;
 
             AbilityPreview aPrev = go.AddComponent<AbilityPreview>();
-            aPrev.ObjectAttackable = projectile.ObjectAttackable;
+            aPrev.HeightAttackable = projectile.HeightAttackable;
+            aPrev.TypeAttackable = projectile.TypeAttackable;
 
             Image previewImage = go.AddComponent<Image>(); //Add the Image Component script
             previewImage.color = new Color32(255,255,255,100);
@@ -393,7 +394,8 @@ public class Spell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             goBoom.name = goProj.name;
 
             AbilityPreview aPrev = goBoom.AddComponent<AbilityPreview>();
-            aPrev.ObjectAttackable = projectile.ObjectAttackable;
+            aPrev.HeightAttackable = projectile.HeightAttackable;
+            aPrev.TypeAttackable = projectile.TypeAttackable;
 
             Image previewImageBoom = goBoom.AddComponent<Image>(); //Add the Image Component script
             previewImageBoom.GetComponent<Image>().color = new Color32(255,255,255,100);
@@ -460,7 +462,8 @@ public class Spell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
                 goLinearVert.name = goCAL.name;
 
                 AbilityPreview aPrev = goLinearVert.AddComponent<AbilityPreview>();
-                aPrev.ObjectAttackable = cal.ObjectAttackable;
+                aPrev.HeightAttackable = cal.HeightAttackable;
+                aPrev.TypeAttackable = cal.TypeAttackable;
 
                 Image previewImageLinearVert = goLinearVert.AddComponent<Image>(); //Add the Image Component script
                 previewImageLinearVert.GetComponent<Image>().color = new Color32(255,255,255,100);
@@ -488,7 +491,8 @@ public class Spell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
                 goLinearHorz.name = goCAL.name;
 
                 AbilityPreview aPrev = goLinearHorz.AddComponent<AbilityPreview>();
-                aPrev.ObjectAttackable = cal.ObjectAttackable;
+                aPrev.HeightAttackable = cal.HeightAttackable;
+                aPrev.TypeAttackable = cal.TypeAttackable;
 
                 Image previewImageLinearHorz = goLinearHorz.AddComponent<Image>(); //Add the Image Component script
                 previewImageLinearHorz.GetComponent<Image>().color = new Color32(255,255,255,100);
@@ -517,7 +521,8 @@ public class Spell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             goBoom.name = goCAL.name;
 
             AbilityPreview aPrev = goBoom.AddComponent<AbilityPreview>();
-            aPrev.ObjectAttackable = cal.ObjectAttackable;
+            aPrev.HeightAttackable = cal.HeightAttackable;
+            aPrev.TypeAttackable = cal.TypeAttackable;
 
             Image previewImageBoom = goBoom.AddComponent<Image>(); //Add the Image Component script
             previewImageBoom.GetComponent<Image>().color = new Color32(255,255,255,100);

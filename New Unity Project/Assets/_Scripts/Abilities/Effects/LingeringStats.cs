@@ -128,7 +128,7 @@ public class LingeringStats
         foreach(Collider collider in colliders) {
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                 Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-                if(GameFunctions.WillHit((abilityComponent as IAbility).ObjectAttackable, damageable)) {
+                if(GameFunctions.WillHit((abilityComponent as IAbility).HeightAttackable, (abilityComponent as IAbility).TypeAttackable, damageable)) {
                     GameFunctions.Attack(damageable, lingeringDamage);
                     (abilityComponent as IAbility).ApplyAffects(damageable);
                 }

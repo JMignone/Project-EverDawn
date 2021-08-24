@@ -7,6 +7,7 @@ public interface IAbility
     float Range { get; }
     int AreaMask();
     PullStats PullStats { get; }
-    GameConstants.OBJECT_ATTACKABLE ObjectAttackable { get; }
+    GameConstants.HEIGHT_ATTACKABLE HeightAttackable { get; }
+    GameConstants.TYPE_ATTACKABLE TypeAttackable { get; }
     void ApplyAffects(Component damageable);
 }

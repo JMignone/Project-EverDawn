@@ -47,11 +47,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBox: {fileID: 4332999102053800178}
   unitSprite: {fileID: 4332999101628587706}
-  radius: 2.5
-  speed: 30
-  range: 50
-  baseDamage: 100
-  objectAttackable: 0
+  radius: 3
+  speed: 250
+  range: 75
+  baseDamage: 0
+  heightAttackable: 0
+  typeAttackable: 0
   canPierce: 0
   blockable: 0
   aoeStats:
@@ -74,13 +75,17 @@ MonoBehaviour:
     poisonDuration: 0
     poisonTick: 0
   knockbackStats:
-    canKnockback: 1
+    canKnockback: 0
     knockbackDuration: 0.75
     initialSpeed: 20
   pullStats:
     canPull: 0
     radius: 0
     speed: 50
+  grabStats:
+    canGrab: 1
+    pullDuration: 0.5
+    stunDuration: 1.5
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0.6

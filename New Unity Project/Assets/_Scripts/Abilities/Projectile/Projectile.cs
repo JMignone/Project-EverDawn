@@ -23,7 +23,10 @@ public class Projectile : MonoBehaviour, IAbility
     private float baseDamage;
 
     [SerializeField]
-    private GameConstants.OBJECT_ATTACKABLE objectAttackable;
+    private GameConstants.HEIGHT_ATTACKABLE heightAttackable;
+
+    [SerializeField]
+    private GameConstants.TYPE_ATTACKABLE typeAttackable;
 
     [SerializeField]
     private bool canPierce;
@@ -53,6 +56,9 @@ public class Projectile : MonoBehaviour, IAbility
     private PullStats pullStats;
 
     [SerializeField]
+    private GrabStats grabStats;
+
+    [SerializeField]
     private BoomerangStats boomerangStats;
 
     [SerializeField]
@@ -70,7 +76,7 @@ public class Projectile : MonoBehaviour, IAbility
     private Actor3D chosenTarget;
 
     //Below 2 are currently only used for boomerang, but may be needed for others
-    private Unit unit;
+    private IDamageable unit;
     private Vector3 lastKnownLocation;
 
     public SphereCollider HitBox
@@ -105,9 +111,14 @@ public class Projectile : MonoBehaviour, IAbility
         //set { baseDamage = value; }
     }
 
-    public GameConstants.OBJECT_ATTACKABLE ObjectAttackable
+    public GameConstants.HEIGHT_ATTACKABLE HeightAttackable
     {
-        get { return objectAttackable; }
+        get { return heightAttackable; }
+    }
+
+    public GameConstants.TYPE_ATTACKABLE TypeAttackable
+    {
+        get { return typeAttackable; }
     }
 
     public bool CanPierce
@@ -148,6 +159,11 @@ public class Projectile : MonoBehaviour, IAbility
     public PullStats PullStats
     {
         get { return pullStats; }
+    }
+
+    public GrabStats GrabStats
+    {
+        get { return grabStats; }
     }
 
     public Vector3 Position()
@@ -196,7 +212,7 @@ public class Projectile : MonoBehaviour, IAbility
         get { return blockable; }
     }
 
-    public Unit Unit
+    public IDamageable Unit
     {
         get { return unit; }
         set { unit = value; }
@@ -232,7 +248,7 @@ public class Projectile : MonoBehaviour, IAbility
     }
 
     private void Update() {
-        if(unit != null) { //This is currently only used for boomerang
+        if(unit.Agent != null) { //This is currently only used for boomerang
             lastKnownLocation = unit.Agent.transform.position;
             lastKnownLocation.y = 0;
         }
@@ -249,20 +265,7 @@ public class Projectile : MonoBehaviour, IAbility
         if(boomerangStats.IsBoomerang)
             speedReduction = boomerangStats.SpeedReduction(gameObject, targetLocation, lastKnownLocation);
         if(!lingeringStats.CurrentlyLingering || (lingeringStats.LingerDuringFlight && lingeringStats.IsInFlight)) { //if the projectile doesnt linger or lingers during flight
-            if(grenadeStats.IsGrenade)
-                grenadeStats.UpdateGrenadeStats(gameObject, targetLocation, speed);
-            else {
-                if(boomerangStats.IsBoomerang && boomerangStats.GoingBack) {
-                    Vector3 direction = transform.position - lastKnownLocation;
-                    Quaternion targetRotation = Quaternion.LookRotation(direction);
-                    transform.rotation = targetRotation;
-                    transform.position -= transform.forward * speed * speedReduction * Time.deltaTime;
-                    boomerangStats.UpdateBoomerangStats();
-                }
-                else
-                    transform.position += transform.forward * speed * speedReduction * Time.deltaTime;
-            }
-            if(Vector3.Distance(transform.position, targetLocation) <= radius || ( (Vector3.Distance(transform.position, lastKnownLocation) <= radius) && boomerangStats.IsBoomerang && boomerangStats.GoingBack) ){ //if the projectile is at the end of its flight
+            if(Vector3.Distance(transform.position, targetLocation) <= radius || ( (Vector3.Distance(transform.position, lastKnownLocation) <= radius) && boomerangStats.IsBoomerang && boomerangStats.GoingBack ) ){ //if the projectile is at the end of its flight
                 if(grenadeStats.IsGrenade)
                     grenadeStats.Explode(gameObject);
                 else if(selfDestructStats.SelfDestructs)
@@ -283,12 +286,25 @@ public class Projectile : MonoBehaviour, IAbility
                         Destroy(gameObject);
                 }
             }
+            if(grenadeStats.IsGrenade)
+                grenadeStats.UpdateGrenadeStats(gameObject, targetLocation, speed);
+            else {
+                if(boomerangStats.IsBoomerang && boomerangStats.GoingBack) {
+                    Vector3 direction = transform.position - lastKnownLocation;
+                    Quaternion targetRotation = Quaternion.LookRotation(direction);
+                    transform.rotation = targetRotation;
+                    transform.position -= transform.forward * speed * speedReduction * Time.deltaTime;
+                    boomerangStats.UpdateBoomerangStats();
+                }
+                else
+                    transform.position += transform.forward * speed * speedReduction * Time.deltaTime;
+            }
         }
     }
 
     public void hit(Component damageable) {
         if(blockable || (damageable as IDamageable).Agent == chosenTarget) { //if the projectile is blockable, or this is infact the chosen target
-            if(GameFunctions.WillHit(objectAttackable, damageable)) {
+            if(GameFunctions.WillHit(heightAttackable, typeAttackable, damageable)) {
                 if(aoeStats.AreaOfEffect)
                     aoeStats.Explode(gameObject);
                 else {
@@ -313,14 +329,16 @@ public class Projectile : MonoBehaviour, IAbility
 
     public void ApplyAffects(Component damageable) {
         if(freezeStats.CanFreeze)
-            (damageable as IDamageable).Stats.FrozenStats.Freeze(freezeStats.FreezeDuration);
+            (damageable as IDamageable).Stats.EffectStats.FrozenStats.Freeze(freezeStats.FreezeDuration);
         if(slowStats.CanSlow)
-            (damageable as IDamageable).Stats.SlowedStats.Slow(slowStats.SlowDuration, slowStats.SlowIntensity);
+            (damageable as IDamageable).Stats.EffectStats.SlowedStats.Slow(slowStats.SlowDuration, slowStats.SlowIntensity);
         if(rootStats.CanRoot)
-            (damageable as IDamageable).Stats.RootedStats.Root(RootStats.RootDuration);
+            (damageable as IDamageable).Stats.EffectStats.RootedStats.Root(RootStats.RootDuration);
         if(poisonStats.CanPoison)
-            (damageable as IDamageable).Stats.PoisonedStats.Poison(poisonStats.PoisonDuration, poisonStats.PoisonTick, poisonStats.PoisonDamage);
+            (damageable as IDamageable).Stats.EffectStats.PoisonedStats.Poison(poisonStats.PoisonDuration, poisonStats.PoisonTick, poisonStats.PoisonDamage);
         if(knockbackStats.CanKnockback)
-            (damageable as IDamageable).Stats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position);
+            (damageable as IDamageable).Stats.EffectStats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position);
+        if(grabStats.CanGrab)
+            (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.PullDuration, grabStats.StunDuration, unit);
     }
 }

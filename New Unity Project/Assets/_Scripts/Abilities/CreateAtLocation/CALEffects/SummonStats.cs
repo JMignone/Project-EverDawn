@@ -101,20 +101,10 @@ public class SummonStats
         CreateAtLocation cal = go.GetComponent<CreateAtLocation>();
         MonoBehaviour.Destroy(go);
         Vector3 position = cal.TargetLocation;
-        /*
-        position = GameFunctions.adjustForTowers(position, cal.Radius);
 
-        UnityEngine.AI.NavMeshHit hit;
-        GameObject summonGo;
-        if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 6.1f, 9))
-            summonGo = GameFunctions.SpawnUnit(summonUnit, GameManager.GetUnitsFolder(), hit.position);
-        else
-            summonGo = GameFunctions.SpawnUnit(summonUnit, GameManager.GetUnitsFolder(), position);
-        */
         GameObject summonGo = GameFunctions.SpawnUnit(summonUnit, GameManager.GetUnitsFolder(), position);
 
         Component damageable = summonGo.GetComponent(typeof(IDamageable));
-        //Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
 
         (damageable as IDamageable).Stats.CurrHealth = (damageable as IDamageable).Stats.MaxHealth * percentHealth;
         (damageable as IDamageable).Stats.MaxHealth = (damageable as IDamageable).Stats.MaxHealth * percentHealth;

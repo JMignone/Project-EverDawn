@@ -13,8 +13,6 @@ public interface IDamageable
     Actor2D UnitSprite { get; }
     Image AbilityIndicator { get; }
     int IndicatorNum { get; set; }
-    bool IsHoveringAbility { get; set; }
-    bool IsCastingAbility { get; set; }
 
     void TakeDamage(float amount);
 

@@ -42,9 +42,6 @@ public class Building : MonoBehaviour, IDamageable
     [SerializeField]
     private List<GameObject> inRangeTargets;
 
-    private bool isHoveringAbility;
-    private bool isCastingAbility;
-
     public Actor3D Agent
     {
         get { return agent; }
@@ -116,23 +113,11 @@ public class Building : MonoBehaviour, IDamageable
         get { return inRangeTargets; }
     }
 
-    public bool IsHoveringAbility
-    {
-        get { return isHoveringAbility; }
-        set { isHoveringAbility = value; }
-    }
-
-    public bool IsCastingAbility
-    {
-        get { return isCastingAbility; }
-        set { isCastingAbility = value; }
-    }
-
     private void Start()
     {
-        stats.StartStats(gameObject);
+        stats.EffectStats.StartStats(gameObject);
         
-        isHoveringAbility = false;
+        stats.IsHoveringAbility = false;
         indicatorNum = 0;
         abilityIndicator.enabled = false;
         abilityIndicator.rectTransform.sizeDelta = new Vector2(2*agent.HitBox.radius + 1, 2*agent.HitBox.radius + 1); 
@@ -149,7 +134,7 @@ public class Building : MonoBehaviour, IDamageable
                 Spawn();
             }
             else if(buildingType == GameConstants.BUILDING_TYPE.ATTACK) {
-                if((target == null || inRange == 0) && stats.CanAct()) { //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
+                if((target == null || inRange == 0) && stats.CanAct && !stats.IsCastingAbility) { //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                     if(hitTargets.Count > 0) {
                         GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
                         if(go != null)
@@ -187,7 +172,7 @@ public class Building : MonoBehaviour, IDamageable
     }
 
     void Spawn() {
-        if(stats.CurrAttackDelay >= stats.AttackDelay && stats.IsReady()) {
+        if(stats.CurrAttackDelay >= stats.AttackDelay && stats.IsReady) {
             Vector3 position = agent.transform.position;
             position += transform.forward * -7;
             Quaternion rotation = agent.transform.rotation;
@@ -205,8 +190,8 @@ public class Building : MonoBehaviour, IDamageable
 
                 if(damageable) { //is the target damageable
                     if(hitTargets.Contains(target)) {  //this is needed for the rare occurance that a unit is 90% done with attack delay and the target leaves its range. It can still do its attack if its within vision given that its attack was already *90% thru
-                        if(stats.AOEStats.AreaOfEffect)
-                            stats.AOEStats.Explode(gameObject, target);
+                        if(stats.EffectStats.AOEStats.AreaOfEffect)
+                            stats.EffectStats.AOEStats.Explode(gameObject, target);
                         else {
                             GameFunctions.Attack(damageable, stats.BaseDamage);
                             stats.ApplyAffects(damageable);
@@ -237,7 +222,7 @@ public class Building : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an abililty?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(GameFunctions.WillHit(ability.ObjectAttackable, this.GetComponent(typeof(IDamageable)))) {
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {
                     indicatorNum++;
                     abilityIndicator.enabled = true;
                 }
@@ -251,7 +236,7 @@ public class Building : MonoBehaviour, IDamageable
                             (unit as IDamageable).InRange++;
                             if(!(unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Add(gameObject);
-                            if(((unit as IDamageable).InRange == 1 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct()) {
+                            if(((unit as IDamageable).InRange == 1 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct) {
                                 GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
                                 if(go != null)
                                     (unit as IDamageable).Target = go;
@@ -274,7 +259,7 @@ public class Building : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an abililty?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(GameFunctions.WillHit(ability.ObjectAttackable, this.GetComponent(typeof(IDamageable)))) {
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {
                     indicatorNum--;
                     if(indicatorNum == 0)
                         abilityIndicator.enabled = false;
@@ -314,7 +299,7 @@ public class Building : MonoBehaviour, IDamageable
                 }
                 else if(other.tag == "Vision") { //Are we in their vision detection object?
                     if((unit as IDamageable).HitTargets.Count > 0) {
-                        if(((unit as IDamageable).InRange == 0 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct()) {
+                        if(((unit as IDamageable).InRange == 0 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct) {
                             GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
                             if(go != null)
                                 (unit as IDamageable).Target = go;

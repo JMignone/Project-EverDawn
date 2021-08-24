@@ -19,9 +19,15 @@ public static class GameConstants
         FLYING
     }
 
-    public enum OBJECT_ATTACKABLE {
+    public enum HEIGHT_ATTACKABLE {
+        BOTH,
         GROUND,
-        FLYING,
+        FLYING
+    }
+
+    public enum TYPE_ATTACKABLE {
+        UNIT,
+        STRUCTURE,
         BOTH
     }
 

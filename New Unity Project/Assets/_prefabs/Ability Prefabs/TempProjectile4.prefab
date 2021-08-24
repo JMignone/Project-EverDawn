@@ -129,9 +129,10 @@ MonoBehaviour:
   hitBox: {fileID: 1224647180710323965}
   radius: 2.5
   range: 80
-  objectAttackable: 2
+  heightAttackable: 0
+  typeAttackable: 0
   freezeStats:
-    canFreeze: 0
+    canFreeze: 1
     freezeDuration: 3
   slowStats:
     canSlow: 0
@@ -149,6 +150,10 @@ MonoBehaviour:
     canKnockback: 1
     knockbackDuration: 1
     initialSpeed: 1
+  pullStats:
+    canPull: 0
+    radius: 0
+    speed: 0
   lingeringStats:
     lingering: 0
     lingerAtEnd: 0

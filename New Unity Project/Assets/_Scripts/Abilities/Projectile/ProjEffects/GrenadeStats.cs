@@ -113,7 +113,7 @@ public class GrenadeStats
         foreach(Collider collider in colliders) {
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                 Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-                if(GameFunctions.WillHit(projectile.ObjectAttackable, damageable)) {
+                if(GameFunctions.WillHit(projectile.HeightAttackable, projectile.TypeAttackable, damageable)) {
                     GameFunctions.Attack(damageable, explosionDamage);
                     projectile.ApplyAffects(damageable);
                 }

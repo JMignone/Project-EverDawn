@@ -172,11 +172,11 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(!playerInfo.OnDragging && !isDragging && unit.Stats.IsReady()) {
+        if(!playerInfo.OnDragging && !isDragging && unit.Stats.IsReady) {
             if(abilityUI.CanDrag) {
                 isDragging = true;
                 playerInfo.OnDragging = true;
-                unit.IsHoveringAbility = true;
+                unit.Stats.IsHoveringAbility = true;
 
                 abilityUI.AbilitySprite.enabled = false;
                 abilityUI.AbilityCancel.enabled = true;
@@ -239,7 +239,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if(playerInfo.OnDragging) {
             isDragging = false;
             playerInfo.OnDragging = false;
-            unit.IsHoveringAbility = false;
+            unit.Stats.IsHoveringAbility = false;
 
             abilityUI.AbilitySprite.enabled = true;
             abilityUI.AbilityCancel.enabled = false;
@@ -259,7 +259,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
             GameManager.removeAbililtyIndicators();
 
-            if(abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y && unit.Stats.CanAct()) {
+            if(abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y && unit.Stats.CanAct) {
                 fireStartPosition = abilityPreviewCanvas.transform.position;
                 if(fireMousePosition == new Vector3(-1, -1, -1)) { //if the ability was not a summon, get the position
                     fireMousePosition = GameFunctions.getPosition(false);
@@ -269,7 +269,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 fireDirection = fireMousePosition - fireStartPosition;
 
                 isFiring = true;
-                unit.IsCastingAbility = true;
+                unit.Stats.IsCastingAbility = true;
                 unit.Target = null;
                 abilityUI.resetAbility();
             }
@@ -278,7 +278,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnPointerClick(PointerEventData pointerEventData)
     {
-        if(!playerInfo.OnDragging && !isDragging && abilityUI.CanDrag && unit.Stats.IsReady()) { //if the abililty can be dragged
+        if(!playerInfo.OnDragging && !isDragging && abilityUI.CanDrag && unit.Stats.IsReady) { //if the abililty can be dragged
             Collider[] colliders = Physics.OverlapSphere(unit.Agent.Agent.transform.position, maxRange);
             Component testComponent = abilityPrefabs[0].GetComponent(typeof(IAbility));
 
@@ -289,7 +289,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 foreach(Collider collider in colliders) {
                     if(!collider.CompareTag(abilityPrefabs[0].tag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-                        if(GameFunctions.WillHit((testComponent as IAbility).ObjectAttackable, damageable)) {
+                        if(GameFunctions.WillHit((testComponent as IAbility).HeightAttackable, (testComponent as IAbility).TypeAttackable, damageable)) {
                             distance = Vector3.Distance(unit.Agent.Agent.transform.position, collider.transform.position);
                             if(distance < closestDistance) {
                                 closestDistance = distance;
@@ -300,7 +300,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 }
             }
 
-            if(closestTargetPosition != new Vector3(-1, -1, -1) && unit.Stats.CanAct()) {
+            if(closestTargetPosition != new Vector3(-1, -1, -1) && unit.Stats.CanAct) {
                 fireStartPosition = abilityPreviewCanvas.transform.position;
                 fireStartPosition.y = 0;
 
@@ -317,7 +317,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 fireDirection = fireMousePosition - fireStartPosition;
 
                 isFiring = true;
-                unit.IsCastingAbility = true;
+                unit.Stats.IsCastingAbility = true;
                 unit.Target = null;
                 abilityUI.resetAbility();
             }
@@ -325,19 +325,19 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     private void Fire() {
-        if(!unit.Stats.CanAct()) {
+        if(!unit.Stats.CanAct) {
             isFiring = false;
             currentProjectileIndex = 0;
             currentDelay = 0;
-            unit.IsCastingAbility = false;
+            unit.Stats.IsCastingAbility = false;
         }
         else if(currentDelay < abilityDelays[currentProjectileIndex]) //if we havnt reached the delay yet
-            currentDelay += Time.deltaTime * unit.Stats.SlowedStats.CurrentSlowIntensity;
+            currentDelay += Time.deltaTime * unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
         else if(currentProjectileIndex == abilityPrefabs.Count) { //if we completed the last delay
             isFiring = false;
             currentProjectileIndex = 0;
             currentDelay = 0;
-            unit.IsCastingAbility = false;
+            unit.Stats.IsCastingAbility = false;
         }
         else { //if we completed a delay
             if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
@@ -437,7 +437,8 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             go.name = goProj.name;
 
             AbilityPreview aPrev = go.AddComponent<AbilityPreview>();
-            aPrev.ObjectAttackable = projectile.ObjectAttackable;
+            aPrev.HeightAttackable = projectile.HeightAttackable;
+            aPrev.TypeAttackable = projectile.TypeAttackable;
 
             Image previewImage = go.AddComponent<Image>(); //Add the Image Component script
             previewImage.color = new Color32(255,255,255,100);
@@ -472,7 +473,8 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             goBoom.name = goProj.name;
 
             AbilityPreview aPrev = goBoom.AddComponent<AbilityPreview>();
-            aPrev.ObjectAttackable = projectile.ObjectAttackable;
+            aPrev.HeightAttackable = projectile.HeightAttackable;
+            aPrev.TypeAttackable = projectile.TypeAttackable;
 
             Image previewImageBoom = goBoom.AddComponent<Image>(); //Add the Image Component script
             previewImageBoom.GetComponent<Image>().color = new Color32(255,255,255,100);
@@ -570,7 +572,8 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 goLinearVert.name = goCAL.name;
 
                 AbilityPreview aPrev = goLinearVert.AddComponent<AbilityPreview>();
-                aPrev.ObjectAttackable = cal.ObjectAttackable;
+                aPrev.HeightAttackable = cal.HeightAttackable;
+                aPrev.TypeAttackable = cal.TypeAttackable;
 
                 Image previewImageLinearVert = goLinearVert.AddComponent<Image>(); //Add the Image Component script
                 previewImageLinearVert.GetComponent<Image>().color = new Color32(255,255,255,100);
@@ -598,7 +601,8 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 goLinearHorz.name = goCAL.name;
 
                 AbilityPreview aPrev = goLinearHorz.AddComponent<AbilityPreview>();
-                aPrev.ObjectAttackable = cal.ObjectAttackable;
+                aPrev.HeightAttackable = cal.HeightAttackable;
+                aPrev.TypeAttackable = cal.TypeAttackable;
 
                 Image previewImageLinearHorz = goLinearHorz.AddComponent<Image>(); //Add the Image Component script
                 previewImageLinearHorz.GetComponent<Image>().color = new Color32(255,255,255,100);
@@ -627,7 +631,8 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             goBoom.name = goCAL.name;
 
             AbilityPreview aPrev = goBoom.AddComponent<AbilityPreview>();
-            aPrev.ObjectAttackable = cal.ObjectAttackable;
+            aPrev.HeightAttackable = cal.HeightAttackable;
+            aPrev.TypeAttackable = cal.TypeAttackable;
 
             Image previewImageBoom = goBoom.AddComponent<Image>(); //Add the Image Component script
             previewImageBoom.GetComponent<Image>().color = new Color32(255,255,255,100);
