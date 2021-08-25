@@ -102,7 +102,7 @@ public class GrabbedStats
             totalDistance = Vector3.Distance((damageableComponent as IDamageable).Agent.Agent.transform.position, enemyUnit.Agent.Agent.transform.position);
 
             (damageableComponent as IDamageable).Agent.Agent.enabled = false;
-            (damageableComponent as IDamageable).Target = null;
+            (damageableComponent as IDamageable).SetTarget(null);
             (damageableComponent as IDamageable).Stats.CurrAttackDelay = 0;
             if(damageableComponent.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors to red
                 foreach(Transform child in damageableComponent.transform.GetChild(1).GetChild(5).GetChild(2)) {

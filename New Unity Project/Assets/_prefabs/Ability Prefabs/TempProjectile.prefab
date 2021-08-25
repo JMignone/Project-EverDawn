@@ -48,7 +48,7 @@ MonoBehaviour:
   hitBox: {fileID: 4332999102053800178}
   unitSprite: {fileID: 4332999101628587706}
   radius: 3
-  speed: 250
+  speed: 125
   range: 75
   baseDamage: 0
   heightAttackable: 0

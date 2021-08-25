@@ -154,6 +154,7 @@ public class Unit : MonoBehaviour, IDamageable
         else {
             print(gameObject.name + " has died!");
             GameManager.RemoveObjectsFromList(gameObject);
+            (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
             Destroy(gameObject);
         }
     }
@@ -207,9 +208,9 @@ public class Unit : MonoBehaviour, IDamageable
                 stats.EffectStats.PulledStats.AddPull(IAbility);
             }
             else { //is it another units vision/range?
-                Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
-                if(damageable) {
-                    Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
+                Component unit = other.transform.parent.parent.GetComponent(typeof(IDamageable));
+                if(unit) {
+                    //Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                     if(other.CompareTag("Range")) {//Are we in their range detection object?
                         if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) { //only if the unit can actually target this one should we adjust this value
                             (unit as IDamageable).InRange++;
@@ -249,9 +250,9 @@ public class Unit : MonoBehaviour, IDamageable
                 stats.EffectStats.PulledStats.RemovePull(IAbility);
             }
             else { //is it another units vision/range?
-                Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
-                if(damageable) {
-                    Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
+                Component unit = other.transform.parent.parent.GetComponent(typeof(IDamageable));
+                if(unit) {
+                    //Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                     if(other.CompareTag("Range")) { //Are we in their Range detection object?
                         if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
                             (unit as IDamageable).InRange--;

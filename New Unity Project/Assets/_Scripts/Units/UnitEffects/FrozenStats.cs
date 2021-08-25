@@ -72,7 +72,7 @@ public class FrozenStats
             frozenDelay = duration;
             currentFrozenDelay = 0;
             (damageableComponent as IDamageable).UnitSprite.Animator.enabled = false;
-            (damageableComponent as IDamageable).Target = null;
+            (damageableComponent as IDamageable).SetTarget(null);
             (damageableComponent as IDamageable).Stats.CurrAttackDelay = 0;
             if(damageableComponent.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors to red
                 foreach(Transform child in damageableComponent.transform.GetChild(1).GetChild(5).GetChild(2)) {

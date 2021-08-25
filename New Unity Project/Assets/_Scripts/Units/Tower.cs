@@ -34,9 +34,6 @@ public class Tower : MonoBehaviour, IDamageable
     private List<GameObject> enemyHitTargets;
 
     [SerializeField]
-    private float enemySoonestKill;
-
-    [SerializeField]
     protected bool leftTower;
 
     public Actor3D Agent
@@ -92,12 +89,6 @@ public class Tower : MonoBehaviour, IDamageable
     public List<GameObject> EnemyHitTargets
     {
         get { return enemyHitTargets; }
-    }
-
-    public float EnemySoonestKill
-    {
-        get { return enemySoonestKill; }
-        set { enemySoonestKill = value; }
     }
 
     public bool LeftTower
@@ -190,9 +181,9 @@ public class Tower : MonoBehaviour, IDamageable
                 }
             }
             else { //is it another units vision/range?
-                Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
-                if(damageable) {
-                    Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
+                Component unit = other.transform.parent.parent.GetComponent(typeof(IDamageable));
+                if(unit) {
+                    //Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                     if(other.CompareTag("Range")) {//Are we in their range detection object?
                         //if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) anything can attack a tower, ill leave it hear incase somthing with an ability gives a need for this
                             (unit as IDamageable).InRange++;
@@ -222,9 +213,9 @@ public class Tower : MonoBehaviour, IDamageable
                 }
             }
             else { //is it another units vision/range?
-                Component damageable = other.transform.parent.parent.GetComponent(typeof(IDamageable));
-                if(damageable) {
-                    Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
+                Component unit = other.transform.parent.parent.GetComponent(typeof(IDamageable));
+                if(unit) {
+                    //Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                     if(other.CompareTag("Range")) { //Are we in their Range detection object?
                         //if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
                             (unit as IDamageable).InRange--;
