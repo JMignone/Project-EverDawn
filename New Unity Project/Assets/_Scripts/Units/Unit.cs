@@ -154,7 +154,8 @@ public class Unit : MonoBehaviour, IDamageable
         else {
             print(gameObject.name + " has died!");
             GameManager.RemoveObjectsFromList(gameObject);
-            (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
+            if(target != null)
+                (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
             Destroy(gameObject);
         }
     }
