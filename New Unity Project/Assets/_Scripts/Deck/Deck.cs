@@ -31,6 +31,14 @@ public class Deck
     }
 
     public void Start() {
+        //this randomizes the deck
+        for (int i = 0; i < cards.Count; i++) {
+            CardStats temp = cards[i];
+            int randomIndex = Random.Range(i, cards.Count);
+            cards[i] = cards[randomIndex];
+            cards[randomIndex] = temp;
+        }
+
         nextCard = cards[0];
     }
 
