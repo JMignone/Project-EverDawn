@@ -270,7 +270,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
                 isFiring = true;
                 unit.Stats.IsCastingAbility = true;
-                unit.Target = null;
+                unit.SetTarget(null);
                 abilityUI.resetAbility();
             }
         }
@@ -318,7 +318,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
                 isFiring = true;
                 unit.Stats.IsCastingAbility = true;
-                unit.Target = null;
+                unit.SetTarget(null);
                 abilityUI.resetAbility();
             }
         }

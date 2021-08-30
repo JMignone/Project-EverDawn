@@ -22,15 +22,18 @@ public class Projectile : MonoBehaviour, IAbility
     [SerializeField]
     private float baseDamage;
 
+    [Tooltip("Determines if the projectile can hit units on the ground, flying, or both")]
     [SerializeField]
     private GameConstants.HEIGHT_ATTACKABLE heightAttackable;
 
+    [Tooltip("Determines if the projectile can hit units, structures, or both")]
     [SerializeField]
     private GameConstants.TYPE_ATTACKABLE typeAttackable;
 
     [SerializeField]
     private bool canPierce;
 
+    [Tooltip("If checked, a targeted ability will be able to hit a unit that is not its target given the unit blocked its path")]
     [SerializeField]
     private bool blockable; //simply means that a projectile can hit somthing that it didnt nessesarly target. Automatically set to true if there is no specific target
 
@@ -253,11 +256,13 @@ public class Projectile : MonoBehaviour, IAbility
             lastKnownLocation.y = 0;
         }
         if(chosenTarget != null && !boomerangStats.GoingBack) {//this is only used if the projectile was fired at a specified target. Must check if its a boomerang and already going back
-            targetLocation = chosenTarget.transform.position;
+            targetLocation = chosenTarget.Agent.transform.position;
             
             Vector3 direction = targetLocation - transform.position;
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = targetRotation;
+            if(direction != Vector3.zero) {
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                transform.rotation = targetRotation;
+            }
         }
         if(lingeringStats.CurrentlyLingering) //if currently lingering
             lingeringStats.UpdateLingeringStats(gameObject);

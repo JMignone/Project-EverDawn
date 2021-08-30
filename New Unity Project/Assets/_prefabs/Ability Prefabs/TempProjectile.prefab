@@ -50,7 +50,7 @@ MonoBehaviour:
   radius: 3
   speed: 125
   range: 75
-  baseDamage: 0
+  baseDamage: 50
   heightAttackable: 0
   typeAttackable: 0
   canPierce: 0
@@ -63,7 +63,7 @@ MonoBehaviour:
     canFreeze: 0
     freezeDuration: 4
   slowStats:
-    canSlow: 1
+    canSlow: 0
     slowDuration: 3
     slowIntensity: 0.5
   rootStats:

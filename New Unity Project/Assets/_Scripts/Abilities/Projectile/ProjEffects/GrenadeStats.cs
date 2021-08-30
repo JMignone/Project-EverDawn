@@ -8,9 +8,11 @@ public class GrenadeStats
     [SerializeField]
     private bool isGrenade;
 
+    [Tooltip("If checked, a grenade will come from the edges of the arena rather than a unit. isGrenade must also be checked for this to work.")]
     [SerializeField]
     private bool isAirStrike;
 
+    [Tooltip("If isAirStrike ischecked, determines where the airstrike will come from.")]
     [SerializeField]
     private GameConstants.AIR_STRIKE_LOCATION startLocation;
 
@@ -23,6 +25,7 @@ public class GrenadeStats
     [SerializeField]
     private float explosionRadius;
 
+    [Tooltip("A number from [0-infinity) that determines how large the arc of the grenade. 1 will set the arc to be a circle.")]
     [SerializeField]
     private float grenadeArcMultiplier; //1 sets the grenade to a circular arc, a smaller number makes the arc smaller, a bigger number makes the arc larger
 
@@ -72,7 +75,7 @@ public class GrenadeStats
     public void StartGrenadeStats(GameObject go) {
         if(isGrenade) {
             Projectile projectile = go.GetComponent<Projectile>();
-            projectile.Radius = 0;
+            projectile.Radius = .1f; //setting it to zero will not work if targeting moving targets
             projectile.HitBox.enabled = false;
             
             if(grenadeArcMultiplier < .1) //preventing divide by zero
@@ -100,7 +103,9 @@ public class GrenadeStats
             Vector3 m1 = Vector3.Lerp( arcStart, arcApex, distanceCovered);
             Vector3 m2 = Vector3.Lerp( arcApex, arcEnd, distanceCovered);
 
-            go.transform.GetChild(0).GetChild(0).rotation = Quaternion.LookRotation(Vector3.Lerp(m1, m2, distanceCovered) - go.transform.position) * Quaternion.Euler(90, 0, 0);
+            Vector3 direction = Vector3.Lerp(m1, m2, distanceCovered) - go.transform.position;
+            if(direction != Vector3.zero)
+                go.transform.GetChild(0).GetChild(0).rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(90, 0, 0);
             go.transform.position = Vector3.Lerp(m1, m2, distanceCovered);
         }
     }

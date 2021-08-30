@@ -100,7 +100,7 @@ public static class GameFunctions
         return go;
     }
 
-    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, Unit unit) {
+    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit) {
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         float distance = Vector3.Distance(startPosition, mousePosition);
         Vector3 endPosition = mousePosition;
@@ -123,7 +123,7 @@ public static class GameFunctions
         go.GetComponent<Projectile>().Unit = unit;
     }
 
-    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, Unit unit) {
+    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit) {
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         float distance = Vector3.Distance(startPosition, chosenTarget.transform.position);
         Vector3 endPosition = chosenTarget.transform.position;
@@ -142,7 +142,7 @@ public static class GameFunctions
         go.GetComponent<Projectile>().Unit = unit;
     }
 
-    public static void FireCAL(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, Unit unit) {
+    public static void FireCAL(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit) {
         Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
         float distance = Vector3.Distance(startPosition, mousePosition);
         Vector3 endPosition = mousePosition;
@@ -165,7 +165,7 @@ public static class GameFunctions
         go.GetComponent<CreateAtLocation>().Unit = unit;
     }
 
-    public static void FireCAL(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, Unit unit) {
+    public static void FireCAL(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit) {
         Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
         float distance = Vector3.Distance(startPosition, chosenTarget.transform.position);
         Vector3 endPosition = chosenTarget.transform.position;

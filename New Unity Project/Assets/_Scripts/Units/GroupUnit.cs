@@ -21,7 +21,7 @@ public class GroupUnit : MonoBehaviour, IDamageable
     private bool isCastingAbility;
     private Image abilityIndicator;
     private int indicatorNum;
-    //Right now I need these so it has the interface. I need the interface because other parts of the code retrieve values by looknig for the interface component.
+    //Right now I need these so it has the interface. I need the interface because other parts of the code retrieve values by looking for the interface component.
     //These values will just be null
 
     public BaseStats Stats
@@ -110,6 +110,10 @@ public class GroupUnit : MonoBehaviour, IDamageable
     }
 
     public void SetTarget(GameObject newTarget) {
+        //pass
+    }
+
+    public void ReTarget() {
         //pass
     }
 }

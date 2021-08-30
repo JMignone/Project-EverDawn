@@ -23,6 +23,9 @@ public class Unit : MonoBehaviour, IDamageable
 
     [SerializeField]
     private BaseStats stats;
+    
+    [SerializeField]
+    private AttackStats attackStats;
 
     [SerializeField]
     private List<GameObject> hitTargets;
@@ -32,9 +35,6 @@ public class Unit : MonoBehaviour, IDamageable
 
     [SerializeField]
     private List<GameObject> enemyHitTargets;
-
-    [SerializeField]
-    private float enemySoonestKill;
 
     public Actor3D Agent
     {
@@ -74,7 +74,11 @@ public class Unit : MonoBehaviour, IDamageable
     public BaseStats Stats
     {
         get { return stats; }
-        //set { stats = value; }
+    }
+
+    public AttackStats AttackStats
+    {
+        get { return attackStats; }
     }
 
     public List<GameObject> HitTargets
@@ -94,18 +98,13 @@ public class Unit : MonoBehaviour, IDamageable
         get { return enemyHitTargets; }
     }
 
-    public float EnemySoonestKill
-    {
-        get { return enemySoonestKill; }
-        set { enemySoonestKill = value; }
-    }
-
     private void Start()
     {
         agent.Agent.stoppingDistance = 0; //Set to be zero, incase someone forgets or accidently changes this value to be a big number
         agent.Agent.speed = stats.MoveSpeed;
 
         stats.EffectStats.StartStats(gameObject);
+        attackStats.StartAttackStats(gameObject);
 
         stats.IsHoveringAbility = false;
         indicatorNum = 0;
@@ -117,27 +116,14 @@ public class Unit : MonoBehaviour, IDamageable
     private void Update()
     {
         if(stats.CurrHealth > 0) {
-            if((target == null || inRange == 0) && stats.CanAct && !stats.IsCastingAbility) { //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
-                if(hitTargets.Count > 0) {
-                    GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
-                    if(go != null)
-                        SetTarget(go);
-                    else {
-                        List<GameObject> towers = GameManager.Instance.TowerObjects;
-                        towers = GameManager.GetAllEnemies(transform.GetChild(0).position, towers, gameObject.tag); //sending in only towers
-                        SetTarget(GameFunctions.GetNearestTarget(towers, gameObject.tag, stats));
-                    }
-                }
-                else {
-                    List<GameObject> towers = GameManager.Instance.TowerObjects;
-                    towers = GameManager.GetAllEnemies(transform.GetChild(0).position, towers, gameObject.tag); //sending in only towers
-                    SetTarget(GameFunctions.GetNearestTarget(towers, gameObject.tag, stats));
-                }
-            }
+            if((target == null || inRange == 0) && stats.CanAct && !stats.IsCastingAbility) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
+                ReTarget();
+
             stats.UpdateStats(inRange, agent, hitTargets, target);
             agent.Agent.speed = stats.MoveSpeed;
             Attack();
-            if(target != null) {
+            
+            if(target != null && !attackStats.IsFiring) {
                 Vector3 direction = target.transform.GetChild(0).position - agent.transform.position;
                 agent.Agent.SetDestination(target.transform.GetChild(0).position - (direction.normalized * .25f));
                 agent.Agent.isStopped = false;
@@ -148,6 +134,8 @@ public class Unit : MonoBehaviour, IDamageable
                     }
                 }
             }
+            else if(target != null && !attackStats.AttacksLocation)
+                lookAtTarget();
             else if(agent.Agent.enabled == true) //prevents errors being thrown when a units agent is temporarily disabled by being grabbed
                 agent.Agent.isStopped = true;
         }
@@ -162,22 +150,33 @@ public class Unit : MonoBehaviour, IDamageable
 
     void Attack() {
         if(target != null) {
-            if(stats.CurrAttackDelay >= stats.AttackDelay) {
-                Component damageable = target.GetComponent(typeof(IDamageable));
-
-                if(damageable) { //is the target damageable
-                    if(hitTargets.Contains(target)) {  //this is needed for the rare occurance that a unit is 90% done with attack delay and the target leaves its range. It can still do its attack if its within vision given that its attack was already *90% thru
-                        if(stats.EffectStats.AOEStats.AreaOfEffect)
-                            stats.EffectStats.AOEStats.Explode(gameObject, target);
-                        else {
-                            GameFunctions.Attack(damageable, stats.BaseDamage);
-                            stats.ApplyAffects(damageable);
+            if(attackStats.FiresProjectiles) { //if the unit fires projectiles rather than simply doing damage when attacking
+                if(stats.CurrAttackDelay >= stats.AttackDelay && !attackStats.IsFiring) {
+                    Component damageable = target.GetComponent(typeof(IDamageable));
+                    if(damageable) { //is the target damageable
+                        if(hitTargets.Contains(target)) //this is needed for the rare occurance that a unit is 90% done with attack delay and the target leaves its range. It can still do its attack if its within vision given that its attack was already *90% thru
+                            attackStats.BeginFiring();
+                    }
+                }
+            }
+            else {
+                if(stats.CurrAttackDelay >= stats.AttackDelay) {
+                    Component damageable = target.GetComponent(typeof(IDamageable));
+                    if(damageable) { //is the target damageable
+                        if(hitTargets.Contains(target)) {  //this is needed for the rare occurance that a unit is 90% done with attack delay and the target leaves its range. It can still do its attack if its within vision given that its attack was already *90% thru
+                            if(stats.EffectStats.AOEStats.AreaOfEffect)
+                                stats.EffectStats.AOEStats.Explode(gameObject, target);
+                            else {
+                                GameFunctions.Attack(damageable, stats.BaseDamage);
+                                stats.ApplyAffects(damageable);
+                            }
+                            stats.CurrAttackDelay = 0;
                         }
-                        stats.CurrAttackDelay = 0;
                     }
                 }
             }
         }
+        attackStats.Fire();
     }
 
     public void SetTarget(GameObject newTarget) {
@@ -187,6 +186,24 @@ public class Unit : MonoBehaviour, IDamageable
             if(newTarget != null)
                 (newTarget.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Add(gameObject);
             target = newTarget;
+        }
+    }
+
+    public void ReTarget() {
+        if(hitTargets.Count > 0) {
+            GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
+            if(go != null)
+                SetTarget(go);
+            else {
+                List<GameObject> towers = GameManager.Instance.TowerObjects;
+                towers = GameManager.GetAllEnemies(transform.GetChild(0).position, towers, gameObject.tag); //sending in only towers
+                SetTarget(GameFunctions.GetNearestTarget(towers, gameObject.tag, stats));
+            }
+        }
+        else {
+            List<GameObject> towers = GameManager.Instance.TowerObjects;
+            towers = GameManager.GetAllEnemies(transform.GetChild(0).position, towers, gameObject.tag); //sending in only towers
+            SetTarget(GameFunctions.GetNearestTarget(towers, gameObject.tag, stats));
         }
     }
 

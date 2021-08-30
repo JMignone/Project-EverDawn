@@ -10,6 +10,7 @@ public class BaseStats
     private float currHealth;
     [SerializeField]
     private float maxHealth;
+    [Tooltip("A number from (0-1) that will determine what percentage of health will be removed each tick. A number below .1 is highly recomended")]
     [SerializeField]
     private float healthDecay;
     [SerializeField]
@@ -34,14 +35,19 @@ public class BaseStats
     private SphereCollider detectionObject;
     [SerializeField]
     private SphereCollider visionObject;
+    [Tooltip("Lets other units know whether this unit is a ground or flying unit")]
     [SerializeField]
     private GameConstants.MOVEMENT_TYPE movementType;
+    [Tooltip("Determines whether this unit can attack units if they are on the ground, flying or either one.")]
     [SerializeField]
     private GameConstants.HEIGHT_ATTACKABLE heightAttackable;
+    [Tooltip("Lets other units know whether this unit is a structure or not")]
     [SerializeField]
     private GameConstants.UNIT_TYPE unitType;
+    [Tooltip("Lets other scripts know whether this unit came from a group spawn or not")]
     [SerializeField]
     private GameConstants.UNIT_GROUPING unitGrouping;
+    [Tooltip("Determines if the unit strictly prioritizes certain enemies")]
     [SerializeField]
     private GameConstants.ATTACK_PRIORITY attackPriority;
     [SerializeField]
@@ -51,6 +57,7 @@ public class BaseStats
 
     private bool isHoveringAbility;
     private bool isCastingAbility;
+    private bool isAttacking;
 
     public float PercentHealth {
         get { return currHealth/maxHealth; }
@@ -191,6 +198,12 @@ public class BaseStats
         set { isCastingAbility = value; }
     }
 
+    public bool IsAttacking
+    {
+        get { return isAttacking; }
+        set { isAttacking = value; }
+    }
+
     public bool IsReady { get { return summoningSicknessUI.IsReady; } }
 
     public bool CanAct { get { return effectStats.CanAct() && summoningSicknessUI.IsReady; } }
@@ -219,7 +232,7 @@ public class BaseStats
             bool inVision = false;
             if(target != null)
                 inVision = hitTargets.Contains(target);       
-            if( ( inRange > 0 || (currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && inVision) ) && CanAct && !IsCastingAbility) { //if target is inRange, or the attack is nearly ready and their within vision AND not stunned
+            if( ( inRange > 0 || (currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && inVision) ) && CanAct && !IsCastingAbility && !isAttacking) { //if target is inRange, or the attack is nearly ready and their within vision AND not stunned
                 
                 if(target != null) {
                     Vector3 directionToTarget = unitAgent.transform.position - target.transform.GetChild(0).position;
@@ -243,7 +256,7 @@ public class BaseStats
                         currAttackDelay += Time.deltaTime * effectStats.SlowedStats.CurrentSlowIntensity;
                 }
             }
-            else if(inVision && !IsCastingAbility) { //if the target is within vision
+            else if(inVision && !IsCastingAbility && !isAttacking) { //if the target is within vision
                 if(currAttackDelay < attackDelay*GameConstants.ATTACK_CHARGE_LIMITER) 
                     currAttackDelay += Time.deltaTime * effectStats.SlowedStats.CurrentSlowIntensity;
             }

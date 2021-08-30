@@ -5186,8 +5186,8 @@ MonoBehaviour:
   target: {fileID: 0}
   inRange: 0
   stats:
-    currHealth: 3000
-    maxHealth: 3000
+    currHealth: 1000
+    maxHealth: 1000
     healthDecay: 0
     range: 6.5
     visionRange: 20
@@ -5265,10 +5265,16 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+  attackStats:
+    firesProjectiles: 0
+    attacksLocation: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
-  enemySoonestKill: 0
 --- !u!4 &367080428
 Transform:
   m_ObjectHideFlags: 0
@@ -7252,10 +7258,16 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+  attackStats:
+    firesProjectiles: 0
+    attacksLocation: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
-  enemySoonestKill: 0
 --- !u!4 &483495842
 Transform:
   m_ObjectHideFlags: 0
@@ -7264,7 +7276,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 483495840}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 24.2, y: 0, z: 37.2}
+  m_LocalPosition: {x: 17.1, y: 0, z: 26.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1010337152}
@@ -16488,7 +16500,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7ee704238b51c1b4591b3f76ea031955, type: 2}
+  - {fileID: 2100000, guid: d5aa3a7c431c1904ea58393742bd7f76, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16584,7 +16596,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7ee704238b51c1b4591b3f76ea031955, type: 2}
+  - {fileID: 2100000, guid: d5aa3a7c431c1904ea58393742bd7f76, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16895,9 +16907,9 @@ MonoBehaviour:
     currHealth: 500
     maxHealth: 500
     healthDecay: 0
-    range: 15
-    visionRange: 35
-    baseDamage: 50
+    range: 35
+    visionRange: 50
+    baseDamage: 0
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 15
@@ -16971,10 +16983,29 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+  attackStats:
+    firesProjectiles: 1
+    attacksLocation: 1
+    continueType: 2
+    abilityPrefabs:
+    - {fileID: 8128849533423555255, guid: 81ca3e3c8e3685c4ebd73ddcb0fb73db, type: 3}
+    - {fileID: 8128849533423555255, guid: 81ca3e3c8e3685c4ebd73ddcb0fb73db, type: 3}
+    - {fileID: 8128849533423555255, guid: 81ca3e3c8e3685c4ebd73ddcb0fb73db, type: 3}
+    - {fileID: 8128849533423555255, guid: 81ca3e3c8e3685c4ebd73ddcb0fb73db, type: 3}
+    - {fileID: 8128849533423555255, guid: 81ca3e3c8e3685c4ebd73ddcb0fb73db, type: 3}
+    - {fileID: 8128849533423555255, guid: 81ca3e3c8e3685c4ebd73ddcb0fb73db, type: 3}
+    abilityDelays:
+    - 0.5
+    - 0.5
+    - 0.5
+    - 0.5
+    - 0.5
+    - 0.5
+    - 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
-  enemySoonestKill: 0
 --- !u!4 &1114531619
 Transform:
   m_ObjectHideFlags: 0
@@ -17499,7 +17530,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7ee704238b51c1b4591b3f76ea031955, type: 2}
+  - {fileID: 2100000, guid: d5aa3a7c431c1904ea58393742bd7f76, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19788,10 +19819,16 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+  attackStats:
+    firesProjectiles: 0
+    attacksLocation: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
-  enemySoonestKill: 0
 --- !u!54 &1390792291
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -22158,7 +22195,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7ee704238b51c1b4591b3f76ea031955, type: 2}
+  - {fileID: 2100000, guid: d5aa3a7c431c1904ea58393742bd7f76, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -22938,10 +22975,16 @@ MonoBehaviour:
         currentStunDelay: 0
   spawnStats:
     unitToSpawn: {fileID: 5726148247449163227, guid: 304a4c69c2fd919499f930a64e2fda40, type: 3}
+  attackStats:
+    firesProjectiles: 0
+    attacksLocation: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
-  enemySoonestKill: 0
 --- !u!1 &1641328580
 GameObject:
   m_ObjectHideFlags: 0
@@ -25942,7 +25985,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7ee704238b51c1b4591b3f76ea031955, type: 2}
+  - {fileID: 2100000, guid: d5aa3a7c431c1904ea58393742bd7f76, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -27344,10 +27387,16 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+  attackStats:
+    firesProjectiles: 0
+    attacksLocation: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
-  enemySoonestKill: 0
 --- !u!1 &1995637123
 GameObject:
   m_ObjectHideFlags: 0

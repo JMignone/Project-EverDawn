@@ -113,13 +113,8 @@ public class Tower : MonoBehaviour, IDamageable
     protected virtual void Update()
     {
         if(stats.CurrHealth > 0) {
-            if((target == null || inRange == 0) && stats.CanAct) { //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
-                if(hitTargets.Count > 0) {
-                    GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
-                    if(go != null)
-                        SetTarget(go);
-                }
-            }
+            if((target == null || inRange == 0) && stats.CanAct) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
+                ReTarget();
 
             stats.UpdateStats(inRange, agent, hitTargets, target);
             Attack();
@@ -162,6 +157,14 @@ public class Tower : MonoBehaviour, IDamageable
             if(newTarget != null)
                 (newTarget.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Add(gameObject);
             target = newTarget;
+        }
+    }
+
+    public void ReTarget() {
+        if(hitTargets.Count > 0) {
+            GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
+            if(go != null)
+                SetTarget(go);
         }
     }
 

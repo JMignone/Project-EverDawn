@@ -262,7 +262,7 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
                 isFiring = true;
                 unit.Stats.IsCastingAbility = true;
-                unit.Target = null;
+                unit.SetTarget(null);
                 abilityUI.resetAbility();
             }
         }
@@ -300,7 +300,7 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
                 isFiring = true;
                 unit.Stats.IsCastingAbility = true;
-                unit.Target = null;
+                unit.SetTarget(null);
                 abilityUI.resetAbility();
             }
         }
