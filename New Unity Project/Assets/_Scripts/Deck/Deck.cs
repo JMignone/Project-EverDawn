@@ -44,7 +44,7 @@ public class Deck
 
     public CardStats DrawCard() {
         CardStats cs = nextCard;
-        if(hand.Count < 3) {    //this is for the game setup, gives each card in hand an assosiated index for where it is in hand
+        if(hand.Count < GameConstants.MAX_HAND_SIZE-1) {    //this is for the game setup, gives each card in hand an assosiated index for where it is in hand
             hand.Add(nextCard);
             nextCard.LayoutIndex = hand.Count;
         }

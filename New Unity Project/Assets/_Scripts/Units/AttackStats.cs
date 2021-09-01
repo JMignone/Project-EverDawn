@@ -11,9 +11,10 @@ public class AttackStats
     [SerializeField]
     private bool firesProjectiles;
 
-    [Tooltip("Makes the unit fire projectiles to the last location the target was before firing the first projectile. Has no effect if 'firesProjectiles' is unchecked.")]
+    [Tooltip("Determines how a projectile behaves when fired from a unit.\nTarget: Makes the projectile seek its target, and stops when it reaches it.\nAttacks Location: Makes the projectiles fire at the location the target was when first engaged\nAttacks Past: Makes the projectile fire towards its target and will fly past if set to pierce.")]
     [SerializeField]
-    private bool attacksLocation;
+    private GameConstants.FIRING_TYPE attackType;
+    
     private Vector3 firstTargetLocation;
     private Vector3 lastTargetLocation;
 
@@ -48,11 +49,6 @@ public class AttackStats
         get { return firesProjectiles; }
     }
 
-    public bool AttacksLocation
-    {
-        get { return attacksLocation; }
-    }
-
     public bool IsFiring
     {
         get { return isFiring; }
@@ -70,16 +66,30 @@ public class AttackStats
         get { return target; }
     }
 
+    public bool SameLocation
+    {
+        get { return continueType == GameConstants.CONTINUE_FIRING_TYPE.SAMELOCATION; }
+    }
+
+    public bool ReTargets
+    {
+        get { return continueType == GameConstants.CONTINUE_FIRING_TYPE.RETARGET; }
+    }
+
+    public bool AttacksLocation
+    {
+        get { return attackType == GameConstants.FIRING_TYPE.ATTACKSLOCATION; }
+    }
+
+    public bool AttacksPast
+    {
+        get { return attackType == GameConstants.FIRING_TYPE.ATTACKSPAST; }
+    }
+
     public void StartAttackStats(GameObject go) {
         unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
     }
-    /*
-    public bool CanRetarget() {
-        if(isFiring && continueType != GameConstants.CONTINUE_FIRING_TYPE.RETARGET)
-            return false;
-        return true;
-    }
-    */
+
     public void BeginFiring() {
         isFiring = true;
         unit.Stats.IsAttacking = true;
@@ -100,28 +110,23 @@ public class AttackStats
     
     public void Fire() {
         if(isFiring) {
-            if(continueType == GameConstants.CONTINUE_FIRING_TYPE.SAMELOCATION && (target as Component) != null && unit.Target == (target as Component).gameObject)
+            if(SameLocation && (target as Component) != null && unit.Target == (target as Component).gameObject)
                 lastTargetLocation = target.Agent.Agent.transform.position;
-            if(!unit.Stats.CanAct) {
-                MonoBehaviour.print("1");
+            if(!unit.Stats.CanAct || (((target as Component) == null || unit.Target != (target as Component).gameObject) && currentProjectileIndex == 0 && !ReTargets)) { //if the unit is frozen or the target has died before the first shot is fired
                 StopFiring();
                 return;
             }
             else if( ((target as Component) == null || unit.Target != (target as Component).gameObject) && continueType == GameConstants.CONTINUE_FIRING_TYPE.NONE ) {
-                MonoBehaviour.print("2");
                 StopFiring();
                 return;
             }
-            else if( ((target as Component) == null || unit.Target != (target as Component).gameObject) && continueType == GameConstants.CONTINUE_FIRING_TYPE.SAMELOCATION && targetDied == false) {
-                MonoBehaviour.print("3");
+            else if( ((target as Component) == null || unit.Target != (target as Component).gameObject) && SameLocation && targetDied == false) {
                 targetDied = true;
-                if(!attacksLocation)
+                if(!AttacksLocation)
                     firstTargetLocation = lastTargetLocation;
             }
-            else if( ((target as Component) == null || unit.Target != (target as Component).gameObject) && continueType == GameConstants.CONTINUE_FIRING_TYPE.RETARGET) {
-                MonoBehaviour.print("4");
+            else if( ((target as Component) == null || unit.Target != (target as Component).gameObject) && ReTargets) {
                 if(unit.Target == null || !unit.InRangeTargets.Contains(unit.Target)) {
-                    MonoBehaviour.print("4.5");
                     StopFiring();
                     return;
                 }
@@ -133,24 +138,30 @@ public class AttackStats
             else if(currentProjectileIndex == abilityPrefabs.Count) //if we completed the last delay
                 StopFiring();
             else { //if we completed a delay
-                if(currentProjectileIndex == 0 && attacksLocation && !targetDied) 
+                if(currentProjectileIndex == 0 && AttacksLocation && !targetDied) 
                     firstTargetLocation = target.Agent.Agent.transform.position;
-                else if(currentProjectileIndex == 0 && attacksLocation && targetDied)
+                else if(currentProjectileIndex == 0 && AttacksLocation && targetDied)
                     firstTargetLocation = lastTargetLocation;
 
                 Vector3 fireDirection;
-                if(attacksLocation)
-                    fireDirection = unit.Agent.Agent.transform.position - firstTargetLocation;
+                if(AttacksLocation)
+                    fireDirection = firstTargetLocation - unit.Agent.Agent.transform.position;
                 else if(targetDied)
-                    fireDirection = unit.Agent.Agent.transform.position - lastTargetLocation;
+                    fireDirection = lastTargetLocation - unit.Agent.Agent.transform.position;
                 else
-                    fireDirection = unit.Agent.Agent.transform.position - target.Agent.Agent.transform.position;
+                    fireDirection = target.Agent.Agent.transform.position - unit.Agent.Agent.transform.position;
 
-                if(attacksLocation || (targetDied && continueType == GameConstants.CONTINUE_FIRING_TYPE.SAMELOCATION) ) { //if the unit fires at the location rather than the target itself
+                if(AttacksLocation || (targetDied && SameLocation) ) { //if the unit fires at the location rather than the target itself
                     if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
                         GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], unit.Agent.Agent.transform.position, firstTargetLocation, fireDirection, unit);
                     else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
                         GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], unit.Agent.Agent.transform.position, firstTargetLocation, fireDirection, unit);
+                }
+                else if(AttacksPast) {
+                    if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
+                        GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], unit.Agent.Agent.transform.position, target.Agent.Agent.transform.position, fireDirection, unit);
+                    else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
+                        GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], unit.Agent.Agent.transform.position, target.Agent.Agent.transform.position, fireDirection, unit);
                 }
                 else {
                     if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())

@@ -5267,7 +5267,7 @@ MonoBehaviour:
         currentStunDelay: 0
   attackStats:
     firesProjectiles: 0
-    attacksLocation: 0
+    attackType: 0
     continueType: 0
     abilityPrefabs: []
     abilityDelays: []
@@ -5861,8 +5861,8 @@ MonoBehaviour:
     currHealth: 500
     maxHealth: 500
     healthDecay: 0
-    range: 30
-    visionRange: 30
+    range: 35
+    visionRange: 35
     baseDamage: 30
     attackDelay: 2
     currAttackDelay: 0
@@ -6013,8 +6013,8 @@ MonoBehaviour:
     currHealth: 500
     maxHealth: 500
     healthDecay: 0
-    range: 30
-    visionRange: 30
+    range: 35
+    visionRange: 35
     baseDamage: 30
     attackDelay: 2
     currAttackDelay: 0
@@ -7260,7 +7260,7 @@ MonoBehaviour:
         currentStunDelay: 0
   attackStats:
     firesProjectiles: 0
-    attacksLocation: 0
+    attackType: 0
     continueType: 0
     abilityPrefabs: []
     abilityDelays: []
@@ -8062,7 +8062,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 30
+  m_Radius: 35
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &527617590
 MeshRenderer:
@@ -13193,14 +13193,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 855631260}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b328a17fda14f74aaa845052562795a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 1390792290}
   abilityPrefabs:
-  - {fileID: 4332999100709516610, guid: 4d38356404b172542bbbb06b5950ec16, type: 3}
+  - {fileID: 7745593707573550172, guid: 625775f3e76e1604f8d2c87051714185, type: 3}
   abilityDelays:
   - 0.35
   - 0.1
@@ -13225,7 +13225,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 855631260}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75740db13975d504fbe3a97a1fead2e0, type: 3}
   m_Name: 
@@ -13961,8 +13961,8 @@ MonoBehaviour:
     currHealth: 500
     maxHealth: 500
     healthDecay: 0
-    range: 30
-    visionRange: 30
+    range: 35
+    visionRange: 35
     baseDamage: 30
     attackDelay: 2
     currAttackDelay: 0
@@ -16910,7 +16910,7 @@ MonoBehaviour:
     range: 35
     visionRange: 50
     baseDamage: 0
-    attackDelay: 1
+    attackDelay: 2.5
     currAttackDelay: 0
     moveSpeed: 15
     rotationSpeed: 120
@@ -16985,8 +16985,8 @@ MonoBehaviour:
         currentStunDelay: 0
   attackStats:
     firesProjectiles: 1
-    attacksLocation: 1
-    continueType: 2
+    attackType: 1
+    continueType: 1
     abilityPrefabs:
     - {fileID: 8128849533423555255, guid: 81ca3e3c8e3685c4ebd73ddcb0fb73db, type: 3}
     - {fileID: 8128849533423555255, guid: 81ca3e3c8e3685c4ebd73ddcb0fb73db, type: 3}
@@ -16995,12 +16995,12 @@ MonoBehaviour:
     - {fileID: 8128849533423555255, guid: 81ca3e3c8e3685c4ebd73ddcb0fb73db, type: 3}
     - {fileID: 8128849533423555255, guid: 81ca3e3c8e3685c4ebd73ddcb0fb73db, type: 3}
     abilityDelays:
-    - 0.5
-    - 0.5
-    - 0.5
-    - 0.5
-    - 0.5
-    - 0.5
+    - 0.4
+    - 0.4
+    - 0.4
+    - 0.4
+    - 0.4
+    - 0.4
     - 0
     currentDelay: 0
   hitTargets: []
@@ -19820,11 +19820,14 @@ MonoBehaviour:
         currentPullDelay: 0
         currentStunDelay: 0
   attackStats:
-    firesProjectiles: 0
-    attacksLocation: 0
-    continueType: 0
-    abilityPrefabs: []
-    abilityDelays: []
+    firesProjectiles: 1
+    attackType: 2
+    continueType: 1
+    abilityPrefabs:
+    - {fileID: 4332999100709516610, guid: 4d38356404b172542bbbb06b5950ec16, type: 3}
+    abilityDelays:
+    - 0.25
+    - 0
     currentDelay: 0
   hitTargets: []
   inRangeTargets: []
@@ -22977,7 +22980,7 @@ MonoBehaviour:
     unitToSpawn: {fileID: 5726148247449163227, guid: 304a4c69c2fd919499f930a64e2fda40, type: 3}
   attackStats:
     firesProjectiles: 0
-    attacksLocation: 0
+    attackType: 0
     continueType: 0
     abilityPrefabs: []
     abilityDelays: []
@@ -27389,7 +27392,7 @@ MonoBehaviour:
         currentStunDelay: 0
   attackStats:
     firesProjectiles: 0
-    attacksLocation: 0
+    attackType: 0
     continueType: 0
     abilityPrefabs: []
     abilityDelays: []
@@ -28146,8 +28149,8 @@ MonoBehaviour:
     currHealth: 500
     maxHealth: 500
     healthDecay: 0
-    range: 30
-    visionRange: 30
+    range: 35
+    visionRange: 35
     baseDamage: 30
     attackDelay: 2
     currAttackDelay: 0

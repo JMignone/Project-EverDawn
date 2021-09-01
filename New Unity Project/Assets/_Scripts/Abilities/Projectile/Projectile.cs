@@ -204,6 +204,12 @@ public class Projectile : MonoBehaviour, IAbility
         set { targetLocation = value; }
     }
 
+    public Vector3 LastKnownLocation
+    {
+        get { return lastKnownLocation; }
+        set { lastKnownLocation = value; }
+    }
+
     public Actor3D ChosenTarget
     {
         get { return chosenTarget; }
@@ -213,6 +219,7 @@ public class Projectile : MonoBehaviour, IAbility
     public bool Blockable
     {
         get { return blockable; }
+        set { blockable = value; }
     }
 
     public IDamageable Unit
@@ -223,7 +230,7 @@ public class Projectile : MonoBehaviour, IAbility
 
     public int AreaMask() //this function is only needed in cal, however we need it in the interface
     {
-        return 1;
+        return 1; //1 represents the 'walkable' area
     }
 
     /*public Vector3 Target() {
