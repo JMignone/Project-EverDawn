@@ -6,8 +6,9 @@ using UnityEngine.UI;
 [System.Serializable]
 public class KnockbackedStats
 {
+    [Tooltip("A number from 0 to 1 that determines a units resistance to being knockedback. A resistance of 1 means they cannot be knockedback")]
     [SerializeField]
-    private bool cantBeKnockbacked;
+    private float knockbackResistance;
 
     [SerializeField]
     private bool isKnockbacked;
@@ -29,10 +30,10 @@ public class KnockbackedStats
 
     private Component damageableComponent;
 
-    public bool CantBeKnockbacked
+    public float KnockbackResistance
     {
-        get { return cantBeKnockbacked; }
-        set { cantBeKnockbacked = value; }
+        get { return knockbackResistance; }
+        set { knockbackResistance = value; }
     }
 
     public bool IsKnockbacked
@@ -79,6 +80,8 @@ public class KnockbackedStats
 
     public void StartKnockbackedStats(GameObject go) {
         damageableComponent = go.GetComponent(typeof(IDamageable));
+        if(knockbackResistance < 0)
+            knockbackResistance = 0;
     }
 
     public void UpdateKnockbackedStats() {
@@ -94,10 +97,10 @@ public class KnockbackedStats
     }
 
     public void Knockback(float duration, float speed, Vector3 sourcePosition) {
-        if(!cantBeKnockbacked) {
+        if(knockbackResistance < 1) {
             isKnockbacked = true;
-            knockbackDuration = duration;
-            currentKnockbackDelay = duration;
+            knockbackDuration = duration * (1 - knockbackResistance);
+            currentKnockbackDelay = duration * (1 - knockbackResistance);
             initialSpeed = speed;
             currentSpeed = speed;
             (damageableComponent as IDamageable).SetTarget(null);

@@ -290,8 +290,8 @@ MonoBehaviour:
   hitBox: {fileID: 7745593706216714732}
   unitSprite: {fileID: 7745593706646091684}
   radius: 2.5
-  speed: 0
-  range: 50
+  speed: 40
+  range: 60
   baseDamage: 0
   heightAttackable: 0
   typeAttackable: 0
@@ -303,7 +303,7 @@ MonoBehaviour:
     explosionRadius: 0
   freezeStats:
     canFreeze: 0
-    freezeDuration: 0
+    freezeDuration: 2.5
   slowStats:
     canSlow: 0
     slowDuration: 0
@@ -330,7 +330,7 @@ MonoBehaviour:
     stunDuration: 0
   boomerangStats:
     isBoomerang: 0
-    percentToSlow: 0
+    percentToSlow: 5
   lingeringStats:
     lingering: 0
     lingerAtEnd: 0
@@ -352,10 +352,10 @@ MonoBehaviour:
     startLocation: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 0
-    explosionRadius: 0
+    explosionRadius: 14
     grenadeArcMultiplier: 0
   chosenTarget: {fileID: 0}
-  passObstacles: 0
+  passObstacles: 1
 --- !u!54 &7745593707573550161
 Rigidbody:
   m_ObjectHideFlags: 0

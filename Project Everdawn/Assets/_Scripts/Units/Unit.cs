@@ -180,7 +180,7 @@ public class Unit : MonoBehaviour, IDamageable
     }
 
     public void SetTarget(GameObject newTarget) {
-        if(newTarget != target) {
+        if((newTarget != target && stats.CanAct && !stats.IsCastingAbility) || newTarget == null) {
             if(target != null)
                 (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
             if(newTarget != null)

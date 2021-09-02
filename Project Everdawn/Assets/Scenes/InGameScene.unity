@@ -5248,7 +5248,7 @@ MonoBehaviour:
         knockbackDuration: 0
         initialSpeed: 0
       knockbackedStats:
-        cantBeKnockbacked: 0
+        knockbackResistance: 0.5
         isKnockbacked: 0
         knockbackDuration: 0
         currentKnockbackDelay: 0
@@ -5256,7 +5256,7 @@ MonoBehaviour:
         currentSpeed: 0
         direction: {x: 0, y: 0, z: 0}
       pulledStats:
-        cantBePulled: 0
+        pullResistance: 0
         pullComponents: []
       grabbedStats:
         cantBeGrabbed: 0
@@ -5920,7 +5920,7 @@ MonoBehaviour:
         knockbackDuration: 0
         initialSpeed: 0
       knockbackedStats:
-        cantBeKnockbacked: 1
+        knockbackResistance: 1
         isKnockbacked: 0
         knockbackDuration: 0
         currentKnockbackDelay: 0
@@ -5928,7 +5928,7 @@ MonoBehaviour:
         currentSpeed: 0
         direction: {x: 0, y: 0, z: 0}
       pulledStats:
-        cantBePulled: 1
+        pullResistance: 1
         pullComponents: []
       grabbedStats:
         cantBeGrabbed: 1
@@ -6072,7 +6072,7 @@ MonoBehaviour:
         knockbackDuration: 0
         initialSpeed: 0
       knockbackedStats:
-        cantBeKnockbacked: 1
+        knockbackResistance: 1
         isKnockbacked: 0
         knockbackDuration: 0
         currentKnockbackDelay: 0
@@ -6080,7 +6080,7 @@ MonoBehaviour:
         currentSpeed: 0
         direction: {x: 0, y: 0, z: 0}
       pulledStats:
-        cantBePulled: 1
+        pullResistance: 1
         pullComponents: []
       grabbedStats:
         cantBeGrabbed: 1
@@ -7241,7 +7241,7 @@ MonoBehaviour:
         knockbackDuration: 0
         initialSpeed: 0
       knockbackedStats:
-        cantBeKnockbacked: 0
+        knockbackResistance: 0
         isKnockbacked: 0
         knockbackDuration: 0
         currentKnockbackDelay: 0
@@ -7249,7 +7249,7 @@ MonoBehaviour:
         currentSpeed: 0
         direction: {x: 0, y: 0, z: 0}
       pulledStats:
-        cantBePulled: 0
+        pullResistance: 0
         pullComponents: []
       grabbedStats:
         cantBeGrabbed: 0
@@ -13203,7 +13203,7 @@ MonoBehaviour:
   - {fileID: 7745593707573550172, guid: 625775f3e76e1604f8d2c87051714185, type: 3}
   abilityDelays:
   - 0.35
-  - 0.1
+  - 0
   currentDelay: 0
   abilityUI:
     cooldownDelay: 2
@@ -13232,10 +13232,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 1390792290}
   abilityPrefabs:
-  - {fileID: 4332999100709516610, guid: 4d38356404b172542bbbb06b5950ec16, type: 3}
+  - {fileID: 7745593707573550172, guid: 625775f3e76e1604f8d2c87051714185, type: 3}
   abilityDelays:
-  - 0.1
-  - 1.2
+  - 0.3
+  - 0
   currentDelay: 0
   abilityUI:
     cooldownDelay: 5
@@ -14020,7 +14020,7 @@ MonoBehaviour:
         knockbackDuration: 0
         initialSpeed: 0
       knockbackedStats:
-        cantBeKnockbacked: 1
+        knockbackResistance: 1
         isKnockbacked: 0
         knockbackDuration: 0
         currentKnockbackDelay: 0
@@ -14028,7 +14028,7 @@ MonoBehaviour:
         currentSpeed: 0
         direction: {x: 0, y: 0, z: 0}
       pulledStats:
-        cantBePulled: 1
+        pullResistance: 1
         pullComponents: []
       grabbedStats:
         cantBeGrabbed: 1
@@ -16966,7 +16966,7 @@ MonoBehaviour:
         knockbackDuration: 0
         initialSpeed: 0
       knockbackedStats:
-        cantBeKnockbacked: 0
+        knockbackResistance: 0
         isKnockbacked: 0
         knockbackDuration: 0
         currentKnockbackDelay: 0
@@ -16974,7 +16974,7 @@ MonoBehaviour:
         currentSpeed: 0
         direction: {x: 0, y: 0, z: 0}
       pulledStats:
-        cantBePulled: 0
+        pullResistance: 0
         pullComponents: []
       grabbedStats:
         cantBeGrabbed: 0
@@ -17940,7 +17940,7 @@ MonoBehaviour:
         knockbackDuration: 0
         initialSpeed: 0
       knockbackedStats:
-        cantBeKnockbacked: 1
+        knockbackResistance: 1
         isKnockbacked: 0
         knockbackDuration: 0
         currentKnockbackDelay: 0
@@ -17948,7 +17948,7 @@ MonoBehaviour:
         currentSpeed: 0
         direction: {x: 0, y: 0, z: 0}
       pulledStats:
-        cantBePulled: 1
+        pullResistance: 1
         pullComponents: []
       grabbedStats:
         cantBeGrabbed: 1
@@ -19740,15 +19740,15 @@ MonoBehaviour:
   target: {fileID: 0}
   inRange: 0
   stats:
-    currHealth: 300
-    maxHealth: 300
+    currHealth: 30000
+    maxHealth: 30000
     healthDecay: 0
     range: 20
     visionRange: 30
     baseDamage: 10
     attackDelay: 2
     currAttackDelay: 0
-    moveSpeed: 5
+    moveSpeed: 0
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 0.5
@@ -19802,7 +19802,7 @@ MonoBehaviour:
         knockbackDuration: 0
         initialSpeed: 0
       knockbackedStats:
-        cantBeKnockbacked: 0
+        knockbackResistance: 0
         isKnockbacked: 0
         knockbackDuration: 0
         currentKnockbackDelay: 0
@@ -19810,7 +19810,7 @@ MonoBehaviour:
         currentSpeed: 0
         direction: {x: 0, y: 0, z: 0}
       pulledStats:
-        cantBePulled: 0
+        pullResistance: 0
         pullComponents: []
       grabbedStats:
         cantBeGrabbed: 0
@@ -22959,7 +22959,7 @@ MonoBehaviour:
         knockbackDuration: 0
         initialSpeed: 0
       knockbackedStats:
-        cantBeKnockbacked: 1
+        knockbackResistance: 1
         isKnockbacked: 0
         knockbackDuration: 0
         currentKnockbackDelay: 0
@@ -22967,7 +22967,7 @@ MonoBehaviour:
         currentSpeed: 0
         direction: {x: 0, y: 0, z: 0}
       pulledStats:
-        cantBePulled: 1
+        pullResistance: 1
         pullComponents: []
       grabbedStats:
         cantBeGrabbed: 1
@@ -27373,7 +27373,7 @@ MonoBehaviour:
         knockbackDuration: 0
         initialSpeed: 0
       knockbackedStats:
-        cantBeKnockbacked: 0
+        knockbackResistance: 0
         isKnockbacked: 0
         knockbackDuration: 0
         currentKnockbackDelay: 0
@@ -27381,7 +27381,7 @@ MonoBehaviour:
         currentSpeed: 0
         direction: {x: 0, y: 0, z: 0}
       pulledStats:
-        cantBePulled: 0
+        pullResistance: 0
         pullComponents: []
       grabbedStats:
         cantBeGrabbed: 0
@@ -27714,7 +27714,7 @@ MonoBehaviour:
         knockbackDuration: 0
         initialSpeed: 0
       knockbackedStats:
-        cantBeKnockbacked: 1
+        knockbackResistance: 1
         isKnockbacked: 0
         knockbackDuration: 0
         currentKnockbackDelay: 0
@@ -27722,7 +27722,7 @@ MonoBehaviour:
         currentSpeed: 0
         direction: {x: 0, y: 0, z: 0}
       pulledStats:
-        cantBePulled: 1
+        pullResistance: 1
         pullComponents: []
       grabbedStats:
         cantBeGrabbed: 1
@@ -28208,7 +28208,7 @@ MonoBehaviour:
         knockbackDuration: 0
         initialSpeed: 0
       knockbackedStats:
-        cantBeKnockbacked: 1
+        knockbackResistance: 1
         isKnockbacked: 0
         knockbackDuration: 0
         currentKnockbackDelay: 0
@@ -28216,7 +28216,7 @@ MonoBehaviour:
         currentSpeed: 0
         direction: {x: 0, y: 0, z: 0}
       pulledStats:
-        cantBePulled: 1
+        pullResistance: 1
         pullComponents: []
       grabbedStats:
         cantBeGrabbed: 1

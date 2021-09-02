@@ -7,7 +7,10 @@ using UnityEngine.EventSystems;
 
 /* ! NOTES ! 
     Cannot use a summon ability with target.
+
     When creating a target ability, all projectiles should have the same range. It will still work, but the previews are not desirable
+
+    When using a movement ability, 'passObstacles' should be set to true
 */
 public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
@@ -54,6 +57,7 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     private PlayerStats playerInfo;
     private bool isDragging;
     
+    private bool abilityControl; //sets it so the skillshot doesnt unset unit casting, but rather the projectile. Usful for movements like dashes or maybe pulls
     private float maxRange;
 
     public Unit Unit
@@ -147,6 +151,8 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             Component component = ability.GetComponent(typeof(IAbility));
             if((component as IAbility).Range > maxRange)
                  maxRange = (component as IAbility).Range;
+            if(ability.GetComponent<Movement>())
+                abilityControl = true;
         }
 
         abilityPreviews = new List<GameObject>();
@@ -338,7 +344,8 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             isFiring = false;
             currentProjectileIndex = 0;
             currentDelay = 0;
-            unit.Stats.IsCastingAbility = false;
+            if(!abilityControl)
+                unit.Stats.IsCastingAbility = false;
         }
         else if(currentDelay < abilityDelays[currentProjectileIndex]) //if we havnt reached the delay yet
             currentDelay += Time.deltaTime * unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
@@ -346,7 +353,8 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             isFiring = false;
             currentProjectileIndex = 0;
             currentDelay = 0;
-            unit.Stats.IsCastingAbility = false;
+            if(!abilityControl)
+                unit.Stats.IsCastingAbility = false;
             target = null;
         }
         else { //if we completed a delay

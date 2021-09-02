@@ -114,10 +114,12 @@ public static class GameFunctions
             endPosition = startPosition + (direction.normalized * range);
         else if(distance < range && !isGrenade && !selfDestructs)
             endPosition = startPosition + (direction.normalized * range);
-        startPosition += direction.normalized * radius;
+        if(!prefab.GetComponent<Movement>())
+            startPosition += direction.normalized * radius;
+        else
+            endPosition += direction.normalized * radius;
         if(isGrenade && projectile.GrenadeStats.IsAirStrike)
             startPosition = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
-
         GameObject go = GameObject.Instantiate(prefab, startPosition, targetRotation, GameManager.GetUnitsFolder());
         go.GetComponent<Projectile>().TargetLocation = endPosition;
         go.GetComponent<Projectile>().Unit = unit;
@@ -131,8 +133,10 @@ public static class GameFunctions
 
         float radius = projectile.Radius;
         bool isGrenade = projectile.GrenadeStats.IsGrenade;
-
-        startPosition += direction.normalized * radius;
+        if(!prefab.GetComponent<Movement>())
+            startPosition += direction.normalized * radius;
+        else
+            endPosition += direction.normalized * radius;
         if(isGrenade && projectile.GrenadeStats.IsAirStrike)
             startPosition = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
 

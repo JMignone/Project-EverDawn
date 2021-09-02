@@ -6,8 +6,9 @@ using UnityEngine.UI;
 [System.Serializable]
 public class PulledStats
 {
+    [Tooltip("A number from 0 to 1 that determines a units resistance to being pulled. A resistance of 1 means they cannot be pulled")]
     [SerializeField]
-    private bool cantBePulled;
+    private float pullResistance;
 
     [SerializeField]
     private List<Component> pullComponents;
@@ -15,10 +16,10 @@ public class PulledStats
     private Component damageableComponent;
     private Vector3 direction;
 
-    public bool CantBePulled
+    public float PullResistance
     {
-        get { return cantBePulled; }
-        set { cantBePulled = value; }
+        get { return pullResistance; }
+        set { pullResistance = value; }
     }
 
     public List<Component> PullComponents
@@ -35,15 +36,17 @@ public class PulledStats
 
     public void StartPulledStats(GameObject go) {
         damageableComponent = go.GetComponent(typeof(IDamageable));
+        if(pullResistance < 0)
+            pullResistance = 0;
     }
 
     public void UpdatePulledStats() {
-        if(!cantBePulled && pullComponents.Count > 0) {
+        if(pullResistance < 1 && pullComponents.Count > 0) {
             Vector3 totalMovement = Vector3.zero;
-            pullComponents.RemoveAll(item => item == null);
+            pullComponents.RemoveAll(item => item == null); //removes a pull component if it becomes null
             foreach(Component IAbility in pullComponents) {
                 Vector3 direction = ((IAbility as IAbility).Position() - (damageableComponent as IDamageable).Agent.transform.position).normalized;
-                direction *= (IAbility as IAbility).PullStats.Speed;
+                direction *= (IAbility as IAbility).PullStats.Speed * (1 - pullResistance);
                 totalMovement += direction;
             }
             totalMovement.y = 0;

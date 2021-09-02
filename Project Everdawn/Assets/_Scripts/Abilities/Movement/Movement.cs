@@ -20,29 +20,28 @@ public class Movement : Projectile
         SlowStats.StartSlowStats();
         PullStats.StartPullStats(gameObject);
 
+        LastKnownLocation = new Vector3(Unit.Agent.transform.position.x, 0, Unit.Agent.transform.position.z); //remembers the start location of a unit for boomerang effects
         //we cant have a grenade and a boomerang
         if(BoomerangStats.IsBoomerang && GrenadeStats.IsGrenade)
             BoomerangStats.IsBoomerang = false;
 
         if(ChosenTarget == null)
             Blockable = true;
-
-        if(passObstacles)
-            Unit.Agent.Agent.enabled = false;
+        Unit.Agent.Agent.enabled = false;
     }
 
     private void OnDestroy()
     {
-        if(passObstacles)
-            Unit.Agent.Agent.enabled = true;
+        Unit.Agent.Agent.enabled = true;
+        Unit.Stats.IsCastingAbility = false;
     }
     
     private void Update() {
-        if(Unit != null && Unit.Agent != null) { //This is currently only used for boomerang
-            LastKnownLocation = new Vector3(Unit.Agent.transform.position.x, 0, Unit.Agent.transform.position.z);
-            Unit.Agent.Agent.transform.position = new Vector3(transform.position.x, Unit.Agent.Agent.transform.position.y, transform.position.z);
-        }
-        if(ChosenTarget != null && !BoomerangStats.GoingBack) {//this is only used if the projectile was fired at a specified target. Must check if its a boomerang and already going back
+        if(Unit == null)
+            Destroy(gameObject);
+        Unit.Agent.Agent.transform.position = new Vector3(transform.position.x, Unit.Agent.Agent.transform.position.y, transform.position.z);
+            
+        if(ChosenTarget != null && !BoomerangStats.GoingBack) { //this is only used if the projectile was fired at a specified target. Must check if its a boomerang and already going back
             TargetLocation = ChosenTarget.Agent.transform.position;
             
             Vector3 direction = TargetLocation - transform.position;
@@ -50,6 +49,7 @@ public class Movement : Projectile
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
                 transform.rotation = targetRotation;
             }
+            TargetLocation -= direction.normalized * (Unit.Agent.Agent.radius + ChosenTarget.Agent.radius);
         }
         if(LingeringStats.CurrentlyLingering) //if currently lingering
             LingeringStats.UpdateLingeringStats(gameObject);

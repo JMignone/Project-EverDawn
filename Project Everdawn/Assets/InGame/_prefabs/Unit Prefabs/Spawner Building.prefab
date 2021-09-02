@@ -397,7 +397,7 @@ MonoBehaviour:
         knockbackDuration: 0
         initialSpeed: 0
       knockbackedStats:
-        cantBeKnockbacked: 1
+        knockbackResistance: 1
         isKnockbacked: 0
         knockbackDuration: 0
         currentKnockbackDelay: 0
@@ -405,7 +405,7 @@ MonoBehaviour:
         currentSpeed: 0
         direction: {x: 0, y: 0, z: 0}
       pulledStats:
-        cantBePulled: 1
+        pullResistance: 1
         pullComponents: []
       grabbedStats:
         cantBeGrabbed: 1
@@ -416,8 +416,16 @@ MonoBehaviour:
         currentStunDelay: 0
   spawnStats:
     unitToSpawn: {fileID: 5726148247449163227, guid: 304a4c69c2fd919499f930a64e2fda40, type: 3}
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
+  enemyHitTargets: []
 --- !u!54 &3887690281620728190
 Rigidbody:
   m_ObjectHideFlags: 0

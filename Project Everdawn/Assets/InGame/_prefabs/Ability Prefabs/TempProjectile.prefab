@@ -53,7 +53,7 @@ MonoBehaviour:
   baseDamage: 50
   heightAttackable: 0
   typeAttackable: 0
-  canPierce: 1
+  canPierce: 0
   blockable: 1
   aoeStats:
     areaOfEffect: 0
@@ -75,7 +75,7 @@ MonoBehaviour:
     poisonDuration: 0
     poisonTick: 0
   knockbackStats:
-    canKnockback: 0
+    canKnockback: 1
     knockbackDuration: 0.75
     initialSpeed: 20
   pullStats:
