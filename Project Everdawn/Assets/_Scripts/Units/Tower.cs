@@ -91,6 +91,11 @@ public class Tower : MonoBehaviour, IDamageable
         get { return enemyHitTargets; }
     }
 
+    public bool IsMoving
+    {
+        get { return false; }
+    }
+
     public bool LeftTower
     {
         get { return leftTower; }

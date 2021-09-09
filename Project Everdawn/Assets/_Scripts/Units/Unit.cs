@@ -28,6 +28,9 @@ public class Unit : MonoBehaviour, IDamageable
     private AttackStats attackStats;
 
     [SerializeField]
+    private ChargeStats chargeStats;
+
+    [SerializeField]
     private List<GameObject> hitTargets;
 
     [SerializeField]
@@ -98,6 +101,11 @@ public class Unit : MonoBehaviour, IDamageable
         get { return enemyHitTargets; }
     }
 
+    public bool IsMoving
+    {
+        get { if(agent.Agent.enabled && !agent.Agent.isStopped && agent.Agent.speed != 0) return true; else return false; }
+    }
+
     private void Start()
     {
         agent.Agent.stoppingDistance = 0; //Set to be zero, incase someone forgets or accidently changes this value to be a big number
@@ -105,6 +113,7 @@ public class Unit : MonoBehaviour, IDamageable
 
         stats.EffectStats.StartStats(gameObject);
         attackStats.StartAttackStats(gameObject);
+        chargeStats.StartChargeStats(gameObject);
 
         stats.IsHoveringAbility = false;
         indicatorNum = 0;
@@ -120,7 +129,7 @@ public class Unit : MonoBehaviour, IDamageable
                 ReTarget();
 
             stats.UpdateStats(inRange, agent, hitTargets, target);
-            agent.Agent.speed = stats.MoveSpeed;
+            chargeStats.UpdateChargeStats();
             Attack();
             
             if(target != null && !attackStats.IsFiring) {

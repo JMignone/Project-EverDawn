@@ -14,13 +14,16 @@ public class CardStats
     [SerializeField]
     private int cost;
     [SerializeField]
-    private bool isSpell;
+    private GameConstants.SPAWN_ZONE_RESTRICTION spawnZoneRestrictions;
     [SerializeField]
     private List<GameObject> prefab;
     [SerializeField]
-    private List<GameObject> previewPrefab;
+    private GameObject previewPrefab;
     [SerializeField]
-    private List<float> previewDelays; //only used for spells
+    private List<float> previewDelays;
+    [Tooltip("The index of the unit in the lists, must match or be -1, meaning there is no unit")]
+    [SerializeField]
+    private int unitIndex;
     //[SerializeField] uncomment for debug purposes
     private int layoutIndex;
 
@@ -48,9 +51,10 @@ public class CardStats
         set { cost = value; }
     }
 
-    public bool IsSpell
+    public GameConstants.SPAWN_ZONE_RESTRICTION SpawnZoneRestrictions
     {
-        get { return isSpell; }
+        get { return spawnZoneRestrictions; }
+        set { spawnZoneRestrictions = value; }
     }
 
     public List<GameObject> Prefab
@@ -59,7 +63,7 @@ public class CardStats
         set { prefab = value; }
     }
 
-    public List<GameObject> PreviewPrefab
+    public GameObject PreviewPrefab
     {
         get { return previewPrefab; }
         set { previewPrefab = value; }
@@ -69,6 +73,12 @@ public class CardStats
     {
         get { return previewDelays; }
         set { previewDelays = value; }
+    }
+
+    public int UnitIndex
+    {
+        get { return unitIndex; }
+        set { unitIndex = value; }
     }
 
     public int LayoutIndex

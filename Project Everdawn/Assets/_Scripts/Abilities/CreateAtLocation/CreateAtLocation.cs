@@ -41,6 +41,9 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     private PullStats pullStats;
 
     [SerializeField]
+    private GrabStats grabStats;
+
+    [SerializeField]
     private LingeringStats lingeringStats;
 
     [SerializeField]
@@ -113,6 +116,11 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     public PullStats PullStats
     {
         get { return pullStats; }
+    }
+
+    public GrabStats GrabStats
+    {
+        get { return grabStats; }
     }
 
     public Vector3 Position()
@@ -215,5 +223,7 @@ public class CreateAtLocation : MonoBehaviour, IAbility
             (damageable as IDamageable).Stats.EffectStats.PoisonedStats.Poison(poisonStats.PoisonDuration, poisonStats.PoisonTick, poisonStats.PoisonDamage);
         if(knockbackStats.CanKnockback)
             (damageable as IDamageable).Stats.EffectStats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position);
+        if(grabStats.CanGrab)
+            (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.PullDuration, grabStats.StunDuration, unit);
     }
 }

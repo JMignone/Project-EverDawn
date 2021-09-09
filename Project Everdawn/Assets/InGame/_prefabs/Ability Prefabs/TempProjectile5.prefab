@@ -289,9 +289,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBox: {fileID: 7745593706216714732}
   unitSprite: {fileID: 7745593706646091684}
-  radius: 2.5
-  speed: 40
-  range: 60
+  radius: 1.5
+  speed: 120
+  range: 20
   baseDamage: 0
   heightAttackable: 0
   typeAttackable: 0
@@ -342,7 +342,7 @@ MonoBehaviour:
     lingeringTick: 0
     currentLingeringTime: 0
   selfDestructStats:
-    selfDestructs: 1
+    selfDestructs: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 0
     explosionRadius: 2.5
@@ -354,6 +354,14 @@ MonoBehaviour:
     explosionDamage: 0
     explosionRadius: 14
     grenadeArcMultiplier: 0
+  resistEffects:
+    resistFreeze: 1
+    resistSlow: 1
+    resistRoot: 1
+    resistPoison: 0
+    resistKnockback: 1
+    resistGrab: 1
+    resistPull: 1
   chosenTarget: {fileID: 0}
   passObstacles: 1
 --- !u!54 &7745593707573550161

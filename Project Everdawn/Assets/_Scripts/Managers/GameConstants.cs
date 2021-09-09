@@ -10,6 +10,8 @@ public static class GameConstants
     public static string HUD_CANVAS = "HUD - Canvas";       //The name of the gameObject that holds the UI
     public static string PLAYER_TAG = "Player";
 
+    public static int FLY_ZONE_HEIGHT = 20; //The distance of the fly zone above the ground
+
     public enum MOVEMENT_TYPE {
         GROUND,
         FLYING
@@ -81,5 +83,12 @@ public static class GameConstants
         TARGET,
         ATTACKSLOCATION,
         ATTACKSPAST
+    }
+
+    //How much of the red spawn zone should be shown when placing cards
+    public enum SPAWN_ZONE_RESTRICTION {
+        FULL,
+        HALF,
+        NONE
     }
 }

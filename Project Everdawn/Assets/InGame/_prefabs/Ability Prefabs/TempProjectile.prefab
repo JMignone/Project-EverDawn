@@ -48,13 +48,13 @@ MonoBehaviour:
   hitBox: {fileID: 4332999102053800178}
   unitSprite: {fileID: 4332999101628587706}
   radius: 3
-  speed: 75
+  speed: 120
   range: 50
   baseDamage: 50
   heightAttackable: 0
   typeAttackable: 0
   canPierce: 0
-  blockable: 1
+  blockable: 0
   aoeStats:
     areaOfEffect: 0
     explosionEffect: {fileID: 0}
@@ -112,6 +112,14 @@ MonoBehaviour:
     explosionDamage: 0
     explosionRadius: 0
     grenadeArcMultiplier: 0
+  resistEffects:
+    resistFreeze: 0
+    resistSlow: 0
+    resistRoot: 0
+    resistPoison: 0
+    resistKnockback: 0
+    resistGrab: 0
+    resistPull: 0
   chosenTarget: {fileID: 0}
 --- !u!54 &4332999100709516623
 Rigidbody:

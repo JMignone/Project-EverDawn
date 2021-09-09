@@ -26,6 +26,9 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     [SerializeField]
     private float currentDelay;
 
+    [SerializeField]
+    private ResistEffects resistEffects; //A list of effects than can be set to be resisted while casting
+
     private bool isFiring;
     private int currentProjectileIndex;
     private Vector3 fireStartPosition;
@@ -270,6 +273,7 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
                 unit.Stats.IsCastingAbility = true;
                 unit.SetTarget(null);
                 abilityUI.resetAbility();
+                resistEffects.StartResistance(unit);
             }
         }
     }
@@ -308,6 +312,7 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
                 unit.Stats.IsCastingAbility = true;
                 unit.SetTarget(null);
                 abilityUI.resetAbility();
+                resistEffects.StartResistance(unit);
             }
         }
     }
@@ -346,6 +351,7 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             currentDelay = 0;
             if(!abilityControl)
                 unit.Stats.IsCastingAbility = false;
+            resistEffects.StopResistance(unit);
         }
         else if(currentDelay < abilityDelays[currentProjectileIndex]) //if we havnt reached the delay yet
             currentDelay += Time.deltaTime * unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
@@ -355,6 +361,7 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             currentDelay = 0;
             if(!abilityControl)
                 unit.Stats.IsCastingAbility = false;
+            resistEffects.StopResistance(unit);
             target = null;
         }
         else { //if we completed a delay

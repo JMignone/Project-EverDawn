@@ -208,6 +208,13 @@ public class BaseStats
 
     public bool CanAct { get { return effectStats.CanAct() && summoningSicknessUI.IsReady; } }
 
+    public float SpeedMultiplier() {
+        if(effectStats.RootedStats.IsRooted || effectStats.FrozenStats.IsFrozen)
+            return 0;
+        else
+            return effectStats.SlowedStats.CurrentSlowIntensity;
+    }
+
     public void UpdateStats(int inRange, Actor3D unitAgent, List<GameObject> hitTargets, GameObject target) {
         if(PercentHealth == 1) {
             HealthBar.enabled = false;
@@ -221,6 +228,8 @@ public class BaseStats
 
         summoningSicknessUI.UpdateStats();
         EffectStats.UpdateStats();
+
+        unitAgent.Agent.speed = moveSpeed * SpeedMultiplier();
 
         detectionObject.radius = range;
         visionObject.radius = visionRange;

@@ -14,11 +14,7 @@ public class Movement : Projectile
 
     private void Start() {
         HitBox.radius = Radius;
-        BoomerangStats.StartBoomerangStats(gameObject);
-        GrenadeStats.StartGrenadeStats(gameObject);
-        LingeringStats.StartLingeringStats(gameObject);
-        SlowStats.StartSlowStats();
-        PullStats.StartPullStats(gameObject);
+        StartStats();
 
         LastKnownLocation = new Vector3(Unit.Agent.transform.position.x, 0, Unit.Agent.transform.position.z); //remembers the start location of a unit for boomerang effects
         //we cant have a grenade and a boomerang
@@ -27,19 +23,24 @@ public class Movement : Projectile
 
         if(ChosenTarget == null)
             Blockable = true;
+
         Unit.Agent.Agent.enabled = false;
     }
 
     private void OnDestroy()
     {
-        Unit.Agent.Agent.enabled = true;
-        Unit.Stats.IsCastingAbility = false;
+        if(Unit != null) {
+            Unit.Agent.Agent.enabled = true;
+            Unit.Stats.IsCastingAbility = false;
+            StopStats();
+        }
     }
     
     private void Update() {
         if(Unit == null)
             Destroy(gameObject);
         Unit.Agent.Agent.transform.position = new Vector3(transform.position.x, Unit.Agent.Agent.transform.position.y, transform.position.z);
+        Unit.Agent.transform.rotation = transform.rotation;
             
         if(ChosenTarget != null && !BoomerangStats.GoingBack) { //this is only used if the projectile was fired at a specified target. Must check if its a boomerang and already going back
             TargetLocation = ChosenTarget.Agent.transform.position;

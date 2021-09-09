@@ -37,7 +37,7 @@ public class AttackStats
     private IDamageable target;
     private bool targetDied;
 
-    private int areaMask;
+    //private int areaMask;
 
     public IDamageable Unit
     {
@@ -110,7 +110,7 @@ public class AttackStats
     
     public void Fire() {
         if(isFiring) {
-            if(SameLocation && (target as Component) != null && unit.Target == (target as Component).gameObject)
+            if(SameLocation && (target as Component) != null && unit.Target == (target as Component).gameObject) //tracks the position of the target such that it fires where it died
                 lastTargetLocation = target.Agent.Agent.transform.position;
             if(!unit.Stats.CanAct || (((target as Component) == null || unit.Target != (target as Component).gameObject) && currentProjectileIndex == 0 && !ReTargets)) { //if the unit is frozen or the target has died before the first shot is fired
                 StopFiring();

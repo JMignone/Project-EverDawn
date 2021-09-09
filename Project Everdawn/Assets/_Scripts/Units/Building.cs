@@ -128,6 +128,11 @@ public class Building : MonoBehaviour, IDamageable
         get { return enemyHitTargets; }
     }
 
+    public bool IsMoving
+    {
+        get { return false; }
+    }
+
     private void Start()
     {
         stats.EffectStats.StartStats(gameObject);

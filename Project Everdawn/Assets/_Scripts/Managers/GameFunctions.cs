@@ -192,7 +192,7 @@ public static class GameFunctions
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane xy;
         if(isFlying)
-            xy = new Plane(Vector3.up, new Vector3(0, 20, 0));
+            xy = new Plane(Vector3.up, new Vector3(0, GameConstants.FLY_ZONE_HEIGHT, 0));
         else
             xy = new Plane(Vector3.up, new Vector3(0, 0, 0));
         

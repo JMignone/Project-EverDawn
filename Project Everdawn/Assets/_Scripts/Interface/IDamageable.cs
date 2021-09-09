@@ -14,6 +14,7 @@ public interface IDamageable
     Actor2D UnitSprite { get; }
     Image AbilityIndicator { get; }
     int IndicatorNum { get; set; }
+    bool IsMoving { get; }
 
     void TakeDamage(float amount);
     void SetTarget(GameObject newTarget);

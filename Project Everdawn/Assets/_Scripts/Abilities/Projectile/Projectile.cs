@@ -73,6 +73,9 @@ public class Projectile : MonoBehaviour, IAbility
     [SerializeField]
     private GrenadeStats grenadeStats;
 
+    [SerializeField]
+    private ResistEffects resistEffects;
+
     private Vector3 targetLocation;
 
     [SerializeField]
@@ -242,11 +245,7 @@ public class Projectile : MonoBehaviour, IAbility
 
     private void Start() {
         hitBox.radius = radius;
-        boomerangStats.StartBoomerangStats(gameObject);
-        grenadeStats.StartGrenadeStats(gameObject);
-        lingeringStats.StartLingeringStats(gameObject);
-        slowStats.StartSlowStats();
-        pullStats.StartPullStats(gameObject);
+        StartStats();
 
         //we cant have a grenade and a boomerang
         if(boomerangStats.IsBoomerang && grenadeStats.IsGrenade)
@@ -254,7 +253,27 @@ public class Projectile : MonoBehaviour, IAbility
 
         if(chosenTarget == null)
             blockable = true;
+    }
 
+    protected void StartStats() {
+        boomerangStats.StartBoomerangStats(gameObject);
+        grenadeStats.StartGrenadeStats(gameObject);
+        lingeringStats.StartLingeringStats(gameObject);
+        slowStats.StartSlowStats();
+        pullStats.StartPullStats(gameObject);
+        
+        if(unit != null)
+            resistEffects.StartResistance(unit);
+    }
+
+    protected void StopStats() {
+        if(unit != null)
+            resistEffects.StopResistance(unit);
+    }
+
+    private void OnDestroy()
+    {
+        StopStats();
     }
 
     private void Update() {

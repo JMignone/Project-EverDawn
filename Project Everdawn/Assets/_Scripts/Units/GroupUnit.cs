@@ -92,6 +92,11 @@ public class GroupUnit : MonoBehaviour, IDamageable
         set { indicatorNum = value; }
     }
 
+    public bool IsMoving
+    {
+        get { return false; }
+    }
+
     private void Start() {
         isHoveringAbility = false;
         indicatorNum = 0;

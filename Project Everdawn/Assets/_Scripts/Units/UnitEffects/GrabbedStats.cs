@@ -28,7 +28,7 @@ public class GrabbedStats
     private Component damageableComponent;
     private IDamageable enemyUnit;
 
-    public bool CantBeKnockbacked
+    public bool CantBeGrabbed
     {
         get { return cantBeGrabbed; }
         set { cantBeGrabbed = value; }
