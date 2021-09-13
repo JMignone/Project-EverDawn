@@ -19,8 +19,6 @@ public class GroupUnit : MonoBehaviour, IDamageable
     private List<GameObject> enemyHitTargets;
     private bool isHoveringAbility;
     private bool isCastingAbility;
-    private Image abilityIndicator;
-    private int indicatorNum;
     //Right now I need these so it has the interface. I need the interface because other parts of the code retrieve values by looking for the interface component.
     //These values will just be null
 
@@ -81,17 +79,6 @@ public class GroupUnit : MonoBehaviour, IDamageable
         set { isCastingAbility = value; }
     }
 
-    public Image AbilityIndicator
-    {
-        get { return abilityIndicator; }
-    }
-
-    public int IndicatorNum
-    {
-        get { return indicatorNum; }
-        set { indicatorNum = value; }
-    }
-
     public bool IsMoving
     {
         get { return false; }
@@ -99,7 +86,6 @@ public class GroupUnit : MonoBehaviour, IDamageable
 
     private void Start() {
         isHoveringAbility = false;
-        indicatorNum = 0;
     }
 
     private void Update()

@@ -7,6 +7,7 @@ public class RootedStats
 {
     [SerializeField]
     private bool cantBeRooted;
+    private bool outSideResistance;
 
     [SerializeField]
     private bool isRooted;
@@ -24,6 +25,12 @@ public class RootedStats
     {
         get { return cantBeRooted; }
         set { cantBeRooted = value; }
+    }
+
+    public bool OutSideResistance
+    {
+        get { return outSideResistance; }
+        set { outSideResistance = value; }
     }
 
     public bool IsRooted
@@ -76,7 +83,7 @@ public class RootedStats
     }
 
     public void Root(float duration) {
-        if(!cantBeRooted) {
+        if(!cantBeRooted && !outSideResistance) {
             isRooted = true;
             rootDelay = duration;
             currentRootDelay = 0;

@@ -511,7 +511,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 6233150844194078998}
   unitSprite: {fileID: 6233150845949525717}
-  abilityIndicator: {fileID: 6233150845706674207}
   target: {fileID: 0}
   inRange: 0
   rotates: 0
@@ -531,10 +530,12 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 0
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 0
       sSCanvas: {fileID: 4890382745174706604}
       sSSprite: {fileID: 5834786533051411073}
       sSMask: {fileID: 4164004720779833706}
     healthBar: {fileID: 6233150845114573794}
+    abilityIndicator: {fileID: 6233150845706674207}
     detectionObject: {fileID: 6233150844581326293}
     visionObject: {fileID: 6233150846021740420}
     movementType: 0
@@ -551,6 +552,7 @@ MonoBehaviour:
         explosionRadius: 0
       frozenStats:
         cantBeFrozen: 0
+        outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
         currentFrozenDelay: 0
@@ -597,6 +599,14 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
   spawnStats:
     unitToSpawn: {fileID: 0}
   attackStats:

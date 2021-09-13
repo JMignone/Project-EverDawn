@@ -12,10 +12,6 @@ public class Unit : MonoBehaviour, IDamageable
     private Actor2D unitSprite;
 
     [SerializeField]
-    private Image abilityIndicator;
-    private int indicatorNum; //We may need this for abilities that have multiple hit zones
-
-    [SerializeField]
     private GameObject target;
 
     [SerializeField]
@@ -49,17 +45,6 @@ public class Unit : MonoBehaviour, IDamageable
     {
         get { return unitSprite; }
         //set { unitSprite = value; }
-    }
-
-    public Image AbilityIndicator
-    {
-        get { return abilityIndicator; }
-    }
-
-    public int IndicatorNum
-    {
-        get { return indicatorNum; }
-        set { indicatorNum = value; }
     }
 
     public GameObject Target
@@ -116,9 +101,8 @@ public class Unit : MonoBehaviour, IDamageable
         chargeStats.StartChargeStats(gameObject);
 
         stats.IsHoveringAbility = false;
-        indicatorNum = 0;
-        abilityIndicator.enabled = false;
-        abilityIndicator.rectTransform.sizeDelta = new Vector2(2*agent.HitBox.radius + 1, 2*agent.HitBox.radius + 1); 
+        stats.AbilityIndicator.enabled = false;
+        stats.AbilityIndicator.rectTransform.sizeDelta = new Vector2(2*agent.HitBox.radius + 1, 2*agent.HitBox.radius + 1); 
         // + 1 is better for the knob UI, if we get our own UI image, we may want to remove it
     }
 
@@ -225,10 +209,8 @@ public class Unit : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {
-                    indicatorNum++;
-                    abilityIndicator.enabled = true;
-                }
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
+                    stats.IndicatorNum++;
             }
             else if(other.CompareTag("Pull")) {
                 Component IAbility = other.transform.parent.parent.GetComponent(typeof(IAbility));
@@ -266,11 +248,8 @@ public class Unit : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {
-                    indicatorNum--;
-                    if(indicatorNum == 0)
-                        abilityIndicator.enabled = false;
-                }
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
+                    stats.IndicatorNum--;
             }
             else if(other.CompareTag("Pull")) {
                 Component IAbility = other.transform.parent.parent.GetComponent(typeof(IAbility));

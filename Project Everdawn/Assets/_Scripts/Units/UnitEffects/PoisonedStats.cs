@@ -7,6 +7,7 @@ public class PoisonedStats
 {
     [SerializeField]
     private bool cantBePoisoned;
+    private bool outSideResistance;
 
     [SerializeField]
     private bool isPoisoned;
@@ -27,6 +28,12 @@ public class PoisonedStats
     {
         get { return cantBePoisoned; }
         set { cantBePoisoned = value; }
+    }
+    
+    public bool OutSideResistance
+    {
+        get { return outSideResistance; }
+        set { outSideResistance = value; }
     }
 
     public bool IsPoisoned
@@ -86,7 +93,7 @@ public class PoisonedStats
     }
 
     public void Poison(float duration, float tick, float damage) {
-        if(!cantBePoisoned) {
+        if(!cantBePoisoned && !outSideResistance) {
             isPoisoned = true;
             poisonedDuration = duration;
             poisonedTick = tick;

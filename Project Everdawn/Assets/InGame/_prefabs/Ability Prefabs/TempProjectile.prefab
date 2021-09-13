@@ -120,6 +120,22 @@ MonoBehaviour:
     resistKnockback: 0
     resistGrab: 0
     resistPull: 0
+  applyResistanceStats:
+    applyToSelf: 0
+    resistFreeze: 0
+    rfDuration: 5
+    resistSlow: 0
+    rsDuration: 5
+    resistRoot: 0
+    rrDuration: 5
+    resistPoison: 0
+    rpDuration: 5
+    resistKnockback: 0
+    rkDuration: 5
+    resistGrab: 0
+    rgDuration: 0
+    resistPull: 0
+    rpullDuration: 0
   chosenTarget: {fileID: 0}
 --- !u!54 &4332999100709516623
 Rigidbody:

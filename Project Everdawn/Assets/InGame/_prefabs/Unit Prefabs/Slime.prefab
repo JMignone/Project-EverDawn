@@ -444,7 +444,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 4300487081545407412}
   unitSprite: {fileID: 4300487081921077863}
-  abilityIndicator: {fileID: 8301396470865325335}
   target: {fileID: 0}
   inRange: 0
   stats:
@@ -461,10 +460,12 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 3
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 2
       sSCanvas: {fileID: 2415997077183179831}
       sSSprite: {fileID: 8669351922708476200}
       sSMask: {fileID: 5427674388908709680}
     healthBar: {fileID: 4300487080971743020}
+    abilityIndicator: {fileID: 8301396470865325335}
     detectionObject: {fileID: 4300487082722879881}
     visionObject: {fileID: 4300487081709656634}
     movementType: 0
@@ -481,6 +482,7 @@ MonoBehaviour:
         explosionRadius: 0
       frozenStats:
         cantBeFrozen: 0
+        outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
         currentFrozenDelay: 0
@@ -510,7 +512,7 @@ MonoBehaviour:
         knockbackDuration: 0
         initialSpeed: 0
       knockbackedStats:
-        cantBeKnockbacked: 0
+        knockbackResistance: 0
         isKnockbacked: 0
         knockbackDuration: 0
         currentKnockbackDelay: 0
@@ -518,7 +520,7 @@ MonoBehaviour:
         currentSpeed: 0
         direction: {x: 0, y: 0, z: 0}
       pulledStats:
-        cantBePulled: 0
+        pullResistance: 0
         pullComponents: []
       grabbedStats:
         cantBeGrabbed: 0
@@ -527,10 +529,31 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
+  chargeStats:
+    charges: 0
+    isCharging: 0
+    chargeDamage: 0
+    chargeSpeed: 0
+    chargeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
-  enemySoonestKill: 0
 --- !u!54 &4300487081235283210
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -8,6 +8,8 @@ public class FrozenStats
 {
     [SerializeField]
     private bool cantBeFrozen;
+    [SerializeField]
+    private bool outSideResistance;
 
     [SerializeField]
     private bool isFrozen;
@@ -24,6 +26,12 @@ public class FrozenStats
     {
         get { return cantBeFrozen; }
         set { cantBeFrozen = value; }
+    }
+
+    public bool OutSideResistance
+    {
+        get { return outSideResistance; }
+        set { outSideResistance = value; }
     }
 
     public bool IsFrozen
@@ -67,7 +75,7 @@ public class FrozenStats
     }
 
     public void Freeze(float duration) {
-        if(!cantBeFrozen) {
+        if(!cantBeFrozen && !outSideResistance) {
             isFrozen = true;
             frozenDelay = duration;
             currentFrozenDelay = 0;

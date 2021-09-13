@@ -56,6 +56,9 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     [SerializeField]
     private SummonStats summonStats;
 
+    [SerializeField]
+    private ApplyResistanceStats applyResistanceStats; //what resistances the projectile gives to its target or the user for a duration
+
     private Vector3 targetLocation;
     private IDamageable unit;
 
@@ -189,6 +192,9 @@ public class CreateAtLocation : MonoBehaviour, IAbility
             lingeringStats.LingeringRadius = radius;
         }
 
+        if(unit != null)
+            applyResistanceStats.StartResistance(unit);
+
         //if(chosenTarget == null)
         //    blockable = true;
     }
@@ -225,5 +231,6 @@ public class CreateAtLocation : MonoBehaviour, IAbility
             (damageable as IDamageable).Stats.EffectStats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position);
         if(grabStats.CanGrab)
             (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.PullDuration, grabStats.StunDuration, unit);
+        applyResistanceStats.ApplyResistance((damageable as IDamageable));
     }
 }

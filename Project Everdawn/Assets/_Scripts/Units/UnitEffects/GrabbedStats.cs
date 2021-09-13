@@ -8,6 +8,7 @@ public class GrabbedStats
 {
     [SerializeField]
     private bool cantBeGrabbed;
+    private bool outSideResistance;
 
     [SerializeField]
     private bool isGrabbed;
@@ -32,6 +33,12 @@ public class GrabbedStats
     {
         get { return cantBeGrabbed; }
         set { cantBeGrabbed = value; }
+    }
+
+    public bool OutSideResistance
+    {
+        get { return outSideResistance; }
+        set { outSideResistance = value; }
     }
 
     public bool IsGrabbed
@@ -92,7 +99,7 @@ public class GrabbedStats
     }
 
     public void Grab(float pullDuration, float stunDuration, IDamageable unit) {
-        if(!cantBeGrabbed && unit.Agent != null && unit.Stats.CanAct) {
+        if(!cantBeGrabbed && !outSideResistance && unit.Agent != null && unit.Stats.CanAct) {
             isGrabbed = true;
             pullDelay = pullDuration;
             currentPullDelay = pullDuration;

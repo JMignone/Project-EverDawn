@@ -9,6 +9,7 @@ public class KnockbackedStats
     [Tooltip("A number from 0 to 1 that determines a units resistance to being knockedback. A resistance of 1 means they cannot be knockedback")]
     [SerializeField]
     private float knockbackResistance;
+    private bool outSideResistance;
 
     [SerializeField]
     private bool isKnockbacked;
@@ -34,6 +35,12 @@ public class KnockbackedStats
     {
         get { return knockbackResistance; }
         set { knockbackResistance = value; }
+    }
+
+    public bool OutSideResistance
+    {
+        get { return outSideResistance; }
+        set { outSideResistance = value; }
     }
 
     public bool IsKnockbacked
@@ -97,7 +104,7 @@ public class KnockbackedStats
     }
 
     public void Knockback(float duration, float speed, Vector3 sourcePosition) {
-        if(knockbackResistance < 1) {
+        if(knockbackResistance < 1 && !outSideResistance) {
             isKnockbacked = true;
             knockbackDuration = duration * (1 - knockbackResistance);
             currentKnockbackDelay = duration * (1 - knockbackResistance);

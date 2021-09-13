@@ -29,6 +29,8 @@ public static class GameFunctions
 
     public static bool WillHit(GameConstants.HEIGHT_ATTACKABLE heightAttackable, GameConstants.TYPE_ATTACKABLE typeAttackable, Component damageable) { //returns if an ability will hit its target
         bool willHit = false;
+        if(!(damageable as IDamageable).Stats.Damageable)
+            return false;
         if(heightAttackable == GameConstants.HEIGHT_ATTACKABLE.BOTH) //If the unit can attack the flying or ground unit, continue
             willHit = true;
         else if(heightAttackable == GameConstants.HEIGHT_ATTACKABLE.GROUND && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND)
@@ -48,7 +50,8 @@ public static class GameFunctions
 
     public static void Attack(Component damageable, float baseDamage) {
         if(damageable) {
-            (damageable as IDamageable).TakeDamage(baseDamage);
+            if((damageable as IDamageable).Stats.Damageable)
+                (damageable as IDamageable).TakeDamage(baseDamage);
         }
     }
 
@@ -65,7 +68,7 @@ public static class GameFunctions
                 targetComponent = hitTarget.GetComponent(typeof(IDamageable));
 
                 if(targetComponent) {
-                    if(GameFunctions.CanAttack(tag, hitTarget.tag, targetComponent, stats)) {
+                    if((targetComponent as IDamageable).Stats.Damageable && GameFunctions.CanAttack(tag, hitTarget.tag, targetComponent, stats)) {
                         targetSc = (targetComponent as IDamageable).Stats.DetectionObject;
                         float newDist = Vector3.Distance(stats.DetectionObject.transform.position, targetSc.transform.position);
 

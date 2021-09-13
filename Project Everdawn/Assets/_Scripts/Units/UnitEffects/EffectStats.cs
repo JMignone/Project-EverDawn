@@ -25,6 +25,8 @@ public class EffectStats
     private PulledStats pulledStats;
     [SerializeField]
     private GrabbedStats grabbedStats;
+    [SerializeField]
+    private ResistStats resistStats;
 
     public UAOEStats AOEStats
     {
@@ -76,6 +78,11 @@ public class EffectStats
         get { return grabbedStats; }
     }
 
+    public ResistStats ResistStats
+    {
+        get { return resistStats; }
+    }
+
     public void StartStats(GameObject go) {
         frozenStats.StartFrozenStats(go);
         slowedStats.StartSlowedStats(go);
@@ -85,6 +92,7 @@ public class EffectStats
         knockbackStats.StartKnockbackStats(go);
         pulledStats.StartPulledStats(go);
         grabbedStats.StartGrabbedStats(go);
+        resistStats.StartResistStats(go);
     }
 
     public void UpdateStats() {
@@ -95,6 +103,7 @@ public class EffectStats
         knockbackedStats.UpdateKnockbackedStats();
         pulledStats.UpdatePulledStats();
         grabbedStats.UpdateGrabbedStats();
+        resistStats.UpdateResistanceStats();
     }
 
     public bool CanAct() {

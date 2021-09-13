@@ -3789,7 +3789,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 7396431751143410317}
   unitSprite: {fileID: 1864922766028958088}
-  abilityIndicator: {fileID: 3794470230721678061}
   target: {fileID: 0}
   inRange: 0
   stats:
@@ -3806,51 +3805,100 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 0
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 0
       sSCanvas: {fileID: 3011246178372554252}
       sSSprite: {fileID: 330096442857837159}
       sSMask: {fileID: 1421214347958537108}
     healthBar: {fileID: 5622258786078970682}
+    abilityIndicator: {fileID: 3794470230721678061}
     detectionObject: {fileID: 870931936664826154}
     visionObject: {fileID: 4475162151694177708}
     movementType: 0
-    objectAttackable: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
-    aoeStats:
-      areaOfEffect: 0
-      unitCentered: 0
-      explosionEffect: {fileID: 0}
-      explosionRadius: 0
-    frozenStats:
-      cantBeFrozen: 0
-      isFrozen: 0
-      frozenDelay: 0
-      currentFrozenDelay: 0
-    slowStats:
-      canSlow: 0
-      slowDuration: 0
-      slowIntensity: 0
-    slowedStats:
-      cantBeSlowed: 0
-      isSlowed: 0
-      slowDelay: 0
-      currentSlowDelay: 0
-      currentSlowIntensity: 0
-    rootedStats:
-      cantBeRooted: 0
-      isRooted: 0
-      rootDelay: 0
-      currentRootDelay: 0
-    poisonedStats:
-      cantBePoisoned: 0
-      isPoisoned: 0
-      poisonedDuration: 0
-      poisonedTick: 0
-      currentPoisonDelay: 0
+    effectStats:
+      aoeStats:
+        areaOfEffect: 0
+        unitCentered: 0
+        explosionEffect: {fileID: 0}
+        explosionRadius: 0
+      frozenStats:
+        cantBeFrozen: 0
+        outSideResistance: 0
+        isFrozen: 0
+        frozenDelay: 0
+        currentFrozenDelay: 0
+      slowStats:
+        canSlow: 0
+        slowDuration: 0
+        slowIntensity: 0
+      slowedStats:
+        cantBeSlowed: 0
+        isSlowed: 0
+        slowDelay: 0
+        currentSlowDelay: 0
+        currentSlowIntensity: 0
+      rootedStats:
+        cantBeRooted: 0
+        isRooted: 0
+        rootDelay: 0
+        currentRootDelay: 0
+      poisonedStats:
+        cantBePoisoned: 0
+        isPoisoned: 0
+        poisonedDuration: 0
+        poisonedTick: 0
+        currentPoisonDelay: 0
+      knockbackStats:
+        canKnockback: 0
+        knockbackDuration: 0
+        initialSpeed: 0
+      knockbackedStats:
+        knockbackResistance: 0
+        isKnockbacked: 0
+        knockbackDuration: 0
+        currentKnockbackDelay: 0
+        initialSpeed: 0
+        currentSpeed: 0
+        direction: {x: 0, y: 0, z: 0}
+      pulledStats:
+        pullResistance: 0
+        pullComponents: []
+      grabbedStats:
+        cantBeGrabbed: 0
+        isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        pullDelay: 0
+        currentPullDelay: 0
+        currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
+  chargeStats:
+    charges: 0
+    isCharging: 0
+    chargeDamage: 0
+    chargeSpeed: 0
+    chargeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
+  enemyHitTargets: []
 --- !u!54 &2418448866591158117
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5141,7 +5189,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 4489671066354659409}
   unitSprite: {fileID: 4489671066213769570}
-  abilityIndicator: {fileID: 7377322938761516862}
   target: {fileID: 0}
   inRange: 0
   stats:
@@ -5158,51 +5205,100 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 0
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 0
       sSCanvas: {fileID: 23364861867829872}
       sSSprite: {fileID: 6382333577737656655}
       sSMask: {fileID: 7290301746493008816}
     healthBar: {fileID: 4489671065649466500}
+    abilityIndicator: {fileID: 7377322938761516862}
     detectionObject: {fileID: 4489671067256449205}
     visionObject: {fileID: 4489671067601574622}
     movementType: 0
-    objectAttackable: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
-    aoeStats:
-      areaOfEffect: 0
-      unitCentered: 0
-      explosionEffect: {fileID: 0}
-      explosionRadius: 0
-    frozenStats:
-      cantBeFrozen: 0
-      isFrozen: 0
-      frozenDelay: 0
-      currentFrozenDelay: 0
-    slowStats:
-      canSlow: 0
-      slowDuration: 0
-      slowIntensity: 0
-    slowedStats:
-      cantBeSlowed: 0
-      isSlowed: 0
-      slowDelay: 0
-      currentSlowDelay: 0
-      currentSlowIntensity: 0
-    rootedStats:
-      cantBeRooted: 0
-      isRooted: 0
-      rootDelay: 0
-      currentRootDelay: 0
-    poisonedStats:
-      cantBePoisoned: 0
-      isPoisoned: 0
-      poisonedDuration: 0
-      poisonedTick: 0
-      currentPoisonDelay: 0
+    effectStats:
+      aoeStats:
+        areaOfEffect: 0
+        unitCentered: 0
+        explosionEffect: {fileID: 0}
+        explosionRadius: 0
+      frozenStats:
+        cantBeFrozen: 0
+        outSideResistance: 0
+        isFrozen: 0
+        frozenDelay: 0
+        currentFrozenDelay: 0
+      slowStats:
+        canSlow: 0
+        slowDuration: 0
+        slowIntensity: 0
+      slowedStats:
+        cantBeSlowed: 0
+        isSlowed: 0
+        slowDelay: 0
+        currentSlowDelay: 0
+        currentSlowIntensity: 0
+      rootedStats:
+        cantBeRooted: 0
+        isRooted: 0
+        rootDelay: 0
+        currentRootDelay: 0
+      poisonedStats:
+        cantBePoisoned: 0
+        isPoisoned: 0
+        poisonedDuration: 0
+        poisonedTick: 0
+        currentPoisonDelay: 0
+      knockbackStats:
+        canKnockback: 0
+        knockbackDuration: 0
+        initialSpeed: 0
+      knockbackedStats:
+        knockbackResistance: 0
+        isKnockbacked: 0
+        knockbackDuration: 0
+        currentKnockbackDelay: 0
+        initialSpeed: 0
+        currentSpeed: 0
+        direction: {x: 0, y: 0, z: 0}
+      pulledStats:
+        pullResistance: 0
+        pullComponents: []
+      grabbedStats:
+        cantBeGrabbed: 0
+        isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        pullDelay: 0
+        currentPullDelay: 0
+        currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
+  chargeStats:
+    charges: 0
+    isCharging: 0
+    chargeDamage: 0
+    chargeSpeed: 0
+    chargeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
+  enemyHitTargets: []
 --- !u!54 &4489671065623934148
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6917,7 +7013,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 4489671066202044873}
   unitSprite: {fileID: 4489671067485101908}
-  abilityIndicator: {fileID: 2803502675204470834}
   target: {fileID: 0}
   inRange: 0
   stats:
@@ -6934,51 +7029,100 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 0
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 0
       sSCanvas: {fileID: 7080496024318998086}
       sSSprite: {fileID: 348160142553842554}
       sSMask: {fileID: 7027609794550414251}
     healthBar: {fileID: 4489671065978627439}
+    abilityIndicator: {fileID: 2803502675204470834}
     detectionObject: {fileID: 4489671066232511034}
     visionObject: {fileID: 4489671066204701867}
     movementType: 0
-    objectAttackable: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
-    aoeStats:
-      areaOfEffect: 0
-      unitCentered: 0
-      explosionEffect: {fileID: 0}
-      explosionRadius: 0
-    frozenStats:
-      cantBeFrozen: 0
-      isFrozen: 0
-      frozenDelay: 0
-      currentFrozenDelay: 0
-    slowStats:
-      canSlow: 0
-      slowDuration: 0
-      slowIntensity: 0
-    slowedStats:
-      cantBeSlowed: 0
-      isSlowed: 0
-      slowDelay: 0
-      currentSlowDelay: 0
-      currentSlowIntensity: 0
-    rootedStats:
-      cantBeRooted: 0
-      isRooted: 0
-      rootDelay: 0
-      currentRootDelay: 0
-    poisonedStats:
-      cantBePoisoned: 0
-      isPoisoned: 0
-      poisonedDuration: 0
-      poisonedTick: 0
-      currentPoisonDelay: 0
+    effectStats:
+      aoeStats:
+        areaOfEffect: 0
+        unitCentered: 0
+        explosionEffect: {fileID: 0}
+        explosionRadius: 0
+      frozenStats:
+        cantBeFrozen: 0
+        outSideResistance: 0
+        isFrozen: 0
+        frozenDelay: 0
+        currentFrozenDelay: 0
+      slowStats:
+        canSlow: 0
+        slowDuration: 0
+        slowIntensity: 0
+      slowedStats:
+        cantBeSlowed: 0
+        isSlowed: 0
+        slowDelay: 0
+        currentSlowDelay: 0
+        currentSlowIntensity: 0
+      rootedStats:
+        cantBeRooted: 0
+        isRooted: 0
+        rootDelay: 0
+        currentRootDelay: 0
+      poisonedStats:
+        cantBePoisoned: 0
+        isPoisoned: 0
+        poisonedDuration: 0
+        poisonedTick: 0
+        currentPoisonDelay: 0
+      knockbackStats:
+        canKnockback: 0
+        knockbackDuration: 0
+        initialSpeed: 0
+      knockbackedStats:
+        knockbackResistance: 0
+        isKnockbacked: 0
+        knockbackDuration: 0
+        currentKnockbackDelay: 0
+        initialSpeed: 0
+        currentSpeed: 0
+        direction: {x: 0, y: 0, z: 0}
+      pulledStats:
+        pullResistance: 0
+        pullComponents: []
+      grabbedStats:
+        cantBeGrabbed: 0
+        isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        pullDelay: 0
+        currentPullDelay: 0
+        currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
+  chargeStats:
+    charges: 0
+    isCharging: 0
+    chargeDamage: 0
+    chargeSpeed: 0
+    chargeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
+  enemyHitTargets: []
 --- !u!54 &4489671065756337581
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7725,7 +7869,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 4489671066910641682}
   unitSprite: {fileID: 4489671065640396629}
-  abilityIndicator: {fileID: 3336149256355331086}
   target: {fileID: 0}
   inRange: 0
   stats:
@@ -7742,51 +7885,100 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 0
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 0
       sSCanvas: {fileID: 5964921022753864683}
       sSSprite: {fileID: 7343584549635227237}
       sSMask: {fileID: 8374871640975507792}
     healthBar: {fileID: 4489671067201627272}
+    abilityIndicator: {fileID: 3336149256355331086}
     detectionObject: {fileID: 4489671067102217219}
     visionObject: {fileID: 4489671067359352700}
     movementType: 0
-    objectAttackable: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
-    aoeStats:
-      areaOfEffect: 0
-      unitCentered: 0
-      explosionEffect: {fileID: 0}
-      explosionRadius: 0
-    frozenStats:
-      cantBeFrozen: 0
-      isFrozen: 0
-      frozenDelay: 0
-      currentFrozenDelay: 0
-    slowStats:
-      canSlow: 0
-      slowDuration: 0
-      slowIntensity: 0
-    slowedStats:
-      cantBeSlowed: 0
-      isSlowed: 0
-      slowDelay: 0
-      currentSlowDelay: 0
-      currentSlowIntensity: 0
-    rootedStats:
-      cantBeRooted: 0
-      isRooted: 0
-      rootDelay: 0
-      currentRootDelay: 0
-    poisonedStats:
-      cantBePoisoned: 0
-      isPoisoned: 0
-      poisonedDuration: 0
-      poisonedTick: 0
-      currentPoisonDelay: 0
+    effectStats:
+      aoeStats:
+        areaOfEffect: 0
+        unitCentered: 0
+        explosionEffect: {fileID: 0}
+        explosionRadius: 0
+      frozenStats:
+        cantBeFrozen: 0
+        outSideResistance: 0
+        isFrozen: 0
+        frozenDelay: 0
+        currentFrozenDelay: 0
+      slowStats:
+        canSlow: 0
+        slowDuration: 0
+        slowIntensity: 0
+      slowedStats:
+        cantBeSlowed: 0
+        isSlowed: 0
+        slowDelay: 0
+        currentSlowDelay: 0
+        currentSlowIntensity: 0
+      rootedStats:
+        cantBeRooted: 0
+        isRooted: 0
+        rootDelay: 0
+        currentRootDelay: 0
+      poisonedStats:
+        cantBePoisoned: 0
+        isPoisoned: 0
+        poisonedDuration: 0
+        poisonedTick: 0
+        currentPoisonDelay: 0
+      knockbackStats:
+        canKnockback: 0
+        knockbackDuration: 0
+        initialSpeed: 0
+      knockbackedStats:
+        knockbackResistance: 0
+        isKnockbacked: 0
+        knockbackDuration: 0
+        currentKnockbackDelay: 0
+        initialSpeed: 0
+        currentSpeed: 0
+        direction: {x: 0, y: 0, z: 0}
+      pulledStats:
+        pullResistance: 0
+        pullComponents: []
+      grabbedStats:
+        cantBeGrabbed: 0
+        isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        pullDelay: 0
+        currentPullDelay: 0
+        currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
+  chargeStats:
+    charges: 0
+    isCharging: 0
+    chargeDamage: 0
+    chargeSpeed: 0
+    chargeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
+  enemyHitTargets: []
 --- !u!54 &4489671065803115546
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8230,7 +8422,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 4489671066623119590}
   unitSprite: {fileID: 4489671066786552159}
-  abilityIndicator: {fileID: 5995023301214930650}
   target: {fileID: 0}
   inRange: 0
   stats:
@@ -8247,51 +8438,100 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 0
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 0
       sSCanvas: {fileID: 6491920843217863599}
       sSSprite: {fileID: 3627015107886400889}
       sSMask: {fileID: 7370617265139137534}
     healthBar: {fileID: 4489671067303787707}
+    abilityIndicator: {fileID: 5995023301214930650}
     detectionObject: {fileID: 4489671066967646346}
     visionObject: {fileID: 4489671065875963720}
     movementType: 0
-    objectAttackable: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
-    aoeStats:
-      areaOfEffect: 0
-      unitCentered: 0
-      explosionEffect: {fileID: 0}
-      explosionRadius: 0
-    frozenStats:
-      cantBeFrozen: 0
-      isFrozen: 0
-      frozenDelay: 0
-      currentFrozenDelay: 0
-    slowStats:
-      canSlow: 0
-      slowDuration: 0
-      slowIntensity: 0
-    slowedStats:
-      cantBeSlowed: 0
-      isSlowed: 0
-      slowDelay: 0
-      currentSlowDelay: 0
-      currentSlowIntensity: 0
-    rootedStats:
-      cantBeRooted: 0
-      isRooted: 0
-      rootDelay: 0
-      currentRootDelay: 0
-    poisonedStats:
-      cantBePoisoned: 0
-      isPoisoned: 0
-      poisonedDuration: 0
-      poisonedTick: 0
-      currentPoisonDelay: 0
+    effectStats:
+      aoeStats:
+        areaOfEffect: 0
+        unitCentered: 0
+        explosionEffect: {fileID: 0}
+        explosionRadius: 0
+      frozenStats:
+        cantBeFrozen: 0
+        outSideResistance: 0
+        isFrozen: 0
+        frozenDelay: 0
+        currentFrozenDelay: 0
+      slowStats:
+        canSlow: 0
+        slowDuration: 0
+        slowIntensity: 0
+      slowedStats:
+        cantBeSlowed: 0
+        isSlowed: 0
+        slowDelay: 0
+        currentSlowDelay: 0
+        currentSlowIntensity: 0
+      rootedStats:
+        cantBeRooted: 0
+        isRooted: 0
+        rootDelay: 0
+        currentRootDelay: 0
+      poisonedStats:
+        cantBePoisoned: 0
+        isPoisoned: 0
+        poisonedDuration: 0
+        poisonedTick: 0
+        currentPoisonDelay: 0
+      knockbackStats:
+        canKnockback: 0
+        knockbackDuration: 0
+        initialSpeed: 0
+      knockbackedStats:
+        knockbackResistance: 0
+        isKnockbacked: 0
+        knockbackDuration: 0
+        currentKnockbackDelay: 0
+        initialSpeed: 0
+        currentSpeed: 0
+        direction: {x: 0, y: 0, z: 0}
+      pulledStats:
+        pullResistance: 0
+        pullComponents: []
+      grabbedStats:
+        cantBeGrabbed: 0
+        isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        pullDelay: 0
+        currentPullDelay: 0
+        currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
+  chargeStats:
+    charges: 0
+    isCharging: 0
+    chargeDamage: 0
+    chargeSpeed: 0
+    chargeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
+  enemyHitTargets: []
 --- !u!54 &4489671065841678828
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12549,49 +12789,83 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 0
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 0
       sSCanvas: {fileID: 0}
       sSSprite: {fileID: 0}
       sSMask: {fileID: 0}
     healthBar: {fileID: 0}
+    abilityIndicator: {fileID: 0}
     detectionObject: {fileID: 0}
     visionObject: {fileID: 0}
     movementType: 0
-    objectAttackable: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 1
     attackPriority: 0
     unitRange: 0
-    aoeStats:
-      areaOfEffect: 0
-      unitCentered: 0
-      explosionEffect: {fileID: 0}
-      explosionRadius: 0
-    frozenStats:
-      cantBeFrozen: 0
-      isFrozen: 0
-      frozenDelay: 0
-      currentFrozenDelay: 0
-    slowStats:
-      canSlow: 0
-      slowDuration: 0
-      slowIntensity: 0
-    slowedStats:
-      cantBeSlowed: 0
-      isSlowed: 0
-      slowDelay: 0
-      currentSlowDelay: 0
-      currentSlowIntensity: 0
-    rootedStats:
-      cantBeRooted: 0
-      isRooted: 0
-      rootDelay: 0
-      currentRootDelay: 0
-    poisonedStats:
-      cantBePoisoned: 0
-      isPoisoned: 0
-      poisonedDuration: 0
-      poisonedTick: 0
-      currentPoisonDelay: 0
+    effectStats:
+      aoeStats:
+        areaOfEffect: 0
+        unitCentered: 0
+        explosionEffect: {fileID: 0}
+        explosionRadius: 0
+      frozenStats:
+        cantBeFrozen: 0
+        outSideResistance: 0
+        isFrozen: 0
+        frozenDelay: 0
+        currentFrozenDelay: 0
+      slowStats:
+        canSlow: 0
+        slowDuration: 0
+        slowIntensity: 0
+      slowedStats:
+        cantBeSlowed: 0
+        isSlowed: 0
+        slowDelay: 0
+        currentSlowDelay: 0
+        currentSlowIntensity: 0
+      rootedStats:
+        cantBeRooted: 0
+        isRooted: 0
+        rootDelay: 0
+        currentRootDelay: 0
+      poisonedStats:
+        cantBePoisoned: 0
+        isPoisoned: 0
+        poisonedDuration: 0
+        poisonedTick: 0
+        currentPoisonDelay: 0
+      knockbackStats:
+        canKnockback: 0
+        knockbackDuration: 0
+        initialSpeed: 0
+      knockbackedStats:
+        knockbackResistance: 0
+        isKnockbacked: 0
+        knockbackDuration: 0
+        currentKnockbackDelay: 0
+        initialSpeed: 0
+        currentSpeed: 0
+        direction: {x: 0, y: 0, z: 0}
+      pulledStats:
+        pullResistance: 0
+        pullComponents: []
+      grabbedStats:
+        cantBeGrabbed: 0
+        isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        pullDelay: 0
+        currentPullDelay: 0
+        currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
 --- !u!1 &4489671066157551708
 GameObject:
   m_ObjectHideFlags: 0
@@ -14182,7 +14456,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 4489671066433120091}
   unitSprite: {fileID: 4489671067690885105}
-  abilityIndicator: {fileID: 212813382345185172}
   target: {fileID: 0}
   inRange: 0
   stats:
@@ -14199,51 +14472,100 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 0
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 0
       sSCanvas: {fileID: 7476644642864741361}
       sSSprite: {fileID: 5600789156958914505}
       sSMask: {fileID: 8147829898743070944}
     healthBar: {fileID: 4489671067657225785}
+    abilityIndicator: {fileID: 212813382345185172}
     detectionObject: {fileID: 4489671066845460561}
     visionObject: {fileID: 4489671066709608801}
     movementType: 0
-    objectAttackable: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
-    aoeStats:
-      areaOfEffect: 0
-      unitCentered: 0
-      explosionEffect: {fileID: 0}
-      explosionRadius: 0
-    frozenStats:
-      cantBeFrozen: 0
-      isFrozen: 0
-      frozenDelay: 0
-      currentFrozenDelay: 0
-    slowStats:
-      canSlow: 0
-      slowDuration: 0
-      slowIntensity: 0
-    slowedStats:
-      cantBeSlowed: 0
-      isSlowed: 0
-      slowDelay: 0
-      currentSlowDelay: 0
-      currentSlowIntensity: 0
-    rootedStats:
-      cantBeRooted: 0
-      isRooted: 0
-      rootDelay: 0
-      currentRootDelay: 0
-    poisonedStats:
-      cantBePoisoned: 0
-      isPoisoned: 0
-      poisonedDuration: 0
-      poisonedTick: 0
-      currentPoisonDelay: 0
+    effectStats:
+      aoeStats:
+        areaOfEffect: 0
+        unitCentered: 0
+        explosionEffect: {fileID: 0}
+        explosionRadius: 0
+      frozenStats:
+        cantBeFrozen: 0
+        outSideResistance: 0
+        isFrozen: 0
+        frozenDelay: 0
+        currentFrozenDelay: 0
+      slowStats:
+        canSlow: 0
+        slowDuration: 0
+        slowIntensity: 0
+      slowedStats:
+        cantBeSlowed: 0
+        isSlowed: 0
+        slowDelay: 0
+        currentSlowDelay: 0
+        currentSlowIntensity: 0
+      rootedStats:
+        cantBeRooted: 0
+        isRooted: 0
+        rootDelay: 0
+        currentRootDelay: 0
+      poisonedStats:
+        cantBePoisoned: 0
+        isPoisoned: 0
+        poisonedDuration: 0
+        poisonedTick: 0
+        currentPoisonDelay: 0
+      knockbackStats:
+        canKnockback: 0
+        knockbackDuration: 0
+        initialSpeed: 0
+      knockbackedStats:
+        knockbackResistance: 0
+        isKnockbacked: 0
+        knockbackDuration: 0
+        currentKnockbackDelay: 0
+        initialSpeed: 0
+        currentSpeed: 0
+        direction: {x: 0, y: 0, z: 0}
+      pulledStats:
+        pullResistance: 0
+        pullComponents: []
+      grabbedStats:
+        cantBeGrabbed: 0
+        isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        pullDelay: 0
+        currentPullDelay: 0
+        currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
+  chargeStats:
+    charges: 0
+    isCharging: 0
+    chargeDamage: 0
+    chargeSpeed: 0
+    chargeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
+  enemyHitTargets: []
 --- !u!54 &4489671066267809237
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18548,7 +18870,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 4489671066325100362}
   unitSprite: {fileID: 4489671066763040794}
-  abilityIndicator: {fileID: 7299956510878383127}
   target: {fileID: 0}
   inRange: 0
   stats:
@@ -18565,51 +18886,100 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 0
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 0
       sSCanvas: {fileID: 8634760496585956737}
       sSSprite: {fileID: 1295654024303385877}
       sSMask: {fileID: 3534584924630169764}
     healthBar: {fileID: 4489671066631235070}
+    abilityIndicator: {fileID: 7299956510878383127}
     detectionObject: {fileID: 4489671065924366034}
     visionObject: {fileID: 4489671066883336212}
     movementType: 0
-    objectAttackable: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
-    aoeStats:
-      areaOfEffect: 0
-      unitCentered: 0
-      explosionEffect: {fileID: 0}
-      explosionRadius: 0
-    frozenStats:
-      cantBeFrozen: 0
-      isFrozen: 0
-      frozenDelay: 0
-      currentFrozenDelay: 0
-    slowStats:
-      canSlow: 0
-      slowDuration: 0
-      slowIntensity: 0
-    slowedStats:
-      cantBeSlowed: 0
-      isSlowed: 0
-      slowDelay: 0
-      currentSlowDelay: 0
-      currentSlowIntensity: 0
-    rootedStats:
-      cantBeRooted: 0
-      isRooted: 0
-      rootDelay: 0
-      currentRootDelay: 0
-    poisonedStats:
-      cantBePoisoned: 0
-      isPoisoned: 0
-      poisonedDuration: 0
-      poisonedTick: 0
-      currentPoisonDelay: 0
+    effectStats:
+      aoeStats:
+        areaOfEffect: 0
+        unitCentered: 0
+        explosionEffect: {fileID: 0}
+        explosionRadius: 0
+      frozenStats:
+        cantBeFrozen: 0
+        outSideResistance: 0
+        isFrozen: 0
+        frozenDelay: 0
+        currentFrozenDelay: 0
+      slowStats:
+        canSlow: 0
+        slowDuration: 0
+        slowIntensity: 0
+      slowedStats:
+        cantBeSlowed: 0
+        isSlowed: 0
+        slowDelay: 0
+        currentSlowDelay: 0
+        currentSlowIntensity: 0
+      rootedStats:
+        cantBeRooted: 0
+        isRooted: 0
+        rootDelay: 0
+        currentRootDelay: 0
+      poisonedStats:
+        cantBePoisoned: 0
+        isPoisoned: 0
+        poisonedDuration: 0
+        poisonedTick: 0
+        currentPoisonDelay: 0
+      knockbackStats:
+        canKnockback: 0
+        knockbackDuration: 0
+        initialSpeed: 0
+      knockbackedStats:
+        knockbackResistance: 0
+        isKnockbacked: 0
+        knockbackDuration: 0
+        currentKnockbackDelay: 0
+        initialSpeed: 0
+        currentSpeed: 0
+        direction: {x: 0, y: 0, z: 0}
+      pulledStats:
+        pullResistance: 0
+        pullComponents: []
+      grabbedStats:
+        cantBeGrabbed: 0
+        isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        pullDelay: 0
+        currentPullDelay: 0
+        currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
+  chargeStats:
+    charges: 0
+    isCharging: 0
+    chargeDamage: 0
+    chargeSpeed: 0
+    chargeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
+  enemyHitTargets: []
 --- !u!54 &4489671066593494593
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -19923,7 +20293,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 4489671067072958032}
   unitSprite: {fileID: 4489671066436168852}
-  abilityIndicator: {fileID: 2401597682168615186}
   target: {fileID: 0}
   inRange: 0
   stats:
@@ -19940,51 +20309,100 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 0
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 0
       sSCanvas: {fileID: 8936197798202814495}
       sSSprite: {fileID: 2279026986767845348}
       sSMask: {fileID: 2039283979595864344}
     healthBar: {fileID: 4489671066889881896}
+    abilityIndicator: {fileID: 2401597682168615186}
     detectionObject: {fileID: 4489671066964217657}
     visionObject: {fileID: 4489671067094608328}
     movementType: 0
-    objectAttackable: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
-    aoeStats:
-      areaOfEffect: 0
-      unitCentered: 0
-      explosionEffect: {fileID: 0}
-      explosionRadius: 0
-    frozenStats:
-      cantBeFrozen: 0
-      isFrozen: 0
-      frozenDelay: 0
-      currentFrozenDelay: 0
-    slowStats:
-      canSlow: 0
-      slowDuration: 0
-      slowIntensity: 0
-    slowedStats:
-      cantBeSlowed: 0
-      isSlowed: 0
-      slowDelay: 0
-      currentSlowDelay: 0
-      currentSlowIntensity: 0
-    rootedStats:
-      cantBeRooted: 0
-      isRooted: 0
-      rootDelay: 0
-      currentRootDelay: 0
-    poisonedStats:
-      cantBePoisoned: 0
-      isPoisoned: 0
-      poisonedDuration: 0
-      poisonedTick: 0
-      currentPoisonDelay: 0
+    effectStats:
+      aoeStats:
+        areaOfEffect: 0
+        unitCentered: 0
+        explosionEffect: {fileID: 0}
+        explosionRadius: 0
+      frozenStats:
+        cantBeFrozen: 0
+        outSideResistance: 0
+        isFrozen: 0
+        frozenDelay: 0
+        currentFrozenDelay: 0
+      slowStats:
+        canSlow: 0
+        slowDuration: 0
+        slowIntensity: 0
+      slowedStats:
+        cantBeSlowed: 0
+        isSlowed: 0
+        slowDelay: 0
+        currentSlowDelay: 0
+        currentSlowIntensity: 0
+      rootedStats:
+        cantBeRooted: 0
+        isRooted: 0
+        rootDelay: 0
+        currentRootDelay: 0
+      poisonedStats:
+        cantBePoisoned: 0
+        isPoisoned: 0
+        poisonedDuration: 0
+        poisonedTick: 0
+        currentPoisonDelay: 0
+      knockbackStats:
+        canKnockback: 0
+        knockbackDuration: 0
+        initialSpeed: 0
+      knockbackedStats:
+        knockbackResistance: 0
+        isKnockbacked: 0
+        knockbackDuration: 0
+        currentKnockbackDelay: 0
+        initialSpeed: 0
+        currentSpeed: 0
+        direction: {x: 0, y: 0, z: 0}
+      pulledStats:
+        pullResistance: 0
+        pullComponents: []
+      grabbedStats:
+        cantBeGrabbed: 0
+        isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        pullDelay: 0
+        currentPullDelay: 0
+        currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
+  chargeStats:
+    charges: 0
+    isCharging: 0
+    chargeDamage: 0
+    chargeSpeed: 0
+    chargeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
+  enemyHitTargets: []
 --- !u!54 &4489671066702715478
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -20364,7 +20782,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 4489671066108102594}
   unitSprite: {fileID: 4489671067194792896}
-  abilityIndicator: {fileID: 3327339704651964843}
   target: {fileID: 0}
   inRange: 0
   stats:
@@ -20381,51 +20798,100 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 0
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 0
       sSCanvas: {fileID: 3847178713783338942}
       sSSprite: {fileID: 7602795126534448984}
       sSMask: {fileID: 4797261027545081169}
     healthBar: {fileID: 4489671067677268712}
+    abilityIndicator: {fileID: 3327339704651964843}
     detectionObject: {fileID: 4489671065723067194}
     visionObject: {fileID: 4489671066552150738}
     movementType: 0
-    objectAttackable: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
-    aoeStats:
-      areaOfEffect: 0
-      unitCentered: 0
-      explosionEffect: {fileID: 0}
-      explosionRadius: 0
-    frozenStats:
-      cantBeFrozen: 0
-      isFrozen: 0
-      frozenDelay: 0
-      currentFrozenDelay: 0
-    slowStats:
-      canSlow: 0
-      slowDuration: 0
-      slowIntensity: 0
-    slowedStats:
-      cantBeSlowed: 0
-      isSlowed: 0
-      slowDelay: 0
-      currentSlowDelay: 0
-      currentSlowIntensity: 0
-    rootedStats:
-      cantBeRooted: 0
-      isRooted: 0
-      rootDelay: 0
-      currentRootDelay: 0
-    poisonedStats:
-      cantBePoisoned: 0
-      isPoisoned: 0
-      poisonedDuration: 0
-      poisonedTick: 0
-      currentPoisonDelay: 0
+    effectStats:
+      aoeStats:
+        areaOfEffect: 0
+        unitCentered: 0
+        explosionEffect: {fileID: 0}
+        explosionRadius: 0
+      frozenStats:
+        cantBeFrozen: 0
+        outSideResistance: 0
+        isFrozen: 0
+        frozenDelay: 0
+        currentFrozenDelay: 0
+      slowStats:
+        canSlow: 0
+        slowDuration: 0
+        slowIntensity: 0
+      slowedStats:
+        cantBeSlowed: 0
+        isSlowed: 0
+        slowDelay: 0
+        currentSlowDelay: 0
+        currentSlowIntensity: 0
+      rootedStats:
+        cantBeRooted: 0
+        isRooted: 0
+        rootDelay: 0
+        currentRootDelay: 0
+      poisonedStats:
+        cantBePoisoned: 0
+        isPoisoned: 0
+        poisonedDuration: 0
+        poisonedTick: 0
+        currentPoisonDelay: 0
+      knockbackStats:
+        canKnockback: 0
+        knockbackDuration: 0
+        initialSpeed: 0
+      knockbackedStats:
+        knockbackResistance: 0
+        isKnockbacked: 0
+        knockbackDuration: 0
+        currentKnockbackDelay: 0
+        initialSpeed: 0
+        currentSpeed: 0
+        direction: {x: 0, y: 0, z: 0}
+      pulledStats:
+        pullResistance: 0
+        pullComponents: []
+      grabbedStats:
+        cantBeGrabbed: 0
+        isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        pullDelay: 0
+        currentPullDelay: 0
+        currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
+  chargeStats:
+    charges: 0
+    isCharging: 0
+    chargeDamage: 0
+    chargeSpeed: 0
+    chargeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
+  enemyHitTargets: []
 --- !u!54 &4489671066735133983
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -21586,7 +22052,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 4489671066465344627}
   unitSprite: {fileID: 4489671066913692635}
-  abilityIndicator: {fileID: 3474217131271221639}
   target: {fileID: 0}
   inRange: 0
   stats:
@@ -21603,51 +22068,100 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 0
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 0
       sSCanvas: {fileID: 3779948123151852317}
       sSSprite: {fileID: 1523212000632938598}
       sSMask: {fileID: 6527288373062936641}
     healthBar: {fileID: 4489671067532645397}
+    abilityIndicator: {fileID: 3474217131271221639}
     detectionObject: {fileID: 4489671065714986912}
     visionObject: {fileID: 4489671067446610601}
     movementType: 0
-    objectAttackable: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
-    aoeStats:
-      areaOfEffect: 0
-      unitCentered: 0
-      explosionEffect: {fileID: 0}
-      explosionRadius: 0
-    frozenStats:
-      cantBeFrozen: 0
-      isFrozen: 0
-      frozenDelay: 0
-      currentFrozenDelay: 0
-    slowStats:
-      canSlow: 0
-      slowDuration: 0
-      slowIntensity: 0
-    slowedStats:
-      cantBeSlowed: 0
-      isSlowed: 0
-      slowDelay: 0
-      currentSlowDelay: 0
-      currentSlowIntensity: 0
-    rootedStats:
-      cantBeRooted: 0
-      isRooted: 0
-      rootDelay: 0
-      currentRootDelay: 0
-    poisonedStats:
-      cantBePoisoned: 0
-      isPoisoned: 0
-      poisonedDuration: 0
-      poisonedTick: 0
-      currentPoisonDelay: 0
+    effectStats:
+      aoeStats:
+        areaOfEffect: 0
+        unitCentered: 0
+        explosionEffect: {fileID: 0}
+        explosionRadius: 0
+      frozenStats:
+        cantBeFrozen: 0
+        outSideResistance: 0
+        isFrozen: 0
+        frozenDelay: 0
+        currentFrozenDelay: 0
+      slowStats:
+        canSlow: 0
+        slowDuration: 0
+        slowIntensity: 0
+      slowedStats:
+        cantBeSlowed: 0
+        isSlowed: 0
+        slowDelay: 0
+        currentSlowDelay: 0
+        currentSlowIntensity: 0
+      rootedStats:
+        cantBeRooted: 0
+        isRooted: 0
+        rootDelay: 0
+        currentRootDelay: 0
+      poisonedStats:
+        cantBePoisoned: 0
+        isPoisoned: 0
+        poisonedDuration: 0
+        poisonedTick: 0
+        currentPoisonDelay: 0
+      knockbackStats:
+        canKnockback: 0
+        knockbackDuration: 0
+        initialSpeed: 0
+      knockbackedStats:
+        knockbackResistance: 0
+        isKnockbacked: 0
+        knockbackDuration: 0
+        currentKnockbackDelay: 0
+        initialSpeed: 0
+        currentSpeed: 0
+        direction: {x: 0, y: 0, z: 0}
+      pulledStats:
+        pullResistance: 0
+        pullComponents: []
+      grabbedStats:
+        cantBeGrabbed: 0
+        isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        pullDelay: 0
+        currentPullDelay: 0
+        currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
+  chargeStats:
+    charges: 0
+    isCharging: 0
+    chargeDamage: 0
+    chargeSpeed: 0
+    chargeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
+  enemyHitTargets: []
 --- !u!54 &4489671066807926417
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -21803,7 +22317,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 4489671065818515562}
   unitSprite: {fileID: 4489671067614447820}
-  abilityIndicator: {fileID: 8223904670195078119}
   target: {fileID: 0}
   inRange: 0
   stats:
@@ -21820,51 +22333,100 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 0
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 0
       sSCanvas: {fileID: 8563577061326915346}
       sSSprite: {fileID: 7168117752283408539}
       sSMask: {fileID: 8533457738019490961}
     healthBar: {fileID: 4489671066061806611}
+    abilityIndicator: {fileID: 8223904670195078119}
     detectionObject: {fileID: 4489671067356271442}
     visionObject: {fileID: 4489671065707903898}
     movementType: 0
-    objectAttackable: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
-    aoeStats:
-      areaOfEffect: 0
-      unitCentered: 0
-      explosionEffect: {fileID: 0}
-      explosionRadius: 0
-    frozenStats:
-      cantBeFrozen: 0
-      isFrozen: 0
-      frozenDelay: 0
-      currentFrozenDelay: 0
-    slowStats:
-      canSlow: 0
-      slowDuration: 0
-      slowIntensity: 0
-    slowedStats:
-      cantBeSlowed: 0
-      isSlowed: 0
-      slowDelay: 0
-      currentSlowDelay: 0
-      currentSlowIntensity: 0
-    rootedStats:
-      cantBeRooted: 0
-      isRooted: 0
-      rootDelay: 0
-      currentRootDelay: 0
-    poisonedStats:
-      cantBePoisoned: 0
-      isPoisoned: 0
-      poisonedDuration: 0
-      poisonedTick: 0
-      currentPoisonDelay: 0
+    effectStats:
+      aoeStats:
+        areaOfEffect: 0
+        unitCentered: 0
+        explosionEffect: {fileID: 0}
+        explosionRadius: 0
+      frozenStats:
+        cantBeFrozen: 0
+        outSideResistance: 0
+        isFrozen: 0
+        frozenDelay: 0
+        currentFrozenDelay: 0
+      slowStats:
+        canSlow: 0
+        slowDuration: 0
+        slowIntensity: 0
+      slowedStats:
+        cantBeSlowed: 0
+        isSlowed: 0
+        slowDelay: 0
+        currentSlowDelay: 0
+        currentSlowIntensity: 0
+      rootedStats:
+        cantBeRooted: 0
+        isRooted: 0
+        rootDelay: 0
+        currentRootDelay: 0
+      poisonedStats:
+        cantBePoisoned: 0
+        isPoisoned: 0
+        poisonedDuration: 0
+        poisonedTick: 0
+        currentPoisonDelay: 0
+      knockbackStats:
+        canKnockback: 0
+        knockbackDuration: 0
+        initialSpeed: 0
+      knockbackedStats:
+        knockbackResistance: 0
+        isKnockbacked: 0
+        knockbackDuration: 0
+        currentKnockbackDelay: 0
+        initialSpeed: 0
+        currentSpeed: 0
+        direction: {x: 0, y: 0, z: 0}
+      pulledStats:
+        pullResistance: 0
+        pullComponents: []
+      grabbedStats:
+        cantBeGrabbed: 0
+        isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        pullDelay: 0
+        currentPullDelay: 0
+        currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
+  chargeStats:
+    charges: 0
+    isCharging: 0
+    chargeDamage: 0
+    chargeSpeed: 0
+    chargeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
+  enemyHitTargets: []
 --- !u!54 &4489671066835727425
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -24766,7 +25328,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 4489671066377913806}
   unitSprite: {fileID: 4489671066491296148}
-  abilityIndicator: {fileID: 756374250439777023}
   target: {fileID: 0}
   inRange: 0
   stats:
@@ -24783,51 +25344,100 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 0
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 0
       sSCanvas: {fileID: 4377577461801931092}
       sSSprite: {fileID: 130937407468813891}
       sSMask: {fileID: 4259977411999012011}
     healthBar: {fileID: 4489671066978676774}
+    abilityIndicator: {fileID: 756374250439777023}
     detectionObject: {fileID: 4489671067449580316}
     visionObject: {fileID: 4489671067296790136}
     movementType: 0
-    objectAttackable: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
-    aoeStats:
-      areaOfEffect: 0
-      unitCentered: 0
-      explosionEffect: {fileID: 0}
-      explosionRadius: 0
-    frozenStats:
-      cantBeFrozen: 0
-      isFrozen: 0
-      frozenDelay: 0
-      currentFrozenDelay: 0
-    slowStats:
-      canSlow: 0
-      slowDuration: 0
-      slowIntensity: 0
-    slowedStats:
-      cantBeSlowed: 0
-      isSlowed: 0
-      slowDelay: 0
-      currentSlowDelay: 0
-      currentSlowIntensity: 0
-    rootedStats:
-      cantBeRooted: 0
-      isRooted: 0
-      rootDelay: 0
-      currentRootDelay: 0
-    poisonedStats:
-      cantBePoisoned: 0
-      isPoisoned: 0
-      poisonedDuration: 0
-      poisonedTick: 0
-      currentPoisonDelay: 0
+    effectStats:
+      aoeStats:
+        areaOfEffect: 0
+        unitCentered: 0
+        explosionEffect: {fileID: 0}
+        explosionRadius: 0
+      frozenStats:
+        cantBeFrozen: 0
+        outSideResistance: 0
+        isFrozen: 0
+        frozenDelay: 0
+        currentFrozenDelay: 0
+      slowStats:
+        canSlow: 0
+        slowDuration: 0
+        slowIntensity: 0
+      slowedStats:
+        cantBeSlowed: 0
+        isSlowed: 0
+        slowDelay: 0
+        currentSlowDelay: 0
+        currentSlowIntensity: 0
+      rootedStats:
+        cantBeRooted: 0
+        isRooted: 0
+        rootDelay: 0
+        currentRootDelay: 0
+      poisonedStats:
+        cantBePoisoned: 0
+        isPoisoned: 0
+        poisonedDuration: 0
+        poisonedTick: 0
+        currentPoisonDelay: 0
+      knockbackStats:
+        canKnockback: 0
+        knockbackDuration: 0
+        initialSpeed: 0
+      knockbackedStats:
+        knockbackResistance: 0
+        isKnockbacked: 0
+        knockbackDuration: 0
+        currentKnockbackDelay: 0
+        initialSpeed: 0
+        currentSpeed: 0
+        direction: {x: 0, y: 0, z: 0}
+      pulledStats:
+        pullResistance: 0
+        pullComponents: []
+      grabbedStats:
+        cantBeGrabbed: 0
+        isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        pullDelay: 0
+        currentPullDelay: 0
+        currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
+  chargeStats:
+    charges: 0
+    isCharging: 0
+    chargeDamage: 0
+    chargeSpeed: 0
+    chargeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
+  enemyHitTargets: []
 --- !u!54 &4489671067000586478
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -31277,7 +31887,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 4489671066063259742}
   unitSprite: {fileID: 4489671067058965782}
-  abilityIndicator: {fileID: 2454115991507151388}
   target: {fileID: 0}
   inRange: 0
   stats:
@@ -31294,51 +31903,100 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 0
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 0
       sSCanvas: {fileID: 1303603769946594415}
       sSSprite: {fileID: 3432151470694943011}
       sSMask: {fileID: 3988108565791026224}
     healthBar: {fileID: 4489671065679376148}
+    abilityIndicator: {fileID: 2454115991507151388}
     detectionObject: {fileID: 4489671067433334794}
     visionObject: {fileID: 4489671067180521833}
     movementType: 0
-    objectAttackable: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
-    aoeStats:
-      areaOfEffect: 0
-      unitCentered: 0
-      explosionEffect: {fileID: 0}
-      explosionRadius: 0
-    frozenStats:
-      cantBeFrozen: 0
-      isFrozen: 0
-      frozenDelay: 0
-      currentFrozenDelay: 0
-    slowStats:
-      canSlow: 0
-      slowDuration: 0
-      slowIntensity: 0
-    slowedStats:
-      cantBeSlowed: 0
-      isSlowed: 0
-      slowDelay: 0
-      currentSlowDelay: 0
-      currentSlowIntensity: 0
-    rootedStats:
-      cantBeRooted: 0
-      isRooted: 0
-      rootDelay: 0
-      currentRootDelay: 0
-    poisonedStats:
-      cantBePoisoned: 0
-      isPoisoned: 0
-      poisonedDuration: 0
-      poisonedTick: 0
-      currentPoisonDelay: 0
+    effectStats:
+      aoeStats:
+        areaOfEffect: 0
+        unitCentered: 0
+        explosionEffect: {fileID: 0}
+        explosionRadius: 0
+      frozenStats:
+        cantBeFrozen: 0
+        outSideResistance: 0
+        isFrozen: 0
+        frozenDelay: 0
+        currentFrozenDelay: 0
+      slowStats:
+        canSlow: 0
+        slowDuration: 0
+        slowIntensity: 0
+      slowedStats:
+        cantBeSlowed: 0
+        isSlowed: 0
+        slowDelay: 0
+        currentSlowDelay: 0
+        currentSlowIntensity: 0
+      rootedStats:
+        cantBeRooted: 0
+        isRooted: 0
+        rootDelay: 0
+        currentRootDelay: 0
+      poisonedStats:
+        cantBePoisoned: 0
+        isPoisoned: 0
+        poisonedDuration: 0
+        poisonedTick: 0
+        currentPoisonDelay: 0
+      knockbackStats:
+        canKnockback: 0
+        knockbackDuration: 0
+        initialSpeed: 0
+      knockbackedStats:
+        knockbackResistance: 0
+        isKnockbacked: 0
+        knockbackDuration: 0
+        currentKnockbackDelay: 0
+        initialSpeed: 0
+        currentSpeed: 0
+        direction: {x: 0, y: 0, z: 0}
+      pulledStats:
+        pullResistance: 0
+        pullComponents: []
+      grabbedStats:
+        cantBeGrabbed: 0
+        isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        pullDelay: 0
+        currentPullDelay: 0
+        currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
+  chargeStats:
+    charges: 0
+    isCharging: 0
+    chargeDamage: 0
+    chargeSpeed: 0
+    chargeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
+  enemyHitTargets: []
 --- !u!54 &4489671067461063342
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -32243,7 +32901,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 4489671067031893307}
   unitSprite: {fileID: 4489671066079972108}
-  abilityIndicator: {fileID: 807772241824463049}
   target: {fileID: 0}
   inRange: 0
   stats:
@@ -32260,51 +32917,100 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 0
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 0
       sSCanvas: {fileID: 6717094171796814697}
       sSSprite: {fileID: 6595559919534392063}
       sSMask: {fileID: 5414130929104898383}
     healthBar: {fileID: 4489671066620169983}
+    abilityIndicator: {fileID: 807772241824463049}
     detectionObject: {fileID: 4489671065636763356}
     visionObject: {fileID: 4489671066966572400}
     movementType: 0
-    objectAttackable: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
-    aoeStats:
-      areaOfEffect: 0
-      unitCentered: 0
-      explosionEffect: {fileID: 0}
-      explosionRadius: 0
-    frozenStats:
-      cantBeFrozen: 0
-      isFrozen: 0
-      frozenDelay: 0
-      currentFrozenDelay: 0
-    slowStats:
-      canSlow: 0
-      slowDuration: 0
-      slowIntensity: 0
-    slowedStats:
-      cantBeSlowed: 0
-      isSlowed: 0
-      slowDelay: 0
-      currentSlowDelay: 0
-      currentSlowIntensity: 0
-    rootedStats:
-      cantBeRooted: 0
-      isRooted: 0
-      rootDelay: 0
-      currentRootDelay: 0
-    poisonedStats:
-      cantBePoisoned: 0
-      isPoisoned: 0
-      poisonedDuration: 0
-      poisonedTick: 0
-      currentPoisonDelay: 0
+    effectStats:
+      aoeStats:
+        areaOfEffect: 0
+        unitCentered: 0
+        explosionEffect: {fileID: 0}
+        explosionRadius: 0
+      frozenStats:
+        cantBeFrozen: 0
+        outSideResistance: 0
+        isFrozen: 0
+        frozenDelay: 0
+        currentFrozenDelay: 0
+      slowStats:
+        canSlow: 0
+        slowDuration: 0
+        slowIntensity: 0
+      slowedStats:
+        cantBeSlowed: 0
+        isSlowed: 0
+        slowDelay: 0
+        currentSlowDelay: 0
+        currentSlowIntensity: 0
+      rootedStats:
+        cantBeRooted: 0
+        isRooted: 0
+        rootDelay: 0
+        currentRootDelay: 0
+      poisonedStats:
+        cantBePoisoned: 0
+        isPoisoned: 0
+        poisonedDuration: 0
+        poisonedTick: 0
+        currentPoisonDelay: 0
+      knockbackStats:
+        canKnockback: 0
+        knockbackDuration: 0
+        initialSpeed: 0
+      knockbackedStats:
+        knockbackResistance: 0
+        isKnockbacked: 0
+        knockbackDuration: 0
+        currentKnockbackDelay: 0
+        initialSpeed: 0
+        currentSpeed: 0
+        direction: {x: 0, y: 0, z: 0}
+      pulledStats:
+        pullResistance: 0
+        pullComponents: []
+      grabbedStats:
+        cantBeGrabbed: 0
+        isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        pullDelay: 0
+        currentPullDelay: 0
+        currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
+  chargeStats:
+    charges: 0
+    isCharging: 0
+    chargeDamage: 0
+    chargeSpeed: 0
+    chargeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
+  enemyHitTargets: []
 --- !u!54 &4489671067536259775
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -35094,7 +35800,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 4489671066467417009}
   unitSprite: {fileID: 4489671066592805366}
-  abilityIndicator: {fileID: 7057957503482578070}
   target: {fileID: 0}
   inRange: 0
   stats:
@@ -35111,51 +35816,100 @@ MonoBehaviour:
     summoningSicknessUI:
       summonSicknessDelay: 0
       currSummonSicknessDelay: 0
+      summonProtectionDelay: 0
       sSCanvas: {fileID: 5348788770317305786}
       sSSprite: {fileID: 917554653242249728}
       sSMask: {fileID: 5427684779320950137}
     healthBar: {fileID: 4489671066987208668}
+    abilityIndicator: {fileID: 7057957503482578070}
     detectionObject: {fileID: 4489671065880224173}
     visionObject: {fileID: 4489671066714865097}
     movementType: 0
-    objectAttackable: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
     unitRange: 0
-    aoeStats:
-      areaOfEffect: 0
-      unitCentered: 0
-      explosionEffect: {fileID: 0}
-      explosionRadius: 0
-    frozenStats:
-      cantBeFrozen: 0
-      isFrozen: 0
-      frozenDelay: 0
-      currentFrozenDelay: 0
-    slowStats:
-      canSlow: 0
-      slowDuration: 0
-      slowIntensity: 0
-    slowedStats:
-      cantBeSlowed: 0
-      isSlowed: 0
-      slowDelay: 0
-      currentSlowDelay: 0
-      currentSlowIntensity: 0
-    rootedStats:
-      cantBeRooted: 0
-      isRooted: 0
-      rootDelay: 0
-      currentRootDelay: 0
-    poisonedStats:
-      cantBePoisoned: 0
-      isPoisoned: 0
-      poisonedDuration: 0
-      poisonedTick: 0
-      currentPoisonDelay: 0
+    effectStats:
+      aoeStats:
+        areaOfEffect: 0
+        unitCentered: 0
+        explosionEffect: {fileID: 0}
+        explosionRadius: 0
+      frozenStats:
+        cantBeFrozen: 0
+        outSideResistance: 0
+        isFrozen: 0
+        frozenDelay: 0
+        currentFrozenDelay: 0
+      slowStats:
+        canSlow: 0
+        slowDuration: 0
+        slowIntensity: 0
+      slowedStats:
+        cantBeSlowed: 0
+        isSlowed: 0
+        slowDelay: 0
+        currentSlowDelay: 0
+        currentSlowIntensity: 0
+      rootedStats:
+        cantBeRooted: 0
+        isRooted: 0
+        rootDelay: 0
+        currentRootDelay: 0
+      poisonedStats:
+        cantBePoisoned: 0
+        isPoisoned: 0
+        poisonedDuration: 0
+        poisonedTick: 0
+        currentPoisonDelay: 0
+      knockbackStats:
+        canKnockback: 0
+        knockbackDuration: 0
+        initialSpeed: 0
+      knockbackedStats:
+        knockbackResistance: 0
+        isKnockbacked: 0
+        knockbackDuration: 0
+        currentKnockbackDelay: 0
+        initialSpeed: 0
+        currentSpeed: 0
+        direction: {x: 0, y: 0, z: 0}
+      pulledStats:
+        pullResistance: 0
+        pullComponents: []
+      grabbedStats:
+        cantBeGrabbed: 0
+        isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        pullDelay: 0
+        currentPullDelay: 0
+        currentStunDelay: 0
+      resistStats:
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
+  chargeStats:
+    charges: 0
+    isCharging: 0
+    chargeDamage: 0
+    chargeSpeed: 0
+    chargeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
+  enemyHitTargets: []
 --- !u!54 &4489671067695297467
 Rigidbody:
   m_ObjectHideFlags: 0

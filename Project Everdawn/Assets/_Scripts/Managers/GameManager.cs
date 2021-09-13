@@ -187,10 +187,8 @@ public class GameManager : MonoBehaviour
     public static void removeAbililtyIndicators() {
         foreach (GameObject go in Instance.Objects) {
             Component component = go.GetComponent(typeof(IDamageable));
-            if((component as IDamageable).IndicatorNum > 0) {
-                (component as IDamageable).AbilityIndicator.enabled = false;
-                (component as IDamageable).IndicatorNum = 0;
-            }
+            if((component as IDamageable).Stats.IndicatorNum > 0)
+                (component as IDamageable).Stats.IndicatorNum = 0;
         }
         GameObject hud = GameObject.Find(GameConstants.HUD_CANVAS);
         hud.transform.GetChild(2).GetComponent<Image>().enabled = false;

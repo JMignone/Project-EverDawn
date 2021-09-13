@@ -74,7 +74,10 @@ public class Projectile : MonoBehaviour, IAbility
     private GrenadeStats grenadeStats;
 
     [SerializeField]
-    private ResistEffects resistEffects;
+    private ResistEffects resistEffects; //gives the shooting unit resistance while the projectile is in play
+
+    [SerializeField]
+    private ApplyResistanceStats applyResistanceStats; //what resistances the projectile gives to its target or the user for a duration
 
     private Vector3 targetLocation;
 
@@ -261,9 +264,12 @@ public class Projectile : MonoBehaviour, IAbility
         lingeringStats.StartLingeringStats(gameObject);
         slowStats.StartSlowStats();
         pullStats.StartPullStats(gameObject);
+
         
-        if(unit != null)
+        if(unit != null) {
             resistEffects.StartResistance(unit);
+            applyResistanceStats.StartResistance(unit);
+        }
     }
 
     protected void StopStats() {
@@ -371,5 +377,6 @@ public class Projectile : MonoBehaviour, IAbility
             (damageable as IDamageable).Stats.EffectStats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position);
         if(grabStats.CanGrab)
             (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.PullDuration, grabStats.StunDuration, unit);
+        applyResistanceStats.ApplyResistance((damageable as IDamageable));
     }
 }

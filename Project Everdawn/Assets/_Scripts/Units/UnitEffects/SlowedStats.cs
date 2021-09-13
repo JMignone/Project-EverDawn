@@ -7,6 +7,7 @@ public class SlowedStats
 {
     [SerializeField]
     private bool cantBeSlowed;
+    private bool outSideResistance;
 
     [SerializeField]
     private bool isSlowed;
@@ -26,6 +27,12 @@ public class SlowedStats
     {
         get { return cantBeSlowed; }
         set { cantBeSlowed = value; }
+    }
+
+    public bool OutSideResistance
+    {
+        get { return outSideResistance; }
+        set { outSideResistance = value; }
     }
 
     public bool IsSlowed
@@ -76,7 +83,7 @@ public class SlowedStats
     }
 
     public void Slow(float duration, float intensity) {
-        if(!cantBeSlowed) {
+        if(!cantBeSlowed && !outSideResistance) {
             isSlowed = true;
             slowDelay = duration;
             currentSlowDelay = 0;

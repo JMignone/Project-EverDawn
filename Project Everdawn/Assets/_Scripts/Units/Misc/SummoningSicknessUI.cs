@@ -6,11 +6,16 @@ using UnityEngine.UI;
 [System.Serializable]
 public class SummoningSicknessUI
 {
+    [Tooltip("Determines how long a unit will be able to act after its summonProtectionDelay is up")]
     [SerializeField]
     private float summonSicknessDelay;
 
     [SerializeField]
     private float currSummonSicknessDelay;
+
+    [Tooltip("Determines how long a unit will be undamageable and untargetable when summoned")]
+    [SerializeField]
+    private float summonProtectionDelay;
 
     [SerializeField]
     private Canvas sSCanvas;
@@ -21,31 +26,10 @@ public class SummoningSicknessUI
     [SerializeField]
     private Image sSMask;
 
-    public float SummonSicknessDelay
+    public bool SummonProtection
     {
-        get { return summonSicknessDelay; }
-        set { summonSicknessDelay = value; }
-    }
-
-    public float SurrSummonSicknessDelay
-    {
-        get { return currSummonSicknessDelay; }
-        set { currSummonSicknessDelay = value; }
-    }
-
-    public Canvas SSCanvas
-    {
-        get { return sSCanvas; }
-    }
-
-    public Image SSSprite
-    {
-        get { return sSSprite; }
-    }
-
-    public Image SSMask
-    {
-        get { return sSMask; }
+        get { if(summonProtectionDelay > 0) return true;
+              else return false; }
     }
 
     public float PercentReady 
@@ -62,7 +46,11 @@ public class SummoningSicknessUI
     }
 
     public void UpdateStats() {
-        if(currSummonSicknessDelay < summonSicknessDelay) {
+        if(summonProtectionDelay > 0) {
+            sSCanvas.enabled = false;
+            summonProtectionDelay -= Time.deltaTime;
+        }
+        else if(currSummonSicknessDelay < summonSicknessDelay) {
             sSCanvas.enabled = true;
             currSummonSicknessDelay += Time.deltaTime;
             sSMask.fillAmount = 1 - PercentReady;

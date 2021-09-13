@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitBox: {fileID: 1224647180710323965}
-  radius: 7
+  radius: 15
   range: 80
   heightAttackable: 0
   typeAttackable: 0
@@ -135,11 +135,11 @@ MonoBehaviour:
     canFreeze: 0
     freezeDuration: 3
   slowStats:
-    canSlow: 1
+    canSlow: 0
     slowDuration: 3.5
     slowIntensity: 0.5
   rootStats:
-    canRoot: 1
+    canRoot: 0
     rootDuration: 0.5
   poisonStats:
     canPoison: 0
@@ -147,9 +147,9 @@ MonoBehaviour:
     poisonDuration: 6
     poisonTick: 0.5
   knockbackStats:
-    canKnockback: 0
-    knockbackDuration: 1
-    initialSpeed: 1
+    canKnockback: 1
+    knockbackDuration: 1.5
+    initialSpeed: 20
   pullStats:
     canPull: 0
     radius: 0
@@ -171,8 +171,8 @@ MonoBehaviour:
   selfDestructStats:
     selfDestructs: 1
     explosionEffect: {fileID: 0}
-    explosionDamage: 1
-    explosionRadius: 7
+    explosionDamage: 35
+    explosionRadius: 15
   linearStats:
     isLinear: 0
     isVertical: 1

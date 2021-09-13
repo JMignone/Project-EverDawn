@@ -12,8 +12,6 @@ public interface IDamageable
     int InRange { get; set; }
     Actor3D Agent { get; }
     Actor2D UnitSprite { get; }
-    Image AbilityIndicator { get; }
-    int IndicatorNum { get; set; }
     bool IsMoving { get; }
 
     void TakeDamage(float amount);

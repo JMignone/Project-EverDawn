@@ -9,6 +9,7 @@ public class PulledStats
     [Tooltip("A number from 0 to 1 that determines a units resistance to being pulled. A resistance of 1 means they cannot be pulled")]
     [SerializeField]
     private float pullResistance;
+    private bool outSideResistance;
 
     [SerializeField]
     private List<Component> pullComponents;
@@ -20,6 +21,12 @@ public class PulledStats
     {
         get { return pullResistance; }
         set { pullResistance = value; }
+    }
+
+    public bool OutSideResistance
+    {
+        get { return outSideResistance; }
+        set { outSideResistance = value; }
     }
 
     public List<Component> PullComponents
@@ -41,7 +48,7 @@ public class PulledStats
     }
 
     public void UpdatePulledStats() {
-        if(pullResistance < 1 && pullComponents.Count > 0) {
+        if(pullResistance < 1 && !outSideResistance && pullComponents.Count > 0) {
             Vector3 totalMovement = Vector3.zero;
             pullComponents.RemoveAll(item => item == null); //removes a pull component if it becomes null
             foreach(Component IAbility in pullComponents) {

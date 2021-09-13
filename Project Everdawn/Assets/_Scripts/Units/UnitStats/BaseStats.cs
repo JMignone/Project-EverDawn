@@ -32,6 +32,9 @@ public class BaseStats
     [SerializeField]
     private Image healthBar;
     [SerializeField]
+    private Image abilityIndicator;
+    private int indicatorNum;
+    [SerializeField]
     private SphereCollider detectionObject;
     [SerializeField]
     private SphereCollider visionObject;
@@ -58,6 +61,14 @@ public class BaseStats
     private bool isHoveringAbility;
     private bool isCastingAbility;
     private bool isAttacking;
+
+    public bool Targetable {
+        get { return !summoningSicknessUI.SummonProtection; }
+    }
+
+    public bool Damageable {
+        get { return !summoningSicknessUI.SummonProtection; }
+    }
 
     public float PercentHealth {
         get { return currHealth/maxHealth; }
@@ -130,7 +141,17 @@ public class BaseStats
     public Image HealthBar
     {
         get { return healthBar; }
-        //set { healthBar = value; }
+    }
+
+    public Image AbilityIndicator
+    {
+        get { return abilityIndicator; }
+    }
+
+    public int IndicatorNum
+    {
+        get { return indicatorNum; }
+        set { indicatorNum = value; }
     }
 
     public SphereCollider DetectionObject
@@ -225,6 +246,11 @@ public class BaseStats
             HealthBar.transform.GetChild(0).gameObject.SetActive(true);
         }
         HealthBar.fillAmount = PercentHealth;
+
+        if(indicatorNum > 0 && Damageable)
+            abilityIndicator.enabled = true;
+        else
+            abilityIndicator.enabled = false;
 
         summoningSicknessUI.UpdateStats();
         EffectStats.UpdateStats();
