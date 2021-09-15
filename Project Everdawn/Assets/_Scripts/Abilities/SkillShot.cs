@@ -20,7 +20,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private float currentDelay;
 
     [SerializeField]
-    private ResistEffects resistEffects; //A list of effects than can be set to be resisted while casting
+    private ApplyResistanceStats applyResistanceStats; //A list of effects than can be set to be resisted while casting
 
     private bool isFiring;
     private int currentProjectileIndex;
@@ -283,7 +283,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 unit.Stats.IsCastingAbility = true;
                 unit.SetTarget(null);
                 abilityUI.resetAbility();
-                resistEffects.StartResistance(unit);
+                applyResistanceStats.ApplyResistance(unit);
             }
         }
     }
@@ -337,7 +337,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 unit.Stats.IsCastingAbility = true;
                 unit.SetTarget(null);
                 abilityUI.resetAbility();
-                resistEffects.StartResistance(unit);
+                applyResistanceStats.ApplyResistance(unit);
             }
         }
     }
@@ -349,7 +349,6 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             currentDelay = 0;
             if(!abilityControl)
                 unit.Stats.IsCastingAbility = false;
-            resistEffects.StopResistance(unit);
         }
         else if(currentDelay < abilityDelays[currentProjectileIndex]) //if we havnt reached the delay yet
             currentDelay += Time.deltaTime * unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
@@ -359,7 +358,6 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             currentDelay = 0;
             if(!abilityControl)
                 unit.Stats.IsCastingAbility = false;
-            resistEffects.StopResistance(unit);
         }
         else { //if we completed a delay
             if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
@@ -423,7 +421,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             }
             else {
                 UnityEngine.AI.NavMesh.Raycast(unit.Agent.Agent.transform.position, position, out hit, 1);
-                position = hit.position;
+                position = GameFunctions.adjustForTowers(hit.position, radius);
             }
             distance = Vector3.Distance(position, abilityPreviewCanvas.transform.position);
 
@@ -460,9 +458,9 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 position = hit.position;
             }
 
-            fireMousePosition = position;
             previewTransform.position = position;
         }  
+        fireMousePosition = position;
     }
 
     private void AdjustCALPreview(GameObject preview, CreateAtLocation cal, Vector3 position, Vector3 direction) {

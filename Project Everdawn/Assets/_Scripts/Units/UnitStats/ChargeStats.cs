@@ -44,7 +44,7 @@ public class ChargeStats
 
     public void UpdateChargeStats() {
         if(charges) {
-            if(unit.IsMoving && !isCharging && unit.Stats.CanAct) {
+            if(unit.IsMoving && !unit.Stats.IsAttacking && !isCharging && unit.Stats.CanAct) {
                 if(currentDelay < chargeDelay) 
                     currentDelay += Time.deltaTime * unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
                 else {
@@ -81,6 +81,8 @@ public class ChargeStats
                 GameFunctions.Attack(damageable, chargeDamage);
                 unit.Stats.ApplyAffects(damageable);
             }
+            unit.Stats.Appear((unit as Component).gameObject, unit.ShadowStats, unit.Agent);
+            unit.Stats.CurrAttackDelay = 0;
         }
     }
 }

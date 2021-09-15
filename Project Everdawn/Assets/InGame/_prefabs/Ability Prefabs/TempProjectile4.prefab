@@ -147,7 +147,7 @@ MonoBehaviour:
     poisonDuration: 6
     poisonTick: 0.5
   knockbackStats:
-    canKnockback: 1
+    canKnockback: 0
     knockbackDuration: 1.5
     initialSpeed: 20
   pullStats:
@@ -188,6 +188,26 @@ MonoBehaviour:
     summonPreview: {fileID: 4409346719447776896, guid: 545779cf297333045a5ad086e79fd511, type: 3}
     timeToSummon: 6
     currentSummonTime: 0
+  applyResistanceStats:
+    applyToSelf: 0
+    resistDamage: 0
+    rdDuration: 0
+    untargetable: 0
+    rtDuration: 0
+    resistFreeze: 0
+    rfDuration: 0
+    resistSlow: 0
+    rsDuration: 0
+    resistRoot: 0
+    rrDuration: 0
+    resistPoison: 0
+    rpDuration: 0
+    resistKnockback: 0
+    rkDuration: 0
+    resistGrab: 0
+    rgDuration: 0
+    resistPull: 0
+    rpullDuration: 0
   chosenTarget: {fileID: 0}
 --- !u!54 &1224647179923901248
 Rigidbody:

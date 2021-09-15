@@ -6,6 +6,8 @@ using UnityEngine.UI;
 [System.Serializable]
 public class SummoningSicknessUI
 {
+    private IDamageable unit;
+
     [Tooltip("Determines how long a unit will be able to act after its summonProtectionDelay is up")]
     [SerializeField]
     private float summonSicknessDelay;
@@ -16,6 +18,10 @@ public class SummoningSicknessUI
     [Tooltip("Determines how long a unit will be undamageable and untargetable when summoned")]
     [SerializeField]
     private float summonProtectionDelay;
+
+    //[Tooltip("Keeps the unit ")]
+    //[SerializeField]
+    //private float stayUntargetable;
 
     [SerializeField]
     private Canvas sSCanvas;
@@ -28,7 +34,7 @@ public class SummoningSicknessUI
 
     public bool SummonProtection
     {
-        get { if(summonProtectionDelay > 0) return true;
+        get { if(summonProtectionDelay < 0) return true;
               else return false; }
     }
 
@@ -45,12 +51,19 @@ public class SummoningSicknessUI
               else return true; }
     }
 
+    public void StartStats(GameObject go) {
+        unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+        if(summonSicknessDelay > 0)
+            unit.Agent.HitBox.enabled = false;
+    }
+
     public void UpdateStats() {
         if(summonProtectionDelay > 0) {
             sSCanvas.enabled = false;
             summonProtectionDelay -= Time.deltaTime;
         }
         else if(currSummonSicknessDelay < summonSicknessDelay) {
+            unit.Agent.HitBox.enabled = true;
             sSCanvas.enabled = true;
             currSummonSicknessDelay += Time.deltaTime;
             sSMask.fillAmount = 1 - PercentReady;

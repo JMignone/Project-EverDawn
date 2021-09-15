@@ -239,13 +239,6 @@ public class Projectile : MonoBehaviour, IAbility
         return 1; //1 represents the 'walkable' area
     }
 
-    /*public Vector3 Target() {
-        if(chosenTarget != null)
-            return chosenTarget.transform.position;
-        else
-            return targetLocation;
-    }*/
-
     private void Start() {
         hitBox.radius = radius;
         StartStats();

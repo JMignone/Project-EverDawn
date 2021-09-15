@@ -64,10 +64,8 @@ public class GameManager : MonoBehaviour
                     (component as IDamageable).HitTargets.Remove(objectToRemove);    //remove it from their possible targets
                     if((component as IDamageable).Target == objectToRemove)          //if an object has this now dead unit as a target ...
                         (component as IDamageable).Target = null;                    //make target null
-                    if((component as IDamageable).InRangeTargets.Contains(objectToRemove)) {
-                        (component as IDamageable).InRange--;
+                    if((component as IDamageable).InRangeTargets.Contains(objectToRemove))
                         (component as IDamageable).InRangeTargets.Remove(objectToRemove); 
-                    }
                 }
             }
         }
@@ -99,8 +97,8 @@ public class GameManager : MonoBehaviour
                     (component as IDamageable).HitTargets.Remove(objectToRemove);    //remove it from their possible targets
                     if((component as IDamageable).Target == objectToRemove)          //if an object has this now dead unit as a target ...
                         (component as IDamageable).Target = null;                    //make target null
-                    if( Vector3.Distance(objectToRemovePosition, new Vector3(go.transform.GetChild(0).position.x, 0, go.transform.GetChild(0).position.z)) <= ((component as IDamageable).Stats.Range + objectToRemoveAgent.HitBox.radius) ) //If the unit that died is within range
-                        (component as IDamageable).InRange--;
+                    if((component as IDamageable).InRangeTargets.Contains(objectToRemove))
+                        (component as IDamageable).InRangeTargets.Remove(objectToRemove); 
                 }
             }
         }

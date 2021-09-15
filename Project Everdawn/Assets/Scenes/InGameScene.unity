@@ -5187,13 +5187,12 @@ MonoBehaviour:
   agent: {fileID: 191223123}
   unitSprite: {fileID: 2093067392}
   target: {fileID: 0}
-  inRange: 0
   stats:
     currHealth: 1000
     maxHealth: 1000
     healthDecay: 0
     range: 6.5
-    visionRange: 20
+    visionRange: 38.48
     baseDamage: 8
     attackDelay: 4
     currAttackDelay: 0
@@ -5272,6 +5271,8 @@ MonoBehaviour:
         currentPullDelay: 0
         currentStunDelay: 0
       resistStats:
+        resistedDamage: 0
+        resistedTarget: 0
         resistedFreeze: 0
         resistedSlow: 0
         resistedRoot: 0
@@ -5290,8 +5291,13 @@ MonoBehaviour:
     charges: 1
     isCharging: 0
     chargeDamage: 200
-    chargeSpeed: 20
-    chargeDelay: 3
+    chargeSpeed: 30
+    chargeDelay: 1
+    currentDelay: 0
+  shadowStats:
+    shades: 1
+    interruptsByDamage: 1
+    shadeDelay: 3
     currentDelay: 0
   hitTargets: []
   inRangeTargets: []
@@ -5876,7 +5882,6 @@ MonoBehaviour:
   agent: {fileID: 561815900}
   unitSprite: {fileID: 2137932696}
   target: {fileID: 0}
-  inRange: 0
   stats:
     currHealth: 500
     maxHealth: 500
@@ -5961,6 +5966,8 @@ MonoBehaviour:
         currentPullDelay: 0
         currentStunDelay: 0
       resistStats:
+        resistedDamage: 0
+        resistedTarget: 0
         resistedFreeze: 0
         resistedSlow: 0
         resistedRoot: 0
@@ -5968,6 +5975,11 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+  shadowStats:
+    shades: 0
+    interruptsByDamage: 0
+    shadeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -6038,7 +6050,6 @@ MonoBehaviour:
   agent: {fileID: 808605434}
   unitSprite: {fileID: 502710458}
   target: {fileID: 0}
-  inRange: 0
   stats:
     currHealth: 500
     maxHealth: 500
@@ -6123,6 +6134,8 @@ MonoBehaviour:
         currentPullDelay: 0
         currentStunDelay: 0
       resistStats:
+        resistedDamage: 0
+        resistedTarget: 0
         resistedFreeze: 0
         resistedSlow: 0
         resistedRoot: 0
@@ -6130,6 +6143,11 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+  shadowStats:
+    shades: 0
+    interruptsByDamage: 0
+    shadeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -7217,7 +7235,6 @@ MonoBehaviour:
   agent: {fileID: 1010337153}
   unitSprite: {fileID: 1958020742}
   target: {fileID: 0}
-  inRange: 0
   stats:
     currHealth: 500
     maxHealth: 500
@@ -7302,6 +7319,8 @@ MonoBehaviour:
         currentPullDelay: 0
         currentStunDelay: 0
       resistStats:
+        resistedDamage: 0
+        resistedTarget: 0
         resistedFreeze: 0
         resistedSlow: 0
         resistedRoot: 0
@@ -7322,6 +7341,11 @@ MonoBehaviour:
     chargeDamage: 0
     chargeSpeed: 0
     chargeDelay: 0
+    currentDelay: 0
+  shadowStats:
+    shades: 0
+    interruptsByDamage: 0
+    shadeDelay: 0
     currentDelay: 0
   hitTargets: []
   inRangeTargets: []
@@ -14594,14 +14618,26 @@ MonoBehaviour:
   - 0.2
   - 0
   currentDelay: 0
-  resistEffects:
+  applyResistanceStats:
+    applyToSelf: 0
+    resistDamage: 0
+    rdDuration: 0
+    untargetable: 0
+    rtDuration: 0
     resistFreeze: 0
+    rfDuration: 0
     resistSlow: 0
+    rsDuration: 0
     resistRoot: 0
+    rrDuration: 0
     resistPoison: 0
+    rpDuration: 0
     resistKnockback: 0
+    rkDuration: 0
     resistGrab: 0
+    rgDuration: 0
     resistPull: 0
+    rpullDuration: 0
   abilityUI:
     cooldownDelay: 2
     currCooldownDelay: 0.4
@@ -14634,14 +14670,26 @@ MonoBehaviour:
   - 0.3
   - 0
   currentDelay: 0
-  resistEffects:
+  applyResistanceStats:
+    applyToSelf: 0
+    resistDamage: 0
+    rdDuration: 0
+    untargetable: 0
+    rtDuration: 0
     resistFreeze: 0
+    rfDuration: 0
     resistSlow: 0
+    rsDuration: 0
     resistRoot: 0
+    rrDuration: 0
     resistPoison: 0
+    rpDuration: 0
     resistKnockback: 0
+    rkDuration: 0
     resistGrab: 0
+    rgDuration: 0
     resistPull: 0
+    rpullDuration: 0
   abilityUI:
     cooldownDelay: 5
     currCooldownDelay: 5
@@ -15355,7 +15403,6 @@ MonoBehaviour:
   agent: {fileID: 829696482}
   unitSprite: {fileID: 1315974520}
   target: {fileID: 0}
-  inRange: 0
   stats:
     currHealth: 500
     maxHealth: 500
@@ -15440,6 +15487,8 @@ MonoBehaviour:
         currentPullDelay: 0
         currentStunDelay: 0
       resistStats:
+        resistedDamage: 0
+        resistedTarget: 0
         resistedFreeze: 0
         resistedSlow: 0
         resistedRoot: 0
@@ -15447,6 +15496,11 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+  shadowStats:
+    shades: 0
+    interruptsByDamage: 0
+    shadeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -18311,7 +18365,6 @@ MonoBehaviour:
   agent: {fileID: 1574630170}
   unitSprite: {fileID: 781495024}
   target: {fileID: 0}
-  inRange: 0
   stats:
     currHealth: 500
     maxHealth: 500
@@ -18396,6 +18449,8 @@ MonoBehaviour:
         currentPullDelay: 0
         currentStunDelay: 0
       resistStats:
+        resistedDamage: 0
+        resistedTarget: 0
         resistedFreeze: 0
         resistedSlow: 0
         resistedRoot: 0
@@ -18429,6 +18484,11 @@ MonoBehaviour:
     chargeDamage: 0
     chargeSpeed: 0
     chargeDelay: 0
+    currentDelay: 0
+  shadowStats:
+    shades: 0
+    interruptsByDamage: 0
+    shadeDelay: 0
     currentDelay: 0
   hitTargets: []
   inRangeTargets: []
@@ -18498,7 +18558,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1139660075
 GameObject:
@@ -19302,7 +19362,6 @@ MonoBehaviour:
   agent: {fileID: 1536723289}
   unitSprite: {fileID: 478127564}
   target: {fileID: 0}
-  inRange: 0
   stats:
     currHealth: 1000
     maxHealth: 1000
@@ -19387,6 +19446,8 @@ MonoBehaviour:
         currentPullDelay: 0
         currentStunDelay: 0
       resistStats:
+        resistedDamage: 0
+        resistedTarget: 0
         resistedFreeze: 0
         resistedSlow: 0
         resistedRoot: 0
@@ -19394,6 +19455,11 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+  shadowStats:
+    shades: 0
+    interruptsByDamage: 0
+    shadeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -20704,14 +20770,26 @@ MonoBehaviour:
   - 0.1
   - 0.5
   currentDelay: 0
-  resistEffects:
-    resistFreeze: 1
-    resistSlow: 1
-    resistRoot: 1
-    resistPoison: 1
-    resistKnockback: 1
-    resistGrab: 1
-    resistPull: 1
+  applyResistanceStats:
+    applyToSelf: 0
+    resistDamage: 0
+    rdDuration: 0
+    untargetable: 0
+    rtDuration: 0
+    resistFreeze: 0
+    rfDuration: 0
+    resistSlow: 0
+    rsDuration: 0
+    resistRoot: 0
+    rrDuration: 0
+    resistPoison: 0
+    rpDuration: 0
+    resistKnockback: 0
+    rkDuration: 0
+    resistGrab: 0
+    rgDuration: 0
+    resistPull: 0
+    rpullDuration: 0
   abilityUI:
     cooldownDelay: 1
     currCooldownDelay: 1
@@ -20744,14 +20822,26 @@ MonoBehaviour:
   - 0
   - 0.25
   currentDelay: 0
-  resistEffects:
+  applyResistanceStats:
+    applyToSelf: 0
+    resistDamage: 0
+    rdDuration: 0
+    untargetable: 0
+    rtDuration: 0
     resistFreeze: 0
+    rfDuration: 0
     resistSlow: 0
+    rsDuration: 0
     resistRoot: 0
+    rrDuration: 0
     resistPoison: 0
+    rpDuration: 0
     resistKnockback: 0
+    rkDuration: 0
     resistGrab: 0
+    rgDuration: 0
     resistPull: 0
+    rpullDuration: 0
   abilityUI:
     cooldownDelay: 5
     currCooldownDelay: 5
@@ -21190,7 +21280,6 @@ MonoBehaviour:
   agent: {fileID: 997561210}
   unitSprite: {fileID: 2075605732}
   target: {fileID: 0}
-  inRange: 0
   stats:
     currHealth: 3000
     maxHealth: 3000
@@ -21200,7 +21289,7 @@ MonoBehaviour:
     baseDamage: 10
     attackDelay: 2
     currAttackDelay: 0
-    moveSpeed: 6
+    moveSpeed: 0
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 0.5
@@ -21275,6 +21364,8 @@ MonoBehaviour:
         currentPullDelay: 0
         currentStunDelay: 0
       resistStats:
+        resistedDamage: 0
+        resistedTarget: 0
         resistedFreeze: 0
         resistedSlow: 0
         resistedRoot: 0
@@ -21298,6 +21389,11 @@ MonoBehaviour:
     chargeDamage: 100
     chargeSpeed: 20
     chargeDelay: 0.5
+    currentDelay: 0
+  shadowStats:
+    shades: 0
+    interruptsByDamage: 0
+    shadeDelay: 0
     currentDelay: 0
   hitTargets: []
   inRangeTargets: []
@@ -24361,7 +24457,6 @@ MonoBehaviour:
   agent: {fileID: 558896014}
   unitSprite: {fileID: 2102655990}
   target: {fileID: 0}
-  inRange: 0
   rotates: 0
   buildingType: 1
   buildingSize: 0
@@ -24449,6 +24544,8 @@ MonoBehaviour:
         currentPullDelay: 0
         currentStunDelay: 0
       resistStats:
+        resistedDamage: 0
+        resistedTarget: 0
         resistedFreeze: 0
         resistedSlow: 0
         resistedRoot: 0
@@ -24464,6 +24561,11 @@ MonoBehaviour:
     continueType: 0
     abilityPrefabs: []
     abilityDelays: []
+    currentDelay: 0
+  shadowStats:
+    shades: 0
+    interruptsByDamage: 0
+    shadeDelay: 0
     currentDelay: 0
   hitTargets: []
   inRangeTargets: []
@@ -28788,7 +28890,6 @@ MonoBehaviour:
   agent: {fileID: 916711975}
   unitSprite: {fileID: 856313650}
   target: {fileID: 0}
-  inRange: 0
   stats:
     currHealth: 1000
     maxHealth: 1000
@@ -28873,6 +28974,8 @@ MonoBehaviour:
         currentPullDelay: 0
         currentStunDelay: 0
       resistStats:
+        resistedDamage: 0
+        resistedTarget: 0
         resistedFreeze: 0
         resistedSlow: 0
         resistedRoot: 0
@@ -28893,6 +28996,11 @@ MonoBehaviour:
     chargeDamage: 0
     chargeSpeed: 0
     chargeDelay: 0
+    currentDelay: 0
+  shadowStats:
+    shades: 0
+    interruptsByDamage: 0
+    shadeDelay: 0
     currentDelay: 0
   hitTargets: []
   inRangeTargets: []
@@ -29146,7 +29254,6 @@ MonoBehaviour:
   agent: {fileID: 1450361169}
   unitSprite: {fileID: 688873988}
   target: {fileID: 0}
-  inRange: 0
   stats:
     currHealth: 1000
     maxHealth: 1000
@@ -29231,6 +29338,8 @@ MonoBehaviour:
         currentPullDelay: 0
         currentStunDelay: 0
       resistStats:
+        resistedDamage: 0
+        resistedTarget: 0
         resistedFreeze: 0
         resistedSlow: 0
         resistedRoot: 0
@@ -29238,6 +29347,11 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+  shadowStats:
+    shades: 0
+    interruptsByDamage: 0
+    shadeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -29661,7 +29775,6 @@ MonoBehaviour:
   agent: {fileID: 1403972040}
   unitSprite: {fileID: 158509298}
   target: {fileID: 0}
-  inRange: 0
   stats:
     currHealth: 500
     maxHealth: 500
@@ -29746,6 +29859,8 @@ MonoBehaviour:
         currentPullDelay: 0
         currentStunDelay: 0
       resistStats:
+        resistedDamage: 0
+        resistedTarget: 0
         resistedFreeze: 0
         resistedSlow: 0
         resistedRoot: 0
@@ -29753,6 +29868,11 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+  shadowStats:
+    shades: 0
+    interruptsByDamage: 0
+    shadeDelay: 0
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []

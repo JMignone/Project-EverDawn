@@ -60,15 +60,9 @@ public class BaseStats
 
     private bool isHoveringAbility;
     private bool isCastingAbility;
-    private bool isAttacking;
-
-    public bool Targetable {
-        get { return !summoningSicknessUI.SummonProtection; }
-    }
-
-    public bool Damageable {
-        get { return !summoningSicknessUI.SummonProtection; }
-    }
+    private bool isFiring; //firing is if a unit is attacking through the attackstats, shooting projectiles
+    private bool isAttacking; //attacking is if the unit attacks in the normal method
+    private bool isShadow;
 
     public float PercentHealth {
         get { return currHealth/maxHealth; }
@@ -136,6 +130,11 @@ public class BaseStats
     {
         get { return rotationSpeed; }
         set { rotationSpeed = value; }
+    }
+
+    public SummoningSicknessUI SummoningSicknessUI
+    {
+        get { return summoningSicknessUI; }
     }
 
     public Image HealthBar
@@ -219,10 +218,29 @@ public class BaseStats
         set { isCastingAbility = value; }
     }
 
+    public bool IsFiring
+    {
+        get { return isFiring; }
+        set { isFiring = value; }
+    }
+
     public bool IsAttacking
     {
-        get { return isAttacking; }
-        set { isAttacking = value; }
+        get { return isAttacking || isFiring; }
+    }
+
+    public bool IsShadow
+    {
+        get { return isShadow; }
+        set { isShadow = value; }
+    }
+
+    public bool Targetable {
+        get { return !isShadow; }
+    }
+
+    public bool Damageable {
+        get { return !summoningSicknessUI.SummonProtection && !effectStats.ResistStats.ResistedDamage; }
     }
 
     public bool IsReady { get { return summoningSicknessUI.IsReady; } }
@@ -267,8 +285,8 @@ public class BaseStats
             bool inVision = false;
             if(target != null)
                 inVision = hitTargets.Contains(target);       
-            if( ( inRange > 0 || (currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && inVision) ) && CanAct && !IsCastingAbility && !isAttacking) { //if target is inRange, or the attack is nearly ready and their within vision AND not stunned
-                
+            if( ( inRange > 0 || (currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && inVision) ) && CanAct && !IsCastingAbility && !isFiring) { //if target is inRange, or the attack is nearly ready and their within vision AND not stunned
+                isAttacking = true;
                 if(target != null) {
                     Vector3 directionToTarget = unitAgent.transform.position - target.transform.GetChild(0).position;
                     directionToTarget.y = 0; // Ignore Y, usful for airborne units
@@ -291,12 +309,15 @@ public class BaseStats
                         currAttackDelay += Time.deltaTime * effectStats.SlowedStats.CurrentSlowIntensity;
                 }
             }
-            else if(inVision && !IsCastingAbility && !isAttacking) { //if the target is within vision
+            else if(inVision && !IsCastingAbility && !isFiring) { //if the target is within vision
+                isAttacking = false;
                 if(currAttackDelay < attackDelay*GameConstants.ATTACK_CHARGE_LIMITER) 
                     currAttackDelay += Time.deltaTime * effectStats.SlowedStats.CurrentSlowIntensity;
             }
-            else 
+            else {
+                isAttacking = false;
                 currAttackDelay = 0;
+            }
         }
     }
 
@@ -311,11 +332,13 @@ public class BaseStats
         }
         HealthBar.fillAmount = PercentHealth;
 
+        if(indicatorNum > 0 && Damageable)
+            abilityIndicator.enabled = true;
+        else
+            abilityIndicator.enabled = false;
+
         summoningSicknessUI.UpdateStats();
-        effectStats.FrozenStats.UpdateFrozenStats();
-        effectStats.SlowedStats.UpdateSlowedStats();
-        effectStats.PoisonedStats.UpdatePoisonedStats();
-        effectStats.RootedStats.UpdateRootedStats();
+        EffectStats.UpdateStats();
 
         if(IsReady) {
             if(healthDecay > 0)
@@ -327,6 +350,59 @@ public class BaseStats
             else
                 currAttackDelay = 0;
         }
+    }
+
+    public void Vanish(GameObject unit, GameObject[] enemyHitTargets) {
+        if(!isShadow) {
+            isShadow = true;
+            foreach(GameObject go in enemyHitTargets) {
+                Component targetComponent = go.GetComponent(typeof(IDamageable));
+                if(targetComponent) {
+                    (targetComponent as IDamageable).SetTarget(null);
+                    if((targetComponent as IDamageable).InRangeTargets.Contains(unit))
+                        (targetComponent as IDamageable).InRangeTargets.Remove(unit);
+                    if((targetComponent as IDamageable).HitTargets.Contains(unit))
+                        (targetComponent as IDamageable).HitTargets.Remove(unit);
+                }
+            }
+            //make unit transparent
+        }
+    }
+
+    public void Appear(GameObject unit, ShadowStats stats, Actor3D unitAgent) {
+        if(isShadow) {
+            isShadow = false;
+            Collider[] colliders = Physics.OverlapSphere(unitAgent.transform.position, unitAgent.Agent.radius);
+            foreach(Collider collider in colliders) {
+                Component enemy = collider.transform.parent.parent.GetComponent(typeof(IDamageable));
+                if(enemy) {
+                    if(!enemy.CompareTag(unit.tag) && collider.CompareTag("Vision")) { //Are we in their vision detection object?
+                        if(!(enemy as IDamageable).HitTargets.Contains(unit))
+                            (enemy as IDamageable).HitTargets.Add(unit);
+                    }
+                }
+            }
+            colliders = Physics.OverlapSphere(unitAgent.transform.position, unitAgent.Agent.radius);
+            foreach(Collider collider in colliders) {
+                Component enemy = collider.transform.parent.parent.GetComponent(typeof(IDamageable));
+                if(enemy) {
+                    if(!enemy.CompareTag(unit.tag) && collider.CompareTag("Range")) {
+                        if(GameFunctions.CanAttack(enemy.tag, unit.tag, unit.GetComponent(typeof(IDamageable)), (enemy as IDamageable).Stats)) { //only if the unit can actually target this one should we adjust this value
+                            if(!(enemy as IDamageable).InRangeTargets.Contains(unit))
+                                (enemy as IDamageable).InRangeTargets.Add(unit);
+                            if( ((enemy as IDamageable).InRangeTargets.Count == 1 || (enemy as IDamageable).Target == null) && (enemy as IDamageable).Stats.CanAct) { //we need this block here as well as stay in the case that a unit is placed inside a units range
+                                GameObject go = GameFunctions.GetNearestTarget((enemy as IDamageable).HitTargets, collider.transform.parent.parent.tag, (enemy as IDamageable).Stats);
+                                if(go != null)
+                                    (enemy as IDamageable).SetTarget(go);
+                            }
+                        }
+                    }
+                }
+            }
+            //make unit appear
+        }
+        else
+            stats.CurrentDelay = 0;
     }
 
     public void ApplyAffects(Component damageable) {

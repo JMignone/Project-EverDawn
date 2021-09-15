@@ -362,6 +362,22 @@ MonoBehaviour:
     resistKnockback: 1
     resistGrab: 1
     resistPull: 1
+  applyResistanceStats:
+    applyToSelf: 0
+    resistFreeze: 0
+    rfDuration: 0
+    resistSlow: 0
+    rsDuration: 0
+    resistRoot: 0
+    rrDuration: 0
+    resistPoison: 0
+    rpDuration: 0
+    resistKnockback: 0
+    rkDuration: 0
+    resistGrab: 0
+    rgDuration: 0
+    resistPull: 0
+    rpullDuration: 0
   chosenTarget: {fileID: 0}
   passObstacles: 1
 --- !u!54 &7745593707573550161

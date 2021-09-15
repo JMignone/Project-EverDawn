@@ -13,7 +13,7 @@ public class GroupUnit : MonoBehaviour, IDamageable
     private Actor3D agent;
     private Actor2D unitSprite;
     private GameObject target;
-    private int inRange;
+    private ShadowStats shadowStats;
     private List<GameObject> hitTargets;
     private List<GameObject> inRangeTargets;
     private List<GameObject> enemyHitTargets;
@@ -46,12 +46,6 @@ public class GroupUnit : MonoBehaviour, IDamageable
         set { target = value; }
     }
 
-    public int InRange
-    {
-        get { return inRange; }
-        set { inRange = value; }
-    }
-
     public List<GameObject> HitTargets
     {
         get { return hitTargets; }
@@ -77,6 +71,11 @@ public class GroupUnit : MonoBehaviour, IDamageable
     {
         get { return isCastingAbility; }
         set { isCastingAbility = value; }
+    }
+
+    public ShadowStats ShadowStats
+    {
+        get { return shadowStats; }
     }
 
     public bool IsMoving

@@ -15,9 +15,6 @@ public class Building : MonoBehaviour, IDamageable
     private GameObject target;
 
     [SerializeField]
-    private int inRange;
-
-    [SerializeField]
     private bool rotates;
     
     [SerializeField]
@@ -34,6 +31,9 @@ public class Building : MonoBehaviour, IDamageable
 
     [SerializeField]
     private AttackStats attackStats;
+
+    [SerializeField]
+    private ShadowStats shadowStats;
 
     [SerializeField]
     private List<GameObject> hitTargets;
@@ -60,12 +60,6 @@ public class Building : MonoBehaviour, IDamageable
     {
         get { return target; }
         set { target = value; }
-    }
-
-    public int InRange
-    {
-        get { return inRange; }
-        set { inRange = value; }
     }
 
     public bool Rotates
@@ -98,6 +92,11 @@ public class Building : MonoBehaviour, IDamageable
         get { return attackStats; }
     }
 
+    public ShadowStats ShadowStats
+    {
+        get { return shadowStats; }
+    }
+
     public List<GameObject> HitTargets
     {
         get { return hitTargets; }
@@ -120,8 +119,10 @@ public class Building : MonoBehaviour, IDamageable
 
     private void Start()
     {
+        stats.SummoningSicknessUI.StartStats(gameObject);
         stats.EffectStats.StartStats(gameObject);
         attackStats.StartAttackStats(gameObject);
+        shadowStats.StartShadowStats(gameObject);
         
         stats.IsHoveringAbility = false;
         stats.AbilityIndicator.enabled = false;
@@ -134,19 +135,20 @@ public class Building : MonoBehaviour, IDamageable
         if(stats.CurrHealth > 0) {
             if(buildingType == GameConstants.BUILDING_TYPE.SPAWN) {
                 stats.UpdateBuildingStats();
+                shadowStats.UpdateShadowStats();
                 Spawn();
             }
             else if(buildingType == GameConstants.BUILDING_TYPE.ATTACK) {
-                if((target == null || inRange == 0) && stats.CanAct && !stats.IsCastingAbility) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
+                if((target == null || inRangeTargets.Count == 0) && stats.CanAct && !stats.IsCastingAbility) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                     ReTarget();
 
-                stats.UpdateStats(inRange, agent, hitTargets, target);
-                agent.Agent.speed = stats.MoveSpeed;
+                stats.UpdateStats(inRangeTargets.Count, agent, hitTargets, target);
+                shadowStats.UpdateShadowStats();
                 Attack();
 
                 if(target != null && !attackStats.IsFiring && rotates) {
                     if(hitTargets.Contains(target)) {
-                        if(inRange > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) //is in range, OR is 90% thru attack cycle -
+                        if(inRangeTargets.Count > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) //is in range, OR is 90% thru attack cycle -
                             lookAtTarget();
                     }
                 }
@@ -195,6 +197,7 @@ public class Building : MonoBehaviour, IDamageable
                                 GameFunctions.Attack(damageable, stats.BaseDamage);
                                 stats.ApplyAffects(damageable);
                             }
+                            stats.Appear(gameObject, shadowStats, agent);
                             stats.CurrAttackDelay = 0;
                         }
                     }
@@ -260,10 +263,9 @@ public class Building : MonoBehaviour, IDamageable
                     //Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                     if(other.CompareTag("Range")) {//Are we in their range detection object?
                         if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) { //only if the unit can actually target this one should we adjust this value
-                            (unit as IDamageable).InRange++;
                             if(!(unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Add(gameObject);
-                            if(((unit as IDamageable).InRange == 1 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct) {
+                            if(((unit as IDamageable).InRangeTargets.Count == 1 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct) {
                                 GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
                                 if(go != null)
                                     (unit as IDamageable).SetTarget(go);
@@ -295,7 +297,6 @@ public class Building : MonoBehaviour, IDamageable
                     //Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                     if(other.CompareTag("Range")) { //Are we in their Range detection object?
                         if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
-                            (unit as IDamageable).InRange--;
                             if((unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Remove(gameObject);
                             if((unit as IDamageable).Target == gameObject)
@@ -315,5 +316,7 @@ public class Building : MonoBehaviour, IDamageable
 
     void IDamageable.TakeDamage(float amount) {
         stats.CurrHealth -= amount;
+        if(shadowStats.InterruptsByDamage)
+            stats.Appear(gameObject, shadowStats, agent);
     }
 }

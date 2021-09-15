@@ -122,6 +122,10 @@ MonoBehaviour:
     resistPull: 0
   applyResistanceStats:
     applyToSelf: 0
+    resistDamage: 0
+    rdDuration: 0
+    untargetable: 0
+    rtDuration: 0
     resistFreeze: 0
     rfDuration: 5
     resistSlow: 0

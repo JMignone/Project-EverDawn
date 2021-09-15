@@ -3,10 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ApplyResistanceStats
+public class ApplyResistanceStats //this type of resistance persists for a given duration
 {
     [SerializeField]
     private bool applyToSelf;
+
+    [SerializeField]
+    private bool resistDamage;
+    [SerializeField]
+    private float rdDuration;
+
+    [SerializeField]
+    private bool untargetable;
+    [SerializeField]
+    private float rtDuration;
 
     [SerializeField]
     private bool resistFreeze;
@@ -45,6 +55,10 @@ public class ApplyResistanceStats
 
     public void StartResistance(IDamageable unit) {
         if(applyToSelf) {
+            if(resistDamage)
+                unit.Stats.EffectStats.ResistStats.ResistDamage(rdDuration);
+            if(untargetable)
+                unit.Stats.EffectStats.ResistStats.ResistTarget(rtDuration);
             if(resistFreeze)
                 unit.Stats.EffectStats.ResistStats.ResistFreeze(rfDuration);
             if(resistSlow)
@@ -63,6 +77,10 @@ public class ApplyResistanceStats
     }
 
     public void ApplyResistance(IDamageable unit) {
+        if(resistDamage)
+            unit.Stats.EffectStats.ResistStats.ResistDamage(rdDuration);
+        if(untargetable)
+                unit.Stats.EffectStats.ResistStats.ResistTarget(rtDuration);
         if(resistFreeze)
             unit.Stats.EffectStats.ResistStats.ResistFreeze(rfDuration);
         if(resistSlow)

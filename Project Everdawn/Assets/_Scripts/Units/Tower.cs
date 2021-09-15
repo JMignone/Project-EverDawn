@@ -15,10 +15,10 @@ public class Tower : MonoBehaviour, IDamageable
     protected GameObject target;
 
     [SerializeField]
-    protected int inRange;
+    protected BaseStats stats;
 
     [SerializeField]
-    protected BaseStats stats;
+    private ShadowStats shadowStats;
 
     [SerializeField]
     protected List<GameObject> hitTargets;
@@ -49,12 +49,6 @@ public class Tower : MonoBehaviour, IDamageable
         set { target = value; }
     }
 
-    public int InRange
-    {
-        get { return inRange; }
-        set { inRange = value; }
-    }
-
     public BaseStats Stats 
     {
         get { return stats; }
@@ -73,6 +67,11 @@ public class Tower : MonoBehaviour, IDamageable
     public List<GameObject> EnemyHitTargets
     {
         get { return enemyHitTargets; }
+    }
+
+    public ShadowStats ShadowStats
+    {
+        get { return shadowStats; }
     }
 
     public bool IsMoving
@@ -102,14 +101,14 @@ public class Tower : MonoBehaviour, IDamageable
     protected virtual void Update()
     {
         if(stats.CurrHealth > 0) {
-            if((target == null || inRange == 0) && stats.CanAct) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
+            if((target == null || inRangeTargets.Count == 0) && stats.CanAct) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                 ReTarget();
 
-            stats.UpdateStats(inRange, agent, hitTargets, target);
+            stats.UpdateStats(inRangeTargets.Count, agent, hitTargets, target);
             Attack();
 
             if(stats.CanAct) { //if its stunned, we want to keep the tower looking in the same direction
-                if((inRange > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) && target != null) //is in range, OR is 90% thru attack cycle -
+                if((inRangeTargets.Count > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) && target != null) //is in range, OR is 90% thru attack cycle -
                     lookAtTarget();
                 else 
                     resetToCenter();
@@ -129,7 +128,7 @@ public class Tower : MonoBehaviour, IDamageable
 
                 if(damageable) { //is the target damageable
                     if(hitTargets.Contains(target)) {  //this and the above may not be needed, more of a santiy check
-                        if(inRange > 0) {
+                        if(inRangeTargets.Count > 0) {
                             GameFunctions.Attack(damageable, stats.BaseDamage);
                             stats.CurrAttackDelay = 0;
                         }
@@ -176,7 +175,6 @@ public class Tower : MonoBehaviour, IDamageable
                     //Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                     if(other.CompareTag("Range")) {//Are we in their range detection object?
                         //if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) anything can attack a tower, ill leave it hear incase somthing with an ability gives a need for this
-                            (unit as IDamageable).InRange++;
                             if(!(unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Add(gameObject);
                     }
@@ -205,7 +203,6 @@ public class Tower : MonoBehaviour, IDamageable
                     //Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                     if(other.CompareTag("Range")) { //Are we in their Range detection object?
                         //if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
-                            (unit as IDamageable).InRange--;
                             if((unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Remove(gameObject);
                             if((unit as IDamageable).Target == gameObject)

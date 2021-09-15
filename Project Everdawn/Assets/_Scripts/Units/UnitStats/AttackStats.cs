@@ -92,7 +92,7 @@ public class AttackStats
 
     public void BeginFiring() {
         isFiring = true;
-        unit.Stats.IsAttacking = true;
+        unit.Stats.IsFiring = true;
         currentProjectileIndex = 0;
         currentDelay = 0;
         target = (unit.Target.GetComponent(typeof(IDamageable)) as IDamageable);
@@ -101,7 +101,7 @@ public class AttackStats
 
     public void StopFiring() {
         isFiring = false;
-        unit.Stats.IsAttacking = false;
+        unit.Stats.IsFiring = false;
         currentProjectileIndex = 0;
         currentDelay = 0;
         target = null;
@@ -138,6 +138,8 @@ public class AttackStats
             else if(currentProjectileIndex == abilityPrefabs.Count) //if we completed the last delay
                 StopFiring();
             else { //if we completed a delay
+                unit.Stats.Appear((unit as Component).gameObject, unit.ShadowStats, unit.Agent); //if the unit is invisible, make it appear
+
                 if(currentProjectileIndex == 0 && AttacksLocation && !targetDied) 
                     firstTargetLocation = target.Agent.Agent.transform.position;
                 else if(currentProjectileIndex == 0 && AttacksLocation && targetDied)

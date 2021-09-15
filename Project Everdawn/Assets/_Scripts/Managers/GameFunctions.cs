@@ -68,7 +68,7 @@ public static class GameFunctions
                 targetComponent = hitTarget.GetComponent(typeof(IDamageable));
 
                 if(targetComponent) {
-                    if((targetComponent as IDamageable).Stats.Damageable && GameFunctions.CanAttack(tag, hitTarget.tag, targetComponent, stats)) {
+                    if((targetComponent as IDamageable).Stats.Targetable && GameFunctions.CanAttack(tag, hitTarget.tag, targetComponent, stats)) {
                         targetSc = (targetComponent as IDamageable).Stats.DetectionObject;
                         float newDist = Vector3.Distance(stats.DetectionObject.transform.position, targetSc.transform.position);
 
@@ -113,14 +113,19 @@ public static class GameFunctions
         float radius = projectile.Radius;
         bool isGrenade = projectile.GrenadeStats.IsGrenade;
         bool selfDestructs = projectile.SelfDestructStats.SelfDestructs;
-        if(distance > (range - radius))
+        bool isMovement = prefab.GetComponent<Movement>();
+        if(distance > (range - radius)) {
             endPosition = startPosition + (direction.normalized * range);
-        else if(distance < range && !isGrenade && !selfDestructs)
+            if(isMovement)
+                endPosition -= direction.normalized * radius;
+        }
+        else if(distance < range && !isGrenade && !selfDestructs && !isMovement)
             endPosition = startPosition + (direction.normalized * range);
-        if(!prefab.GetComponent<Movement>())
+        if(!isMovement)
             startPosition += direction.normalized * radius;
         else
             endPosition += direction.normalized * radius;
+        
         if(isGrenade && projectile.GrenadeStats.IsAirStrike)
             startPosition = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
         GameObject go = GameObject.Instantiate(prefab, startPosition, targetRotation, GameManager.GetUnitsFolder());

@@ -6,6 +6,14 @@ using UnityEngine;
 public class ResistStats
 {
     [SerializeField]
+    private bool resistedDamage;
+    private float rdDuration;
+
+    [SerializeField]
+    private bool resistedTarget;
+    private float rtDuration;
+
+    [SerializeField]
     private bool resistedFreeze;
     private float rfDuration;
 
@@ -33,7 +41,31 @@ public class ResistStats
     private bool resistedPull;
     private float rpullDuration;
 
-    private Component damageableComponent;
+    private IDamageable unit;
+
+    public bool ResistedDamage
+    {
+        get { return resistedDamage; }
+        set { resistedDamage = value; }
+    }
+
+    public float RdDuration
+    {
+        get { return rdDuration; }
+        set { rdDuration = value; }
+    }
+
+    public bool ResistedTarget
+    {
+        get { return resistedTarget; }
+        set { resistedTarget = value; }
+    }
+
+    public float RtDuration
+    {
+        get { return rtDuration; }
+        set { rtDuration = value; }
+    }
 
     public bool ResistedFreeze
     {
@@ -113,21 +145,37 @@ public class ResistStats
         set { rpullDuration = value; }
     }
     
-    public Component DamageableComponent
+    public IDamageable Unit
     {
-        get { return damageableComponent; }
-        set { damageableComponent = value; }
+        get { return unit; }
+        set { unit = value; }
     }
 
     public void StartResistStats(GameObject go) {
-        damageableComponent = go.GetComponent(typeof(IDamageable));
+        unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+    }
+
+    public void ResistDamage(float duration) {
+        if(!resistedDamage) {
+            resistedDamage = true;
+            rdDuration = duration;
+
+        }
+    }
+
+    public void ResistTarget(float duration) {
+        if(!resistedTarget) {
+            resistedTarget = true;
+            rtDuration = duration;
+            unit.Stats.Vanish((unit as Component).gameObject, unit.EnemyHitTargets.ToArray());
+        }
     }
 
     public void ResistFreeze(float duration) {
         if(!resistedFreeze) {
             resistedFreeze = true;
             rfDuration = duration;
-            (damageableComponent as IDamageable).Stats.EffectStats.FrozenStats.OutSideResistance = true;
+            unit.Stats.EffectStats.FrozenStats.OutSideResistance = true;
         }
     }
 
@@ -135,7 +183,7 @@ public class ResistStats
         if(!resistedSlow) {
             resistedSlow = true;
             rsDuration = duration;
-            (damageableComponent as IDamageable).Stats.EffectStats.SlowedStats.OutSideResistance = true;
+            unit.Stats.EffectStats.SlowedStats.OutSideResistance = true;
         }
     }
 
@@ -143,7 +191,7 @@ public class ResistStats
         if(!resistedRoot) {
             resistedRoot = true;
             rrDuration = duration;
-            (damageableComponent as IDamageable).Stats.EffectStats.RootedStats.OutSideResistance = true;
+            unit.Stats.EffectStats.RootedStats.OutSideResistance = true;
         }
     }
 
@@ -151,7 +199,7 @@ public class ResistStats
         if(!resistedPoison) {
             resistedPoison = true;
             rpDuration = duration;
-            (damageableComponent as IDamageable).Stats.EffectStats.PoisonedStats.OutSideResistance = true;
+            unit.Stats.EffectStats.PoisonedStats.OutSideResistance = true;
         }
     }
 
@@ -159,7 +207,7 @@ public class ResistStats
         if(!resistedKnockback) {
             resistedKnockback = true;
             rkDuration = duration;
-            (damageableComponent as IDamageable).Stats.EffectStats.KnockbackedStats.OutSideResistance = true;
+            unit.Stats.EffectStats.KnockbackedStats.OutSideResistance = true;
         }
     }
 
@@ -167,7 +215,7 @@ public class ResistStats
         if(!resistedGrab) {
             resistedGrab = true;
             rgDuration = duration;
-            (damageableComponent as IDamageable).Stats.EffectStats.GrabbedStats.OutSideResistance = true;
+            unit.Stats.EffectStats.GrabbedStats.OutSideResistance = true;
         }
     }
 
@@ -175,17 +223,31 @@ public class ResistStats
         if(!resistedPull) {
             resistedPull = true;
             rpullDuration = duration;
-            (damageableComponent as IDamageable).Stats.EffectStats.PulledStats.OutSideResistance = true;
+            unit.Stats.EffectStats.PulledStats.OutSideResistance = true;
         }
     }
 
     public void UpdateResistanceStats() {
+        if(resistedDamage) {
+            if(rdDuration > 0)
+                rdDuration -= Time.deltaTime;
+            else
+                resistedDamage = false;
+        }
+        if(resistedTarget) {
+            if(rtDuration > 0)
+                rtDuration -= Time.deltaTime;
+            else {
+                resistedTarget = false;
+                unit.Stats.Appear((unit as Component).gameObject, unit.ShadowStats, unit.Agent);
+            }
+        }
         if(resistedFreeze) {
             if(rfDuration > 0)
                 rfDuration -= Time.deltaTime;
             else {
                 resistedFreeze = false;
-                (damageableComponent as IDamageable).Stats.EffectStats.FrozenStats.OutSideResistance = false;
+                unit.Stats.EffectStats.FrozenStats.OutSideResistance = false;
             }
         }
         if(resistedSlow) {
@@ -193,7 +255,7 @@ public class ResistStats
                 rsDuration -= Time.deltaTime;
             else {
                 resistedSlow = false;
-                (damageableComponent as IDamageable).Stats.EffectStats.SlowedStats.OutSideResistance = false;
+                unit.Stats.EffectStats.SlowedStats.OutSideResistance = false;
             }
         }
         if(resistedRoot) {
@@ -201,7 +263,7 @@ public class ResistStats
                 rrDuration -= Time.deltaTime;
             else {
                 resistedRoot = false;
-                (damageableComponent as IDamageable).Stats.EffectStats.RootedStats.OutSideResistance = false;
+                unit.Stats.EffectStats.RootedStats.OutSideResistance = false;
             }
         }
         if(resistedPoison) {
@@ -209,7 +271,7 @@ public class ResistStats
                 rpDuration -= Time.deltaTime;
             else {
                 resistedPoison = false;
-                (damageableComponent as IDamageable).Stats.EffectStats.PoisonedStats.OutSideResistance = false;
+                unit.Stats.EffectStats.PoisonedStats.OutSideResistance = false;
             }
         }
         if(resistedKnockback) {
@@ -217,7 +279,7 @@ public class ResistStats
                 rkDuration -= Time.deltaTime;
             else {
                 resistedKnockback = false;
-                (damageableComponent as IDamageable).Stats.EffectStats.KnockbackedStats.OutSideResistance = false;
+                unit.Stats.EffectStats.KnockbackedStats.OutSideResistance = false;
             }
         }
         if(resistedGrab) {
@@ -225,7 +287,7 @@ public class ResistStats
                 rgDuration -= Time.deltaTime;
             else {
                 resistedGrab = false;
-                (damageableComponent as IDamageable).Stats.EffectStats.GrabbedStats.OutSideResistance = false;
+                unit.Stats.EffectStats.GrabbedStats.OutSideResistance = false;
             }
         }
         if(resistedPull) {
@@ -233,7 +295,7 @@ public class ResistStats
                 rpullDuration -= Time.deltaTime;
             else {
                 resistedPull = false;
-                (damageableComponent as IDamageable).Stats.EffectStats.PulledStats.OutSideResistance = false;
+                unit.Stats.EffectStats.PulledStats.OutSideResistance = false;
             }
         }
     }

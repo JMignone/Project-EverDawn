@@ -9,9 +9,9 @@ public interface IDamageable
     List<GameObject> InRangeTargets { get; }
     List<GameObject> EnemyHitTargets { get; }
     GameObject Target { get; set; }
-    int InRange { get; set; }
     Actor3D Agent { get; }
     Actor2D UnitSprite { get; }
+    ShadowStats ShadowStats { get; }
     bool IsMoving { get; }
 
     void TakeDamage(float amount);

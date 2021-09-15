@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ResistEffects
+public class ResistEffects //this type of resistance persists as long as the projectile is in play
 {
     [SerializeField]
     private bool resistFreeze;
