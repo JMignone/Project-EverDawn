@@ -254,7 +254,7 @@ public class BaseStats
             return effectStats.SlowedStats.CurrentSlowIntensity;
     }
 
-    public void UpdateStats(int inRange, Actor3D unitAgent, List<GameObject> hitTargets, GameObject target) {
+    public void UpdateStats(bool chargeAttack, int inRange, Actor3D unitAgent, List<GameObject> hitTargets, GameObject target) {
         if(PercentHealth == 1) {
             HealthBar.enabled = false;
             HealthBar.transform.GetChild(0).gameObject.SetActive(false); //this is the image border
@@ -285,7 +285,7 @@ public class BaseStats
             bool inVision = false;
             if(target != null)
                 inVision = hitTargets.Contains(target);       
-            if( ( inRange > 0 || (currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && inVision) ) && CanAct && !IsCastingAbility && !isFiring) { //if target is inRange, or the attack is nearly ready and their within vision AND not stunned
+            if( ( inRange > 0 || (currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && inVision) ) && CanAct && !IsCastingAbility && chargeAttack) { //if target is inRange, or the attack is nearly ready and their within vision AND not stunned
                 isAttacking = true;
                 if(target != null) {
                     Vector3 directionToTarget = unitAgent.transform.position - target.transform.GetChild(0).position;
@@ -309,7 +309,7 @@ public class BaseStats
                         currAttackDelay += Time.deltaTime * effectStats.SlowedStats.CurrentSlowIntensity;
                 }
             }
-            else if(inVision && !IsCastingAbility && !isFiring) { //if the target is within vision
+            else if(inVision && !IsCastingAbility && chargeAttack) { //if the target is within vision
                 isAttacking = false;
                 if(currAttackDelay < attackDelay*GameConstants.ATTACK_CHARGE_LIMITER) 
                     currAttackDelay += Time.deltaTime * effectStats.SlowedStats.CurrentSlowIntensity;
@@ -355,6 +355,7 @@ public class BaseStats
     public void Vanish(GameObject unit, GameObject[] enemyHitTargets) {
         if(!isShadow) {
             isShadow = true;
+            indicatorNum = 0;
             foreach(GameObject go in enemyHitTargets) {
                 Component targetComponent = go.GetComponent(typeof(IDamageable));
                 if(targetComponent) {

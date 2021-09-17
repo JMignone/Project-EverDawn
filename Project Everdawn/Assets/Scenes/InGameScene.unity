@@ -5294,6 +5294,14 @@ MonoBehaviour:
     chargeSpeed: 30
     chargeDelay: 1
     currentDelay: 0
+  dashStats:
+    dashes: 0
+    isDashing: 0
+    dashDamage: 0
+    dashSpeed: 0
+    dashRange: 0
+    dashDelay: 0
+    currentDelay: 0
   shadowStats:
     shades: 1
     interruptsByDamage: 1
@@ -5975,11 +5983,6 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
-  shadowStats:
-    shades: 0
-    interruptsByDamage: 0
-    shadeDelay: 0
-    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -6143,11 +6146,6 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
-  shadowStats:
-    shades: 0
-    interruptsByDamage: 0
-    shadeDelay: 0
-    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -7341,6 +7339,14 @@ MonoBehaviour:
     chargeDamage: 0
     chargeSpeed: 0
     chargeDelay: 0
+    currentDelay: 0
+  dashStats:
+    dashes: 0
+    isDashing: 0
+    dashDamage: 0
+    dashSpeed: 0
+    dashRange: 0
+    dashDelay: 0
     currentDelay: 0
   shadowStats:
     shades: 0
@@ -15496,11 +15502,6 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
-  shadowStats:
-    shades: 0
-    interruptsByDamage: 0
-    shadeDelay: 0
-    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -18485,6 +18486,14 @@ MonoBehaviour:
     chargeSpeed: 0
     chargeDelay: 0
     currentDelay: 0
+  dashStats:
+    dashes: 0
+    isDashing: 0
+    dashDamage: 0
+    dashSpeed: 0
+    dashRange: 0
+    dashDelay: 0
+    currentDelay: 0
   shadowStats:
     shades: 0
     interruptsByDamage: 0
@@ -19455,11 +19464,6 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
-  shadowStats:
-    shades: 0
-    interruptsByDamage: 0
-    shadeDelay: 0
-    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -21284,12 +21288,12 @@ MonoBehaviour:
     currHealth: 3000
     maxHealth: 3000
     healthDecay: 0
-    range: 20
+    range: 5
     visionRange: 30
     baseDamage: 10
     attackDelay: 2
     currAttackDelay: 0
-    moveSpeed: 0
+    moveSpeed: 6
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 0.5
@@ -21374,7 +21378,7 @@ MonoBehaviour:
         resistedGrab: 0
         resistedPull: 0
   attackStats:
-    firesProjectiles: 1
+    firesProjectiles: 0
     attackType: 2
     continueType: 1
     abilityPrefabs:
@@ -21389,6 +21393,14 @@ MonoBehaviour:
     chargeDamage: 100
     chargeSpeed: 20
     chargeDelay: 0.5
+    currentDelay: 0
+  dashStats:
+    dashes: 1
+    isDashing: 0
+    dashDamage: 50
+    dashSpeed: 85
+    dashRange: 20
+    dashDelay: 1
     currentDelay: 0
   shadowStats:
     shades: 0
@@ -28997,6 +29009,14 @@ MonoBehaviour:
     chargeSpeed: 0
     chargeDelay: 0
     currentDelay: 0
+  dashStats:
+    dashes: 0
+    isDashing: 0
+    dashDamage: 0
+    dashSpeed: 0
+    dashRange: 0
+    dashDelay: 0
+    currentDelay: 0
   shadowStats:
     shades: 0
     interruptsByDamage: 0
@@ -29347,11 +29367,6 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
-  shadowStats:
-    shades: 0
-    interruptsByDamage: 0
-    shadeDelay: 0
-    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -29868,11 +29883,6 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
-  shadowStats:
-    shades: 0
-    interruptsByDamage: 0
-    shadeDelay: 0
-    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []

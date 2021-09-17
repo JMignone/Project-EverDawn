@@ -11,6 +11,7 @@ public interface IDamageable
     GameObject Target { get; set; }
     Actor3D Agent { get; }
     Actor2D UnitSprite { get; }
+    DashStats DashStats { get; }
     ShadowStats ShadowStats { get; }
     bool IsMoving { get; }
 

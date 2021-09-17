@@ -24,6 +24,9 @@ public class Unit : MonoBehaviour, IDamageable
     private ChargeStats chargeStats;
 
     [SerializeField]
+    private DashStats dashStats;
+
+    [SerializeField]
     private ShadowStats shadowStats;
 
     [SerializeField]
@@ -62,6 +65,11 @@ public class Unit : MonoBehaviour, IDamageable
     {
         get { return attackStats; }
     }
+
+    public DashStats DashStats
+    {
+        get { return dashStats; }
+    }
     
     public ShadowStats ShadowStats
     {
@@ -90,6 +98,11 @@ public class Unit : MonoBehaviour, IDamageable
         get { if(agent.Agent.enabled && !agent.Agent.isStopped && agent.Agent.speed != 0) return true; else return false; }
     }
 
+    public bool ChargeAttack
+    {
+        get { return !chargeStats.IsCharging && !attackStats.IsFiring && !dashStats.IsDashing; }
+    }
+
     private void Start()
     {
         agent.Agent.stoppingDistance = 0; //Set to be zero, incase someone forgets or accidently changes this value to be a big number
@@ -99,6 +112,7 @@ public class Unit : MonoBehaviour, IDamageable
         stats.EffectStats.StartStats(gameObject);
         attackStats.StartAttackStats(gameObject);
         chargeStats.StartChargeStats(gameObject);
+        dashStats.StartDashStats(gameObject);
         shadowStats.StartShadowStats(gameObject);
 
         stats.IsHoveringAbility = false;
@@ -113,31 +127,28 @@ public class Unit : MonoBehaviour, IDamageable
             if((target == null || inRangeTargets.Count == 0) && stats.CanAct && !stats.IsCastingAbility) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                 ReTarget();
 
-            stats.UpdateStats(inRangeTargets.Count, agent, hitTargets, target);
+            stats.UpdateStats(ChargeAttack, inRangeTargets.Count, agent, hitTargets, target);
             chargeStats.UpdateChargeStats();
+            dashStats.UpdateDashStats();
             shadowStats.UpdateShadowStats();
             Attack();
-            //if(gameObject.name.CompareTo("BaseUnit Flight") == 0)
-                //print(agent.Agent.isStopped);
-            
-            if(target != null && !attackStats.IsFiring) {
+
+            if(dashStats.IsDashing)
+                lookAtTarget();
+            else if(target != null && !attackStats.IsFiring) {
                 Vector3 direction = target.transform.GetChild(0).position - agent.transform.position;
                 agent.Agent.SetDestination(target.transform.GetChild(0).position - (direction.normalized * .25f));
-                //agent.Agent.isStopped = false;
                 if(hitTargets.Contains(target)) {
                     if(inRangeTargets.Count > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) { //is in range, OR is 90% thru attack cycle -
                         lookAtTarget();
-                        //agent.Agent.isStopped = true;
                         agent.Agent.ResetPath();
                     }
                 }
             }
-            else if(target != null && (!attackStats.AttacksLocation || !attackStats.FiresProjectiles))
+            else if(target != null && (!attackStats.AttacksLocation || !attackStats.FiresProjectiles)) //if the unit fires at a specific location, dont turn towards the target, keep looking at location else (which is the if) look at target
                 lookAtTarget();
-            else if(agent.Agent.enabled == true) { //prevents errors being thrown when a units agent is temporarily disabled by being grabbed
-                //agent.Agent.isStopped = true;
+            else if(agent.Agent.enabled == true) //prevents errors being thrown when a units agent is temporarily disabled by being grabbed
                 agent.Agent.ResetPath();
-            }
         }
         else {
             print(gameObject.name + " has died!");
@@ -218,12 +229,19 @@ public class Unit : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
+                if(stats.Targetable && GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
                     stats.IndicatorNum++;
             }
             else if(other.CompareTag("Pull")) {
                 Component IAbility = other.transform.parent.parent.GetComponent(typeof(IAbility));
                 stats.EffectStats.PulledStats.AddPull(IAbility);
+            }
+            else if(other.CompareTag("Dash")) {
+                Component unit = other.transform.parent.parent.GetComponent(typeof(IDamageable));
+                if(unit) {
+                    if(stats.Targetable && GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats))
+                        (unit as IDamageable).DashStats.StartDash(gameObject);
+                }
             }
             else { //is it another units vision/range?
                 Component unit = other.transform.parent.parent.GetComponent(typeof(IDamageable));
@@ -256,7 +274,7 @@ public class Unit : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
+                if(stats.Targetable && GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
                     stats.IndicatorNum--;
             }
             else if(other.CompareTag("Pull")) {

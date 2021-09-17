@@ -11,6 +11,7 @@ TagManager:
   - Projectile
   - CreateAtLocation
   - Pull
+  - Dash
   layers:
   - Default
   - TransparentFX
@@ -47,4 +48,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Towers
+    uniqueID: 2621812631
+    locked: 0
+  - name: UI
+    uniqueID: 892909883
     locked: 0

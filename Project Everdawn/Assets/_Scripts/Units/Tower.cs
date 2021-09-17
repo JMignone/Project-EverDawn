@@ -17,7 +17,10 @@ public class Tower : MonoBehaviour, IDamageable
     [SerializeField]
     protected BaseStats stats;
 
-    [SerializeField]
+    //[SerializeField]
+    private DashStats dashStats;
+
+    //[SerializeField]
     private ShadowStats shadowStats;
 
     [SerializeField]
@@ -69,6 +72,11 @@ public class Tower : MonoBehaviour, IDamageable
         get { return enemyHitTargets; }
     }
 
+    public DashStats DashStats
+    {
+        get { return dashStats; }
+    }
+
     public ShadowStats ShadowStats
     {
         get { return shadowStats; }
@@ -104,7 +112,7 @@ public class Tower : MonoBehaviour, IDamageable
             if((target == null || inRangeTargets.Count == 0) && stats.CanAct) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                 ReTarget();
 
-            stats.UpdateStats(inRangeTargets.Count, agent, hitTargets, target);
+            stats.UpdateStats(true, inRangeTargets.Count, agent, hitTargets, target);
             Attack();
 
             if(stats.CanAct) { //if its stunned, we want to keep the tower looking in the same direction
@@ -115,7 +123,7 @@ public class Tower : MonoBehaviour, IDamageable
             }
         }
         else {
-            print(gameObject.name + "has died!");
+            print(gameObject.name + " has died!");
             GameManager.RemoveObjectsFromList(gameObject, leftTower, false);
             Destroy(gameObject);
         }
@@ -166,8 +174,15 @@ public class Tower : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an abililty?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
+                if(stats.Targetable && GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
                     stats.IndicatorNum++;
+            }
+            else if(other.CompareTag("Dash")) {
+                Component unit = other.transform.parent.parent.GetComponent(typeof(IDamageable));
+                if(unit) {
+                    if(stats.Targetable && GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats))
+                        (unit as IDamageable).DashStats.StartDash(gameObject);
+                }
             }
             else { //is it another units vision/range?
                 Component unit = other.transform.parent.parent.GetComponent(typeof(IDamageable));
@@ -194,7 +209,7 @@ public class Tower : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an abililty?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
+                if(stats.Targetable && GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
                     stats.IndicatorNum--;
             }
             else { //is it another units vision/range?

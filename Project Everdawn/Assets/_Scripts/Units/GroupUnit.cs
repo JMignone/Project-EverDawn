@@ -13,6 +13,7 @@ public class GroupUnit : MonoBehaviour, IDamageable
     private Actor3D agent;
     private Actor2D unitSprite;
     private GameObject target;
+    private DashStats dashStats;
     private ShadowStats shadowStats;
     private List<GameObject> hitTargets;
     private List<GameObject> inRangeTargets;
@@ -73,6 +74,11 @@ public class GroupUnit : MonoBehaviour, IDamageable
         set { isCastingAbility = value; }
     }
 
+    public DashStats DashStats
+    {
+        get { return dashStats; }
+    }
+
     public ShadowStats ShadowStats
     {
         get { return shadowStats; }
@@ -82,10 +88,10 @@ public class GroupUnit : MonoBehaviour, IDamageable
     {
         get { return false; }
     }
-
+/*
     private void Start() {
         isHoveringAbility = false;
-    }
+    }*/
 
     private void Update()
     {

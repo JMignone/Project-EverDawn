@@ -16,7 +16,7 @@ public class Keep : Tower
                     }
                 }
 
-                stats.UpdateStats(InRangeTargets.Count, agent, hitTargets, target);
+                stats.UpdateStats(true, InRangeTargets.Count, agent, hitTargets, target);
                 Attack();
 
                 if(stats.CanAct) { //if its stunend, we want to keep the tower looking in the same direction

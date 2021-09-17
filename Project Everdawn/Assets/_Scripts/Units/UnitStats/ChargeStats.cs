@@ -44,7 +44,7 @@ public class ChargeStats
 
     public void UpdateChargeStats() {
         if(charges) {
-            if(unit.IsMoving && !unit.Stats.IsAttacking && !isCharging && unit.Stats.CanAct) {
+            if(unit.IsMoving && !unit.Stats.IsAttacking && !isCharging && unit.Stats.CanAct && !unit.Stats.IsCastingAbility) {
                 if(currentDelay < chargeDelay) 
                     currentDelay += Time.deltaTime * unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
                 else {
@@ -59,7 +59,7 @@ public class ChargeStats
     }
 
     private void Charge() {
-        if(isCharging && unit.Stats.CanAct) {
+        if(isCharging && unit.Stats.CanAct && !unit.Stats.IsCastingAbility) {
             unit.Stats.MoveSpeed = chargeSpeed;
             if(unit.InRangeTargets.Contains(unit.Target)) {
                 ChargeAttack();
@@ -82,7 +82,6 @@ public class ChargeStats
                 unit.Stats.ApplyAffects(damageable);
             }
             unit.Stats.Appear((unit as Component).gameObject, unit.ShadowStats, unit.Agent);
-            unit.Stats.CurrAttackDelay = 0;
         }
     }
 }

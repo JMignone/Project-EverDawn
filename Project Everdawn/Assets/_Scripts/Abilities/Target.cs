@@ -328,7 +328,7 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             foreach(Collider collider in colliders) {
                 if(!collider.CompareTag(abilityPrefabs[0].tag) && collider.name == "Agent") {
                     Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-                    if(GameFunctions.WillHit((testComponent as IAbility).HeightAttackable, (testComponent as IAbility).TypeAttackable, damageable)) {
+                    if((damageable as IDamageable).Stats.Targetable && GameFunctions.WillHit((testComponent as IAbility).HeightAttackable, (testComponent as IAbility).TypeAttackable, damageable)) {
                         distance = Vector3.Distance(unit.Agent.Agent.transform.position, collider.transform.position);
                         if(distance < closestDistance) {
                             closestDistance = distance;

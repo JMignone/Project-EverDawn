@@ -112,7 +112,8 @@ public class AttackStats
         if(isFiring) {
             if(SameLocation && (target as Component) != null && unit.Target == (target as Component).gameObject) //tracks the position of the target such that it fires where it died
                 lastTargetLocation = target.Agent.Agent.transform.position;
-            if(!unit.Stats.CanAct || (((target as Component) == null || unit.Target != (target as Component).gameObject) && currentProjectileIndex == 0 && !ReTargets)) { //if the unit is frozen or the target has died before the first shot is fired
+            if(!unit.Stats.CanAct || unit.Stats.IsCastingAbility || 
+               ( ( (target as Component) == null || unit.Target != (target as Component).gameObject ) && currentProjectileIndex == 0 && !ReTargets ) ) { //if the unit is frozen or the target has died before the first shot is fired
                 StopFiring();
                 return;
             }
