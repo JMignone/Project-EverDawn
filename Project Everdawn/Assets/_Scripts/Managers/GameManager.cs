@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour
     private List<PlayerStats> players;
     [SerializeField]
     private GameObject ground;
+    [SerializeField]
+    private GameObject gameplay_HUD;
+    [SerializeField]
+    private GameObject end_game_screen;
 
     public static GameManager Instance
     {
@@ -39,6 +43,16 @@ public class GameManager : MonoBehaviour
     public GameObject Ground
     {
         get { return ground; }
+    }
+
+    public GameObject Gameplay_HUD
+    {
+        get { return gameplay_HUD; }
+    }
+
+    public GameObject End_Game_Screen
+    {
+        get { return end_game_screen; }
     }
 
     private void Awake()
@@ -108,6 +122,7 @@ public class GameManager : MonoBehaviour
         if(!objectToRemove.CompareTag(GameConstants.PLAYER_TAG)) {
             if(isKeep) {
                 Instance.Players[0].Score = 3;
+                GameManager.EndGame();
                 //END THE GAME
             }
             else {
@@ -194,5 +209,39 @@ public class GameManager : MonoBehaviour
         }
         GameObject hud = GameObject.Find(GameConstants.HUD_CANVAS);
         hud.transform.GetChild(2).GetComponent<Image>().enabled = false;
+    }
+
+    //Ends the game
+    public static void EndGame()
+    {
+        //Destroy all non-tower type game objects that are in play and remove them from the game 
+        foreach (GameObject go in Instance.Objects)
+        {
+            GameObject.Destroy(go);
+            //RemoveObjectsFromList(go);
+        }
+
+        //Destroy all tower type game objects that are in play and remove them from the game 
+        foreach (GameObject go in Instance.TowerObjects)
+        {
+            GameObject.Destroy(go);
+            //RemoveObjectsFromList(go);
+        }
+
+        /*TODO
+         * While not exactly necessary, since it'll get reset when the scene unloads, it'd be good to clear the Objects and TowerObjects lists at the end of the game.
+         * The lower loop currently does not work. If included in the above foreach loops it fails to destroy any game objects lower in the list than the enemy keep.
+        
+        foreach (GameObject go in Instance.Objects)
+        {
+            RemoveObjectsFromList(go);
+        }
+        */
+
+        //Hide Gameplay HUD
+        Instance.Gameplay_HUD.SetActive(false);
+
+        //Show End Game Screen
+        Instance.End_Game_Screen.SetActive(true);
     }
 }
