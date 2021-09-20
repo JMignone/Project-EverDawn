@@ -52,7 +52,7 @@ MonoBehaviour:
   range: 80
   baseDamage: 0
   heightAttackable: 0
-  typeAttackable: 2
+  typeAttackable: 0
   canPierce: 0
   blockable: 0
   aoeStats:
@@ -86,6 +86,10 @@ MonoBehaviour:
     canGrab: 0
     pullDuration: 0
     stunDuration: 0
+  strengthStats:
+    canStrength: 0
+    strengthDuration: 0
+    strengthIntensity: 0
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0
@@ -110,8 +114,37 @@ MonoBehaviour:
     startLocation: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 75
+    damageMultiplier: 0
     explosionRadius: 15
     grenadeArcMultiplier: 0.2
+  resistEffects:
+    resistFreeze: 0
+    resistSlow: 0
+    resistRoot: 0
+    resistPoison: 0
+    resistKnockback: 0
+    resistGrab: 0
+    resistPull: 0
+  applyResistanceStats:
+    applyToSelf: 0
+    resistDamage: 0
+    rdDuration: 0
+    untargetable: 0
+    rtDuration: 0
+    resistFreeze: 0
+    rfDuration: 0
+    resistSlow: 0
+    rsDuration: 0
+    resistRoot: 0
+    rrDuration: 0
+    resistPoison: 0
+    rpDuration: 0
+    resistKnockback: 0
+    rkDuration: 0
+    resistGrab: 0
+    rgDuration: 0
+    resistPull: 0
+    rpullDuration: 0
   chosenTarget: {fileID: 0}
 --- !u!54 &8128849533423555258
 Rigidbody:

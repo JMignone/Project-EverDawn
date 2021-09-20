@@ -205,9 +205,9 @@ public class Building : MonoBehaviour, IDamageable
                     if(damageable) { //is the target damageable
                         if(hitTargets.Contains(target)) {  //this is needed for the rare occurance that a unit is 90% done with attack delay and the target leaves its range. It can still do its attack if its within vision given that its attack was already *90% thru
                             if(stats.EffectStats.AOEStats.AreaOfEffect)
-                                stats.EffectStats.AOEStats.Explode(gameObject, target);
+                                stats.EffectStats.AOEStats.Explode(gameObject, target, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                             else {
-                                GameFunctions.Attack(damageable, stats.BaseDamage);
+                                GameFunctions.Attack(damageable, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                                 stats.ApplyAffects(damageable);
                             }
                             stats.Appear(gameObject, shadowStats, agent);

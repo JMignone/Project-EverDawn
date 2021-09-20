@@ -366,9 +366,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             if(currentProjectileIndex == cardInfo.UnitIndex)
                 GameFunctions.SpawnUnit(cardInfo.Prefab[currentProjectileIndex], GameManager.GetUnitsFolder(), targetLocation);
             else if(cardInfo.Prefab[currentProjectileIndex].GetComponent<Projectile>())
-                GameFunctions.FireProjectile(cardInfo.Prefab[currentProjectileIndex], targetLocation, targetLocation, new Vector3(0,0,1), null);
+                GameFunctions.FireProjectile(cardInfo.Prefab[currentProjectileIndex], targetLocation, targetLocation, new Vector3(0,0,1), null, 1);
             else if(cardInfo.Prefab[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                GameFunctions.FireCAL(cardInfo.Prefab[currentProjectileIndex], targetLocation, targetLocation, new Vector3(0,0,1), null);
+                GameFunctions.FireCAL(cardInfo.Prefab[currentProjectileIndex], targetLocation, targetLocation, new Vector3(0,0,1), null, 1);
             currentDelay = 0;
             currentProjectileIndex++;
             if(currentProjectileIndex == cardInfo.PreviewDelays.Count)//if we completed the last delay
@@ -378,32 +378,35 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     //this function will fix the position of unit placment and the preview with the addition of the no place zones
     private Vector3 adjustForSpawnZones(Vector3 position) {
-        float firstAreaBottom = playerInfo.LeftArea.transform.position.z - radius*2;
-        float secondAreaBottom = playerInfo.TopArea.transform.position.z - radius*2;
-
+        float firstAreaBottom = playerInfo.LeftArea.transform.position.z - radius;
+        float secondAreaBottom = playerInfo.TopArea.transform.position.z - radius;
         if(cardInfo.SpawnZoneRestrictions == GameConstants.SPAWN_ZONE_RESTRICTION.FULL && !playerInfo.LeftZone && !playerInfo.RightZone) { //If both zones are active
             if(position.z > firstAreaBottom)
                 position = new Vector3(position.x, position.y, firstAreaBottom);
         }
         else if(cardInfo.SpawnZoneRestrictions == GameConstants.SPAWN_ZONE_RESTRICTION.FULL && !playerInfo.LeftZone){ //If only the left zone is active
-            if(position.x < 0 && position.z > firstAreaBottom) { //AND the cursor is in the zone
+            if(position.x < radius && position.z > firstAreaBottom) { //AND the cursor is in the zone
                 float distanceToBottom = Math.Abs(position.z - firstAreaBottom);
-                float distanceToCenter = Math.Abs(position.x);
-                if(distanceToBottom < distanceToCenter) //if the cursor is closer to the bottom edge of the no place zone
+                float distanceToCenter = Math.Abs(position.x)+radius;
+                if(distanceToBottom < distanceToCenter) //if the cursor is closer to the bottom edge than the middler edge of the no place zone
                     position = new Vector3(position.x, position.y, firstAreaBottom);
-                else
-                    position = new Vector3(0, position.y, position.z);
+                else 
+                    position = new Vector3(radius, position.y, position.z);
             }
+            if(position.z > secondAreaBottom)
+                position = new Vector3(position.x, position.y, secondAreaBottom);
         }
         else if(cardInfo.SpawnZoneRestrictions == GameConstants.SPAWN_ZONE_RESTRICTION.FULL && !playerInfo.RightZone) { //If only the right zone is active
-            if(position.x > 0 && position.z > firstAreaBottom) { //AND the cursor is in the zone
+            if(position.x > -radius && position.z > firstAreaBottom) { //AND the cursor is in the zone
                 float distanceToBottom = Math.Abs(position.z - firstAreaBottom);
-                float distanceToCenter = Math.Abs(position.x);
+                float distanceToCenter = Math.Abs(position.x)+radius;
                 if(distanceToBottom < distanceToCenter) //if the cursor is closer to the bottom edge of the no place zone
                     position = new Vector3(position.x, position.y, firstAreaBottom);
                 else
-                    position = new Vector3(0, position.y, position.z);
+                    position = new Vector3(-radius, position.y, position.z);
             }
+            if(position.z > secondAreaBottom)
+                position = new Vector3(position.x, position.y, secondAreaBottom);
         }
         else if(cardInfo.SpawnZoneRestrictions != GameConstants.SPAWN_ZONE_RESTRICTION.NONE && position.z > secondAreaBottom)
             position = new Vector3(position.x, position.y, secondAreaBottom);

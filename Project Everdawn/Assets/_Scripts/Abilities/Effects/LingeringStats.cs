@@ -22,6 +22,7 @@ public class LingeringStats
 
     [SerializeField]
     private float lingeringDamage;
+    private float damageMultiplier;
 
     [SerializeField]
     private float lingeringRadius;
@@ -102,6 +103,7 @@ public class LingeringStats
 
         if(!lingerDuringFlight && !lingerAtEnd) //if lingering is on but it doesnt linger both in flight and at end, default to end
             lingerAtEnd = true;
+        damageMultiplier = (abilityComponent as IAbility).DamageMultiplier;
     }
 
     public void UpdateLingeringStats(GameObject go) {
@@ -129,7 +131,7 @@ public class LingeringStats
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                 Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
                 if(GameFunctions.WillHit((abilityComponent as IAbility).HeightAttackable, (abilityComponent as IAbility).TypeAttackable, damageable)) {
-                    GameFunctions.Attack(damageable, lingeringDamage);
+                    GameFunctions.Attack(damageable, lingeringDamage*damageMultiplier);
                     (abilityComponent as IAbility).ApplyAffects(damageable);
                 }
             }

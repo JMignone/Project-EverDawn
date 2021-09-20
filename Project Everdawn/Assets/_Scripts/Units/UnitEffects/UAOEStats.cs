@@ -17,6 +17,8 @@ public class UAOEStats
     [SerializeField]
     private float explosionRadius;
 
+    private IDamageable unit;
+
     public bool AreaOfEffect
     {
         get { return areaOfEffect; }
@@ -37,22 +39,24 @@ public class UAOEStats
         get { return explosionRadius; }
     }
 
-    public void Explode(GameObject go, GameObject target) {
+    public void StartStats(GameObject go) {
+        unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+    }
+
+    public void Explode(GameObject go, GameObject target, float damage) {
         //Instantiate(explosionEffect, go.transform.position, go.transform.rotation);
         Collider[] colliders;
         if(unitCentered)
             colliders = Physics.OverlapSphere(go.transform.GetChild(0).position, explosionRadius);
         else
             colliders = Physics.OverlapSphere(target.transform.GetChild(0).position, explosionRadius);
-        Component unit = go.gameObject.GetComponent(typeof(IDamageable));
-        float damage = (unit as IDamageable).Stats.BaseDamage;
 
         foreach(Collider collider in colliders) {
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                 Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-                if(GameFunctions.CanAttack(go.tag, damageable.tag, damageable.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
+                if(GameFunctions.CanAttack(go.tag, damageable.tag, damageable.GetComponent(typeof(IDamageable)), unit.Stats)) {
                     GameFunctions.Attack(damageable, damage);
-                    (unit as IDamageable).Stats.ApplyAffects(damageable);
+                    unit.Stats.ApplyAffects(damageable);
                 }
             }
         }

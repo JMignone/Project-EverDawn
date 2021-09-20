@@ -137,7 +137,7 @@ public class Tower : MonoBehaviour, IDamageable
                 if(damageable) { //is the target damageable
                     if(hitTargets.Contains(target)) {  //this and the above may not be needed, more of a santiy check
                         if(inRangeTargets.Count > 0) {
-                            GameFunctions.Attack(damageable, stats.BaseDamage);
+                            GameFunctions.Attack(damageable, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                             stats.CurrAttackDelay = 0;
                         }
                     }

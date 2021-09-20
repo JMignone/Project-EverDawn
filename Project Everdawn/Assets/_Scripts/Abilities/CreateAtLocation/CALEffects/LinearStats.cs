@@ -19,6 +19,7 @@ public class LinearStats
 
     [SerializeField]
     private float explosionDamage;
+    private float damageMultiplier;
 
     [SerializeField]
     private float explosionWidth;
@@ -54,9 +55,10 @@ public class LinearStats
         set { explosionWidth = value; }
     }
 
-    public void StartLinearStats() {
+    public void StartLinearStats(float dMultiplier) {
         if(!isVertical && !isHorizontal) //if neither option was selected, just default vertical
             isVertical = true;
+        damageMultiplier = dMultiplier;
     }
 
     public void Explode(GameObject go) {
@@ -69,7 +71,7 @@ public class LinearStats
                     if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
                         if(GameFunctions.WillHit((ability as IAbility).HeightAttackable, (ability as IAbility).TypeAttackable, damageable)) {
-                            GameFunctions.Attack(damageable, explosionDamage);
+                            GameFunctions.Attack(damageable, explosionDamage*damageMultiplier);
                             (ability as IAbility).ApplyAffects(damageable);
                         }
                     }
@@ -81,7 +83,7 @@ public class LinearStats
                     if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
                         if(GameFunctions.WillHit((ability as IAbility).HeightAttackable, (ability as IAbility).TypeAttackable, damageable)) {
-                            GameFunctions.Attack(damageable, explosionDamage);
+                            GameFunctions.Attack(damageable, explosionDamage*damageMultiplier);
                             (ability as IAbility).ApplyAffects(damageable);
                         }
                     }

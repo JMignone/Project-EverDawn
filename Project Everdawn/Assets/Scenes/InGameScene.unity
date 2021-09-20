@@ -4600,7 +4600,7 @@ MonoBehaviour:
       name: Unit 1
       icon: {fileID: 21300000, guid: 78cd5f19747f13a4895c5a28e72a73d1, type: 3}
       cost: 2
-      spawnZoneRestrictions: 0
+      spawnZoneRestrictions: 2
       prefab:
       - {fileID: 4332999100709516610, guid: 4d38356404b172542bbbb06b5950ec16, type: 3}
       previewPrefab: {fileID: 0}
@@ -4624,7 +4624,7 @@ MonoBehaviour:
       name: Unit 2
       icon: {fileID: 21300000, guid: 04d58490ded8c4c4aa64bca7867d7969, type: 3}
       cost: 3
-      spawnZoneRestrictions: 0
+      spawnZoneRestrictions: 2
       prefab:
       - {fileID: 1224647179923901261, guid: 9f95a636396da294c8b3f8bf1ae79e27, type: 3}
       previewPrefab: {fileID: 0}
@@ -4635,7 +4635,7 @@ MonoBehaviour:
       name: Unit Group
       icon: {fileID: 21300000, guid: 616f99a5a0da8bc4696cec0e5e538437, type: 3}
       cost: 2
-      spawnZoneRestrictions: 0
+      spawnZoneRestrictions: 1
       prefab:
       - {fileID: 4489671066153867563, guid: cbc231736edf9454caa0c4feed18afc2, type: 3}
       previewPrefab: {fileID: 9061750350620061380, guid: 13fdda68d34ea614ba84e5ec9ad6a2ee, type: 3}
@@ -5270,6 +5270,12 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+      strengthenedStats:
+        cantBeStrengthened: 0
+        isStrengthened: 0
+        strengthDelay: 0
+        currentDelay: 0
+        currentStrengthIntensity: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -5973,6 +5979,12 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+      strengthenedStats:
+        cantBeStrengthened: 0
+        isStrengthened: 0
+        strengthDelay: 0
+        currentDelay: 0
+        currentStrengthIntensity: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -6136,6 +6148,12 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+      strengthenedStats:
+        cantBeStrengthened: 0
+        isStrengthened: 0
+        strengthDelay: 0
+        currentDelay: 0
+        currentStrengthIntensity: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -7316,6 +7334,12 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+      strengthenedStats:
+        cantBeStrengthened: 0
+        isStrengthened: 0
+        strengthDelay: 0
+        currentDelay: 0
+        currentStrengthIntensity: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -15492,6 +15516,12 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+      strengthenedStats:
+        cantBeStrengthened: 0
+        isStrengthened: 0
+        strengthDelay: 0
+        currentDelay: 0
+        currentStrengthIntensity: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -18449,6 +18479,12 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+      strengthenedStats:
+        cantBeStrengthened: 0
+        isStrengthened: 0
+        strengthDelay: 0
+        currentDelay: 0
+        currentStrengthIntensity: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -19454,6 +19490,12 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+      strengthenedStats:
+        cantBeStrengthened: 0
+        isStrengthened: 0
+        strengthDelay: 0
+        currentDelay: 0
+        currentStrengthIntensity: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -21367,6 +21409,12 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+      strengthenedStats:
+        cantBeStrengthened: 0
+        isStrengthened: 0
+        strengthDelay: 0
+        currentDelay: 0
+        currentStrengthIntensity: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -24555,6 +24603,12 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+      strengthenedStats:
+        cantBeStrengthened: 0
+        isStrengthened: 0
+        strengthDelay: 0
+        currentDelay: 0
+        currentStrengthIntensity: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -28985,6 +29039,12 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+      strengthenedStats:
+        cantBeStrengthened: 0
+        isStrengthened: 0
+        strengthDelay: 0
+        currentDelay: 0
+        currentStrengthIntensity: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -29357,6 +29417,12 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+      strengthenedStats:
+        cantBeStrengthened: 0
+        isStrengthened: 0
+        strengthDelay: 0
+        currentDelay: 0
+        currentStrengthIntensity: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -29873,6 +29939,12 @@ MonoBehaviour:
         pullDelay: 0
         currentPullDelay: 0
         currentStunDelay: 0
+      strengthenedStats:
+        cantBeStrengthened: 0
+        isStrengthened: 0
+        strengthDelay: 0
+        currentDelay: 0
+        currentStrengthIntensity: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0

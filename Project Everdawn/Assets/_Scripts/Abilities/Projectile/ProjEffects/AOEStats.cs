@@ -33,7 +33,7 @@ public class AOEStats
         //Instantiate(explosionEffect, go.transform.position, go.transform.rotation);
         Collider[] colliders = Physics.OverlapSphere(go.transform.position, explosionRadius);
         Projectile projectile = go.GetComponent<Projectile>();
-        float damage = projectile.BaseDamage;
+        float damage = projectile.BaseDamage*projectile.DamageMultiplier;
 
         foreach(Collider collider in colliders) {
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {

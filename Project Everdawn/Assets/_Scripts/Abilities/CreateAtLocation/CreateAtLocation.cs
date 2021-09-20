@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// !! CURENTLY, CAL's DO NOT GAIN DAMAGE EVEN IF A UNIT IS STRENGTHENED !!
 public class CreateAtLocation : MonoBehaviour, IAbility
 {
     [SerializeField]
     private SphereCollider hitBox;
+
+    private float damageMultiplier; //used for units that may have had its damage increased/decreased and fires projectiles as a ranged attack
 
     [SerializeField]
     private float radius;
@@ -44,6 +48,9 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     private GrabStats grabStats;
 
     [SerializeField]
+    private StrengthStats strengthStats;
+
+    [SerializeField]
     private LingeringStats lingeringStats;
 
     [SerializeField]
@@ -79,6 +86,12 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     public float Range
     {
         get { return range; }
+    }
+
+    public float DamageMultiplier
+    {
+        get { return damageMultiplier; }
+        set { damageMultiplier = value; }
     }
 
     public GameConstants.HEIGHT_ATTACKABLE HeightAttackable
@@ -124,6 +137,11 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     public GrabStats GrabStats
     {
         get { return grabStats; }
+    }
+
+    public StrengthStats StrengthStats
+    {
+        get { return strengthStats; }
     }
 
     public Vector3 Position()
@@ -181,6 +199,8 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     {
         hitBox.radius = radius;
         slowStats.StartSlowStats();
+        pullStats.StartPullStats(gameObject);
+        strengthStats.StartStrengthStats();
         
         if(selfDestructStats.SelfDestructs)
             selfDestructStats.ExplosionRadius = radius;
@@ -191,6 +211,8 @@ public class CreateAtLocation : MonoBehaviour, IAbility
             lingeringStats.IsInFlight = false;
             lingeringStats.LingeringRadius = radius;
         }
+        if(linearStats.IsLinear)
+            linearStats.StartLinearStats(damageMultiplier);
 
         if(unit != null)
             applyResistanceStats.StartResistance(unit);
@@ -231,6 +253,8 @@ public class CreateAtLocation : MonoBehaviour, IAbility
             (damageable as IDamageable).Stats.EffectStats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position);
         if(grabStats.CanGrab)
             (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.PullDuration, grabStats.StunDuration, unit);
+        if(strengthStats.CanStrength)
+            (damageable as IDamageable).Stats.EffectStats.StrengthenedStats.Strengthen(strengthStats.StrengthDuration, StrengthStats.StrengthIntensity);
         applyResistanceStats.ApplyResistance((damageable as IDamageable));
     }
 }

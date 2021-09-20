@@ -21,6 +21,7 @@ public class Projectile : MonoBehaviour, IAbility
 
     [SerializeField]
     private float baseDamage;
+    private float damageMultiplier; //used for units that may have had its damage increased/decreased and fires projectiles as a ranged attack
 
     [Tooltip("Determines if the projectile can hit units on the ground, flying, or both")]
     [SerializeField]
@@ -60,6 +61,9 @@ public class Projectile : MonoBehaviour, IAbility
 
     [SerializeField]
     private GrabStats grabStats;
+
+    [SerializeField]
+    private StrengthStats strengthStats;
 
     [SerializeField]
     private BoomerangStats boomerangStats;
@@ -117,7 +121,13 @@ public class Projectile : MonoBehaviour, IAbility
     public float BaseDamage
     {
         get { return baseDamage; }
-        //set { baseDamage = value; }
+        set { baseDamage = value; }
+    }
+
+    public float DamageMultiplier
+    {
+        get { return damageMultiplier; }
+        set { damageMultiplier = value; }
     }
 
     public GameConstants.HEIGHT_ATTACKABLE HeightAttackable
@@ -173,6 +183,11 @@ public class Projectile : MonoBehaviour, IAbility
     public GrabStats GrabStats
     {
         get { return grabStats; }
+    }
+
+    public StrengthStats StrengthStats
+    {
+        get { return strengthStats; }
     }
 
     public Vector3 Position()
@@ -257,6 +272,7 @@ public class Projectile : MonoBehaviour, IAbility
         lingeringStats.StartLingeringStats(gameObject);
         slowStats.StartSlowStats();
         pullStats.StartPullStats(gameObject);
+        strengthStats.StartStrengthStats();
 
         
         if(unit != null) {
@@ -338,7 +354,7 @@ public class Projectile : MonoBehaviour, IAbility
                 if(aoeStats.AreaOfEffect)
                     aoeStats.Explode(gameObject);
                 else {
-                    GameFunctions.Attack(damageable, baseDamage);
+                    GameFunctions.Attack(damageable, baseDamage*damageMultiplier);
                     ApplyAffects(damageable);
                 }
                 if(!canPierce) {
@@ -370,6 +386,8 @@ public class Projectile : MonoBehaviour, IAbility
             (damageable as IDamageable).Stats.EffectStats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position);
         if(grabStats.CanGrab)
             (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.PullDuration, grabStats.StunDuration, unit);
+        if(strengthStats.CanStrength)
+            (damageable as IDamageable).Stats.EffectStats.StrengthenedStats.Strengthen(strengthStats.StrengthDuration, StrengthStats.StrengthIntensity);
         applyResistanceStats.ApplyResistance((damageable as IDamageable));
     }
 }

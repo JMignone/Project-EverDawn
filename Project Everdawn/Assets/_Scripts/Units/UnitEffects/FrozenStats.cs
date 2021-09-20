@@ -20,7 +20,7 @@ public class FrozenStats
     [SerializeField]
     private float currentFrozenDelay;
 
-    private Component damageableComponent;
+    private IDamageable unit;
 
     public bool CantBeFrozen
     {
@@ -52,14 +52,8 @@ public class FrozenStats
         set { currentFrozenDelay = value; }
     }
 
-    public Component DamageableComponent
-    {
-        get { return damageableComponent; }
-        set { damageableComponent = value; }
-    }
-
     public void StartFrozenStats(GameObject go) {
-        damageableComponent = go.GetComponent(typeof(IDamageable));
+        unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
         isFrozen = false;
         frozenDelay = 0;
         currentFrozenDelay = 0;
@@ -79,11 +73,11 @@ public class FrozenStats
             isFrozen = true;
             frozenDelay = duration;
             currentFrozenDelay = 0;
-            (damageableComponent as IDamageable).UnitSprite.Animator.enabled = false;
-            (damageableComponent as IDamageable).SetTarget(null);
-            (damageableComponent as IDamageable).Stats.CurrAttackDelay = 0;
-            if(damageableComponent.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors to red
-                foreach(Transform child in damageableComponent.transform.GetChild(1).GetChild(5).GetChild(2)) {
+            unit.UnitSprite.Animator.enabled = false;
+            unit.SetTarget(null);
+            unit.Stats.CurrAttackDelay = 0;
+            if((unit as Component).gameObject.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors to red
+                foreach(Transform child in (unit as Component).gameObject.transform.GetChild(1).GetChild(5).GetChild(2)) {
                     if(child.childCount > 0) //this means its a complicated summon preview
                         child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,0,0,50);
                     else
@@ -95,9 +89,9 @@ public class FrozenStats
 
     public void unFreeze() {
         isFrozen = false;
-        (damageableComponent as IDamageable).UnitSprite.Animator.enabled = true;
-        if(damageableComponent.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors back to green
-            foreach(Transform child in damageableComponent.transform.GetChild(1).GetChild(5).GetChild(2)) {
+        unit.UnitSprite.Animator.enabled = true;
+        if((unit as Component).gameObject.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors back to green
+            foreach(Transform child in (unit as Component).gameObject.transform.GetChild(1).GetChild(5).GetChild(2)) {
                 if(child.childCount > 0) //this means its a complicated summon preview
                     child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,255,255,100);
                 else

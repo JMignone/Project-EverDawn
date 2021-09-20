@@ -76,9 +76,9 @@ public class ChargeStats
         Component damageable = unit.Target.GetComponent(typeof(IDamageable));
         if(damageable) { //is the target damageable
             if(unit.Stats.EffectStats.AOEStats.AreaOfEffect)
-                unit.Stats.EffectStats.AOEStats.Explode((unit as Component).gameObject, unit.Target);
+                unit.Stats.EffectStats.AOEStats.Explode((unit as Component).gameObject, unit.Target, chargeDamage * unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
             else {
-                GameFunctions.Attack(damageable, chargeDamage);
+                GameFunctions.Attack(damageable, chargeDamage * unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                 unit.Stats.ApplyAffects(damageable);
             }
             unit.Stats.Appear((unit as Component).gameObject, unit.ShadowStats, unit.Agent);

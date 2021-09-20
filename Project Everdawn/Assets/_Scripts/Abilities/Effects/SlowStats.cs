@@ -11,6 +11,7 @@ public class SlowStats
     [SerializeField]
     private float slowDuration;
 
+    [Tooltip("A number from 0 to 1 determining what percentage the effective unit will move from its original speed")]
     [SerializeField]
     private float slowIntensity;
 

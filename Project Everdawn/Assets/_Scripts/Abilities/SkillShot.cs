@@ -361,9 +361,9 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
         else { //if we completed a delay
             if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
-                GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], fireStartPosition, fireMousePosition, fireDirection, unit);
+                GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], fireStartPosition, fireMousePosition, fireDirection, unit, 1);
             else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], fireStartPosition, fireMousePosition, fireDirection, unit);
+                GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], fireStartPosition, fireMousePosition, fireDirection, unit, 1);
             currentDelay = 0;
             currentProjectileIndex++;
         }

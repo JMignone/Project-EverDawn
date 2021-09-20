@@ -364,9 +364,9 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         }
         else { //if we completed a delay
             if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
-                GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], fireStartPosition, target, fireDirection, unit);
+                GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], fireStartPosition, target, fireDirection, unit, 1);
             else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], fireStartPosition, target, fireDirection, unit);
+                GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], fireStartPosition, target, fireDirection, unit, 1);
             currentDelay = 0;
             currentProjectileIndex++;
         }

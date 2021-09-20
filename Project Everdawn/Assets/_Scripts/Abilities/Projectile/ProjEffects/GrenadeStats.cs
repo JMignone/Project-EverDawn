@@ -21,6 +21,7 @@ public class GrenadeStats
 
     [SerializeField]
     private float explosionDamage;
+    private float damageMultiplier;
 
     [SerializeField]
     private float explosionRadius;
@@ -93,6 +94,7 @@ public class GrenadeStats
                 arcStart = go.transform.position;
                 arcApex = arcStart + (arcEnd - arcStart)/2 + Vector3.up * Vector3.Distance(arcStart, arcEnd) * grenadeArcMultiplier;
             }
+            damageMultiplier = projectile.DamageMultiplier;
         }
     }
 
@@ -119,7 +121,7 @@ public class GrenadeStats
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                 Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
                 if(GameFunctions.WillHit(projectile.HeightAttackable, projectile.TypeAttackable, damageable)) {
-                    GameFunctions.Attack(damageable, explosionDamage);
+                    GameFunctions.Attack(damageable, explosionDamage*damageMultiplier);
                     projectile.ApplyAffects(damageable);
                 }
             }

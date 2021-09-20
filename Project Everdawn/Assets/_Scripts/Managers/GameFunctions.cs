@@ -103,7 +103,8 @@ public static class GameFunctions
         return go;
     }
 
-    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit) {
+    //damage increase is needed for range units that fire projectiles in its auto attack
+    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit, float damageMultiplier) {
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         float distance = Vector3.Distance(startPosition, mousePosition);
         Vector3 endPosition = mousePosition;
@@ -129,11 +130,14 @@ public static class GameFunctions
         if(isGrenade && projectile.GrenadeStats.IsAirStrike)
             startPosition = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
         GameObject go = GameObject.Instantiate(prefab, startPosition, targetRotation, GameManager.GetUnitsFolder());
-        go.GetComponent<Projectile>().TargetLocation = endPosition;
-        go.GetComponent<Projectile>().Unit = unit;
+        Projectile proj = go.GetComponent<Projectile>();
+        proj.TargetLocation = endPosition;
+        if(unit != null)
+            proj.Unit = unit;
+        proj.DamageMultiplier = damageMultiplier;
     }
 
-    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit) {
+    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, float damageMultiplier) {
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         float distance = Vector3.Distance(startPosition, chosenTarget.transform.position);
         Vector3 endPosition = chosenTarget.transform.position;
@@ -149,12 +153,16 @@ public static class GameFunctions
             startPosition = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
 
         GameObject go = GameObject.Instantiate(prefab, startPosition, targetRotation, GameManager.GetUnitsFolder());
-        go.GetComponent<Projectile>().TargetLocation = endPosition;
-        go.GetComponent<Projectile>().ChosenTarget = chosenTarget;
-        go.GetComponent<Projectile>().Unit = unit;
+        Projectile proj = go.GetComponent<Projectile>();
+        proj.TargetLocation = endPosition;
+        proj.ChosenTarget = chosenTarget;
+        if(unit != null) 
+            proj.Unit = unit;
+        proj.DamageMultiplier *= damageMultiplier;
     }
 
-    public static void FireCAL(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit) {
+
+    public static void FireCAL(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit, float damageMultiplier) {
         Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
         float distance = Vector3.Distance(startPosition, mousePosition);
         Vector3 endPosition = mousePosition;
@@ -173,11 +181,14 @@ public static class GameFunctions
                 endPosition = hit.position;
         }
         GameObject go = GameObject.Instantiate(prefab, endPosition, targetRotation, GameManager.GetUnitsFolder());
-        go.GetComponent<CreateAtLocation>().TargetLocation = endPosition;
-        go.GetComponent<CreateAtLocation>().Unit = unit;
+        CreateAtLocation goCal = go.GetComponent<CreateAtLocation>();
+        goCal.TargetLocation = endPosition;
+        if(unit != null)
+            goCal.Unit = unit;
+        goCal.DamageMultiplier *= damageMultiplier;
     }
 
-    public static void FireCAL(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit) {
+    public static void FireCAL(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, float damageMultiplier) {
         Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
         float distance = Vector3.Distance(startPosition, chosenTarget.transform.position);
         Vector3 endPosition = chosenTarget.transform.position;
@@ -189,9 +200,12 @@ public static class GameFunctions
             endPosition = startPosition + (direction.normalized * (range - radius));
 
         GameObject go = GameObject.Instantiate(prefab, endPosition, targetRotation, GameManager.GetUnitsFolder());
-        go.GetComponent<CreateAtLocation>().TargetLocation = endPosition;
-        go.GetComponent<CreateAtLocation>().ChosenTarget = chosenTarget;
-        go.GetComponent<CreateAtLocation>().Unit = unit;
+        CreateAtLocation goCal = go.GetComponent<CreateAtLocation>();
+        goCal.TargetLocation = endPosition;
+        goCal.ChosenTarget = chosenTarget;
+        if(unit != null)
+            goCal.Unit = unit;
+        goCal.DamageMultiplier *= damageMultiplier;
     }
 
     //This code was found from https://answers.unity.com/questions/566519/camerascreentoworldpoint-in-perspective.html

@@ -183,6 +183,7 @@ public class PlayerStats : MonoBehaviour
         score = 0;
         timeLeft = 181; // 180 seconds is 3 minutes
         //SetSpawnZone();
+        spawnZone = GameConstants.SPAWN_ZONE_RESTRICTION.NONE;
     }
 
     private void Update()
@@ -200,6 +201,8 @@ public class PlayerStats : MonoBehaviour
         }
         else if(spawnZone == GameConstants.SPAWN_ZONE_RESTRICTION.HALF) {
             topArea.SetActive(!topZone);
+            leftArea.SetActive(false);
+            rightArea.SetActive(false);
         }
         else {
             topArea.SetActive(false);
