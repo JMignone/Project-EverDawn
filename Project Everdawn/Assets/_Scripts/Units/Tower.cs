@@ -22,6 +22,9 @@ public class Tower : MonoBehaviour, IDamageable
 
     //[SerializeField]
     private ShadowStats shadowStats;
+    
+    //[SerializeField]
+    private DeathStats deathStats;
 
     [SerializeField]
     protected List<GameObject> hitTargets;
@@ -80,6 +83,11 @@ public class Tower : MonoBehaviour, IDamageable
     public ShadowStats ShadowStats
     {
         get { return shadowStats; }
+    }
+
+    public DeathStats DeathStats
+    {
+        get { return deathStats; }
     }
 
     public bool IsMoving

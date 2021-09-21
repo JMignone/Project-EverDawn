@@ -30,6 +30,9 @@ public class Unit : MonoBehaviour, IDamageable
     private ShadowStats shadowStats;
 
     [SerializeField]
+    private DeathStats deathStats;
+
+    [SerializeField]
     private List<GameObject> hitTargets;
 
     [SerializeField]
@@ -74,6 +77,11 @@ public class Unit : MonoBehaviour, IDamageable
     public ShadowStats ShadowStats
     {
         get { return shadowStats; }
+    }
+
+    public DeathStats DeathStats
+    {
+        get { return deathStats; }
     }
 
     public List<GameObject> HitTargets
@@ -149,6 +157,11 @@ public class Unit : MonoBehaviour, IDamageable
                 lookAtTarget();
             else if(agent.Agent.enabled == true) //prevents errors being thrown when a units agent is temporarily disabled by being grabbed
                 agent.Agent.ResetPath();
+        }
+        else if(deathStats.DeathSkill) {
+            if(!deathStats.IsDying)
+                deathStats.StartStats(gameObject);
+            deathStats.FireDeathSkill();
         }
         else {
             print(gameObject.name + " has died!");

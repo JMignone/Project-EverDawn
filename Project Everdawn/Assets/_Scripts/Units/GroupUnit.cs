@@ -15,6 +15,7 @@ public class GroupUnit : MonoBehaviour, IDamageable
     private GameObject target;
     private DashStats dashStats;
     private ShadowStats shadowStats;
+    private DeathStats deathStats;
     private List<GameObject> hitTargets;
     private List<GameObject> inRangeTargets;
     private List<GameObject> enemyHitTargets;
@@ -82,6 +83,11 @@ public class GroupUnit : MonoBehaviour, IDamageable
     public ShadowStats ShadowStats
     {
         get { return shadowStats; }
+    }
+
+    public DeathStats DeathStats
+    {
+        get { return deathStats; }
     }
 
     public bool IsMoving

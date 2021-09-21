@@ -39,6 +39,9 @@ public class Building : MonoBehaviour, IDamageable
     private ShadowStats shadowStats;
 
     [SerializeField]
+    private DeathStats deathStats;
+
+    [SerializeField]
     private List<GameObject> hitTargets;
 
     [SerializeField]
@@ -103,6 +106,11 @@ public class Building : MonoBehaviour, IDamageable
     public ShadowStats ShadowStats
     {
         get { return shadowStats; }
+    }
+
+    public DeathStats DeathStats
+    {
+        get { return deathStats; }
     }
 
     public List<GameObject> HitTargets

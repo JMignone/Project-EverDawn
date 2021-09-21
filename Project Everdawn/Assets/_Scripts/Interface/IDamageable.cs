@@ -13,6 +13,7 @@ public interface IDamageable
     Actor2D UnitSprite { get; }
     DashStats DashStats { get; }
     ShadowStats ShadowStats { get; }
+    //DeathStats DeathStats { get; }
     bool IsMoving { get; }
 
     void TakeDamage(float amount);

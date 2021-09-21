@@ -53,7 +53,7 @@ MonoBehaviour:
   baseDamage: 50
   heightAttackable: 0
   typeAttackable: 0
-  canPierce: 0
+  canPierce: 1
   blockable: 0
   aoeStats:
     areaOfEffect: 0
@@ -86,6 +86,10 @@ MonoBehaviour:
     canGrab: 0
     pullDuration: 0.5
     stunDuration: 1.5
+  strengthStats:
+    canStrength: 0
+    strengthDuration: 0
+    strengthIntensity: 0
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0.6

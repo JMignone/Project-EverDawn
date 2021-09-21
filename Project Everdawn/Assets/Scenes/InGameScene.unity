@@ -5313,6 +5313,10 @@ MonoBehaviour:
     interruptsByDamage: 1
     shadeDelay: 3
     currentDelay: 0
+  deathStats:
+    deathSkill: 0
+    abilityPrefabs: []
+    abilityDelays: []
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -7377,6 +7381,10 @@ MonoBehaviour:
     interruptsByDamage: 0
     shadeDelay: 0
     currentDelay: 0
+  deathStats:
+    deathSkill: 0
+    abilityPrefabs: []
+    abilityDelays: []
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -8277,7 +8285,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 532737518}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
   m_Controller: {fileID: 0}
   m_CullingMode: 1
@@ -18535,6 +18543,10 @@ MonoBehaviour:
     interruptsByDamage: 0
     shadeDelay: 0
     currentDelay: 0
+  deathStats:
+    deathSkill: 0
+    abilityPrefabs: []
+    abilityDelays: []
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -21327,7 +21339,7 @@ MonoBehaviour:
   unitSprite: {fileID: 2075605732}
   target: {fileID: 0}
   stats:
-    currHealth: 3000
+    currHealth: 100
     maxHealth: 3000
     healthDecay: 0
     range: 5
@@ -21455,6 +21467,17 @@ MonoBehaviour:
     interruptsByDamage: 0
     shadeDelay: 0
     currentDelay: 0
+  deathStats:
+    deathSkill: 1
+    abilityPrefabs:
+    - {fileID: 1224647179923901261, guid: 9f95a636396da294c8b3f8bf1ae79e27, type: 3}
+    - {fileID: 2538035110669741027, guid: 13a17977caf49464a90a86e954b0a79e, type: 3}
+    - {fileID: 4332999100709516610, guid: 4d38356404b172542bbbb06b5950ec16, type: 3}
+    abilityDelays:
+    - 1
+    - 1
+    - 1
+    - 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -24633,6 +24656,10 @@ MonoBehaviour:
     interruptsByDamage: 0
     shadeDelay: 0
     currentDelay: 0
+  deathStats:
+    deathSkill: 0
+    abilityPrefabs: []
+    abilityDelays: []
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -29082,6 +29109,10 @@ MonoBehaviour:
     interruptsByDamage: 0
     shadeDelay: 0
     currentDelay: 0
+  deathStats:
+    deathSkill: 0
+    abilityPrefabs: []
+    abilityDelays: []
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -30937,7 +30968,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140046817}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -62.233376, y: -191.99384, z: 634.8926}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -31553,6 +31584,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 945437422}
     m_Modifications:
+    - target: {fileID: 541108947070885123, guid: 44f7a6c052fb5f94db33c7c7cd40b7ad, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1913794650724410274, guid: 44f7a6c052fb5f94db33c7c7cd40b7ad, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -31641,9 +31676,37 @@ PrefabInstance:
       propertyPath: playerInfo
       value: 
       objectReference: {fileID: 335821902}
+    - target: {fileID: 3657463436887887817, guid: 44f7a6c052fb5f94db33c7c7cd40b7ad, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3667414896389333260, guid: 44f7a6c052fb5f94db33c7c7cd40b7ad, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968483266104143950, guid: 44f7a6c052fb5f94db33c7c7cd40b7ad, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5573443942769350919, guid: 44f7a6c052fb5f94db33c7c7cd40b7ad, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6700390220749663540, guid: 44f7a6c052fb5f94db33c7c7cd40b7ad, type: 3}
       propertyPath: m_Name
       value: TempNextCardPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700390220749663540, guid: 44f7a6c052fb5f94db33c7c7cd40b7ad, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7835723822100930308, guid: 44f7a6c052fb5f94db33c7c7cd40b7ad, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8367337065504698025, guid: 44f7a6c052fb5f94db33c7c7cd40b7ad, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44f7a6c052fb5f94db33c7c7cd40b7ad, type: 3}
