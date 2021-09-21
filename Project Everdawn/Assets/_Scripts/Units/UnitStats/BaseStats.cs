@@ -30,6 +30,8 @@ public class BaseStats
     [SerializeField]
     private SummoningSicknessUI summoningSicknessUI;
     [SerializeField]
+    private GameObject canvasAbility;
+    [SerializeField]
     private Image healthBar;
     [SerializeField]
     private Image abilityIndicator;
@@ -135,6 +137,11 @@ public class BaseStats
     public SummoningSicknessUI SummoningSicknessUI
     {
         get { return summoningSicknessUI; }
+    }
+
+    public GameObject CanvasAbility
+    {
+        get { return canvasAbility; }
     }
 
     public Image HealthBar

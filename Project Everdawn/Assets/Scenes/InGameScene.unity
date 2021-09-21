@@ -5205,6 +5205,7 @@ MonoBehaviour:
       sSCanvas: {fileID: 505489019}
       sSSprite: {fileID: 2138846190}
       sSMask: {fileID: 344124568}
+    canvasAbility: {fileID: 0}
     healthBar: {fileID: 632578507}
     abilityIndicator: {fileID: 622256857}
     detectionObject: {fileID: 1293166446}
@@ -5918,6 +5919,7 @@ MonoBehaviour:
       sSCanvas: {fileID: 1803213321}
       sSSprite: {fileID: 329479875}
       sSMask: {fileID: 1509596893}
+    canvasAbility: {fileID: 0}
     healthBar: {fileID: 1338576366}
     abilityIndicator: {fileID: 1902443571}
     detectionObject: {fileID: 1429048356}
@@ -6087,6 +6089,7 @@ MonoBehaviour:
       sSCanvas: {fileID: 880209751}
       sSSprite: {fileID: 84257160}
       sSMask: {fileID: 1035551820}
+    canvasAbility: {fileID: 0}
     healthBar: {fileID: 1139660077}
     abilityIndicator: {fileID: 277934148}
     detectionObject: {fileID: 208280334}
@@ -7273,6 +7276,7 @@ MonoBehaviour:
       sSCanvas: {fileID: 1254336075}
       sSSprite: {fileID: 1220271378}
       sSMask: {fileID: 174481709}
+    canvasAbility: {fileID: 0}
     healthBar: {fileID: 1448884627}
     abilityIndicator: {fileID: 144834659}
     detectionObject: {fileID: 458848459}
@@ -15459,6 +15463,7 @@ MonoBehaviour:
       sSCanvas: {fileID: 683812955}
       sSSprite: {fileID: 246436701}
       sSMask: {fileID: 494304146}
+    canvasAbility: {fileID: 0}
     healthBar: {fileID: 657163289}
     abilityIndicator: {fileID: 742012318}
     detectionObject: {fileID: 1055625688}
@@ -18422,6 +18427,7 @@ MonoBehaviour:
       sSCanvas: {fileID: 1701419881}
       sSSprite: {fileID: 1554303406}
       sSMask: {fileID: 1352765303}
+    canvasAbility: {fileID: 1722957324}
     healthBar: {fileID: 1040936824}
     abilityIndicator: {fileID: 981755474}
     detectionObject: {fileID: 179946909}
@@ -19437,6 +19443,7 @@ MonoBehaviour:
       sSCanvas: {fileID: 821037176}
       sSSprite: {fileID: 936810104}
       sSMask: {fileID: 40250001}
+    canvasAbility: {fileID: 0}
     healthBar: {fileID: 1862490394}
     abilityIndicator: {fileID: 467577675}
     detectionObject: {fileID: 672963758}
@@ -21356,6 +21363,7 @@ MonoBehaviour:
       sSCanvas: {fileID: 965008416}
       sSSprite: {fileID: 348660779}
       sSMask: {fileID: 611585004}
+    canvasAbility: {fileID: 1728403369}
     healthBar: {fileID: 2127388520}
     abilityIndicator: {fileID: 88194678}
     detectionObject: {fileID: 2008451027}
@@ -24561,6 +24569,7 @@ MonoBehaviour:
       sSCanvas: {fileID: 734232462}
       sSSprite: {fileID: 125890114}
       sSMask: {fileID: 331623797}
+    canvasAbility: {fileID: 0}
     healthBar: {fileID: 397502947}
     abilityIndicator: {fileID: 1338346863}
     detectionObject: {fileID: 1685450648}
@@ -29001,6 +29010,7 @@ MonoBehaviour:
       sSCanvas: {fileID: 833246252}
       sSSprite: {fileID: 1112781050}
       sSMask: {fileID: 1817424005}
+    canvasAbility: {fileID: 0}
     healthBar: {fileID: 588475778}
     abilityIndicator: {fileID: 348953512}
     detectionObject: {fileID: 1733946787}
@@ -29383,6 +29393,7 @@ MonoBehaviour:
       sSCanvas: {fileID: 298426318}
       sSSprite: {fileID: 26597391}
       sSMask: {fileID: 1528686275}
+    canvasAbility: {fileID: 0}
     healthBar: {fileID: 99010016}
     abilityIndicator: {fileID: 1357193625}
     detectionObject: {fileID: 944897465}
@@ -29905,6 +29916,7 @@ MonoBehaviour:
       sSCanvas: {fileID: 95069749}
       sSSprite: {fileID: 1725979910}
       sSMask: {fileID: 1641328582}
+    canvasAbility: {fileID: 0}
     healthBar: {fileID: 567344972}
     abilityIndicator: {fileID: 1703132071}
     detectionObject: {fileID: 1777450603}

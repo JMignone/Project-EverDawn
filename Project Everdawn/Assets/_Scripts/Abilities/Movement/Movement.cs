@@ -89,8 +89,11 @@ public class Movement : Projectile
                     transform.position -= transform.forward * Speed * SpeedReduction * Time.deltaTime;
                     BoomerangStats.UpdateBoomerangStats();
                 }
-                else
-                    transform.position += transform.forward * Speed * SpeedReduction * Time.deltaTime;
+                else {
+                    //transform.position += transform.forward * Speed * SpeedReduction * Time.deltaTime;
+                    //below takes more operations, but may be safer. This might be needed for projectile as well
+                    transform.position += (TargetLocation - transform.position).normalized * Speed * SpeedReduction * Time.deltaTime;
+                }
             }
         }
     }

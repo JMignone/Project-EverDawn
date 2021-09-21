@@ -39,6 +39,11 @@ public class DeathStats
         unit.Stats.EffectStats.ResistStats.ResistDamage(999);
         isDying = true;
         unit.Agent.Agent.enabled = false;
+        if(unit.Stats.CanvasAbility != null)
+            MonoBehaviour.Destroy(unit.Stats.CanvasAbility);
+        MonoBehaviour.Destroy(unit.Stats.HealthBar.transform.parent.gameObject);
+        if(unit.Stats.IsHoveringAbility)
+            GameManager.removeAbililtyIndicators();
     }
 
     public void FireDeathSkill() {
@@ -47,7 +52,7 @@ public class DeathStats
         else if(currentProjectileIndex == abilityPrefabs.Count) { //if we completed the last delay
             GameManager.RemoveObjectsFromList((unit as Component).gameObject);
             MonoBehaviour.Destroy((unit as Component).gameObject);
-            print((unit as Component).gameObject.name + " has died!");
+            MonoBehaviour.print((unit as Component).gameObject.name + " has died!");
         }
         else { //if we completed a delay
             Vector3 startPosition = new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z);
