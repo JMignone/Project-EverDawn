@@ -208,6 +208,11 @@ public class Tower : MonoBehaviour, IDamageable
                 }
             }
         }
+        else if(other.CompareTag("FriendlyAbilityHighlight")) { //if the hitbox is from a friendly units ability that hits friendly units
+            AbilityPreview ability = other.GetComponent<AbilityPreview>();
+            if(stats.Targetable && GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
+                stats.IndicatorNum++;
+        }
     }
 
     public void OnTriggerExit(Collider other) {
@@ -240,6 +245,11 @@ public class Tower : MonoBehaviour, IDamageable
                     }
                 }
             }
+        }
+        else if(other.CompareTag("FriendlyAbilityHighlight")) { //if the hitbox is from a friendly units ability that hits friendly units
+            AbilityPreview ability = other.GetComponent<AbilityPreview>();
+            if(stats.Targetable && GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
+                stats.IndicatorNum--;
         }
     }
 

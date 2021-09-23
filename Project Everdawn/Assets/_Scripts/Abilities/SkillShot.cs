@@ -227,7 +227,6 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             
             foreach(GameObject preview in abilityPreviews) {
                 if(preview.GetComponent<SphereCollider>() || preview.GetComponent<BoxCollider>()) {
-                    Vector3 newPosition = position;
                     GameObject go = abilityPrefabs.Find(go => go.name == preview.name);
                     if(go.GetComponent<Movement>())
                         AdjustMovementPreview(preview, go.GetComponent<Movement>(), position, direction);
@@ -400,7 +399,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         RectTransform previewTransform = preview.GetComponent<RectTransform>();
         float distance = Vector3.Distance(position, abilityPreviewCanvas.transform.position);
 
-        if(preview.GetComponent<BoxCollider>()) {
+        if(preview.GetComponent<BoxCollider>()) { //if the projectile is not a grenade
             if(distance > range - radius) {
                 Vector3 distFromRadius = position - abilityPreviewCanvas.transform.position;
                 distFromRadius *= (range - radius)/distance;
@@ -409,11 +408,13 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             }
 
             UnityEngine.AI.NavMeshHit hit;
-            if(move.PassObstacles) { //if the movment is able to pass through obstacles
+            if(unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING) //if the unit is flying, disregard all obstacles
+                position = GameFunctions.adjustForBoundary(position);
+            else if(move.PassObstacles) { //if the movment is able to pass through obstacles
                 position = GameFunctions.adjustForBoundary(position);
                 if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, 9))
                     position = hit.position;
-
+                
                 Vector3 newDirection = abilityPreviewCanvas.transform.position - position;
                 newDirection.y = 0;
                 Quaternion rotation = Quaternion.LookRotation(newDirection);
@@ -421,7 +422,8 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             }
             else {
                 UnityEngine.AI.NavMesh.Raycast(unit.Agent.Agent.transform.position, position, out hit, 1);
-                position = GameFunctions.adjustForTowers(hit.position, radius);
+                //position = GameFunctions.adjustForTowers(hit.position, radius);
+                position = hit.position;
             }
             distance = Vector3.Distance(position, abilityPreviewCanvas.transform.position);
 
@@ -430,7 +432,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
             preview.GetComponent<BoxCollider>().size = new Vector3(move.Radius*2, distance, 1);
         }
-        else {
+        else { //else if the projectile is a grenade
             bool previewCircleAtEnd = !move.GrenadeStats.IsGrenade && !move.SelfDestructStats.SelfDestructs && 
                                   (move.LingeringStats.Lingering && move.LingeringStats.LingerAtEnd);
                                   //if its not a grenade, doesnt selfdestruct, and lingers at the end its true        
@@ -455,6 +457,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             }
             else {
                 UnityEngine.AI.NavMesh.Raycast(unit.Agent.Agent.transform.position, position, out hit, 1);
+                //position = GameFunctions.adjustForTowers(hit.position, radius);
                 position = hit.position;
             }
 
@@ -485,22 +488,50 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, areaMask))
                 position = hit.position;
             if(preview.transform.childCount > 1)
-                preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(position);
+                preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(position); //this moves the summon part of the preview
             else
-                preview.GetComponent<RectTransform>().position = position;
+                preview.GetComponent<RectTransform>().position = position; //this moves the other parts, perhaps an explosion around the summon
         }
-        else if(cal.LinearStats.IsLinear) {
-            preview.GetComponent<RectTransform>().rotation = Quaternion.Euler(90f, 0f, 0f);
+        else {
             RectTransform previewRect = preview.GetComponent<RectTransform>();
+
+            UnityEngine.AI.NavMeshHit hit;
+            if(cal.TeleportStats.IsWarp && unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND) {
+                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, 9))
+                    position = hit.position;
+            }
+
+            previewRect.rotation = Quaternion.Euler(90f, 0f, 0f);
+            if(previewRect.sizeDelta.x < previewRect.sizeDelta.y) //this is the vertical component for a linear cal
+                previewRect.position = new Vector3(position.x, 1, 0); 
+            else if(previewRect.sizeDelta.x > previewRect.sizeDelta.y) //this is the horizontal component for a linear cal
+                previewRect.position = new Vector3(0, 1, position.z); 
+            else { //these are any other components
+                //if the preview in question is NOT the ally radius part of the warp, which requires a sphere collider
+                if( !(cal.TeleportStats.IsWarp && cal.TeleportStats.TeleportsAllies && preview.GetComponent<SphereCollider>().radius == cal.TeleportStats.AllyRadius) ) {
+                    position.y = 1;
+                    previewRect.position = position;
+                }
+            }
+        }
+
+        /*
+        else if(cal.LinearStats.IsLinear) {
+            RectTransform previewRect = preview.GetComponent<RectTransform>();
+            previewRect.rotation = Quaternion.Euler(90f, 0f, 0f);
             if(previewRect.sizeDelta.x < previewRect.sizeDelta.y) //this is the vertical component
-                preview.GetComponent<RectTransform>().position = new Vector3(position.x, 1, 0); 
-            else //this is the horizontal component
-                preview.GetComponent<RectTransform>().position = new Vector3(0, 1, position.z); 
+                previewRect.position = new Vector3(position.x, 1, 0); 
+            else if(previewRect.sizeDelta.x > previewRect.sizeDelta.y) //this is the horizontal component
+                previewRect.position = new Vector3(0, 1, position.z); 
+            else { //these are any other components
+                position.y = 1;
+                previewRect.position = position;
+            }
         }
         else {
             position.y = 1;
             preview.GetComponent<RectTransform>().position = position;
-        }
+        }*/
         fireMousePosition = position;
     }
 
@@ -543,7 +574,14 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             previewHitBox.center = new Vector3(0, 0, -.5f);
             previewHitBox.enabled = false;
 
-            go.tag = "AbilityHighlight";
+            //not all movement abilities need to highlight enemies
+            if(goProj.GetComponent<Movement>()) {
+                if(goProj.GetComponent<Movement>().HighlightEnemies)
+                    go.tag = "AbilityHighlight";
+            }
+            else
+                go.tag = "AbilityHighlight";
+
             RectTransform previewTransform = go.GetComponent<RectTransform>();
             previewTransform.anchorMin = new Vector2(.5f, 0);
             previewTransform.anchorMax = new Vector2(.5f, 0);
@@ -716,7 +754,8 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 abilityPreviews.Add(goLinearHorz);
             }      
         }
-        else if(cal.LingeringStats.Lingering || cal.SelfDestructStats.SelfDestructs) {
+
+        if(cal.LingeringStats.Lingering || cal.SelfDestructStats.SelfDestructs) {
             GameObject goBoom = new GameObject(); //Create the GameObject
             goBoom.name = goCAL.name;
 
@@ -748,6 +787,74 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
             goBoom.SetActive(true);
             abilityPreviews.Add(goBoom);
+        }
+
+        if(cal.TeleportStats.IsWarp) {
+            GameObject goWarp = new GameObject(); //Create the GameObject
+            goWarp.name = goCAL.name;
+
+            AbilityPreview aPrev = goWarp.AddComponent<AbilityPreview>();
+            aPrev.HeightAttackable = cal.HeightAttackable;
+            aPrev.TypeAttackable = cal.TypeAttackable;
+
+            Image previewImageWarp = goWarp.AddComponent<Image>(); //Add the Image Component script
+            previewImageWarp.GetComponent<Image>().color = new Color32(255,255,255,100);
+            previewImageWarp.sprite = abilityPreviewBomb; //Set the Sprite of the Image Component on the new GameObject
+            previewImageWarp.enabled = false;
+
+            float radius = unit.Agent.Agent.radius;
+
+            SphereCollider previewHitBoxWarp = goWarp.AddComponent<SphereCollider>();
+            previewHitBoxWarp.radius = radius;
+            previewHitBoxWarp.center = new Vector3(0, 0, 0);
+            previewHitBoxWarp.enabled = false;
+
+            //goWarp.tag = "AbilityHighlight"; //we dont need it to highlight enemies
+            RectTransform previewWarpTransform =  goWarp.GetComponent<RectTransform>();
+            previewWarpTransform.anchorMin = new Vector2(.5f, 0);
+            previewWarpTransform.anchorMax = new Vector2(.5f, 0);
+            previewWarpTransform.pivot = new Vector2(.5f, .5f);
+            previewWarpTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+            previewWarpTransform.localPosition = new Vector3(0, -5, 0);
+            previewWarpTransform.localRotation = Quaternion.Euler(270, 0, 0);
+            previewWarpTransform.sizeDelta = new Vector2(radius*2, radius*2);
+
+            goWarp.SetActive(true);
+            abilityPreviews.Add(goWarp);
+
+            if(cal.TeleportStats.TeleportsAllies) {
+                GameObject goAWarp = new GameObject(); //Create the GameObject
+                goAWarp.name = goCAL.name;
+
+                AbilityPreview aPrevAlly = goAWarp.AddComponent<AbilityPreview>();
+                aPrevAlly.HeightAttackable = cal.HeightAttackable;
+                aPrevAlly.TypeAttackable = cal.TypeAttackable;
+
+                Image previewImageAWarp = goAWarp.AddComponent<Image>(); //Add the Image Component script
+                previewImageAWarp.GetComponent<Image>().color = new Color32(255,255,255,100);
+                previewImageAWarp.sprite = abilityPreviewBomb; //Set the Sprite of the Image Component on the new GameObject
+                previewImageAWarp.enabled = false;
+
+                radius = cal.TeleportStats.AllyRadius;
+
+                SphereCollider previewHitBoxAWarp = goAWarp.AddComponent<SphereCollider>();
+                previewHitBoxAWarp.radius = radius;
+                previewHitBoxAWarp.center = new Vector3(0, 0, 0);
+                previewHitBoxAWarp.enabled = false;
+
+                goAWarp.tag = "FriendlyAbilityHighlight"; //we need this to highlight allies
+                RectTransform previewAWarpTransform =  goAWarp.GetComponent<RectTransform>();
+                previewAWarpTransform.anchorMin = new Vector2(.5f, 0);
+                previewAWarpTransform.anchorMax = new Vector2(.5f, 0);
+                previewAWarpTransform.pivot = new Vector2(.5f, .5f);
+                previewAWarpTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+                previewAWarpTransform.localPosition = new Vector3(0, -5, 0);
+                previewAWarpTransform.localRotation = Quaternion.Euler(270, 0, 0);
+                previewAWarpTransform.sizeDelta = new Vector2(radius*2, radius*2);
+
+                goAWarp.SetActive(true);
+                abilityPreviews.Add(goAWarp);
+            }
         }
         
         //now add the range circle

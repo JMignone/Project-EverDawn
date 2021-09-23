@@ -300,7 +300,7 @@ public class BaseStats
                     float angle = Vector3.Angle(unitAgent.transform.forward, directionToTarget); 
 
                     //180 - *** might be the source of an error later on, depends on the angle of a unit agent at the start, right now they are all 180
-                    if(180-Mathf.Abs(angle) < GameConstants.MAXIMUM_ATTACK_ANGLE) {
+                    if(180-Mathf.Abs(angle) < GameConstants.MAXIMUM_ATTACK_ANGLE || Mathf.Abs(angle) == 0) { //it may equal 0 if the unit is right on top of the target, this may be fixed if the units are set to 0 and not 180
                         if(currAttackDelay < attackDelay) 
                             currAttackDelay += Time.deltaTime * effectStats.SlowedStats.CurrentSlowIntensity;
                         else

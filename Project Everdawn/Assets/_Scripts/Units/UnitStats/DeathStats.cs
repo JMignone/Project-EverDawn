@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class DeathStats
@@ -32,6 +33,9 @@ public class DeathStats
         get { return isDying; }
     }
 
+    private Vector3 startPosition;
+    private Vector3 endPosition;
+    private Vector3 fireDirection;
     public void StartStats(GameObject go) {
         unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
         unit.SetTarget(null);
@@ -42,8 +46,15 @@ public class DeathStats
         if(unit.Stats.CanvasAbility != null)
             MonoBehaviour.Destroy(unit.Stats.CanvasAbility);
         MonoBehaviour.Destroy(unit.Stats.HealthBar.transform.parent.gameObject);
-        if(unit.Stats.IsHoveringAbility)
+
+        if(unit.Stats.IsHoveringAbility) {
             GameManager.removeAbililtyIndicators();
+            GameManager.Instance.Players[0].OnDragging = false;
+        }
+
+        startPosition = new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z);
+        endPosition = startPosition + unit.Agent.transform.forward * .001f; //moves the end position slightly forward 
+        fireDirection = endPosition - startPosition;
     }
 
     public void FireDeathSkill() {
@@ -55,9 +66,6 @@ public class DeathStats
             MonoBehaviour.print((unit as Component).gameObject.name + " has died!");
         }
         else { //if we completed a delay
-            Vector3 startPosition = new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z);
-            Vector3 endPosition = startPosition + unit.Agent.transform.forward * .001f; //moves the end position slightly forward 
-            Vector3 fireDirection = endPosition - startPosition;
             if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
                 GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPosition, endPosition, fireDirection, unit, 1);
             else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())

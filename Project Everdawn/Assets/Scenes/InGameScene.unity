@@ -4644,12 +4644,12 @@ MonoBehaviour:
       unitIndex: 0
     - index: 3
       name: Knight
-      icon: {fileID: 21300000, guid: 3705379fccc4e694d861698406ce8912, type: 3}
+      icon: {fileID: 21300000, guid: a3615353b88c90a448ef598d9e2409e7, type: 3}
       cost: 4
       spawnZoneRestrictions: 0
       prefab:
-      - {fileID: 1701868425468477452, guid: 2bedcad420ef25749bc48f0b7524c165, type: 3}
-      previewPrefab: {fileID: 881476954545742613, guid: 5186c23a5998e7d4d90f336cba1d6aba, type: 3}
+      - {fileID: 3415333900699297907, guid: 88d8d05153de23e43a8727beab575034, type: 3}
+      previewPrefab: {fileID: 2091876083188452919, guid: ef0564141109bcb4281b5660d1246051, type: 3}
       previewDelays:
       - 0
       unitIndex: 0
@@ -14658,7 +14658,7 @@ MonoBehaviour:
   - {fileID: 7745593707573550172, guid: 625775f3e76e1604f8d2c87051714185, type: 3}
   abilityDelays:
   - 0.2
-  - 0
+  - 1
   currentDelay: 0
   applyResistanceStats:
     applyToSelf: 0
@@ -20823,14 +20823,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1347901587}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b328a17fda14f74aaa845052562795a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 1114531618}
   abilityPrefabs:
-  - {fileID: 1224647179923901261, guid: 9f95a636396da294c8b3f8bf1ae79e27, type: 3}
+  - {fileID: 7239714737300649845, guid: 20e87596b55db0a4fb0d2fb3e4946cb3, type: 3}
   abilityDelays:
   - 0.1
   - 0.5
@@ -20875,14 +20875,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1347901587}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75740db13975d504fbe3a97a1fead2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 1114531618}
   abilityPrefabs:
-  - {fileID: 1224647179923901261, guid: 9f95a636396da294c8b3f8bf1ae79e27, type: 3}
+  - {fileID: 7239714737300649845, guid: 20e87596b55db0a4fb0d2fb3e4946cb3, type: 3}
   abilityDelays:
   - 0
   - 0.25
@@ -21346,7 +21346,7 @@ MonoBehaviour:
   unitSprite: {fileID: 2075605732}
   target: {fileID: 0}
   stats:
-    currHealth: 100
+    currHealth: 1000
     maxHealth: 3000
     healthDecay: 0
     range: 5
@@ -23996,7 +23996,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1574630164}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 4
+  m_Radius: 3
   m_Speed: 10
   m_Acceleration: 100
   avoidancePriority: 50

@@ -356,7 +356,7 @@ MonoBehaviour:
     startLocation: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 0
-    explosionRadius: 14
+    explosionRadius: 1.5
     grenadeArcMultiplier: 0
   resistEffects:
     resistFreeze: 1

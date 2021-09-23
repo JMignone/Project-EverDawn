@@ -188,7 +188,6 @@ public class GameManager : MonoBehaviour
             if((component as IDamageable).Stats.IndicatorNum > 0)
                 (component as IDamageable).Stats.IndicatorNum = 0;
         }
-        GameObject hud = GameObject.Find(GameConstants.HUD_CANVAS);
-        hud.transform.GetChild(2).GetComponent<Image>().enabled = false;
+        GameFunctions.GetCanvas().GetChild(3).GetComponent<Image>().enabled = false;
     }
 }

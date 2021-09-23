@@ -7,9 +7,17 @@ public class Movement : Projectile
     [SerializeField]
     private bool passObstacles;
 
+    [SerializeField]
+    private bool highlightEnemies;
+
     public bool PassObstacles
     {
         get { return passObstacles; }
+    }
+
+    public bool HighlightEnemies
+    {
+        get { return highlightEnemies; }
     }
 
     private void Start() {

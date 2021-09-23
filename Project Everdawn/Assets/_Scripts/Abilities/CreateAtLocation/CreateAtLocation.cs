@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-// !! CURENTLY, CAL's DO NOT GAIN DAMAGE EVEN IF A UNIT IS STRENGTHENED !!
 public class CreateAtLocation : MonoBehaviour, IAbility
 {
     [SerializeField]
@@ -58,6 +56,9 @@ public class CreateAtLocation : MonoBehaviour, IAbility
 
     [SerializeField]
     private LinearStats linearStats;
+
+    [SerializeField]
+    private TeleportStats teleportStats;
     private bool hasExploded;
 
     [SerializeField]
@@ -164,6 +165,11 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         get { return linearStats; }
     }
 
+    public TeleportStats TeleportStats
+    {
+        get { return teleportStats; }
+    }
+
     public SummonStats SummonStats
     {
         get { return summonStats; }
@@ -213,6 +219,7 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         }
         if(linearStats.IsLinear)
             linearStats.StartLinearStats(damageMultiplier);
+        teleportStats.StartStats(unit);
 
         if(unit != null)
             applyResistanceStats.StartResistance(unit);
@@ -226,6 +233,8 @@ public class CreateAtLocation : MonoBehaviour, IAbility
             selfDestructStats.Explode(gameObject);
         if(linearStats.IsLinear && !hasExploded)
             linearStats.Explode(gameObject);
+        if(teleportStats.IsWarp && !hasExploded)
+            teleportStats.Warp(gameObject);
         hasExploded = true;
         if(lingeringStats.Lingering)
             lingeringStats.UpdateLingeringStats(gameObject);

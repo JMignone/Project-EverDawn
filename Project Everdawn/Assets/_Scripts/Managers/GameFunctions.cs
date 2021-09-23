@@ -224,6 +224,10 @@ public static class GameFunctions
     }
 
     public static Vector3 adjustForTowers(Vector3 position, float radius) {
+        return position; 
+
+        // !!! IT SEEMS THIS FUNCTION MAY NOT BE NEEDED WITH THE ADDITION OF THE TOWER BARRIERS, ILL KEEP IT LIKE THIS FOR NOW !!!
+        /*
         foreach(GameObject go in GameManager.Instance.TowerObjects) {
             Component component = go.GetComponent(typeof(IDamageable));
             float towerRadius = (component as IDamageable).Agent.HitBox.radius;
@@ -252,6 +256,7 @@ public static class GameFunctions
                }        
         }
         return position;
+        */
     }
 
     public static Vector3 adjustForBoundary(Vector3 position) {
