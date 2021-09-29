@@ -22,6 +22,9 @@ public class ShadowStats
     [SerializeField]
     private float currentDelay;
 
+    [SerializeField]
+    private List<Renderer> mats;
+
     public bool Shades
     {
         get { return shades; }
@@ -51,6 +54,7 @@ public class ShadowStats
                 else {
                     currentDelay = 0;
                     unit.Stats.Vanish(gameObj, unit.EnemyHitTargets.ToArray());
+                    unit.Stats.UnitMaterials.MakeTransparent();
                 }
             }
             else if(unit.Stats.IsShadow && (!unit.Stats.CanAct || unit.Stats.IsCastingAbility || unit.Stats.IsAttacking) )

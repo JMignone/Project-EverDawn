@@ -8,7 +8,7 @@ public static class GameFunctions
 {
     public static bool CanAttack(string playerTag, string enemyTag, Component damageable, BaseStats stats) { //returns if a unit can attack another
         if(damageable) {
-            if(playerTag != enemyTag) {
+            if(playerTag != enemyTag && (damageable as IDamageable).Stats.Targetable) {
                 bool heightAttackable = false;
                 if(stats.HeightAttackable == GameConstants.HEIGHT_ATTACKABLE.BOTH) //If the unit can attack the flying or ground unit, continue
                     heightAttackable = true;
@@ -84,10 +84,6 @@ public static class GameFunctions
             return go;
         }
         return null;
-    }
-
-    public static Transform GetCanvas() {
-        return GameObject.Find(GameConstants.HUD_CANVAS).transform;
     }
 
     public static GameObject SpawnUnit(GameObject prefab, Transform parent, Vector3 position) 
@@ -279,4 +275,7 @@ public static class GameFunctions
         return position;
     }
 
+    public static Transform GetCanvas() {
+        return GameObject.Find(GameConstants.HUD_CANVAS).transform;
+    }
 }

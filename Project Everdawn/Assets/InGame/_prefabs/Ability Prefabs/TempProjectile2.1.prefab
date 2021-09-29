@@ -60,7 +60,7 @@ MonoBehaviour:
     explosionEffect: {fileID: 0}
     explosionRadius: 0
   freezeStats:
-    canFreeze: 0
+    canFreeze: 1
     freezeDuration: 4
   slowStats:
     canSlow: 0
@@ -71,9 +71,9 @@ MonoBehaviour:
     rootDuration: 0
   poisonStats:
     canPoison: 0
-    poisonDamage: 0
-    poisonDuration: 0
-    poisonTick: 0
+    poisonDamage: 20
+    poisonDuration: 6
+    poisonTick: 1
   knockbackStats:
     canKnockback: 0
     knockbackDuration: 0.1
@@ -114,7 +114,6 @@ MonoBehaviour:
     startLocation: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 75
-    damageMultiplier: 0
     explosionRadius: 15
     grenadeArcMultiplier: 0.2
   resistEffects:

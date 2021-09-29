@@ -12,6 +12,7 @@ TagManager:
   - CreateAtLocation
   - Pull
   - Dash
+  - FriendlyAbilityHighlight
   layers:
   - Default
   - TransparentFX

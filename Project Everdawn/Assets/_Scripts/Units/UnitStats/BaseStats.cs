@@ -35,6 +35,7 @@ public class BaseStats
     private Image healthBar;
     [SerializeField]
     private Image abilityIndicator;
+    [SerializeField]
     private int indicatorNum;
     [SerializeField]
     private SphereCollider detectionObject;
@@ -46,6 +47,8 @@ public class BaseStats
     [Tooltip("Determines whether this unit can attack units if they are on the ground, flying or either one.")]
     [SerializeField]
     private GameConstants.HEIGHT_ATTACKABLE heightAttackable;
+    [SerializeField]
+    private UnitMaterials unitMaterials;
     [Tooltip("Lets other units know whether this unit is a structure or not")]
     [SerializeField]
     private GameConstants.UNIT_TYPE unitType;
@@ -182,6 +185,11 @@ public class BaseStats
     {
         get { return heightAttackable; }
         //set { heightAttackable = value; }
+    }
+
+    public UnitMaterials UnitMaterials
+    {
+        get { return unitMaterials; }
     }
 
     public GameConstants.UNIT_TYPE UnitType
@@ -362,7 +370,6 @@ public class BaseStats
     public void Vanish(GameObject unit, GameObject[] enemyHitTargets) {
         if(!isShadow) {
             isShadow = true;
-            indicatorNum = 0;
             foreach(GameObject go in enemyHitTargets) {
                 Component targetComponent = go.GetComponent(typeof(IDamageable));
                 if(targetComponent) {
@@ -408,9 +415,22 @@ public class BaseStats
                 }
             }
             //make unit appear
+            unitMaterials.MakeOpaque();
         }
         else
             stats.CurrentDelay = 0;
+    }
+
+    public void IncIndicatorNum() {
+        if(indicatorNum == 0)
+            unitMaterials.AbilityHover();
+        indicatorNum++;
+    }
+
+    public void DecIndicatorNum() {
+        indicatorNum--;
+        if(indicatorNum == 0)
+            unitMaterials.RemoveAbilityHover();
     }
 
     public void ApplyAffects(Component damageable) {

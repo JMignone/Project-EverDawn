@@ -159,7 +159,6 @@ public class ResistStats
         if(!resistedDamage) {
             resistedDamage = true;
             rdDuration = duration;
-
         }
     }
 

@@ -242,8 +242,8 @@ public class Unit : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(stats.Targetable && GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
-                    stats.IndicatorNum++;
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) 
+                    stats.IncIndicatorNum();
             }
             else if(other.CompareTag("Pull")) {
                 Component IAbility = other.transform.parent.parent.GetComponent(typeof(IAbility));
@@ -252,7 +252,7 @@ public class Unit : MonoBehaviour, IDamageable
             else if(other.CompareTag("Dash")) {
                 Component unit = other.transform.parent.parent.GetComponent(typeof(IDamageable));
                 if(unit) {
-                    if(stats.Targetable && GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats))
+                    if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats))
                         (unit as IDamageable).DashStats.StartDash(gameObject);
                 }
             }
@@ -280,8 +280,8 @@ public class Unit : MonoBehaviour, IDamageable
         }
         else if(other.CompareTag("FriendlyAbilityHighlight")) { //if the hitbox is from a friendly units ability that hits friendly units
             AbilityPreview ability = other.GetComponent<AbilityPreview>();
-            if(stats.Targetable && GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
-                stats.IndicatorNum++;
+            if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
+                stats.IncIndicatorNum();
         }
     }
 
@@ -292,8 +292,8 @@ public class Unit : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(stats.Targetable && GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
-                    stats.IndicatorNum--;
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
+                    stats.DecIndicatorNum();
             }
             else if(other.CompareTag("Pull")) {
                 Component IAbility = other.transform.parent.parent.GetComponent(typeof(IAbility));
@@ -322,8 +322,8 @@ public class Unit : MonoBehaviour, IDamageable
         }
         else if(other.CompareTag("FriendlyAbilityHighlight")) { //if the hitbox is from a friendly units ability that hits friendly units
             AbilityPreview ability = other.GetComponent<AbilityPreview>();
-            if(stats.Targetable && GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
-                stats.IndicatorNum--;
+            if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
+                stats.DecIndicatorNum();
         }
     }
 

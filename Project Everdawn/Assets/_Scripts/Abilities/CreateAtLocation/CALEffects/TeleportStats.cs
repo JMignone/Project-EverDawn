@@ -16,6 +16,10 @@ public class TeleportStats
     [SerializeField]
     private float allyRadius;
 
+    [Tooltip("Determines how long allys teleported are unable to act")]
+    [SerializeField]
+    private float allyWarpSickness;
+
     [SerializeField]
     private GameObject explosionEffect;
 
@@ -62,7 +66,7 @@ public class TeleportStats
                         }
 
                         //replace freeze with stun maybe later on
-                        (damageable as IDamageable).Stats.EffectStats.FrozenStats.Freeze(.5f);
+                        (damageable as IDamageable).Stats.EffectStats.FrozenStats.Freeze(allyWarpSickness);
                     }
                 }
             }

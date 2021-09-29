@@ -87,13 +87,19 @@ public class PoisonedStats
                     poisonedDuration -= poisonedTick;
                 }
             }
-            else
+            else {
                 isPoisoned = false;
+
+                (damageableComponent as IDamageable).Stats.UnitMaterials.RemovePurple();
+            }
         }
     }
 
     public void Poison(float duration, float tick, float damage) {
         if(!cantBePoisoned && !outSideResistance) {
+            if(!isPoisoned)
+                (damageableComponent as IDamageable).Stats.UnitMaterials.TintPurple();
+
             isPoisoned = true;
             poisonedDuration = duration;
             poisonedTick = tick;

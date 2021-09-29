@@ -70,6 +70,9 @@ public class FrozenStats
 
     public void Freeze(float duration) {
         if(!cantBeFrozen && !outSideResistance) {
+            if(!isFrozen)
+                unit.Stats.UnitMaterials.TintCyan();
+
             isFrozen = true;
             frozenDelay = duration;
             currentFrozenDelay = 0;
@@ -88,6 +91,8 @@ public class FrozenStats
     }
 
     public void unFreeze() {
+        unit.Stats.UnitMaterials.RemoveCyan();
+
         isFrozen = false;
         unit.UnitSprite.Animator.enabled = true;
         if((unit as Component).gameObject.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors back to green
