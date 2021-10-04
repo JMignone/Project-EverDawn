@@ -240,9 +240,9 @@ public class CreateAtLocation : MonoBehaviour, IAbility
             lingeringStats.UpdateLingeringStats(gameObject);
         if(SummonStats.IsSummon) {
             if(unit != null && unit.Agent != null) //if the unit is alive, then check if its stunned
-                SummonStats.UpdateSummonStats(gameObject, !unit.Stats.CanAct);
+                SummonStats.UpdateSummonStats(gameObject, unit.Stats.CanAct);
             else
-                SummonStats.UpdateSummonStats(gameObject, true);
+                SummonStats.UpdateSummonStats(gameObject, false);
         }
         else if(!lingeringStats.Lingering) {
             Destroy(gameObject);

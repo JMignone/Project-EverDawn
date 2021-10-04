@@ -6,26 +6,30 @@ using UnityEngine.UI;
 [System.Serializable]
 public class BaseStats
 {
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float currHealth;
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float maxHealth;
+    [SerializeField] [Min(0)]
+    private float currArmor;
+    [SerializeField] [Min(0)]
+    private float maxArmor;
     [Tooltip("A number from (0-1) that will determine what percentage of health will be removed each tick. A number below .1 is highly recomended")]
-    [SerializeField]
+    [SerializeField] [Range(0,1)]
     private float healthDecay;
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float range;
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float visionRange;
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float baseDamage;
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float attackDelay;
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float currAttackDelay;
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float moveSpeed;
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float rotationSpeed;
     [SerializeField]
     private SummoningSicknessUI summoningSicknessUI;
@@ -34,8 +38,10 @@ public class BaseStats
     [SerializeField]
     private Image healthBar;
     [SerializeField]
-    private Image abilityIndicator;
+    private Image armorBar;
     [SerializeField]
+    private Image abilityIndicator;
+    //[SerializeField]
     private int indicatorNum;
     [SerializeField]
     private SphereCollider detectionObject;
@@ -93,6 +99,22 @@ public class BaseStats
     public float HealthDecay {
         get { return healthDecay; }
         //set { healthDecay = value; }
+    }
+
+    public float PercentArmor {
+        get { return currArmor/maxArmor; }
+    }
+
+    public float CurrArmor {
+        get { return currArmor; }
+        set { 
+            if(value <= 0)
+                currArmor = 0;
+            else if(value >= maxArmor)
+                currArmor = maxArmor;
+            else
+                currArmor = value;
+        }
     }
 
     public float Range
@@ -270,6 +292,7 @@ public class BaseStats
     }
 
     public void UpdateStats(bool chargeAttack, int inRange, Actor3D unitAgent, List<GameObject> hitTargets, GameObject target) {
+        /*
         if(PercentHealth == 1) {
             HealthBar.enabled = false;
             HealthBar.transform.GetChild(0).gameObject.SetActive(false); //this is the image border
@@ -279,6 +302,8 @@ public class BaseStats
             HealthBar.transform.GetChild(0).gameObject.SetActive(true);
         }
         HealthBar.fillAmount = PercentHealth;
+        */
+        UpdateHealth();
 
         if(indicatorNum > 0 && Damageable)
             abilityIndicator.enabled = true;
@@ -337,6 +362,7 @@ public class BaseStats
     }
 
     public void UpdateBuildingStats() {
+        /*
         if(PercentHealth == 1) {
             HealthBar.enabled = false;
             HealthBar.transform.GetChild(0).gameObject.SetActive(false); //this is the image border
@@ -346,6 +372,8 @@ public class BaseStats
             HealthBar.transform.GetChild(0).gameObject.SetActive(true);
         }
         HealthBar.fillAmount = PercentHealth;
+        */
+        UpdateHealth();
 
         if(indicatorNum > 0 && Damageable)
             abilityIndicator.enabled = true;
@@ -381,6 +409,34 @@ public class BaseStats
                 }
             }
             //make unit transparent
+        }
+    }
+
+    public void UpdateHealth() {
+        if(currArmor > 0) {
+            if(PercentArmor == 1) {
+                armorBar.enabled = false;
+                armorBar.transform.GetChild(0).gameObject.SetActive(false); //this is the image border
+            }
+            else {
+                armorBar.enabled = true;
+                armorBar.transform.GetChild(0).gameObject.SetActive(true);
+            }
+            armorBar.fillAmount = PercentArmor;
+        }
+        else {
+            armorBar.enabled = false;
+            armorBar.transform.GetChild(0).gameObject.SetActive(false);
+
+            if(PercentHealth == 1 && maxArmor == 0) {
+                healthBar.enabled = false;
+                healthBar.transform.GetChild(0).gameObject.SetActive(false); //this is the image border
+            }
+            else {
+                healthBar.enabled = true;
+                healthBar.transform.GetChild(0).gameObject.SetActive(true);
+            }
+            healthBar.fillAmount = PercentHealth;
         }
     }
 

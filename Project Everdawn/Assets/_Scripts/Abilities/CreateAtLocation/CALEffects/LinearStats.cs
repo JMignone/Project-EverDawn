@@ -17,7 +17,7 @@ public class LinearStats
     [SerializeField]
     private GameObject explosionEffect;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float explosionDamage;
     private float damageMultiplier;
 

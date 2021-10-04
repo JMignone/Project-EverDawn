@@ -11,7 +11,7 @@ public class CardStats
     private string name;
     [SerializeField]
     private Sprite icon;
-    [SerializeField]
+    [SerializeField] [Range(0,10)]
     private int cost;
     [SerializeField]
     private GameConstants.SPAWN_ZONE_RESTRICTION spawnZoneRestrictions;

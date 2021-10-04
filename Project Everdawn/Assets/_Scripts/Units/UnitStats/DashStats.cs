@@ -15,21 +15,21 @@ public class DashStats
     private bool isDashing;
     private bool isMoving;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float dashDamage;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float dashSpeed;
     private float speed;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float dashRange;
 
     [Tooltip("Determines the amount of time before starting to dash")]
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float dashDelay;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float currentDelay;
 
     public bool Dashes

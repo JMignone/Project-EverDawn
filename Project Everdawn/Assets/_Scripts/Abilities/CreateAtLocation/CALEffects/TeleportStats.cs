@@ -13,11 +13,11 @@ public class TeleportStats
     [SerializeField]
     private bool teleportsAllies;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float allyRadius;
 
     [Tooltip("Determines how long allys teleported are unable to act")]
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float allyWarpSickness;
 
     [SerializeField]

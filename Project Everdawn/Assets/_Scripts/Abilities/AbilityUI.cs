@@ -6,10 +6,10 @@ using UnityEngine.UI;
 [System.Serializable]
 public class AbilityUI
 {
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float cooldownDelay;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float currCooldownDelay;
 
     [SerializeField]

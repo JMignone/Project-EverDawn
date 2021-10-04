@@ -15,7 +15,7 @@ public class BoomerangStats
     private float speedModifier;
 
     [Tooltip("A number from (0-1], determines how far along the projectile will travel to its destination before starting to slow down. 1 will cause it to not slow down")]
-    [SerializeField]
+    [SerializeField] [Range(0,1)]
     private float percentToSlow; //a number from 0 to 1
 
     public bool IsBoomerang

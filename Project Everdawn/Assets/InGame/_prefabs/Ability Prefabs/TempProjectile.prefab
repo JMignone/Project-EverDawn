@@ -76,7 +76,7 @@ MonoBehaviour:
     poisonTick: 0
   knockbackStats:
     canKnockback: 1
-    knockbackDuration: 0.75
+    knockbackDuration: 5.75
     initialSpeed: 20
   pullStats:
     canPull: 0

@@ -1,6 +1,6 @@
 public static class GameConstants
 {
-    public static float ATTACK_READY_PERCENTAGE = .9f; //when is the attack set in stone? Once it is, it will happen even if the target is not within range, but within vision and in front of unit
+    public static float ATTACK_READY_PERCENTAGE = .75f; //when is the attack set in stone? Once it is, it will happen even if the target is not within range, but within vision and in front of unit
     public static float ATTACK_CHARGE_LIMITER = .5f;   //To what point should the attack charge to when a unit is within vision, but not range, or not in front of the unit
     public static float MAXIMUM_ATTACK_ANGLE = 70.0f;  //to what extend can the unit be not rotated on target before the attack is delayed? Think airship
 

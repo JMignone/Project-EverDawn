@@ -20,10 +20,10 @@ public class SummonStats
     [SerializeField]
     private GameObject summonPreview;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float timeToSummon;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float currentSummonTime;
 
     public bool IsSummon
@@ -76,17 +76,19 @@ public class SummonStats
         currentSummonTime = 0;
     }
 
-    public void UpdateSummonStats(GameObject go, bool isStunned) 
+    public void UpdateSummonStats(GameObject go, bool canAct) 
     {
-        if(currentSummonTime < timeToSummon && !isStunned) 
+        if(currentSummonTime < timeToSummon && canAct) 
             currentSummonTime += Time.deltaTime;
         else
             Summon(go, currentSummonTime/timeToSummon);
     }
 
     private void Summon(GameObject go, float percentHealth) {
-        if(percentHealth < .25f)
+        if(percentHealth < .25f) {
+            MonoBehaviour.Destroy(go);
             return;
+        }
         else if(percentHealth < .5f)
             percentHealth = .25f;
         else if(percentHealth < .75f)

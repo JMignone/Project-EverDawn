@@ -10,16 +10,16 @@ public class Projectile : MonoBehaviour, IAbility
     [SerializeField]
     private ProjActor2D unitSprite;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float radius;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float speed;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float range;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float baseDamage;
     private float damageMultiplier; //used for units that may have had its damage increased/decreased and fires projectiles as a ranged attack
 

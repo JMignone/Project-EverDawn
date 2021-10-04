@@ -19,15 +19,15 @@ public class GrenadeStats
     [SerializeField]
     private GameObject explosionEffect;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float explosionDamage;
     private float damageMultiplier;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float explosionRadius;
 
     [Tooltip("A number from [0-infinity) that determines how large the arc of the grenade. 1 will set the arc to be a circle.")]
-    [SerializeField]
+    [SerializeField] [Min(.1f)]
     private float grenadeArcMultiplier; //1 sets the grenade to a circular arc, a smaller number makes the arc smaller, a bigger number makes the arc larger
 
     public bool IsGrenade
@@ -79,8 +79,6 @@ public class GrenadeStats
             projectile.Radius = .1f; //setting it to zero will not work if targeting moving targets
             projectile.HitBox.enabled = false;
             
-            if(grenadeArcMultiplier < .1) //preventing divide by zero
-                grenadeArcMultiplier = .1f;
             Vector3 arcEnd = projectile.TargetLocation;
             if(isAirStrike) {
                 if(startLocation == GameConstants.AIR_STRIKE_LOCATION.BOTTOM)

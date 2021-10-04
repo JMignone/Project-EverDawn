@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 4409346719447776898}
   - component: {fileID: 6473105368971166577}
   m_Layer: 0
-  m_Name: SummonPreview
+  m_Name: SummonBigPreview
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,7 +177,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4409346719574394640}
   m_Enabled: 1
-  m_AgentTypeID: -902729914
+  m_AgentTypeID: 287145453
   m_Radius: 1
   m_Speed: 0
   m_Acceleration: 0

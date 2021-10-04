@@ -353,7 +353,10 @@ public class Building : MonoBehaviour, IDamageable
     }
 
     void IDamageable.TakeDamage(float amount) {
-        stats.CurrHealth -= amount;
+        if(stats.CurrArmor > 0)
+            stats.CurrArmor -= amount;
+        else
+            stats.CurrHealth -= amount;
         if(shadowStats.InterruptsByDamage)
             stats.Appear(gameObject, shadowStats, agent);
     }

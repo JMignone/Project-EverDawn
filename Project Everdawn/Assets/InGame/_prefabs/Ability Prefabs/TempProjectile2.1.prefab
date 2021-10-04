@@ -60,7 +60,7 @@ MonoBehaviour:
     explosionEffect: {fileID: 0}
     explosionRadius: 0
   freezeStats:
-    canFreeze: 1
+    canFreeze: 0
     freezeDuration: 4
   slowStats:
     canSlow: 0
@@ -70,7 +70,7 @@ MonoBehaviour:
     canRoot: 0
     rootDuration: 0
   poisonStats:
-    canPoison: 0
+    canPoison: 1
     poisonDamage: 20
     poisonDuration: 6
     poisonTick: 1

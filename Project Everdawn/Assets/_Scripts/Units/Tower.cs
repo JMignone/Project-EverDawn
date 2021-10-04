@@ -172,7 +172,7 @@ public class Tower : MonoBehaviour, IDamageable
         }
     }
 
-    /* I dont think structres need a vision radius */
+    /* I dont think structres need a vision radius, keep it for now */
     public void OnTriggerEnter(Collider other) {
         if(!other.transform.parent.parent.CompareTag(gameObject.tag)) { //checks to make sure the target isnt on the same team
             if(other.CompareTag("Projectile")) { //Did we get hit by a skill shot?
@@ -197,9 +197,10 @@ public class Tower : MonoBehaviour, IDamageable
                 if(unit) {
                     //Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                     if(other.CompareTag("Range")) {//Are we in their range detection object?
-                        //if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) anything can attack a tower, ill leave it hear incase somthing with an ability gives a need for this
+                        if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {//anything can attack a tower, ill leave it hear incase somthing with an ability gives a need for this
                             if(!(unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Add(gameObject);
+                        }
                     }
                     else if(other.CompareTag("Vision")) { //Are we in their vision detection object?
                         if(!(unit as IDamageable).HitTargets.Contains(gameObject))
@@ -230,12 +231,12 @@ public class Tower : MonoBehaviour, IDamageable
                 if(unit) {
                     //Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                     if(other.CompareTag("Range")) { //Are we in their Range detection object?
-                        //if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
+                        if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
                             if((unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Remove(gameObject);
                             if((unit as IDamageable).Target == gameObject)
                                 (unit as IDamageable).SetTarget(null);
-                        //}
+                        }
                     }
                     else if(other.CompareTag("Vision")) { //Are we in their vision detection object?
                         if((unit as IDamageable).HitTargets.Contains(gameObject))
@@ -273,7 +274,10 @@ public class Tower : MonoBehaviour, IDamageable
     }
 
     void IDamageable.TakeDamage(float amount) {
-        stats.CurrHealth -= amount;
+        if(stats.CurrArmor > 0)
+            stats.CurrArmor -= amount;
+        else
+            stats.CurrHealth -= amount;
     }
 
 }

@@ -11,7 +11,7 @@ public class PlayerStats : MonoBehaviour
     private List<Image> resources;
     private float timeLeft;
     private int score;
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float currResource;
     private float dueResource;
     [SerializeField]
