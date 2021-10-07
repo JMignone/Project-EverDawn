@@ -21,7 +21,7 @@ public class StrengthenedStats
     [SerializeField]
     private float currentStrengthIntensity;
 
-    private Component damageableComponent;
+    private IDamageable unit;
 
     public bool CantBeStrengthened
     {
@@ -59,14 +59,8 @@ public class StrengthenedStats
         set { currentStrengthIntensity = value; }
     }
 
-    public Component DamageableComponent
-    {
-        get { return damageableComponent; }
-        set { damageableComponent = value; }
-    }
-
-    public void StartStrengthenedStats(GameObject go) {
-        damageableComponent = go.GetComponent(typeof(IDamageable));
+    public void StartStrengthenedStats(IDamageable go) {
+        unit = go;
         currentStrengthIntensity = 1;
     }
 

@@ -8,10 +8,10 @@ public class GrabStats
     [SerializeField]
     private bool canGrab;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float pullDuration;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float stunDuration;
 
     public bool CanGrab

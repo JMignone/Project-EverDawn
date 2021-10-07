@@ -8,11 +8,11 @@ public class StrengthStats
     [SerializeField]
     private bool canStrength;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float strengthDuration;
 
     [Tooltip("A number from 1 to infinity determining what percentage the effective unit will deal damage.")]
-    [SerializeField]
+    [SerializeField] [Min(1)]
     private float strengthIntensity;
 
     public bool CanStrength

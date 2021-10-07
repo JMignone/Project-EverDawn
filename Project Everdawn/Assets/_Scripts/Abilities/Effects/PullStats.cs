@@ -8,10 +8,10 @@ public class PullStats
     [SerializeField]
     private bool canPull;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float radius;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float speed;
 
     public bool CanPull

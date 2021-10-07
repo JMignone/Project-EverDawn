@@ -36,8 +36,7 @@ public class UKnockbackStats
         get { return agent.transform.position; }
     }
 
-    public void StartKnockbackStats(GameObject go) {
-        Component component = go.GetComponent(typeof(IDamageable));
-        agent = (component as IDamageable).Agent;
+    public void StartKnockbackStats(IDamageable go) {
+        agent = go.Agent;
     }
 }

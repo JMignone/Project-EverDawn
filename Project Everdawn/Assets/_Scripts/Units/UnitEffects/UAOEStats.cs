@@ -39,8 +39,8 @@ public class UAOEStats
         get { return explosionRadius; }
     }
 
-    public void StartStats(GameObject go) {
-        unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+    public void StartStats(IDamageable go) {
+        unit = go;
     }
 
     public void Explode(GameObject go, GameObject target, float damage) {

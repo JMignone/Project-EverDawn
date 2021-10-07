@@ -4305,6 +4305,12 @@ MonoBehaviour:
     abilityPrefabs: []
     abilityDelays: []
     currentDelay: 0
+  buildUpStats:
+    buildsUp: 0
+    damageIncrease: 0
+    delayDecrease: 0
+    damageCap: 0
+    delayCap: 0
   chargeStats:
     charges: 1
     isCharging: 0
@@ -4985,6 +4991,13 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -5161,6 +5174,13 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -6218,8 +6238,8 @@ MonoBehaviour:
   unitSprite: {fileID: 1958020742}
   target: {fileID: 0}
   stats:
-    currHealth: 500
-    maxHealth: 500
+    currHealth: 5000
+    maxHealth: 5000
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
@@ -6332,6 +6352,12 @@ MonoBehaviour:
     abilityPrefabs: []
     abilityDelays: []
     currentDelay: 0
+  buildUpStats:
+    buildsUp: 1
+    damageIncrease: 15
+    delayDecrease: 0.2
+    damageCap: 150
+    delayCap: 0.75
   chargeStats:
     charges: 0
     isCharging: 0
@@ -13732,7 +13758,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 100, y: 0, z: 180}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 6, y: 5}
+  m_AnchoredPosition: {x: 5, y: 5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &855631262
@@ -14509,6 +14535,13 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -17141,6 +17174,12 @@ MonoBehaviour:
     - 0.4
     - 0
     currentDelay: 0
+  buildUpStats:
+    buildsUp: 0
+    damageIncrease: 0
+    delayDecrease: 0
+    damageCap: 0
+    delayCap: 0
   chargeStats:
     charges: 0
     isCharging: 0
@@ -17970,6 +18009,13 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -18888,7 +18934,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 100, y: 0, z: 180}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 6, y: 5}
+  m_AnchoredPosition: {x: 5, y: 5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1347901589
@@ -19739,6 +19785,12 @@ MonoBehaviour:
     - 0.25
     - 0
     currentDelay: 0
+  buildUpStats:
+    buildsUp: 0
+    damageIncrease: 0
+    delayDecrease: 0
+    damageCap: 0
+    delayCap: 0
   chargeStats:
     charges: 0
     isCharging: 0
@@ -22742,6 +22794,12 @@ MonoBehaviour:
     abilityPrefabs: []
     abilityDelays: []
     currentDelay: 0
+  buildUpStats:
+    buildsUp: 0
+    damageIncrease: 0
+    delayDecrease: 0
+    damageCap: 0
+    delayCap: 0
   shadowStats:
     shades: 0
     interruptsByDamage: 0
@@ -27848,6 +27906,12 @@ MonoBehaviour:
     abilityPrefabs: []
     abilityDelays: []
     currentDelay: 0
+  buildUpStats:
+    buildsUp: 0
+    damageIncrease: 0
+    delayDecrease: 0
+    damageCap: 0
+    delayCap: 0
   chargeStats:
     charges: 0
     isCharging: 0
@@ -28158,6 +28222,13 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -28689,6 +28760,13 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+  attackStats:
+    firesProjectiles: 0
+    attackType: 0
+    continueType: 0
+    abilityPrefabs: []
+    abilityDelays: []
+    currentDelay: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []

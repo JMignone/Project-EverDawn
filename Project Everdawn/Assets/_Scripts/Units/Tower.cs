@@ -17,6 +17,9 @@ public class Tower : MonoBehaviour, IDamageable
     [SerializeField]
     protected BaseStats stats;
 
+    [SerializeField]
+    private AttackStats attackStats;
+
     //[SerializeField]
     private DashStats dashStats;
 
@@ -106,7 +109,8 @@ public class Tower : MonoBehaviour, IDamageable
         stats.HealthBar.enabled = false;
         stats.HealthBar.transform.GetChild(0).gameObject.SetActive(false);
 
-        stats.EffectStats.StartStats(gameObject);
+        IDamageable unit = (gameObject.GetComponent(typeof(IDamageable)) as IDamageable);
+        stats.EffectStats.StartStats(unit);
 
         stats.IsHoveringAbility = false;
         stats.AbilityIndicator.enabled = false;
@@ -139,19 +143,34 @@ public class Tower : MonoBehaviour, IDamageable
 
     protected void Attack() {
         if(target != null) {
-            if(stats.CurrAttackDelay >= stats.AttackDelay) {
-                Component damageable = target.GetComponent(typeof(IDamageable));
-
-                if(damageable) { //is the target damageable
-                    if(hitTargets.Contains(target)) {  //this and the above may not be needed, more of a santiy check
-                        if(inRangeTargets.Count > 0) {
-                            GameFunctions.Attack(damageable, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+            if(attackStats.FiresProjectiles) { //if the unit fires projectiles rather than simply doing damage when attacking
+                if(stats.CurrAttackDelay >= stats.AttackDelay && !attackStats.IsFiring) {
+                    Component damageable = target.GetComponent(typeof(IDamageable));
+                    if(damageable) { //is the target damageable
+                        if(hitTargets.Contains(target)) //this is needed for the rare occurance that a unit is 90% done with attack delay and the target leaves its range. It can still do its attack if its within vision given that its attack was already *90% thru
+                            attackStats.BeginFiring();
+                    }
+                }
+            }
+            else {
+                if(stats.CurrAttackDelay >= stats.AttackDelay) {
+                    Component damageable = target.GetComponent(typeof(IDamageable));
+                    if(damageable) { //is the target damageable
+                        if(hitTargets.Contains(target)) {  //this and the above may not be needed, more of a santiy check
+                            if(stats.EffectStats.AOEStats.AreaOfEffect)
+                                stats.EffectStats.AOEStats.Explode(gameObject, target, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                            else {
+                                GameFunctions.Attack(damageable, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                                stats.ApplyAffects(damageable);
+                            }
                             stats.CurrAttackDelay = 0;
                         }
                     }
                 }
             }
         }
+        if(attackStats.FiresProjectiles)
+            attackStats.Fire();
     }
 
     public void SetTarget(GameObject newTarget) {

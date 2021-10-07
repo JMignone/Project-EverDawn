@@ -20,20 +20,20 @@ public class LingeringStats
     [SerializeField]
     private GameObject lingeringEffect;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float lingeringDamage;
     private float damageMultiplier;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float lingeringRadius;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float lingeringDuration;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float lingeringTick;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float currentLingeringTime;
 
     private Component abilityComponent;

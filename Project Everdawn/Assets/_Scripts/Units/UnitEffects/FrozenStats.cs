@@ -14,10 +14,10 @@ public class FrozenStats
     [SerializeField]
     private bool isFrozen;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float frozenDelay;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float currentFrozenDelay;
 
     private IDamageable unit;
@@ -52,8 +52,8 @@ public class FrozenStats
         set { currentFrozenDelay = value; }
     }
 
-    public void StartFrozenStats(GameObject go) {
-        unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+    public void StartFrozenStats(IDamageable go) {
+        unit = go;
         isFrozen = false;
         frozenDelay = 0;
         currentFrozenDelay = 0;

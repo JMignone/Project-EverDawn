@@ -32,6 +32,9 @@ public class Building : MonoBehaviour, IDamageable
     [SerializeField]
     private AttackStats attackStats;
 
+    [SerializeField]
+    private BuildUpStats buildUpStats;
+
     //[SerializeField]
     private DashStats dashStats; //needed for interface
 
@@ -140,10 +143,13 @@ public class Building : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        stats.SummoningSicknessUI.StartStats(gameObject);
-        stats.EffectStats.StartStats(gameObject);
-        attackStats.StartAttackStats(gameObject);
-        shadowStats.StartShadowStats(gameObject);
+        IDamageable unit = (gameObject.GetComponent(typeof(IDamageable)) as IDamageable);
+
+        stats.SummoningSicknessUI.StartStats(unit);
+        stats.EffectStats.StartStats(unit);
+        attackStats.StartAttackStats(unit);
+        buildUpStats.StartStats(unit);
+        shadowStats.StartShadowStats(unit);
         
         stats.IsHoveringAbility = false;
         stats.AbilityIndicator.enabled = false;
@@ -218,6 +224,7 @@ public class Building : MonoBehaviour, IDamageable
                                 GameFunctions.Attack(damageable, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                                 stats.ApplyAffects(damageable);
                             }
+                            buildUpStats.BuildUp();
                             stats.Appear(gameObject, shadowStats, agent);
                             stats.CurrAttackDelay = 0;
                         }
@@ -225,7 +232,10 @@ public class Building : MonoBehaviour, IDamageable
                 }
             }
         }
-        attackStats.Fire();
+        else
+            buildUpStats.ResetStats();
+        if(attackStats.FiresProjectiles)
+            attackStats.Fire();
     }
 
     public void SetTarget(GameObject newTarget) {
@@ -235,6 +245,7 @@ public class Building : MonoBehaviour, IDamageable
             if(newTarget != null)
                 (newTarget.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Add(gameObject);
             target = newTarget;
+            buildUpStats.ResetStats();
         }
     }
 

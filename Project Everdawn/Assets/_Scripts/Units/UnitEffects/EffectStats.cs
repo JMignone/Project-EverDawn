@@ -90,7 +90,7 @@ public class EffectStats
         get { return resistStats; }
     }
 
-    public void StartStats(GameObject go) {
+    public void StartStats(IDamageable go) {
         frozenStats.StartFrozenStats(go);
         slowedStats.StartSlowedStats(go);
         poisonedStats.StartPoisonedStats(go);

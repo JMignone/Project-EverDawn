@@ -42,9 +42,9 @@ public class DashStats
         get { return isDashing; }
     }
 
-    public void StartDashStats(GameObject go) {
+    public void StartDashStats(IDamageable go) {
         if(dashes) {
-            unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+            unit = go;
             speed = unit.Stats.MoveSpeed;
         
             GameObject dashGo = new GameObject();
@@ -57,7 +57,7 @@ public class DashStats
             dashBox.enabled = true;
 
             dashGo.SetActive(true);
-            dashGo.transform.SetParent(go.transform.GetChild(1));
+            dashGo.transform.SetParent((unit as Component).gameObject.transform.GetChild(1));
             dashGo.transform.localPosition = Vector3.zero;
         }
     }

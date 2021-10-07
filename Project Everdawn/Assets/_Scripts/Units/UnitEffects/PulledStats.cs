@@ -7,14 +7,14 @@ using UnityEngine.UI;
 public class PulledStats
 {
     [Tooltip("A number from 0 to 1 that determines a units resistance to being pulled. A resistance of 1 means they cannot be pulled")]
-    [SerializeField]
+    [SerializeField] [Range(0, 1)]
     private float pullResistance;
     private bool outSideResistance;
 
     [SerializeField]
     private List<Component> pullComponents;
 
-    private Component damageableComponent;
+    private IDamageable unit;
     private Vector3 direction;
 
     public float PullResistance
@@ -35,14 +35,8 @@ public class PulledStats
         set { pullComponents = value; }
     }
 
-    public Component DamageableComponent
-    {
-        get { return damageableComponent; }
-        set { damageableComponent = value; }
-    }
-
-    public void StartPulledStats(GameObject go) {
-        damageableComponent = go.GetComponent(typeof(IDamageable));
+    public void StartPulledStats(IDamageable go) {
+        unit = go;
         if(pullResistance < 0)
             pullResistance = 0;
     }
@@ -52,12 +46,12 @@ public class PulledStats
             Vector3 totalMovement = Vector3.zero;
             pullComponents.RemoveAll(item => item == null); //removes a pull component if it becomes null
             foreach(Component IAbility in pullComponents) {
-                Vector3 direction = ((IAbility as IAbility).Position() - (damageableComponent as IDamageable).Agent.transform.position).normalized;
+                Vector3 direction = ((IAbility as IAbility).Position() - unit.Agent.transform.position).normalized;
                 direction *= (IAbility as IAbility).PullStats.Speed * (1 - pullResistance);
                 totalMovement += direction;
             }
             totalMovement.y = 0;
-            (damageableComponent as IDamageable).Agent.transform.position += totalMovement * Time.deltaTime;
+            unit.Agent.transform.position += totalMovement * Time.deltaTime;
         }
     }
 

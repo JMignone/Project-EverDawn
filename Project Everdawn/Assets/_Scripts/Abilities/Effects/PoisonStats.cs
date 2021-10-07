@@ -8,13 +8,13 @@ public class PoisonStats
     [SerializeField]
     private bool canPoison;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float poisonDamage;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float poisonDuration;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float poisonTick;
 
     public bool CanPoison

@@ -13,16 +13,16 @@ public class PoisonedStats
     private bool isPoisoned;
     private float poisonedDamage;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float poisonedDuration;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float poisonedTick;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float currentPoisonDelay;
 
-    private Component damageableComponent;
+    private IDamageable unit;
 
     public bool CantBePoisoned
     {
@@ -65,14 +65,8 @@ public class PoisonedStats
         set { currentPoisonDelay = value; }
     }
 
-    public Component DamageableComponent
-    {
-        get { return damageableComponent; }
-        set { damageableComponent = value; }
-    }
-
-    public void StartPoisonedStats(GameObject go) {
-        damageableComponent = go.GetComponent(typeof(IDamageable));
+    public void StartPoisonedStats(IDamageable go) {
+        unit = go;
         isPoisoned = false;
     }
 
@@ -82,7 +76,7 @@ public class PoisonedStats
                 if(currentPoisonDelay < poisonedTick)
                     currentPoisonDelay += Time.deltaTime;
                 else {
-                    GameFunctions.Attack(damageableComponent, poisonedDamage);
+                    GameFunctions.Attack((unit as Component), poisonedDamage);
                     currentPoisonDelay = 0;
                     poisonedDuration -= poisonedTick;
                 }
@@ -90,7 +84,7 @@ public class PoisonedStats
             else {
                 isPoisoned = false;
 
-                (damageableComponent as IDamageable).Stats.UnitMaterials.RemovePurple();
+                unit.Stats.UnitMaterials.RemovePurple();
             }
         }
     }
@@ -98,7 +92,7 @@ public class PoisonedStats
     public void Poison(float duration, float tick, float damage) {
         if(!cantBePoisoned && !outSideResistance) {
             if(!isPoisoned)
-                (damageableComponent as IDamageable).Stats.UnitMaterials.TintPurple();
+                unit.Stats.UnitMaterials.TintPurple();
 
             isPoisoned = true;
             poisonedDuration = duration;

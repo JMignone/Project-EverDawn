@@ -11,10 +11,10 @@ public class SelfDestructStats
     [SerializeField]
     private GameObject explosionEffect;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float explosionDamage;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float explosionRadius;
 
     public bool SelfDestructs

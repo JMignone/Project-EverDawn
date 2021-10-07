@@ -151,8 +151,8 @@ public class ResistStats
         set { unit = value; }
     }
 
-    public void StartResistStats(GameObject go) {
-        unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+    public void StartResistStats(IDamageable go) {
+        unit = go;
     }
 
     public void ResistDamage(float duration) {

@@ -51,8 +51,8 @@ public class SummoningSicknessUI
               else return true; }
     }
 
-    public void StartStats(GameObject go) {
-        unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+    public void StartStats(IDamageable go) {
+        unit = go;
         if(summonSicknessDelay > 0)
             unit.Agent.HitBox.enabled = false;
     }

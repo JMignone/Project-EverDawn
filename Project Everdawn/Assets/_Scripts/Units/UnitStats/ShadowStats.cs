@@ -41,9 +41,9 @@ public class ShadowStats
         get { return interruptsByDamage; }
     }
 
-    public void StartShadowStats(GameObject go) {
-        gameObj = go;
-        unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+    public void StartShadowStats(IDamageable go) {
+        unit = go;
+        gameObj = (unit as Component).gameObject;
     }
 
     public void UpdateShadowStats() {

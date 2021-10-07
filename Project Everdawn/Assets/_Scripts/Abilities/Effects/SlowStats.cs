@@ -8,11 +8,11 @@ public class SlowStats
     [SerializeField]
     private bool canSlow;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float slowDuration;
 
     [Tooltip("A number from 0 to 1 determining what percentage the effective unit will move from its original speed")]
-    [SerializeField]
+    [SerializeField] [Range(0,1)]
     private float slowIntensity;
 
     public bool CanSlow

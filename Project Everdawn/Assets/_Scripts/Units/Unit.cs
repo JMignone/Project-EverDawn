@@ -21,6 +21,9 @@ public class Unit : MonoBehaviour, IDamageable
     private AttackStats attackStats;
 
     [SerializeField]
+    private BuildUpStats buildUpStats;
+
+    [SerializeField]
     private ChargeStats chargeStats;
 
     [SerializeField]
@@ -116,12 +119,15 @@ public class Unit : MonoBehaviour, IDamageable
         agent.Agent.stoppingDistance = 0; //Set to be zero, incase someone forgets or accidently changes this value to be a big number
         agent.Agent.speed = stats.MoveSpeed;
 
-        stats.SummoningSicknessUI.StartStats(gameObject);
-        stats.EffectStats.StartStats(gameObject);
-        attackStats.StartAttackStats(gameObject);
-        chargeStats.StartChargeStats(gameObject);
-        dashStats.StartDashStats(gameObject);
-        shadowStats.StartShadowStats(gameObject);
+        IDamageable unit = (gameObject.GetComponent(typeof(IDamageable)) as IDamageable);
+
+        stats.SummoningSicknessUI.StartStats(unit);
+        stats.EffectStats.StartStats(unit);
+        attackStats.StartAttackStats(unit);
+        buildUpStats.StartStats(unit);
+        chargeStats.StartChargeStats(unit);
+        dashStats.StartDashStats(unit);
+        shadowStats.StartShadowStats(unit);
 
         stats.IsHoveringAbility = false;
         stats.AbilityIndicator.enabled = false;
@@ -136,6 +142,7 @@ public class Unit : MonoBehaviour, IDamageable
                 ReTarget();
 
             stats.UpdateStats(ChargeAttack, inRangeTargets.Count, agent, hitTargets, target);
+            buildUpStats.UpdateStats();
             chargeStats.UpdateChargeStats();
             dashStats.UpdateDashStats();
             shadowStats.UpdateShadowStats();
@@ -194,6 +201,7 @@ public class Unit : MonoBehaviour, IDamageable
                                 GameFunctions.Attack(damageable, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                                 stats.ApplyAffects(damageable);
                             }
+                            buildUpStats.BuildUp();
                             stats.Appear(gameObject, shadowStats, agent);
                             stats.CurrAttackDelay = 0;
                         }
@@ -201,6 +209,8 @@ public class Unit : MonoBehaviour, IDamageable
                 }
             }
         }
+        else
+            buildUpStats.ResetStats();
         if(attackStats.FiresProjectiles)
             attackStats.Fire();
     }
@@ -212,6 +222,7 @@ public class Unit : MonoBehaviour, IDamageable
             if(newTarget != null)
                 (newTarget.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Add(gameObject);
             target = newTarget;
+            buildUpStats.ResetStats();
         }
     }
 

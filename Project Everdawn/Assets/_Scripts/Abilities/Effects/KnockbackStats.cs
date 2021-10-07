@@ -8,10 +8,10 @@ public class KnockbackStats
     [SerializeField]
     private bool canKnockback;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float knockbackDuration;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float initialSpeed;
 
     public bool CanKnockback

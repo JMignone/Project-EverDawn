@@ -21,7 +21,7 @@ public class SlowedStats
     [SerializeField]
     private float currentSlowIntensity;
 
-    private Component damageableComponent;
+    private IDamageable unit;
 
     public bool CantBeSlowed
     {
@@ -59,14 +59,8 @@ public class SlowedStats
         set { currentSlowIntensity = value; }
     }
 
-    public Component DamageableComponent
-    {
-        get { return damageableComponent; }
-        set { damageableComponent = value; }
-    }
-
-    public void StartSlowedStats(GameObject go) {
-        damageableComponent = go.GetComponent(typeof(IDamageable));
+    public void StartSlowedStats(IDamageable go) {
+        unit = go;
         isSlowed = false;
         slowDelay = 0;
         currentSlowDelay = 0;
@@ -88,14 +82,14 @@ public class SlowedStats
             slowDelay = duration;
             currentSlowDelay = 0;
             currentSlowIntensity = intensity;
-            (damageableComponent as IDamageable).UnitSprite.Animator.speed = intensity;
-            (damageableComponent as IDamageable).Stats.CurrAttackDelay = 0;
+            unit.UnitSprite.Animator.speed = intensity;
+            unit.Stats.CurrAttackDelay = 0;
         }
     }
 
     public void unSlow() {
         isSlowed = false;
         currentSlowIntensity = 1;
-        (damageableComponent as IDamageable).UnitSprite.Animator.speed = 1;
+        unit.UnitSprite.Animator.speed = 1;
     }
 }

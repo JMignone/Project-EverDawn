@@ -37,8 +37,8 @@ public class ChargeStats
         get { return isCharging; }
     }
 
-    public void StartChargeStats(GameObject go) {
-        unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+    public void StartChargeStats(IDamageable go) {
+        unit = go;
         speed = unit.Stats.MoveSpeed;
     }
 

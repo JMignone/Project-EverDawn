@@ -132,13 +132,13 @@ public class BaseStats
     public float BaseDamage
     {
         get { return baseDamage; }
-        //set { baseDamage = value; }
+        set { baseDamage = value; }
     }
 
     public float AttackDelay
     {
         get { return attackDelay; }
-        //set { attackDelay = value; }
+        set { attackDelay = value; }
     }
 
     public float CurrAttackDelay

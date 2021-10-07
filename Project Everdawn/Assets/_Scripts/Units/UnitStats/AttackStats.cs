@@ -86,8 +86,8 @@ public class AttackStats
         get { return attackType == GameConstants.FIRING_TYPE.ATTACKSPAST; }
     }
 
-    public void StartAttackStats(GameObject go) {
-        unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+    public void StartAttackStats(IDamageable go) {
+        unit = go;
     }
 
     public void BeginFiring() {

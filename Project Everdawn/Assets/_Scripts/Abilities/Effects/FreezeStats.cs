@@ -8,7 +8,7 @@ public class FreezeStats
     [SerializeField]
     private bool canFreeze;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float freezeDuration;
 
     public bool CanFreeze
