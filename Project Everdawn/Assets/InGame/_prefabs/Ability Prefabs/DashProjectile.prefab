@@ -297,6 +297,7 @@ MonoBehaviour:
   typeAttackable: 0
   canPierce: 1
   blockable: 0
+  abilityControl: 1
   aoeStats:
     areaOfEffect: 0
     explosionEffect: {fileID: 0}
@@ -388,6 +389,10 @@ MonoBehaviour:
     rpullDuration: 0
   chosenTarget: {fileID: 0}
   passObstacles: 1
+  highlightEnemies: 0
+  retreatStats:
+    retreats: 0
+    distance: 0
 --- !u!54 &7745593707573550161
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -49,11 +49,9 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField]
     private Sprite abilityPreviewRange;
 
-    [SerializeField]
-    private PlayerStats playerInfo;
     private bool isDragging;
 
-    private bool abilityControl; //sets it so the skillshot doesnt unset unit casting, but rather the projectile. Usful for movements like dashes or maybe pulls
+    private bool abilityControl; //sets it so the skillshot doesnt unset unit casting, but rather the projectile will unset it. Usful for movements like dashes or maybe pulls
     private bool shootRaycast;
     private float maxRange;
     private int areaMask;
@@ -157,21 +155,21 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         isDragging = false;
         fireMousePosition = new Vector3(-1, -1, -1);
 
-        AbilityUI.CardCanvasDim = GameFunctions.GetCanvas().GetChild(0).GetComponent<RectTransform>();
+        AbilityUI.StartStats();
 
         //Below sets up what will be needed for clicking the ability, such that we only need to calculate maxRange and areaMask once.
         maxRange = 0;
         areaMask = 1;
         foreach(GameObject ability in abilityPrefabs) { //this finds the largest range of all the abilitys shot by this skillshot
             Component component = ability.GetComponent(typeof(IAbility));
+            if((component as IAbility).AbilityControl)
+                abilityControl = true;
             if((component as IAbility).Range > maxRange)
                  maxRange = (component as IAbility).Range;
             if((component as IAbility).AreaMask() > areaMask)
                 areaMask = (component as IAbility).AreaMask();
-            if(ability.GetComponent<Movement>()) {
-                abilityControl = true;
+            if(ability.GetComponent<Movement>())
                 shootRaycast = !ability.GetComponent<Movement>().PassObstacles;
-            }
         }
     }
 
@@ -181,10 +179,10 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(!playerInfo.OnDragging && !isDragging && unit.Stats.IsReady) {
+        if(!isDragging && unit.Stats.IsReady) {
             if(abilityUI.CanDrag) {
                 isDragging = true;
-                playerInfo.OnDragging = true;
+                
                 unit.Stats.IsHoveringAbility = true;
 
                 abilityUI.AbilitySprite.enabled = false;
@@ -216,7 +214,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     */
     private void Update() {
         abilityUI.UpdateStats();
-        if(playerInfo.OnDragging && isDragging) {
+        if(isDragging) {
             Vector3 position = GameFunctions.getPosition(false);
             Vector3 direction = abilityPreviewCanvas.transform.position - position;
             direction.y = 0;
@@ -246,50 +244,47 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if(playerInfo.OnDragging) {
-            isDragging = false;
-            playerInfo.OnDragging = false;
-            unit.Stats.IsHoveringAbility = false;
+        isDragging = false;    
+        unit.Stats.IsHoveringAbility = false;
 
-            abilityUI.AbilitySprite.enabled = true;
-            abilityUI.AbilityCancel.enabled = false;
+        abilityUI.AbilitySprite.enabled = true;
+        abilityUI.AbilityCancel.enabled = false;
 
-            foreach(GameObject preview in abilityPreviews) {
-                if(preview.CompareTag("Player")) { //this is a summon preview, as its more complicated
-                    fireMousePosition = preview.transform.GetChild(0).position;
-                    preview.transform.GetChild(1).GetChild(0).GetComponent<Image>().enabled = false;
-                    //preview.transform.GetChild(1).GetChild(0).GetComponent<Collider>().enabled = false;
-                }
-                else {
-                    preview.GetComponent<Image>().enabled = false;
-                    if(preview.GetComponent<Collider>())
-                        preview.GetComponent<Collider>().enabled = false;
-                }
+        foreach(GameObject preview in abilityPreviews) {
+            if(preview.CompareTag("Player")) { //this is a summon preview, as its more complicated
+                fireMousePosition = preview.transform.GetChild(0).position;
+            preview.transform.GetChild(1).GetChild(0).GetComponent<Image>().enabled = false;
+                //preview.transform.GetChild(1).GetChild(0).GetComponent<Collider>().enabled = false;
             }
-
-            GameManager.removeAbililtyIndicators();
-
-            if(abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y && unit.Stats.CanAct) {
-                fireStartPosition = abilityPreviewCanvas.transform.position;
-                if(fireMousePosition == new Vector3(-1, -1, -1)) { //if the ability was not a summon, get the position
-                    fireMousePosition = GameFunctions.getPosition(false);
-                    fireMousePosition.y = 0;
-                }
-                fireStartPosition.y = 0;
-                fireDirection = fireMousePosition - fireStartPosition;
-
-                isFiring = true;
-                unit.Stats.IsCastingAbility = true;
-                unit.SetTarget(null);
-                abilityUI.resetAbility();
-                applyResistanceStats.ApplyResistance(unit);
+        else {
+            preview.GetComponent<Image>().enabled = false;
+                if(preview.GetComponent<Collider>())
+                    preview.GetComponent<Collider>().enabled = false;
             }
+        }
+
+        GameManager.removeAbililtyIndicators();
+
+        if(abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y && unit.Stats.CanAct) {
+            fireStartPosition = abilityPreviewCanvas.transform.position;
+            if(fireMousePosition == new Vector3(-1, -1, -1)) { //if the ability was not a summon or a movement, get the position
+                fireMousePosition = GameFunctions.getPosition(false);
+                fireMousePosition.y = 0;
+            }
+            fireStartPosition.y = 0;
+            fireDirection = fireMousePosition - fireStartPosition;
+
+            isFiring = true;
+            unit.Stats.IsCastingAbility = true;
+            unit.SetTarget(null);
+            abilityUI.resetAbility();
+            applyResistanceStats.ApplyResistance(unit);
         }
     }
 
     public void OnPointerClick(PointerEventData pointerEventData)
     {
-        if(!playerInfo.OnDragging && !isDragging && abilityUI.CanDrag && unit.Stats.IsReady) { //if the abililty can be dragged
+        if(!isDragging && abilityUI.CanDrag && unit.Stats.IsReady) { //if the abililty can be dragged
             Collider[] colliders = Physics.OverlapSphere(unit.Agent.Agent.transform.position, maxRange);
             Component testComponent = abilityPrefabs[0].GetComponent(typeof(IAbility));
 
@@ -359,6 +354,11 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 unit.Stats.IsCastingAbility = false;
         }
         else { //if we completed a delay
+            if(fireStartPosition != abilityPreviewCanvas.transform.position) {
+                float distance = Vector3.Distance(abilityPreviewCanvas.transform.position, fireMousePosition) - Vector3.Distance(fireStartPosition, fireMousePosition);
+                fireStartPosition = abilityPreviewCanvas.transform.position;
+                (abilityPrefabs[currentProjectileIndex].GetComponent<IAbility>() as IAbility).Range += distance;
+            }
             if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
                 GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], fireStartPosition, fireMousePosition, fireDirection, unit, 1);
             else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
@@ -428,7 +428,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             distance = Vector3.Distance(position, abilityPreviewCanvas.transform.position);
 
             previewTransform.sizeDelta = new Vector2(previewTransform.sizeDelta.x, distance);
-            previewTransform.localPosition = new Vector3(0, -5, -distance/2);
+            previewTransform.localPosition = new Vector3(0, 0, -distance/2);
 
             preview.GetComponent<BoxCollider>().size = new Vector3(move.Radius*2, distance, 1);
         }
@@ -571,7 +571,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
             BoxCollider previewHitBox = go.AddComponent<BoxCollider>();
             previewHitBox.size = new Vector3(width, range, 1);
-            previewHitBox.center = new Vector3(0, 0, -.5f);
+            previewHitBox.center = new Vector3(0, 0, 0);
             previewHitBox.enabled = false;
 
             //not all movement abilities need to highlight enemies
@@ -587,7 +587,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             previewTransform.anchorMax = new Vector2(.5f, 0);
             previewTransform.pivot = new Vector2(.5f, .5f);
             previewTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-            previewTransform.localPosition = new Vector3(0, -4, -1 * range/2);
+            previewTransform.localPosition = new Vector3(0, 0, -1 * range/2);
             previewTransform.localRotation = Quaternion.Euler(270, 0, 0);
             previewTransform.sizeDelta = new Vector2(width, range);
 
@@ -628,7 +628,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             previewBoomTransform.anchorMax = new Vector2(.5f, 0);
             previewBoomTransform.pivot = new Vector2(.5f, .5f);
             previewBoomTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-            previewBoomTransform.localPosition = new Vector3(0, -5, 0);
+            previewBoomTransform.localPosition = new Vector3(0, 0, 0);
             previewBoomTransform.localRotation = Quaternion.Euler(270, 0, 0);
             previewBoomTransform.sizeDelta = new Vector2(radius*2, radius*2);
             
@@ -650,7 +650,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             previewBoomRangeTransform.anchorMax = new Vector2(.5f, 0);
             previewBoomRangeTransform.pivot = new Vector2(.5f, .5f);
             previewBoomRangeTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-            previewBoomRangeTransform.localPosition = new Vector3(0, -5, 0);
+            previewBoomRangeTransform.localPosition = new Vector3(0, 0, 0);
             previewBoomRangeTransform.localRotation = Quaternion.Euler(270, 0, 0);
             previewBoomRangeTransform.sizeDelta = new Vector2(projectile.Range*2, projectile.Range*2);
 
@@ -719,7 +719,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 previewLinearTransformVert.anchorMax = new Vector2(.5f, 0);
                 previewLinearTransformVert.pivot = new Vector2(.5f, .5f);
                 previewLinearTransformVert.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-                previewLinearTransformVert.localPosition = new Vector3(0, -5, 0);
+                previewLinearTransformVert.localPosition = new Vector3(0, 0, 0);
                 previewLinearTransformVert.localRotation = Quaternion.Euler(270, 0, 0);
                 previewLinearTransformVert.sizeDelta = new Vector2(width, GameManager.Instance.Ground.transform.localScale.z * 10);
                 abilityPreviews.Add(goLinearVert);
@@ -748,7 +748,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 previewLinearTransformHorz.anchorMax = new Vector2(.5f, 0);
                 previewLinearTransformHorz.pivot = new Vector2(.5f, .5f);
                 previewLinearTransformHorz.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-                previewLinearTransformHorz.localPosition = new Vector3(0, -5, 0);
+                previewLinearTransformHorz.localPosition = new Vector3(0, 0, 0);
                 previewLinearTransformHorz.localRotation = Quaternion.Euler(270, 0, 0);
                 previewLinearTransformHorz.sizeDelta = new Vector2(GameManager.Instance.Ground.transform.localScale.x * 10, width);
                 abilityPreviews.Add(goLinearHorz);
@@ -781,7 +781,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             previewBoomTransform.anchorMax = new Vector2(.5f, 0);
             previewBoomTransform.pivot = new Vector2(.5f, .5f);
             previewBoomTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-            previewBoomTransform.localPosition = new Vector3(0, -5, 0);
+            previewBoomTransform.localPosition = new Vector3(0, 0, 0);
             previewBoomTransform.localRotation = Quaternion.Euler(270, 0, 0);
             previewBoomTransform.sizeDelta = new Vector2(radius*2, radius*2);
 
@@ -815,7 +815,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             previewWarpTransform.anchorMax = new Vector2(.5f, 0);
             previewWarpTransform.pivot = new Vector2(.5f, .5f);
             previewWarpTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-            previewWarpTransform.localPosition = new Vector3(0, -5, 0);
+            previewWarpTransform.localPosition = new Vector3(0, 0, 0);
             previewWarpTransform.localRotation = Quaternion.Euler(270, 0, 0);
             previewWarpTransform.sizeDelta = new Vector2(radius*2, radius*2);
 
@@ -848,7 +848,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 previewAWarpTransform.anchorMax = new Vector2(.5f, 0);
                 previewAWarpTransform.pivot = new Vector2(.5f, .5f);
                 previewAWarpTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-                previewAWarpTransform.localPosition = new Vector3(0, -5, 0);
+                previewAWarpTransform.localPosition = new Vector3(0, 0, 0);
                 previewAWarpTransform.localRotation = Quaternion.Euler(270, 0, 0);
                 previewAWarpTransform.sizeDelta = new Vector2(radius*2, radius*2);
 
@@ -871,7 +871,7 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         previewBoomRangeTransform.anchorMax = new Vector2(.5f, 0);
         previewBoomRangeTransform.pivot = new Vector2(.5f, .5f);
         previewBoomRangeTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-        previewBoomRangeTransform.localPosition = new Vector3(0, -5, 0);
+        previewBoomRangeTransform.localPosition = new Vector3(0, 0, 0);
         previewBoomRangeTransform.localRotation = Quaternion.Euler(270, 0, 0);
         previewBoomRangeTransform.sizeDelta = new Vector2(cal.Range*2, cal.Range*2);
 

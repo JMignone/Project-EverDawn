@@ -13,6 +13,10 @@ public class BuildUpStats
     [SerializeField]
     private bool buildsUp;
 
+    [Tooltip("If enabled, the unit will retain its power while a new target is within its range")]
+    [SerializeField]
+    private bool retainOnRetarget;
+
     [Tooltip("Determines how much the units damage increases at the end of each delay")]
     [SerializeField] [Min(0)]
     private float damageIncrease;
@@ -51,10 +55,12 @@ public class BuildUpStats
         }
     }
 
-    public void ResetStats() {
+    public void ResetStats(bool retargeting) {
         if(buildsUp) {
-            unit.Stats.BaseDamage = initialDamage;
-            unit.Stats.AttackDelay = initialAttackDelay;
+            if(!(retargeting && retainOnRetarget)) {
+                unit.Stats.BaseDamage = initialDamage;
+                unit.Stats.AttackDelay = initialAttackDelay;
+            }
         }
     }
 

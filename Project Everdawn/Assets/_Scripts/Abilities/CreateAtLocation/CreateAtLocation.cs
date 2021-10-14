@@ -24,6 +24,10 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     //[SerializeField]
     //private bool blockable; //currently not sure if we will need this for CAL's. Description of this var is in Projectile
 
+    [Tooltip("If checked, the skillshot script will not tell BaseStats that the unit is done casting. This job will be left to the ability")]
+    [SerializeField]
+    private bool abilityControl;
+
     [SerializeField]
     private FreezeStats freezeStats;
 
@@ -87,6 +91,7 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     public float Range
     {
         get { return range; }
+        set { range = value; }
     }
 
     public float DamageMultiplier
@@ -103,6 +108,11 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     public GameConstants.TYPE_ATTACKABLE TypeAttackable
     {
         get { return typeAttackable; }
+    }
+
+    public bool AbilityControl
+    {
+        get { return abilityControl; }
     }
 
     public FreezeStats FreezeStats
@@ -221,11 +231,17 @@ public class CreateAtLocation : MonoBehaviour, IAbility
             linearStats.StartLinearStats(damageMultiplier);
         teleportStats.StartStats(unit);
 
-        if(unit != null)
+        if(unit != null && !unit.Equals(null))
             applyResistanceStats.StartResistance(unit);
 
         //if(chosenTarget == null)
         //    blockable = true;
+    }
+
+    private void OnDestroy()
+    {
+        if(unit != null && !unit.Equals(null) && abilityControl)
+            unit.Stats.IsCastingAbility = false;
     }
 
     private void Update() {
@@ -239,7 +255,7 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         if(lingeringStats.Lingering)
             lingeringStats.UpdateLingeringStats(gameObject);
         if(SummonStats.IsSummon) {
-            if(unit != null && unit.Agent != null) //if the unit is alive, then check if its stunned
+            if(unit != null && !unit.Equals(null)) //if the unit is alive, then check if its stunned
                 SummonStats.UpdateSummonStats(gameObject, unit.Stats.CanAct);
             else
                 SummonStats.UpdateSummonStats(gameObject, false);

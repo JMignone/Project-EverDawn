@@ -38,6 +38,10 @@ public class Projectile : MonoBehaviour, IAbility
     [SerializeField]
     private bool blockable; //simply means that a projectile can hit somthing that it didnt nessesarly target. Automatically set to true if there is no specific target
 
+    [Tooltip("If checked, the skillshot script will not tell BaseStats that the unit is done casting. This job will be left to the ability")]
+    [SerializeField]
+    private bool abilityControl;
+
     [SerializeField]
     private AOEStats aoeStats;
 
@@ -116,6 +120,7 @@ public class Projectile : MonoBehaviour, IAbility
     public float Range
     {
         get { return range; }
+        set { range = value; }
     }
 
     public float BaseDamage
@@ -143,6 +148,11 @@ public class Projectile : MonoBehaviour, IAbility
     public bool CanPierce
     {
         get { return canPierce; }
+    }
+
+    public bool AbilityControl
+    {
+        get { return abilityControl; }
     }
 
     public AOEStats AOEStats
@@ -275,24 +285,26 @@ public class Projectile : MonoBehaviour, IAbility
         strengthStats.StartStrengthStats();
 
         
-        if(unit != null) {
+        if(unit != null && !unit.Equals(null)) {
             resistEffects.StartResistance(unit);
             applyResistanceStats.StartResistance(unit);
         }
     }
 
     protected void StopStats() {
-        if(unit != null)
+        if(unit != null && !unit.Equals(null))
             resistEffects.StopResistance(unit);
     }
 
     private void OnDestroy()
     {
         StopStats();
+        if(unit != null && !unit.Equals(null) && abilityControl)
+            unit.Stats.IsCastingAbility = false;
     }
 
     private void Update() {
-        if(unit != null && unit.Agent != null) { //This is currently only used for boomerang
+        if(unit != null && !unit.Equals(null)) { //This is currently only used for boomerang
             lastKnownLocation = unit.Agent.transform.position;
             lastKnownLocation.y = 0;
         }

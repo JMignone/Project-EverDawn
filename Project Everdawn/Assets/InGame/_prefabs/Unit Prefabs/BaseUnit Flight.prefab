@@ -507,6 +507,13 @@ MonoBehaviour:
     abilityPrefabs: []
     abilityDelays: []
     currentDelay: 0
+  buildUpStats:
+    buildsUp: 0
+    retainOnRetarget: 0
+    damageIncrease: 0
+    delayDecrease: 0
+    damageCap: 0
+    delayCap: 0
   chargeStats:
     charges: 0
     isCharging: 0
@@ -762,7 +769,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 10
-  m_BaseOffset: 1
+  m_BaseOffset: 0
   m_WalkableMask: 8
   m_ObstacleAvoidanceType: 4
 --- !u!114 &3415333901079641160

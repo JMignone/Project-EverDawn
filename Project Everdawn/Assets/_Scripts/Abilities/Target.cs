@@ -152,10 +152,10 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         maxRange = 0;
         foreach(GameObject ability in abilityPrefabs) { //this finds the largest range of all the abilitys shot by this skillshot
             Component component = ability.GetComponent(typeof(IAbility));
-            if((component as IAbility).Range > maxRange)
-                 maxRange = (component as IAbility).Range;
-            if(ability.GetComponent<Movement>())
+            if((component as IAbility).AbilityControl)
                 abilityControl = true;
+            if((component as IAbility).Range > maxRange)
+                maxRange = (component as IAbility).Range;
         }
 
         abilityPreviews = new List<GameObject>();
@@ -363,6 +363,7 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             target = null;
         }
         else { //if we completed a delay
+            fireStartPosition = abilityPreviewCanvas.transform.position;
             if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
                 GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], fireStartPosition, target, fireDirection, unit, 1);
             else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
@@ -483,7 +484,7 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         previewBoomRangeTransform.anchorMax = new Vector2(.5f, 0);
         previewBoomRangeTransform.pivot = new Vector2(.5f, .5f);
         previewBoomRangeTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-        previewBoomRangeTransform.localPosition = new Vector3(0, -5, 0);
+        previewBoomRangeTransform.localPosition = new Vector3(0, 0, 0);
         previewBoomRangeTransform.localRotation = Quaternion.Euler(270, 0, 0);
         previewBoomRangeTransform.sizeDelta = new Vector2(maxRange*2, maxRange*2);
 
@@ -538,7 +539,7 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             previewBoomTransform.anchorMax = new Vector2(.5f, 0);
             previewBoomTransform.pivot = new Vector2(.5f, .5f);
             previewBoomTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-            previewBoomTransform.localPosition = new Vector3(0, -5, 0);
+            previewBoomTransform.localPosition = new Vector3(0, 0, 0);
             previewBoomTransform.localRotation = Quaternion.Euler(270, 0, 0);
             previewBoomTransform.sizeDelta = new Vector2(radius*2, radius*2);
             
@@ -577,7 +578,7 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
                 previewLinearTransformVert.anchorMax = new Vector2(.5f, 0);
                 previewLinearTransformVert.pivot = new Vector2(.5f, .5f);
                 previewLinearTransformVert.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-                previewLinearTransformVert.localPosition = new Vector3(0, -5, 0);
+                previewLinearTransformVert.localPosition = new Vector3(0, 0, 0);
                 previewLinearTransformVert.localRotation = Quaternion.Euler(270, 0, 0);
                 previewLinearTransformVert.sizeDelta = new Vector2(width, GameManager.Instance.Ground.transform.localScale.z * 10);
                 abilityPreviews.Add(goLinearVert);
@@ -606,7 +607,7 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
                 previewLinearTransformHorz.anchorMax = new Vector2(.5f, 0);
                 previewLinearTransformHorz.pivot = new Vector2(.5f, .5f);
                 previewLinearTransformHorz.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-                previewLinearTransformHorz.localPosition = new Vector3(0, -5, 0);
+                previewLinearTransformHorz.localPosition = new Vector3(0, 0, 0);
                 previewLinearTransformHorz.localRotation = Quaternion.Euler(270, 0, 0);
                 previewLinearTransformHorz.sizeDelta = new Vector2(GameManager.Instance.Ground.transform.localScale.x * 10, width);
                 abilityPreviews.Add(goLinearHorz);
@@ -639,7 +640,7 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             previewBoomTransform.anchorMax = new Vector2(.5f, 0);
             previewBoomTransform.pivot = new Vector2(.5f, .5f);
             previewBoomTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-            previewBoomTransform.localPosition = new Vector3(0, -5, 0);
+            previewBoomTransform.localPosition = new Vector3(0, 0, 0);
             previewBoomTransform.localRotation = Quaternion.Euler(270, 0, 0);
             previewBoomTransform.sizeDelta = new Vector2(radius*2, radius*2);
 
@@ -673,7 +674,7 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             previewAWarpTransform.anchorMax = new Vector2(.5f, 0);
             previewAWarpTransform.pivot = new Vector2(.5f, .5f);
             previewAWarpTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-            previewAWarpTransform.localPosition = new Vector3(0, -5, 0);
+            previewAWarpTransform.localPosition = new Vector3(0, 0, 0);
             previewAWarpTransform.localRotation = Quaternion.Euler(270, 0, 0);
             previewAWarpTransform.sizeDelta = new Vector2(radius*2, radius*2);
 

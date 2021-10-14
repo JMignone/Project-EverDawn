@@ -69,6 +69,11 @@ public class AbilityUI
         get { return currCooldownDelay/cooldownDelay; }
     }
 
+    public void StartStats() {
+        cardCanvasDim = GameFunctions.GetCanvas().GetChild(0).GetComponent<RectTransform>();
+        abilityCancel = GameFunctions.GetCanvas().GetChild(3).GetComponent<Image>();
+    }
+
     public void UpdateStats() {
         if(currCooldownDelay < cooldownDelay) {
             currCooldownDelay += Time.deltaTime;

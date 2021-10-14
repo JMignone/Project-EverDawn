@@ -154,7 +154,7 @@ public static class GameFunctions
         proj.ChosenTarget = chosenTarget;
         if(unit != null) 
             proj.Unit = unit;
-        proj.DamageMultiplier *= damageMultiplier;
+        proj.DamageMultiplier = damageMultiplier;
     }
 
 
@@ -181,7 +181,7 @@ public static class GameFunctions
         goCal.TargetLocation = endPosition;
         if(unit != null)
             goCal.Unit = unit;
-        goCal.DamageMultiplier *= damageMultiplier;
+        goCal.DamageMultiplier = damageMultiplier;
     }
 
     public static void FireCAL(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, float damageMultiplier) {
@@ -201,7 +201,7 @@ public static class GameFunctions
         goCal.ChosenTarget = chosenTarget;
         if(unit != null)
             goCal.Unit = unit;
-        goCal.DamageMultiplier *= damageMultiplier;
+        goCal.DamageMultiplier = damageMultiplier;
     }
 
     //This code was found from https://answers.unity.com/questions/566519/camerascreentoworldpoint-in-perspective.html

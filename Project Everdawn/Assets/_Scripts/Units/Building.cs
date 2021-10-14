@@ -233,7 +233,7 @@ public class Building : MonoBehaviour, IDamageable
             }
         }
         else
-            buildUpStats.ResetStats();
+            buildUpStats.ResetStats(false);
         if(attackStats.FiresProjectiles)
             attackStats.Fire();
     }
@@ -245,7 +245,7 @@ public class Building : MonoBehaviour, IDamageable
             if(newTarget != null)
                 (newTarget.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Add(gameObject);
             target = newTarget;
-            buildUpStats.ResetStats();
+            buildUpStats.ResetStats(true);
         }
     }
 

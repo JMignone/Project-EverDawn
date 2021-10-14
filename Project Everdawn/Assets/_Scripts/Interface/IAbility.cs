@@ -4,7 +4,8 @@ using UnityEngine;
 public interface IAbility
 {
     Vector3 Position();
-    float Range { get; }
+    float Range { get; set; }
+    bool AbilityControl { get; }
     float DamageMultiplier { get; }
     int AreaMask();
     PullStats PullStats { get; }

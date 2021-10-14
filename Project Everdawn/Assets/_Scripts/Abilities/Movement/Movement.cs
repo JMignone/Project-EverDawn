@@ -10,6 +10,9 @@ public class Movement : Projectile
     [SerializeField]
     private bool highlightEnemies;
 
+    [SerializeField]
+    private RetreatStats retreatStats;
+
     public bool PassObstacles
     {
         get { return passObstacles; }
@@ -23,6 +26,7 @@ public class Movement : Projectile
     private void Start() {
         HitBox.radius = Radius;
         StartStats();
+        TargetLocation = retreatStats.GetTargetLocation(Unit.Agent.transform.position, TargetLocation);
 
         LastKnownLocation = new Vector3(Unit.Agent.transform.position.x, 0, Unit.Agent.transform.position.z); //remembers the start location of a unit for boomerang effects
         //we cant have a grenade and a boomerang
@@ -37,16 +41,19 @@ public class Movement : Projectile
 
     private void OnDestroy()
     {
-        if(Unit != null) {
+        if(!Unit.Equals(null)) {
             Unit.Agent.Agent.enabled = true;
-            Unit.Stats.IsCastingAbility = false;
+            if(AbilityControl)
+                Unit.Stats.IsCastingAbility = false;
             StopStats();
         }
     }
     
     private void Update() {
-        if(Unit == null)
+        if(Unit.Equals(null) || !Unit.Stats.CanAct) {
             Destroy(gameObject);
+            return;
+        }
         Unit.Agent.Agent.transform.position = new Vector3(transform.position.x, Unit.Agent.Agent.transform.position.y, transform.position.z);
         Unit.Agent.transform.rotation = transform.rotation;
             
