@@ -21,6 +21,10 @@ public class Projectile : MonoBehaviour, IAbility
 
     [SerializeField] [Min(0)]
     private float baseDamage;
+
+    [Tooltip("If set to 0, towerDamage will be set to baseDamage")]
+    [SerializeField] [Min(0)]
+    private float towerDamage;
     private float damageMultiplier; //used for units that may have had its damage increased/decreased and fires projectiles as a ranged attack
 
     [Tooltip("Determines if the projectile can hit units on the ground, flying, or both")]
@@ -41,6 +45,10 @@ public class Projectile : MonoBehaviour, IAbility
     [Tooltip("If checked, the skillshot script will not tell BaseStats that the unit is done casting. This job will be left to the ability")]
     [SerializeField]
     private bool abilityControl;
+
+    [Tooltip("If checked, the preview will not display")]
+    [SerializeField]
+    private bool hidePreview;
 
     [SerializeField]
     private AOEStats aoeStats;
@@ -129,6 +137,12 @@ public class Projectile : MonoBehaviour, IAbility
         set { baseDamage = value; }
     }
 
+    public float TowerDamage
+    {
+        get { return towerDamage; }
+        set { towerDamage = value; }
+    }
+
     public float DamageMultiplier
     {
         get { return damageMultiplier; }
@@ -153,6 +167,11 @@ public class Projectile : MonoBehaviour, IAbility
     public bool AbilityControl
     {
         get { return abilityControl; }
+    }
+
+    public bool HidePreview
+    {
+        get { return hidePreview; }
     }
 
     public AOEStats AOEStats
@@ -289,6 +308,9 @@ public class Projectile : MonoBehaviour, IAbility
             resistEffects.StartResistance(unit);
             applyResistanceStats.StartResistance(unit);
         }
+
+        if(towerDamage == 0)
+            towerDamage = baseDamage;
     }
 
     protected void StopStats() {
@@ -362,11 +384,16 @@ public class Projectile : MonoBehaviour, IAbility
 
     public void hit(Component damageable) {
         if(blockable || (damageable as IDamageable).Agent == chosenTarget) { //if the projectile is blockable, or this is infact the chosen target
+
             if(GameFunctions.WillHit(heightAttackable, typeAttackable, damageable)) {
                 if(aoeStats.AreaOfEffect)
                     aoeStats.Explode(gameObject);
                 else {
-                    GameFunctions.Attack(damageable, baseDamage*damageMultiplier);
+                    float damage = baseDamage*damageMultiplier;
+                    if(damageable.GetComponent<Tower>())
+                        damage = towerDamage*damageMultiplier;
+
+                    GameFunctions.Attack(damageable, damage);
                     ApplyAffects(damageable);
                 }
                 if(!canPierce) {

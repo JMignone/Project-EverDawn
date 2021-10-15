@@ -6,6 +6,7 @@ public interface IAbility
     Vector3 Position();
     float Range { get; set; }
     bool AbilityControl { get; }
+    bool HidePreview { get; }
     float DamageMultiplier { get; }
     int AreaMask();
     PullStats PullStats { get; }

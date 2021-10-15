@@ -100,13 +100,13 @@ public static class GameFunctions
     }
 
     //damage increase is needed for range units that fire projectiles in its auto attack
-    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit, float damageMultiplier) {
+    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit, float damageMultiplier = 1.0f, float rangeIncrease = 0) {
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         float distance = Vector3.Distance(startPosition, mousePosition);
         Vector3 endPosition = mousePosition;
         Projectile projectile = prefab.GetComponent<Projectile>();
 
-        float range = projectile.Range;
+        float range = projectile.Range + rangeIncrease;
         float radius = projectile.Radius;
         bool isGrenade = projectile.GrenadeStats.IsGrenade;
         bool selfDestructs = projectile.SelfDestructStats.SelfDestructs;
@@ -133,7 +133,7 @@ public static class GameFunctions
         proj.DamageMultiplier = damageMultiplier;
     }
 
-    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, float damageMultiplier) {
+    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, float damageMultiplier = 1.0f) {
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         float distance = Vector3.Distance(startPosition, chosenTarget.transform.position);
         Vector3 endPosition = chosenTarget.transform.position;
@@ -158,13 +158,13 @@ public static class GameFunctions
     }
 
 
-    public static void FireCAL(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit, float damageMultiplier) {
+    public static void FireCAL(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit, float damageMultiplier = 1.0f, float rangeIncrease = 0) {
         Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
         float distance = Vector3.Distance(startPosition, mousePosition);
         Vector3 endPosition = mousePosition;
         CreateAtLocation cal = prefab.GetComponent<CreateAtLocation>();
 
-        float range = cal.Range;
+        float range = cal.Range + rangeIncrease;
         float radius = cal.Radius;
         if(distance > (range - radius))
             endPosition = startPosition + (direction.normalized * (range - radius));
@@ -184,13 +184,13 @@ public static class GameFunctions
         goCal.DamageMultiplier = damageMultiplier;
     }
 
-    public static void FireCAL(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, float damageMultiplier) {
+    public static void FireCAL(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, float damageMultiplier = 1.0f, float rangeIncrease = 0) {
         Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
         float distance = Vector3.Distance(startPosition, chosenTarget.transform.position);
         Vector3 endPosition = chosenTarget.transform.position;
         CreateAtLocation cal = prefab.GetComponent<CreateAtLocation>();
 
-        float range = cal.Range;
+        float range = cal.Range + rangeIncrease;
         float radius = cal.Radius;
         if(distance > (range - radius))
             endPosition = startPosition + (direction.normalized * (range - radius));

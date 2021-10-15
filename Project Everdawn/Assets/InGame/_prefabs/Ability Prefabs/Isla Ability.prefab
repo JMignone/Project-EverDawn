@@ -47,15 +47,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBox: {fileID: 7096565872914647090}
   unitSprite: {fileID: 7096565872282865274}
-  radius: 3
+  radius: 2
   speed: 100
   range: 40
-  baseDamage: 50
+  baseDamage: 240
+  towerDamage: 100
   heightAttackable: 0
   typeAttackable: 0
   canPierce: 1
   blockable: 0
   abilityControl: 0
+  hidePreview: 0
   aoeStats:
     areaOfEffect: 0
     explosionEffect: {fileID: 0}

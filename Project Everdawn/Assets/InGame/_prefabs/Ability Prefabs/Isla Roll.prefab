@@ -56,6 +56,7 @@ MonoBehaviour:
   canPierce: 1
   blockable: 0
   abilityControl: 0
+  hidePreview: 1
   aoeStats:
     areaOfEffect: 0
     explosionEffect: {fileID: 0}

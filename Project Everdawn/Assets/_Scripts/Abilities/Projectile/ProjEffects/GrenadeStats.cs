@@ -20,10 +20,6 @@ public class GrenadeStats
     private GameObject explosionEffect;
 
     [SerializeField] [Min(0)]
-    private float explosionDamage;
-    private float damageMultiplier;
-
-    [SerializeField] [Min(0)]
     private float explosionRadius;
 
     [Tooltip("A number from [0-infinity) that determines how large the arc of the grenade. 1 will set the arc to be a circle.")]
@@ -48,11 +44,6 @@ public class GrenadeStats
     public GameObject ExplosionEffect
     {
         get { return explosionEffect; }
-    }
-
-    public float ExplosionDamage
-    {
-        get { return explosionDamage; }
     }
 
     public float ExplosionRadius
@@ -92,7 +83,6 @@ public class GrenadeStats
                 arcStart = go.transform.position;
                 arcApex = arcStart + (arcEnd - arcStart)/2 + Vector3.up * Vector3.Distance(arcStart, arcEnd) * grenadeArcMultiplier;
             }
-            damageMultiplier = projectile.DamageMultiplier;
         }
     }
 
@@ -118,8 +108,14 @@ public class GrenadeStats
         foreach(Collider collider in colliders) {
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                 Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
+
                 if(GameFunctions.WillHit(projectile.HeightAttackable, projectile.TypeAttackable, damageable)) {
-                    GameFunctions.Attack(damageable, explosionDamage*damageMultiplier);
+
+                    float damage = projectile.BaseDamage*projectile.DamageMultiplier;
+                    if(damageable.GetComponent<Tower>())
+                        damage = projectile.TowerDamage*projectile.DamageMultiplier;
+
+                    GameFunctions.Attack(damageable, damage);
                     projectile.ApplyAffects(damageable);
                 }
             }

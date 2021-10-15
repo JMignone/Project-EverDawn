@@ -28,6 +28,10 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     [SerializeField]
     private bool abilityControl;
 
+    [Tooltip("If checked, the preview will not display")]
+    [SerializeField]
+    private bool hidePreview;
+
     [SerializeField]
     private FreezeStats freezeStats;
 
@@ -113,6 +117,11 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     public bool AbilityControl
     {
         get { return abilityControl; }
+    }
+
+    public bool HidePreview
+    {
+        get { return hidePreview; }
     }
 
     public FreezeStats FreezeStats

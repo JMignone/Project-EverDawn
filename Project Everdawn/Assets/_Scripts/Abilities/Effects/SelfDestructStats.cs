@@ -15,6 +15,9 @@ public class SelfDestructStats
     private float explosionDamage;
 
     [SerializeField] [Min(0)]
+    private float towerDamage;
+
+    [SerializeField] [Min(0)]
     private float explosionRadius;
 
     public bool SelfDestructs
@@ -47,8 +50,14 @@ public class SelfDestructStats
             foreach(Collider collider in colliders) {
                 if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                     Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
+
                     if(GameFunctions.WillHit((ability as IAbility).HeightAttackable, (ability as IAbility).TypeAttackable, damageable)) {
-                        GameFunctions.Attack(damageable, explosionDamage);
+
+                        float damage = explosionDamage*(ability as IAbility).DamageMultiplier;
+                        if(towerDamage > 0 && damageable.GetComponent<Tower>())
+                            damage = towerDamage*(ability as IAbility).DamageMultiplier;
+
+                        GameFunctions.Attack(damageable, damage);
                         (ability as IAbility).ApplyAffects(damageable);
                     }
                 }

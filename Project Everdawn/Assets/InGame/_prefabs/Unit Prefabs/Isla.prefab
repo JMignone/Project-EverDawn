@@ -974,7 +974,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3925836232371597723}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 31.07, y: 0, z: -18.63}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3925836231010811518}
@@ -998,15 +998,15 @@ MonoBehaviour:
   unitSprite: {fileID: 3925836231506596151}
   target: {fileID: 0}
   stats:
-    currHealth: 3000
-    maxHealth: 3000
+    currHealth: 750
+    maxHealth: 750
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
-    range: 21
-    visionRange: 30
+    range: 25
+    visionRange: 33
     baseDamage: 0
-    attackDelay: 1.5
+    attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 8
     rotationSpeed: 120

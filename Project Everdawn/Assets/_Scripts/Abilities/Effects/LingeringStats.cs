@@ -22,6 +22,9 @@ public class LingeringStats
 
     [SerializeField] [Min(0)]
     private float lingeringDamage;
+
+    [SerializeField] [Min(0)]
+    private float towerDamage;
     private float damageMultiplier;
 
     [SerializeField] [Min(0)]
@@ -131,6 +134,11 @@ public class LingeringStats
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                 Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
                 if(GameFunctions.WillHit((abilityComponent as IAbility).HeightAttackable, (abilityComponent as IAbility).TypeAttackable, damageable)) {
+
+                    float damage = lingeringDamage*(abilityComponent as IAbility).DamageMultiplier;
+                    if(towerDamage > 0 && damageable.GetComponent<Tower>())
+                        damage = towerDamage*(abilityComponent as IAbility).DamageMultiplier;
+
                     GameFunctions.Attack(damageable, lingeringDamage*damageMultiplier);
                     (abilityComponent as IAbility).ApplyAffects(damageable);
                 }

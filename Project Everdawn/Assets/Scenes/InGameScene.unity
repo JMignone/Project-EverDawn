@@ -4886,15 +4886,15 @@ MonoBehaviour:
   unitSprite: {fileID: 2137932696}
   target: {fileID: 0}
   stats:
-    currHealth: 500
-    maxHealth: 500
+    currHealth: 3500
+    maxHealth: 3500
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
     range: 30
     visionRange: 30
-    baseDamage: 30
-    attackDelay: 1
+    baseDamage: 130
+    attackDelay: 0.85
     currAttackDelay: 0
     moveSpeed: 0
     rotationSpeed: 120
@@ -5071,15 +5071,15 @@ MonoBehaviour:
   unitSprite: {fileID: 502710458}
   target: {fileID: 0}
   stats:
-    currHealth: 500
-    maxHealth: 500
+    currHealth: 3500
+    maxHealth: 3500
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
     range: 30
     visionRange: 30
-    baseDamage: 30
-    attackDelay: 1
+    baseDamage: 130
+    attackDelay: 0.85
     currAttackDelay: 0
     moveSpeed: 0
     rotationSpeed: 120
@@ -6240,8 +6240,8 @@ MonoBehaviour:
   unitSprite: {fileID: 1958020742}
   target: {fileID: 0}
   stats:
-    currHealth: 5000
-    maxHealth: 5000
+    currHealth: 1000
+    maxHealth: 1000
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
@@ -13939,7 +13939,6 @@ MonoBehaviour:
   abilityPreviewLinear: {fileID: 21300000, guid: 3d46296629f72914da3ffeb630c82832, type: 3}
   abilityPreviewBomb: {fileID: 21300000, guid: 68c0303b57e53ce4188ea1bbcf918c1a, type: 3}
   abilityPreviewRange: {fileID: 21300000, guid: 658bc1bba667d16429506ad48b1602a0, type: 3}
-  playerInfo: {fileID: 335821902}
 --- !u!1 &856313647
 GameObject:
   m_ObjectHideFlags: 0
@@ -14432,15 +14431,15 @@ MonoBehaviour:
   unitSprite: {fileID: 1315974520}
   target: {fileID: 0}
   stats:
-    currHealth: 500
-    maxHealth: 500
+    currHealth: 3500
+    maxHealth: 3500
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
     range: 30
     visionRange: 30
-    baseDamage: 30
-    attackDelay: 1
+    baseDamage: 130
+    attackDelay: 0.85
     currAttackDelay: 0
     moveSpeed: 0
     rotationSpeed: 120
@@ -17908,14 +17907,14 @@ MonoBehaviour:
   unitSprite: {fileID: 478127564}
   target: {fileID: 0}
   stats:
-    currHealth: 1000
-    maxHealth: 1000
+    currHealth: 5500
+    maxHealth: 5500
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
     range: 35
     visionRange: 35
-    baseDamage: 35
+    baseDamage: 120
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 0
@@ -19116,7 +19115,6 @@ MonoBehaviour:
   abilityPreviewLinear: {fileID: 21300000, guid: 3d46296629f72914da3ffeb630c82832, type: 3}
   abilityPreviewBomb: {fileID: 21300000, guid: 68c0303b57e53ce4188ea1bbcf918c1a, type: 3}
   abilityPreviewRange: {fileID: 21300000, guid: 658bc1bba667d16429506ad48b1602a0, type: 3}
-  playerInfo: {fileID: 335821902}
 --- !u!1 &1352459725
 GameObject:
   m_ObjectHideFlags: 0
@@ -28121,14 +28119,14 @@ MonoBehaviour:
   unitSprite: {fileID: 688873988}
   target: {fileID: 0}
   stats:
-    currHealth: 1000
-    maxHealth: 1000
+    currHealth: 5500
+    maxHealth: 5500
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
     range: 35
     visionRange: 35
-    baseDamage: 35
+    baseDamage: 120
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 0
@@ -28659,15 +28657,15 @@ MonoBehaviour:
   unitSprite: {fileID: 158509298}
   target: {fileID: 0}
   stats:
-    currHealth: 500
-    maxHealth: 500
+    currHealth: 3500
+    maxHealth: 3500
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
     range: 30
     visionRange: 30
-    baseDamage: 30
-    attackDelay: 1
+    baseDamage: 130
+    attackDelay: 0.85
     currAttackDelay: 0
     moveSpeed: 0
     rotationSpeed: 120
@@ -30159,6 +30157,22 @@ PrefabInstance:
       propertyPath: abilityUI.abilityCancel
       value: 
       objectReference: {fileID: 63724459}
+    - target: {fileID: 3925836231184498327, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
+      propertyPath: abilityUI.cooldownDelay
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925836231184498327, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
+      propertyPath: abilityDelays.Array.data[0]
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925836231184498327, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
+      propertyPath: abilityDelays.Array.data[1]
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925836231184498327, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
+      propertyPath: abilityUI.currCooldownDelay
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 3925836232371597720, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -30202,6 +30216,18 @@ PrefabInstance:
     - target: {fileID: 3925836232371597720, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925836232371597721, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
+      propertyPath: stats.attackDelay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925836232371597721, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
+      propertyPath: stats.visionRange
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925836232371597721, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
+      propertyPath: stats.summoningSicknessUI.summonSicknessDelay
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3925836232371597723, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
       propertyPath: m_Name
