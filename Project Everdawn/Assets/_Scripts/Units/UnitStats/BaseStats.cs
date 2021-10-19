@@ -328,12 +328,11 @@ public class BaseStats
             if( ( inRange > 0 || (currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && inVision) ) && CanAct && !IsCastingAbility && chargeAttack) { //if target is inRange, or the attack is nearly ready and their within vision AND not stunned
                 isAttacking = true;
                 if(target != null) {
-                    Vector3 directionToTarget = unitAgent.transform.position - target.transform.GetChild(0).position;
+                    Vector3 directionToTarget = target.transform.GetChild(0).position - unitAgent.transform.position;
                     directionToTarget.y = 0; // Ignore Y, usful for airborne units
                     float angle = Vector3.Angle(unitAgent.transform.forward, directionToTarget); 
 
-                    //180 - *** might be the source of an error later on, depends on the angle of a unit agent at the start, right now they are all 180
-                    if(180-Mathf.Abs(angle) < GameConstants.MAXIMUM_ATTACK_ANGLE || Mathf.Abs(angle) == 0) { //it may equal 0 if the unit is right on top of the target, this may be fixed if the units are set to 0 and not 180
+                    if(Mathf.Abs(angle) < GameConstants.MAXIMUM_ATTACK_ANGLE) {
                         if(currAttackDelay < attackDelay) 
                             currAttackDelay += Time.deltaTime * effectStats.SlowedStats.CurrentSlowIntensity;
                         else

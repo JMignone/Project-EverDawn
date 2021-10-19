@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7301237268377999428}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -37,7 +37,7 @@ Transform:
   - {fileID: 7301237269661400001}
   m_Father: {fileID: 7301237269475668352}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7301237268377999451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,7 +463,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7301237269475668355}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -471,7 +471,7 @@ Transform:
   - {fileID: 7301237268377999429}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7301237269475668358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -813,14 +813,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7301237269661400000}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7301237269365400454}
   m_Father: {fileID: 7301237268377999429}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &7301237268396564079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -986,7 +986,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2921666733987451172, guid: 95c4d26308b2d534aa62a5c1d05284d7, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2921666733987451172, guid: 95c4d26308b2d534aa62a5c1d05284d7, type: 3}
       propertyPath: m_LocalRotation.x
@@ -994,7 +994,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2921666733987451172, guid: 95c4d26308b2d534aa62a5c1d05284d7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2921666733987451172, guid: 95c4d26308b2d534aa62a5c1d05284d7, type: 3}
       propertyPath: m_LocalRotation.z
@@ -1006,7 +1006,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2921666733987451172, guid: 95c4d26308b2d534aa62a5c1d05284d7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2921666733987451172, guid: 95c4d26308b2d534aa62a5c1d05284d7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -1101,7 +1101,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.199997
+      value: -2.2
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1121,7 +1121,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -6
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1141,7 +1141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791332, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_Name
-      value: CanvasSummonSickness (1)
+      value: CanvasSummonSickness
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}

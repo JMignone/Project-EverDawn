@@ -123,14 +123,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4286050856114231759}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7768093917990573618}
   m_Father: {fileID: 4300487081921077861}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &4300487081235283213
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +156,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4300487081235283213}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -164,7 +164,7 @@ Transform:
   - {fileID: 4300487081921077861}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4300487081235283212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,6 +295,13 @@ MonoBehaviour:
     abilityPrefabs: []
     abilityDelays: []
     currentDelay: 0
+  buildUpStats:
+    buildsUp: 0
+    retainOnRetarget: 0
+    damageIncrease: 0
+    delayDecrease: 0
+    damageCap: 0
+    delayCap: 0
   chargeStats:
     charges: 0
     isCharging: 0
@@ -367,13 +374,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4300487081545407402}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4300487081235283211}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4300487081545407414
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -618,7 +625,7 @@ MonoBehaviour:
   followTarget: {fileID: 4300487081545407402}
   anim: {fileID: 4300487081921077862}
   agent: {fileID: 4300487081545407401}
-  isFlying: 0
+  isPreview: 0
 --- !u!95 &4300487081921077862
 Animator:
   serializedVersion: 3
@@ -756,7 +763,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7130030977810432960}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 6, y: 6, z: 6}
   m_Children:
@@ -765,7 +772,7 @@ Transform:
   - {fileID: 7130030977810407414}
   m_Father: {fileID: 4300487081921077861}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7130030977810432964
 GameObject:
   m_ObjectHideFlags: 0
@@ -1442,7 +1449,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.199997
+      value: -2.2
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1462,7 +1469,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -6
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_AnchoredPosition.y

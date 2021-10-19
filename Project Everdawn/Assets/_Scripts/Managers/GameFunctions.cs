@@ -90,7 +90,7 @@ public static class GameFunctions
     {
         var targetPosition = position;
         targetPosition.z = 100; //What about the enemy player? Does this need to be -100?
-        Vector3 direction = position - targetPosition;
+        Vector3 direction = targetPosition - position;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         //This makes sure the unit is rotated the corect way
 

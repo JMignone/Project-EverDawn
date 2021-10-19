@@ -193,11 +193,11 @@ public class Building : MonoBehaviour, IDamageable
     void Spawn() {
         if(stats.CurrAttackDelay >= stats.AttackDelay && stats.IsReady) {
             Vector3 position = agent.transform.position;
-            position += transform.forward * -7;
+            position += transform.forward * 7;
             Quaternion rotation = agent.transform.rotation;
 
             GameObject spawnedUnit = Instantiate(spawnStats.UnitToSpawn, position, rotation, transform.parent);
-            spawnedUnit.transform.Rotate(0, 180, 0, Space.Self);
+            spawnedUnit.transform.Rotate(0, 0, 0, Space.Self);
             GameManager.AddObjectToList(spawnedUnit);
         }
     }
