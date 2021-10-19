@@ -1704,7 +1704,7 @@ MonoBehaviour:
   followTarget: {fileID: 1403972039}
   anim: {fileID: 158509299}
   agent: {fileID: 0}
-  isFlying: 0
+  isPreview: 0
 --- !u!95 &158509299
 Animator:
   serializedVersion: 3
@@ -3749,7 +3749,7 @@ MonoBehaviour:
       - 0
       unitIndex: 0
     - index: 1
-      name: Unit 2
+      name: Freeze
       icon: {fileID: 21300000, guid: 04d58490ded8c4c4aa64bca7867d7969, type: 3}
       cost: 3
       spawnZoneRestrictions: 2
@@ -3760,13 +3760,13 @@ MonoBehaviour:
       - 0.5
       unitIndex: -1
     - index: 2
-      name: Unit Group
+      name: Bao Zu
       icon: {fileID: 21300000, guid: 616f99a5a0da8bc4696cec0e5e538437, type: 3}
       cost: 2
       spawnZoneRestrictions: 1
       prefab:
-      - {fileID: 4489671066153867563, guid: cbc231736edf9454caa0c4feed18afc2, type: 3}
-      previewPrefab: {fileID: 9061750350620061380, guid: 13fdda68d34ea614ba84e5ec9ad6a2ee, type: 3}
+      - {fileID: 4489671066153867563, guid: 97143c3ff03398a4a9833e0cbbd1d5ea, type: 3}
+      previewPrefab: {fileID: 9061750350620061380, guid: 6b106a57a97597b41b5b3ce5f3de747f, type: 3}
       previewDelays:
       - 0
       unitIndex: 0
@@ -6111,7 +6111,7 @@ MonoBehaviour:
   followTarget: {fileID: 1536723287}
   anim: {fileID: 478127565}
   agent: {fileID: 0}
-  isFlying: 0
+  isPreview: 0
 --- !u!95 &478127565
 Animator:
   serializedVersion: 3
@@ -6651,7 +6651,7 @@ MonoBehaviour:
   followTarget: {fileID: 808605432}
   anim: {fileID: 502710459}
   agent: {fileID: 0}
-  isFlying: 0
+  isPreview: 0
 --- !u!95 &502710459
 Animator:
   serializedVersion: 3
@@ -10456,7 +10456,7 @@ MonoBehaviour:
   followTarget: {fileID: 1450361168}
   anim: {fileID: 688873989}
   agent: {fileID: 0}
-  isFlying: 0
+  isPreview: 0
 --- !u!95 &688873989
 Animator:
   serializedVersion: 3
@@ -13006,7 +13006,7 @@ MonoBehaviour:
   followTarget: {fileID: 1574630164}
   anim: {fileID: 781495025}
   agent: {fileID: 1574630165}
-  isFlying: 0
+  isPreview: 0
 --- !u!95 &781495025
 Animator:
   serializedVersion: 3
@@ -14011,7 +14011,7 @@ MonoBehaviour:
   followTarget: {fileID: 916711974}
   anim: {fileID: 856313649}
   agent: {fileID: 916711976}
-  isFlying: 0
+  isPreview: 0
 --- !u!1 &859577862
 GameObject:
   m_ObjectHideFlags: 0
@@ -18559,7 +18559,7 @@ MonoBehaviour:
   followTarget: {fileID: 829696480}
   anim: {fileID: 1315974521}
   agent: {fileID: 0}
-  isFlying: 0
+  isPreview: 0
 --- !u!95 &1315974521
 Animator:
   serializedVersion: 3
@@ -19027,7 +19027,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 1114531618}
   abilityPrefabs:
-  - {fileID: 4332999100709516610, guid: 4d38356404b172542bbbb06b5950ec16, type: 3}
+  - {fileID: 1224647179923901261, guid: 9f95a636396da294c8b3f8bf1ae79e27, type: 3}
   abilityDelays:
   - 0.1
   - 0.5
@@ -27495,7 +27495,7 @@ MonoBehaviour:
   followTarget: {fileID: 1010337147}
   anim: {fileID: 1958020743}
   agent: {fileID: 1010337148}
-  isFlying: 0
+  isPreview: 0
 --- !u!95 &1958020743
 Animator:
   serializedVersion: 3
@@ -28955,7 +28955,7 @@ MonoBehaviour:
   followTarget: {fileID: 997561208}
   anim: {fileID: 2075605731}
   agent: {fileID: 997561211}
-  isFlying: 0
+  isPreview: 0
 --- !u!1001 &2076849508
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29315,7 +29315,7 @@ MonoBehaviour:
   followTarget: {fileID: 191223117}
   anim: {fileID: 2093067393}
   agent: {fileID: 191223118}
-  isFlying: 0
+  isPreview: 0
 --- !u!95 &2093067393
 Animator:
   serializedVersion: 3
@@ -29508,7 +29508,7 @@ MonoBehaviour:
   followTarget: {fileID: 558896012}
   anim: {fileID: 2102655989}
   agent: {fileID: 558896013}
-  isFlying: 0
+  isPreview: 0
 --- !u!1001 &2103357960
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29778,7 +29778,7 @@ MonoBehaviour:
   followTarget: {fileID: 561815899}
   anim: {fileID: 2137932697}
   agent: {fileID: 0}
-  isFlying: 0
+  isPreview: 0
 --- !u!95 &2137932697
 Animator:
   serializedVersion: 3
@@ -30172,6 +30172,10 @@ PrefabInstance:
     - target: {fileID: 3925836231184498327, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
       propertyPath: abilityUI.currCooldownDelay
       value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925836231506596151, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
+      propertyPath: isPreview
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3925836232371597720, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
       propertyPath: m_RootOrder

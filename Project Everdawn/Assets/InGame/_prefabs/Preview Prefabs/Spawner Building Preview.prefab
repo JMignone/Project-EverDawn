@@ -111,7 +111,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3037569614883454715}
-  - component: {fileID: 1821496376346803644}
+  - component: {fileID: 6166698858847195106}
   - component: {fileID: 2419974930159045263}
   m_Layer: 0
   m_Name: GameArt
@@ -135,7 +135,7 @@ Transform:
   m_Father: {fileID: 1401404796868230814}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1821496376346803644
+--- !u!114 &6166698858847195106
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,13 +144,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2955625276029569488}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c74e0c4340b2334d9734ae67d9d5448, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a132239c02c8244da005675dfdc886d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 1401404796738995981}
   anim: {fileID: 2419974930159045263}
   agent: {fileID: 1401404796738995983}
-  isFlying: 0
+  isPreview: 1
 --- !u!95 &2419974930159045263
 Animator:
   serializedVersion: 3
@@ -161,7 +161,7 @@ Animator:
   m_GameObject: {fileID: 2955625276029569488}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
-  m_Controller: {fileID: 9100000, guid: 9ac6b77e5a57c0e42878edd4b768d9c3, type: 2}
+  m_Controller: {fileID: 9100000, guid: ebc9d54892e4b374abfca607825407c4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

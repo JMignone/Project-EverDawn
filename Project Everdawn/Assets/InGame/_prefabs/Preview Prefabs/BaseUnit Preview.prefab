@@ -61,7 +61,6 @@ GameObject:
   - component: {fileID: 881476954686139290}
   - component: {fileID: 881476954686139291}
   - component: {fileID: 881476954686139294}
-  - component: {fileID: 881476954686139293}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Player
@@ -154,18 +153,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 0
---- !u!114 &881476954686139293
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 881476954686139295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49b91bca88058ef448adf6c6204ef7db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &881476954921382669
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,7 +162,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 881476954921382668}
-  - component: {fileID: 881476954921382666}
+  - component: {fileID: 8455232314082815270}
   - component: {fileID: 881476954921382667}
   m_Layer: 0
   m_Name: GameArt
@@ -199,7 +186,7 @@ Transform:
   m_Father: {fileID: 881476954545742612}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &881476954921382666
+--- !u!114 &8455232314082815270
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,13 +195,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 881476954921382669}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c74e0c4340b2334d9734ae67d9d5448, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a132239c02c8244da005675dfdc886d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 881476954686139295}
   anim: {fileID: 881476954921382667}
   agent: {fileID: 881476954686139294}
-  isFlying: 0
+  isPreview: 1
 --- !u!95 &881476954921382667
 Animator:
   serializedVersion: 3
@@ -225,7 +212,7 @@ Animator:
   m_GameObject: {fileID: 881476954921382669}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 7a5a3e219870e1b42ba792e890964c79, type: 3}
-  m_Controller: {fileID: 9100000, guid: b5b53c0123fce83488733b367ea98fc9, type: 2}
+  m_Controller: {fileID: 9100000, guid: 38c587cb4f3004144a6033f7d17bbd20, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

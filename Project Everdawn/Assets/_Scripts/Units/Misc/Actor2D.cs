@@ -12,7 +12,7 @@ public class Actor2D : MonoBehaviour
     [SerializeField]
     NavMeshAgent agent;
     [SerializeField]
-    bool isFlying;
+    bool isPreview;
 
     public Animator Animator
     {
@@ -21,40 +21,37 @@ public class Actor2D : MonoBehaviour
 
     private void Awake()
     {
-        anim = GetComponent<Animator>();
-        if(agent != null) { //temporary so tower doesnt scream errors for lack of animation
+        if(anim != null) {
+            anim = GetComponent<Animator>();
+            anim.SetBool("IsPreview", isPreview);
+        }
+        if(agent != null) //temporary so tower doesnt scream errors for lack of animation
             agent = followTarget.GetComponent<NavMeshAgent>();
+    }
+
+    private void Update() {
+        if(!isPreview && agent != null) { //temporary so tower doesnt scream errors for lack of animation
+            anim.SetBool("IsWalking", agent.velocity == Vector3.zero ? false : true);
+
+            Component damageable = followTarget.transform.parent.GetComponent(typeof(IDamageable));
+            Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
+
+            anim.SetBool("IsCasting", (unit as IDamageable).Stats.IsCastingAbility);
+            anim.SetBool("IsAttacking", ( ((unit as IDamageable).InRangeTargets.Count > 0
+                                        || (unit as IDamageable).Stats.IsAttacking
+                                        || ( (unit as IDamageable).Stats.CurrAttackDelay/(unit as IDamageable).Stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && (unit as IDamageable).HitTargets.Contains((unit as IDamageable).Target) ) ) 
+                && (unit as IDamageable).Stats.CanAct ) ? true : false); //is in range, OR (is nearly done with attack and within vision)?
+                
+            //anim.SetBool("IsReady", ((unit as IDamageable).Stats.CurrAttackDelay/(unit as IDamageable).Stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && (unit as IDamageable).HitTargets.Contains((unit as IDamageable).Target)) ? true : false); //is nearly done with attack and within vision?
+            /*
+                We may need a seperate value for all units, as their animations for attacking might take longer, even tho we may want them to attack at similar speeds.
+                This way they can properly do their entire attack animation
+            */
         }
     }
 
-    private void Update()
-    {   if(agent != null) { //temporary so tower doesnt scream errors for lack of animation
-            if(!isFlying) {
-                anim.SetBool("IsWalking", agent.velocity == Vector3.zero ? false : true);
-
-                Component damageable = followTarget.transform.parent.GetComponent(typeof(IDamageable));
-                Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
-
-                anim.SetBool("IsCasting", (unit as IDamageable).Stats.IsCastingAbility);
-                anim.SetBool("IsAttacking", ( ((unit as IDamageable).InRangeTargets.Count > 0
-                                            || (unit as IDamageable).Stats.IsAttacking
-                                            || ( (unit as IDamageable).Stats.CurrAttackDelay/(unit as IDamageable).Stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && (unit as IDamageable).HitTargets.Contains((unit as IDamageable).Target) ) ) 
-                    && (unit as IDamageable).Stats.CanAct ) ? true : false); //is in range, OR (is nearly done with attack and within vision)?
-                
-                //anim.SetBool("IsReady", ((unit as IDamageable).Stats.CurrAttackDelay/(unit as IDamageable).Stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && (unit as IDamageable).HitTargets.Contains((unit as IDamageable).Target)) ? true : false); //is nearly done with attack and within vision?
-                /*
-                    We may need a seperate value for all units, as their animations for attacking might take longer, even tho we may want them to attack at similar speeds.
-                    This way they can properly do their entire attack animation
-                */
-                
-            }
-        }
-    }
-
-    private void LateUpdate()
-    {
-        if(followTarget != null)
-        {
+    private void LateUpdate() {
+        if(followTarget != null) {
             transform.localPosition = new Vector3(
                 followTarget.transform.localPosition.x, 
                 followTarget.transform.localPosition.y, 

@@ -469,7 +469,6 @@ GameObject:
   - component: {fileID: 7317817158579484862}
   - component: {fileID: 7317817158579484863}
   - component: {fileID: 7317817158579484833}
-  - component: {fileID: 2909185865858044669}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Enemy
@@ -562,18 +561,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 0
---- !u!114 &2909185865858044669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7317817158579484834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49b91bca88058ef448adf6c6204ef7db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7317817158688808453
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,7 +619,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7317817159374537069}
-  - component: {fileID: 6583709780216259354}
+  - component: {fileID: 2187872684371927873}
   - component: {fileID: 7317817159374537070}
   m_Layer: 0
   m_Name: GameArt
@@ -656,7 +643,7 @@ Transform:
   m_Father: {fileID: 7317817158688808451}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6583709780216259354
+--- !u!114 &2187872684371927873
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -665,13 +652,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7317817159374537104}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c74e0c4340b2334d9734ae67d9d5448, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a132239c02c8244da005675dfdc886d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 7317817158579484834}
   anim: {fileID: 7317817159374537070}
   agent: {fileID: 7317817158579484833}
-  isFlying: 0
+  isPreview: 1
 --- !u!95 &7317817159374537070
 Animator:
   serializedVersion: 3
@@ -682,7 +669,7 @@ Animator:
   m_GameObject: {fileID: 7317817159374537104}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: b2b64690726d3492892bd2e15ca37563, type: 3}
-  m_Controller: {fileID: 9100000, guid: 49145672fa39b0544abae4607f9b5e99, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6f7b648786ddee64c9a5878920ad41cd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

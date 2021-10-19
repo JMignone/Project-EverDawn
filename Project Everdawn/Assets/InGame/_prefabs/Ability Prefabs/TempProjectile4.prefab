@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1224647179923901248}
   m_Layer: 0
   m_Name: TempProjectile4
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,11 +128,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBox: {fileID: 1224647180710323965}
   radius: 15
-  range: 80
+  range: 120
   heightAttackable: 0
   typeAttackable: 0
+  abilityControl: 0
+  hidePreview: 0
   freezeStats:
-    canFreeze: 0
+    canFreeze: 1
     freezeDuration: 3
   slowStats:
     canSlow: 0
@@ -147,7 +149,7 @@ MonoBehaviour:
     poisonDuration: 6
     poisonTick: 0.5
   knockbackStats:
-    canKnockback: 1
+    canKnockback: 0
     knockbackDuration: 1.5
     initialSpeed: 20
   pullStats:
@@ -164,10 +166,11 @@ MonoBehaviour:
     strengthIntensity: 3
   lingeringStats:
     lingering: 0
-    lingerAtEnd: 1
+    lingerAtEnd: 0
     lingerDuringFlight: 0
     lingeringEffect: {fileID: 0}
     lingeringDamage: 25
+    towerDamage: 0
     lingeringRadius: 0
     lingeringDuration: 8
     lingeringTick: 1
@@ -176,6 +179,7 @@ MonoBehaviour:
     selfDestructs: 1
     explosionEffect: {fileID: 0}
     explosionDamage: 100
+    towerDamage: 20
     explosionRadius: 15
   linearStats:
     isLinear: 0
@@ -183,11 +187,13 @@ MonoBehaviour:
     isHorizontal: 1
     explosionEffect: {fileID: 0}
     explosionDamage: 50
+    towerDamage: 0
     explosionWidth: 5
   teleportStats:
     isWarp: 0
     teleportsAllies: 0
     allyRadius: 0
+    allyWarpSickness: 0
     explosionEffect: {fileID: 0}
   summonStats:
     isSummon: 0
