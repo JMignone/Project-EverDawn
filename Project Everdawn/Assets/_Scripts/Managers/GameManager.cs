@@ -15,9 +15,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject ground;
     [SerializeField]
-    private GameObject gameplay_HUD;
+    private GameObject gameplayHUD;
     [SerializeField]
-    private GameObject end_game_screen;
+    private GameObject endGameScreen;
 
     public static GameManager Instance
     {
@@ -45,14 +45,14 @@ public class GameManager : MonoBehaviour
         get { return ground; }
     }
 
-    public GameObject Gameplay_HUD
+    public GameObject GameplayHUD
     {
-        get { return gameplay_HUD; }
+        get { return gameplayHUD; }
     }
 
-    public GameObject End_Game_Screen
+    public GameObject EndGameScreen
     {
-        get { return end_game_screen; }
+        get { return endGameScreen; }
     }
 
     private void Awake()
@@ -228,7 +228,15 @@ public class GameManager : MonoBehaviour
             //RemoveObjectsFromList(go);
         }
 
-        /*TODO
+        //Clear the objects from the lists
+        Instance.Objects.Clear();
+        Instance.TowerObjects.Clear();
+        /* This probably isn't a good way to do this, since there's the chance some objects may have not gotten destroyed or something, but it works
+         * We'll probably need a better solution in the future
+         * Also CardDatabaseDisplay has basically the same issue
+         */
+
+        /* TODO
          * While not exactly necessary, since it'll get reset when the scene unloads, it'd be good to clear the Objects and TowerObjects lists at the end of the game.
          * The lower loop currently does not work. If included in the above foreach loops it fails to destroy any game objects lower in the list than the enemy keep.
         
@@ -239,9 +247,9 @@ public class GameManager : MonoBehaviour
         */
 
         //Hide Gameplay HUD
-        Instance.Gameplay_HUD.SetActive(false);
+        Instance.GameplayHUD.SetActive(false);
 
         //Show End Game Screen
-        Instance.End_Game_Screen.SetActive(true);
+        Instance.EndGameScreen.SetActive(true);
     }
 }

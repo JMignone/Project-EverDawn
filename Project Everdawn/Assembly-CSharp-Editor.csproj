@@ -47,7 +47,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\MenuAssets\LeanTween\Editor\LeanTweenDocumentationEditor.cs" />
+     <Compile Include="Assets\LeanTween\Editor\LeanTweenDocumentationEditor.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.17f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
