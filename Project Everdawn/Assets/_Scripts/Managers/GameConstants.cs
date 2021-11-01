@@ -4,7 +4,7 @@ public static class GameConstants
     public static float ATTACK_CHARGE_LIMITER = .5f;   //To what point should the attack charge to when a unit is within vision, but not range, or not in front of the unit
     public static float MAXIMUM_ATTACK_ANGLE = 70.0f;  //to what extend can the unit be not rotated on target before the attack is delayed? Think airship
 
-    public static float RESOURCE_SPEED = 0.66f;             //How fast the resource generates
+    public static float RESOURCE_SPEED = 0.33f;             //How fast the resource generates
     public static int RESOURCE_MAX = 9;                     //The cap on the resource (9 means 10)
     public static int MAX_HAND_SIZE = 4;                    //size of the player hand
     public static string HUD_CANVAS = "HUD - Canvas";       //The name of the gameObject that holds the UI

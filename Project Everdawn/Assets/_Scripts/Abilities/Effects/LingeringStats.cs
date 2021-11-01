@@ -128,7 +128,8 @@ public class LingeringStats
 
     public void LingerDamage(GameObject go) {
         //Instantiate(lingeringEffect, go.transform.position, go.transform.rotation);
-        Collider[] colliders = Physics.OverlapSphere(go.transform.position, lingeringRadius);
+        Vector3 position = new Vector3(go.transform.position.x, 0, go.transform.position.y);
+        Collider[] colliders = Physics.OverlapSphere(position, lingeringRadius);
 
         foreach(Collider collider in colliders) {
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {

@@ -34,7 +34,7 @@ public class SummoningSicknessUI
 
     public bool SummonProtection
     {
-        get { if(summonProtectionDelay < 0) return true;
+        get { if(summonProtectionDelay > 0) return true;
               else return false; }
     }
 

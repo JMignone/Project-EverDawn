@@ -86,21 +86,28 @@ public static class GameFunctions
         return null;
     }
 
-    public static GameObject SpawnUnit(GameObject prefab, Transform parent, Vector3 position) 
+    public static GameObject SpawnUnit(GameObject prefab, Transform parent, Vector3 position, string tag = "Player") 
     {
+        int playerOffset = 100;
+        if(tag == "Enemy")
+            playerOffset = -100;
+
         var targetPosition = position;
-        targetPosition.z = 100; //What about the enemy player? Does this need to be -100?
+        targetPosition.z = playerOffset; //What about the enemy player? Does this need to be -100?
         Vector3 direction = targetPosition - position;
+        
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         //This makes sure the unit is rotated the corect way
 
         GameObject go = GameObject.Instantiate(prefab, position, targetRotation, parent);
+        giveUnitTeam(go, tag);
+
         GameManager.AddObjectToList(go);
         return go;
     }
 
     //damage increase is needed for range units that fire projectiles in its auto attack
-    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit, float damageMultiplier = 1.0f, float rangeIncrease = 0) {
+    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, float rangeIncrease = 0) {
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         float distance = Vector3.Distance(startPosition, mousePosition);
         Vector3 endPosition = mousePosition;
@@ -126,6 +133,8 @@ public static class GameFunctions
         if(isGrenade && projectile.GrenadeStats.IsAirStrike)
             startPosition = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
         GameObject go = GameObject.Instantiate(prefab, startPosition, targetRotation, GameManager.GetUnitsFolder());
+        go.tag = tag;
+
         Projectile proj = go.GetComponent<Projectile>();
         proj.TargetLocation = endPosition;
         if(unit != null)
@@ -133,7 +142,7 @@ public static class GameFunctions
         proj.DamageMultiplier = damageMultiplier;
     }
 
-    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, float damageMultiplier = 1.0f) {
+    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f) {
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         float distance = Vector3.Distance(startPosition, chosenTarget.transform.position);
         Vector3 endPosition = chosenTarget.transform.position;
@@ -149,6 +158,8 @@ public static class GameFunctions
             startPosition = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
 
         GameObject go = GameObject.Instantiate(prefab, startPosition, targetRotation, GameManager.GetUnitsFolder());
+        go.tag = tag;
+
         Projectile proj = go.GetComponent<Projectile>();
         proj.TargetLocation = endPosition;
         proj.ChosenTarget = chosenTarget;
@@ -158,7 +169,7 @@ public static class GameFunctions
     }
 
 
-    public static void FireCAL(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit, float damageMultiplier = 1.0f, float rangeIncrease = 0) {
+    public static void FireCAL(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, float rangeIncrease = 0) {
         Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
         float distance = Vector3.Distance(startPosition, mousePosition);
         Vector3 endPosition = mousePosition;
@@ -177,6 +188,8 @@ public static class GameFunctions
                 endPosition = hit.position;
         }
         GameObject go = GameObject.Instantiate(prefab, endPosition, targetRotation, GameManager.GetUnitsFolder());
+        go.tag = tag;
+
         CreateAtLocation goCal = go.GetComponent<CreateAtLocation>();
         goCal.TargetLocation = endPosition;
         if(unit != null)
@@ -184,7 +197,7 @@ public static class GameFunctions
         goCal.DamageMultiplier = damageMultiplier;
     }
 
-    public static void FireCAL(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, float damageMultiplier = 1.0f, float rangeIncrease = 0) {
+    public static void FireCAL(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, float rangeIncrease = 0) {
         Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
         float distance = Vector3.Distance(startPosition, chosenTarget.transform.position);
         Vector3 endPosition = chosenTarget.transform.position;
@@ -196,6 +209,8 @@ public static class GameFunctions
             endPosition = startPosition + (direction.normalized * (range - radius));
 
         GameObject go = GameObject.Instantiate(prefab, endPosition, targetRotation, GameManager.GetUnitsFolder());
+        go.tag = tag;
+        
         CreateAtLocation goCal = go.GetComponent<CreateAtLocation>();
         goCal.TargetLocation = endPosition;
         goCal.ChosenTarget = chosenTarget;
@@ -273,6 +288,25 @@ public static class GameFunctions
             position.z = top;
         
         return position;
+    }
+
+    // ! This function will fall into an endless loop or fail outright if a group unit has another group unit inside it, which shouldn't be the case !
+    public static void giveUnitTeam(GameObject go, string tag) {
+        IDamageable unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+
+        if(unit.Stats.UnitGrouping == GameConstants.UNIT_GROUPING.GROUP) {
+            for(int unitIndex=1; unitIndex<go.transform.childCount; unitIndex++)
+                giveUnitTeam(go.transform.GetChild(unitIndex).gameObject, tag);
+        }
+        else {
+            go.tag = tag;
+            unit.Agent.transform.tag = tag;
+            unit.UnitSprite.Ability.transform.tag = tag;
+        }
+    }
+
+    public static void giveAbilityTeam(GameObject go, string tag) {
+        go.tag = tag;
     }
 
     public static Transform GetCanvas() {

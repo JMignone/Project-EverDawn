@@ -14,6 +14,20 @@ public class GameManager : MonoBehaviour
     private List<PlayerStats> players;
     [SerializeField]
     private GameObject ground;
+    private int playerScore;
+    private int enemyScore;
+    [SerializeField]
+    private Text playerTextScore;
+    [SerializeField]
+    private Text enemyTextScore;
+    [Tooltip("Time of the game is in seconds, must be set to 1 more than desired time.")]
+    [SerializeField]
+    private float timeLeft;
+    private float timeLimit;
+    [SerializeField]
+    private Text textTimer;
+    [SerializeField]
+    private bool testSetup;
 
     public static GameManager Instance
     {
@@ -41,10 +55,43 @@ public class GameManager : MonoBehaviour
         get { return ground; }
     }
 
+    public float TimeLimit
+    {
+        get { return timeLimit; }
+    }
+
     private void Awake()
     {
         if(instance != this)
             instance = this;
+
+        timeLimit = timeLeft - 1;
+
+        //for testing purposes, removes all non towers from the game immediatly
+        if(testSetup) {
+            foreach (GameObject objectToRemove in Instance.Objects) {
+                if(!Instance.TowerObjects.Contains(objectToRemove))
+                    Destroy(objectToRemove);
+            }
+
+            for (var i = Instance.Objects.Count-1; i >=0; i--) {
+                GameObject objectToRemove = Instance.Objects[i];
+                if(objectToRemove.GetComponent<Tower>() == null)
+                    Instance.Objects.RemoveAt(i);
+            }
+        }
+    }
+
+    //updates the timer
+    private void Update() {
+        timeLeft -= Time.deltaTime;
+        if(timeLeft > 0) {
+            string text = ((int) timeLeft/60).ToString();
+            text += ":" + ((int) timeLeft%60).ToString();
+            if(text.Length != 4)
+                text = text.Substring(0, 2) + "0" + text.Substring(2);
+            textTimer.text = text;
+        }
     }
 
     public static void RemoveObjectsFromList(GameObject objectToRemove)

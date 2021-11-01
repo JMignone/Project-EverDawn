@@ -156,21 +156,21 @@ public class AttackStats
 
                 if(AttacksLocation || (targetDied && SameLocation) ) { //if the unit fires at the location rather than the target itself
                     if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
-                        GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], unit.Agent.Agent.transform.position, firstTargetLocation, fireDirection, unit, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                        GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], unit.Agent.Agent.transform.position, firstTargetLocation, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                     else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                        GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], unit.Agent.Agent.transform.position, firstTargetLocation, fireDirection, unit, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                        GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], unit.Agent.Agent.transform.position, firstTargetLocation, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                 }
                 else if(AttacksPast) {
                     if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
-                        GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], unit.Agent.Agent.transform.position, target.Agent.Agent.transform.position, fireDirection, unit, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                        GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], unit.Agent.Agent.transform.position, target.Agent.Agent.transform.position, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                     else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                        GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], unit.Agent.Agent.transform.position, target.Agent.Agent.transform.position, fireDirection, unit, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                        GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], unit.Agent.Agent.transform.position, target.Agent.Agent.transform.position, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                 }
                 else {
                     if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
-                        GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], unit.Agent.Agent.transform.position, target.Agent, fireDirection, unit, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                        GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], unit.Agent.Agent.transform.position, target.Agent, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                     else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                        GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], unit.Agent.Agent.transform.position, target.Agent, fireDirection, unit, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                        GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], unit.Agent.Agent.transform.position, target.Agent, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                 }
                 currentDelay = 0;
                 currentProjectileIndex++;

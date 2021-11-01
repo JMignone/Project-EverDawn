@@ -67,9 +67,9 @@ public class DeathStats
         }
         else { //if we completed a delay
             if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
-                GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPosition, endPosition, fireDirection, unit, 1);
+                GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPosition, endPosition, fireDirection, unit, (unit as Component).gameObject.tag, 1);
             else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], startPosition, endPosition, fireDirection, unit, 1);
+                GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], startPosition, endPosition, fireDirection, unit, (unit as Component).gameObject.tag, 1);
             currentDelay = 0;
             currentProjectileIndex++;
         }

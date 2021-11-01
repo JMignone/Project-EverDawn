@@ -487,6 +487,7 @@ MonoBehaviour:
   followTarget: {fileID: 3925836231010811492}
   anim: {fileID: 3925836231506596148}
   agent: {fileID: 3925836231010811493}
+  ability: {fileID: 3925836231430602714}
   isPreview: 0
 --- !u!95 &3925836231506596148
 Animator:

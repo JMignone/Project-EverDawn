@@ -326,6 +326,7 @@ public class Projectile : MonoBehaviour, IAbility
     }
 
     private void Update() {
+        hitBox.transform.position = new Vector3(hitBox.transform.position.x, 0, hitBox.transform.position.z);
         if(unit != null && !unit.Equals(null)) { //This is currently only used for boomerang
             lastKnownLocation = unit.Agent.transform.position;
             lastKnownLocation.y = 0;

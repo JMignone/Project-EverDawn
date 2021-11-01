@@ -359,9 +359,9 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 startPos = abilityPreviewCanvas.transform.position;
             }
             if (abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
-                GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPos, fireMousePosition, fireDirection, unit, 1, rangeIncrease);
+                GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPos, fireMousePosition, fireDirection, unit, transform.parent.tag, 1, rangeIncrease);
             else if (abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], startPos, fireMousePosition, fireDirection, unit, 1, rangeIncrease);
+                GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], startPos, fireMousePosition, fireDirection, unit, transform.parent.tag, 1, rangeIncrease);
             currentDelay = 0;
             currentProjectileIndex++;
         }

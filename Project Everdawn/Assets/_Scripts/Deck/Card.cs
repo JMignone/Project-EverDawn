@@ -200,8 +200,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
                 //work on unit prefab
                 if(cardInfo.UnitIndex != -1) {
-                    GameObject go = Instantiate(cardInfo.PreviewPrefab);
-                    unitPreview = go;
+                    unitPreview = Instantiate(cardInfo.PreviewPrefab);
                     unitPreview.SetActive(false);
                     unitPreviewAgent = unitPreview.transform.GetChild(0).GetComponent<NavMeshAgent>();
                     radius = unitPreviewAgent.radius;
@@ -342,7 +341,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
     }
 
-    private void QueCard(Vector3 position) {
+    public void QueCard(Vector3 position) {
         if(playerInfo.GetCurrResource >= cardInfo.Cost) //do I need this if the call to this function requires this anyway? Just a santiy check maybe?
         {
             playerInfo.PlayersDeck.RemoveHand(cardInfo.Index);
@@ -363,12 +362,16 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(currentDelay < cardInfo.PreviewDelays[currentProjectileIndex]) //if we havnt reached the delay yet
             currentDelay += Time.deltaTime;
         else { //if we completed a delay
+            Vector3 direction = new Vector3(0,0,1);
+            if(playerInfo.gameObject.tag == "Enemy")
+                direction.y = -1;
+
             if(currentProjectileIndex == cardInfo.UnitIndex)
-                GameFunctions.SpawnUnit(cardInfo.Prefab[currentProjectileIndex], GameManager.GetUnitsFolder(), targetLocation);
+                GameFunctions.SpawnUnit(cardInfo.Prefab[currentProjectileIndex], GameManager.GetUnitsFolder(), targetLocation, playerInfo.gameObject.tag);
             else if(cardInfo.Prefab[currentProjectileIndex].GetComponent<Projectile>())
-                GameFunctions.FireProjectile(cardInfo.Prefab[currentProjectileIndex], targetLocation, targetLocation, new Vector3(0,0,1), null, 1);
+                GameFunctions.FireProjectile(cardInfo.Prefab[currentProjectileIndex], targetLocation, targetLocation, direction, null, playerInfo.gameObject.tag, 1);
             else if(cardInfo.Prefab[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                GameFunctions.FireCAL(cardInfo.Prefab[currentProjectileIndex], targetLocation, targetLocation, new Vector3(0,0,1), null, 1);
+                GameFunctions.FireCAL(cardInfo.Prefab[currentProjectileIndex], targetLocation, targetLocation, direction, null, playerInfo.gameObject.tag, 1);
             currentDelay = 0;
             currentProjectileIndex++;
             if(currentProjectileIndex == cardInfo.PreviewDelays.Count)//if we completed the last delay

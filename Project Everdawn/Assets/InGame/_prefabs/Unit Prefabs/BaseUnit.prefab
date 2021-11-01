@@ -184,6 +184,7 @@ MonoBehaviour:
   followTarget: {fileID: 1701868423733107988}
   anim: {fileID: 1701868424819537039}
   agent: {fileID: 1701868423733107991}
+  ability: {fileID: 7870179655350065263}
   isPreview: 0
 --- !u!95 &1701868424819537039
 Animator:
@@ -693,7 +694,7 @@ GameObject:
   - component: {fileID: 18346142176097874}
   m_Layer: 0
   m_Name: Ability
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

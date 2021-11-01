@@ -12,11 +12,18 @@ public class Actor2D : MonoBehaviour
     [SerializeField]
     NavMeshAgent agent;
     [SerializeField]
+    GameObject ability;
+    [SerializeField]
     bool isPreview;
 
     public Animator Animator
     {
         get { return anim; }
+    }
+
+    public GameObject Ability
+    {
+        get { return ability; }
     }
 
     private void Awake()
