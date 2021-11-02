@@ -11,9 +11,6 @@ public class UnitMaterials
     //[SerializeField]
     //private bool transparent;
 
-    [SerializeField]
-    private Material defaultMat;
-
     private Color emissionColor; //emission color is the what makes a unit appear frozen, poisoned, or hovered by an ability
     private bool hovered;
 
@@ -28,11 +25,6 @@ public class UnitMaterials
     public List<Renderer> Renderers
     {
         get { return renderers; }
-    }
-
-    public Material DefaultMat
-    {
-        get { return defaultMat; }
     }
 
     public void Start() {

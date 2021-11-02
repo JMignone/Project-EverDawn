@@ -197,6 +197,8 @@ public class Building : MonoBehaviour, IDamageable
             Quaternion rotation = agent.transform.rotation;
 
             GameObject spawnedUnit = Instantiate(spawnStats.UnitToSpawn, position, rotation, transform.parent);
+            GameFunctions.giveUnitTeam(spawnedUnit, gameObject.tag);
+
             spawnedUnit.transform.Rotate(0, 0, 0, Space.Self);
             GameManager.AddObjectToList(spawnedUnit);
         }

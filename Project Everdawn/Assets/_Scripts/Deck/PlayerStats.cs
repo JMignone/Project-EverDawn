@@ -207,10 +207,10 @@ public class PlayerStats : MonoBehaviour
     private void UpdateText()
     {
         if(!computerStats.IsComputer) {
-        textCurrResource.text = GetCurrResource.ToString();
-        //textMaxResource.text = (GameConstants.RESOURCE_MAX + 1).toString(); currently not using this
-        textScore.text = score.ToString();
+            textCurrResource.text = GetCurrResource.ToString();
+            //textMaxResource.text = (GameConstants.RESOURCE_MAX + 1).toString(); currently not using this
         }
+        textScore.text = score.ToString();
     }
 
     private void UpdateDeck()

@@ -164,14 +164,20 @@ public class GameManager : MonoBehaviour
                     Instance.Players[0].Score++;
             }
         }
-    /*  else { //we may send the enemy score information over the internet rather than the players side instead
-            if(leftTower) 
-                Instance.Players[1].LeftZone = true;
-            else 
-                Instance.Players[1].RightZone = true;
-            Instance.Players[1].Score++;
+        else { //we may send the enemy score information over the internet rather than the players side instead
+            if(isKeep) {
+                Instance.Players[1].Score = 3;
+                //END THE GAME
+            }
+            else {
+                if(leftTower) 
+                    Instance.Players[1].LeftZone = true;
+                else 
+                    Instance.Players[1].RightZone = true;
+                if(Instance.Players[1].Score < 3)
+                    Instance.Players[1].Score++;
+            }
         }
-    */
 
         /*
             We would only need this if towers have abilities.

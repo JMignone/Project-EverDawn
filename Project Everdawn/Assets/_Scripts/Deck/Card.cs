@@ -364,7 +364,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         else { //if we completed a delay
             Vector3 direction = new Vector3(0,0,1);
             if(playerInfo.gameObject.tag == "Enemy")
-                direction.y = -1;
+                direction.z = -1;
 
             if(currentProjectileIndex == cardInfo.UnitIndex)
                 GameFunctions.SpawnUnit(cardInfo.Prefab[currentProjectileIndex], GameManager.GetUnitsFolder(), targetLocation, playerInfo.gameObject.tag);

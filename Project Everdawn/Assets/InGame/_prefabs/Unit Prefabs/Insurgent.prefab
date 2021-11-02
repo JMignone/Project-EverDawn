@@ -217,8 +217,8 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 10
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_WalkableMask: 1
+  m_ObstacleAvoidanceType: 2
 --- !u!114 &5028950966964901271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,7 +369,7 @@ MonoBehaviour:
     moveSpeed: 7
     rotationSpeed: 120
     summoningSicknessUI:
-      summonSicknessDelay: 0
+      summonSicknessDelay: 1
       currSummonSicknessDelay: 0
       summonProtectionDelay: 0
       sSCanvas: {fileID: 2796575116556131537}
@@ -382,7 +382,7 @@ MonoBehaviour:
     detectionObject: {fileID: 5028950968597663479}
     visionObject: {fileID: 5028950968383091483}
     movementType: 0
-    heightAttackable: 0
+    heightAttackable: 1
     unitMaterials:
       renderers:
       - {fileID: 8416434254322649759}
@@ -391,7 +391,7 @@ MonoBehaviour:
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
-    unitRange: 0
+    unitRange: 1
     effectStats:
       aoeStats:
         areaOfEffect: 0

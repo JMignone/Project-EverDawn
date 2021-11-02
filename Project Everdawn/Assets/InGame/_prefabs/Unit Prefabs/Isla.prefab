@@ -1012,7 +1012,7 @@ MonoBehaviour:
     moveSpeed: 8
     rotationSpeed: 120
     summoningSicknessUI:
-      summonSicknessDelay: 0.25
+      summonSicknessDelay: 1
       currSummonSicknessDelay: 0
       summonProtectionDelay: 0
       sSCanvas: {fileID: 6160463879896391651}
@@ -1028,7 +1028,6 @@ MonoBehaviour:
     heightAttackable: 0
     unitMaterials:
       renderers: []
-      defaultMat: {fileID: 0}
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
@@ -1126,17 +1125,17 @@ MonoBehaviour:
   chargeStats:
     charges: 0
     isCharging: 0
-    chargeDamage: 100
-    chargeSpeed: 20
-    chargeDelay: 0.5
+    chargeDamage: 0
+    chargeSpeed: 0
+    chargeDelay: 0
     currentDelay: 0
   dashStats:
     dashes: 0
     isDashing: 0
-    dashDamage: 50
-    dashSpeed: 85
-    dashRange: 20
-    dashDelay: 1
+    dashDamage: 0
+    dashSpeed: 0
+    dashRange: 0
+    dashDelay: 0
     currentDelay: 0
   shadowStats:
     shades: 0

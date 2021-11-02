@@ -3111,6 +3111,7 @@ MonoBehaviour:
   - {fileID: 2007464376}
   players:
   - {fileID: 335821902}
+  - {fileID: 2140046819}
   ground: {fileID: 689364501}
   playerTextScore: {fileID: 568690039}
   enemyTextScore: {fileID: 1708688850}
@@ -3839,19 +3840,61 @@ MonoBehaviour:
   playersDeck:
     cards:
     - index: 0
-      name: Unit 1
-      icon: {fileID: 21300000, guid: 78cd5f19747f13a4895c5a28e72a73d1, type: 3}
-      cost: 2
-      spawnZoneRestrictions: 2
+      name: Isla
+      icon: {fileID: 21300000, guid: 3705379fccc4e694d861698406ce8912, type: 3}
+      cost: 4
+      spawnZoneRestrictions: 0
       prefab:
-      - {fileID: 4332999100709516610, guid: 4d38356404b172542bbbb06b5950ec16, type: 3}
-      - {fileID: 4332999100709516610, guid: 4d38356404b172542bbbb06b5950ec16, type: 3}
-      previewPrefab: {fileID: 0}
+      - {fileID: 3925836232371597723, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
+      previewPrefab: {fileID: 881476954545742613, guid: 5186c23a5998e7d4d90f336cba1d6aba, type: 3}
       previewDelays:
       - 0
-      - 0.5
-      unitIndex: -1
-    - index: 0
+      unitIndex: 0
+    - index: 1
+      name: Bao Zu
+      icon: {fileID: 21300000, guid: 616f99a5a0da8bc4696cec0e5e538437, type: 3}
+      cost: 5
+      spawnZoneRestrictions: 0
+      prefab:
+      - {fileID: 4489671066153867563, guid: 97143c3ff03398a4a9833e0cbbd1d5ea, type: 3}
+      previewPrefab: {fileID: 9061750350620061380, guid: 6b106a57a97597b41b5b3ce5f3de747f, type: 3}
+      previewDelays:
+      - 0
+      unitIndex: 0
+    - index: 2
+      name: Cornut
+      icon: {fileID: 21300000, guid: e351a62f6e3266644b0accb868e6a820, type: 3}
+      cost: 5
+      spawnZoneRestrictions: 0
+      prefab:
+      - {fileID: 4300487081235283213, guid: 5adae2a12427f2c42a05621d251f2e18, type: 3}
+      previewPrefab: {fileID: 7317817158688808453, guid: c00283b83b82b8643b43162d89268e96, type: 3}
+      previewDelays:
+      - 0
+      unitIndex: 0
+    - index: 6
+      name: Steamwyrm
+      icon: {fileID: 21300000, guid: a3615353b88c90a448ef598d9e2409e7, type: 3}
+      cost: 4
+      spawnZoneRestrictions: 0
+      prefab:
+      - {fileID: 3415333900699297907, guid: 88d8d05153de23e43a8727beab575034, type: 3}
+      previewPrefab: {fileID: 2091876083188452919, guid: ef0564141109bcb4281b5660d1246051, type: 3}
+      previewDelays:
+      - 0
+      unitIndex: 0
+    - index: 3
+      name: Monsoon Gunners
+      icon: {fileID: 21300000, guid: 526f2e41c56666847a887ac31f5fff5b, type: 3}
+      cost: 2
+      spawnZoneRestrictions: 0
+      prefab:
+      - {fileID: 4489671066153867563, guid: 8cf03c9655e5bea4fb85d248243bb54a, type: 3}
+      previewPrefab: {fileID: 9061750350620061380, guid: 169c0ab4dc9d6a740b2b39ad298d7286, type: 3}
+      previewDelays:
+      - 0
+      unitIndex: 0
+    - index: 4
       name: Unit 1
       icon: {fileID: 21300000, guid: 78cd5f19747f13a4895c5a28e72a73d1, type: 3}
       cost: 3
@@ -3864,7 +3907,7 @@ MonoBehaviour:
       - 0
       - 0
       unitIndex: 0
-    - index: 1
+    - index: 5
       name: Freeze
       icon: {fileID: 21300000, guid: 04d58490ded8c4c4aa64bca7867d7969, type: 3}
       cost: 3
@@ -3875,29 +3918,7 @@ MonoBehaviour:
       previewDelays:
       - 0.5
       unitIndex: -1
-    - index: 2
-      name: Bao Zu
-      icon: {fileID: 21300000, guid: 616f99a5a0da8bc4696cec0e5e538437, type: 3}
-      cost: 2
-      spawnZoneRestrictions: 1
-      prefab:
-      - {fileID: 4489671066153867563, guid: 97143c3ff03398a4a9833e0cbbd1d5ea, type: 3}
-      previewPrefab: {fileID: 9061750350620061380, guid: 6b106a57a97597b41b5b3ce5f3de747f, type: 3}
-      previewDelays:
-      - 0
-      unitIndex: 0
-    - index: 3
-      name: Knight
-      icon: {fileID: 21300000, guid: a3615353b88c90a448ef598d9e2409e7, type: 3}
-      cost: 4
-      spawnZoneRestrictions: 0
-      prefab:
-      - {fileID: 3415333900699297907, guid: 88d8d05153de23e43a8727beab575034, type: 3}
-      previewPrefab: {fileID: 2091876083188452919, guid: ef0564141109bcb4281b5660d1246051, type: 3}
-      previewDelays:
-      - 0
-      unitIndex: 0
-    - index: 5
+    - index: 7
       name: Unit 6
       icon: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
       cost: 1
@@ -3905,28 +3926,6 @@ MonoBehaviour:
       prefab:
       - {fileID: 3887690281620728188, guid: f33c3c6d021417745a6999784b7030e5, type: 3}
       previewPrefab: {fileID: 1401404796868230813, guid: c302e0fd1b2fabc4ea2aa8c0abbc667c, type: 3}
-      previewDelays:
-      - 0
-      unitIndex: 0
-    - index: 6
-      name: Slime
-      icon: {fileID: 21300000, guid: e351a62f6e3266644b0accb868e6a820, type: 3}
-      cost: 4
-      spawnZoneRestrictions: 0
-      prefab:
-      - {fileID: 4300487081235283213, guid: 5adae2a12427f2c42a05621d251f2e18, type: 3}
-      previewPrefab: {fileID: 7317817158688808453, guid: c00283b83b82b8643b43162d89268e96, type: 3}
-      previewDelays:
-      - 0
-      unitIndex: 0
-    - index: 7
-      name: Isla
-      icon: {fileID: 21300000, guid: 3705379fccc4e694d861698406ce8912, type: 3}
-      cost: 0
-      spawnZoneRestrictions: 0
-      prefab:
-      - {fileID: 3925836232371597723, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      previewPrefab: {fileID: 881476954545742613, guid: 5186c23a5998e7d4d90f336cba1d6aba, type: 3}
       previewDelays:
       - 0
       unitIndex: 0
@@ -4338,7 +4337,6 @@ MonoBehaviour:
       renderers:
       - {fileID: 3419616080708033096}
       - {fileID: 3419616080708033100}
-      defaultMat: {fileID: 2100000, guid: c555f608a4ca549389b277a96610437a, type: 2}
     unitType: 0
     unitGrouping: 0
     attackPriority: 1
@@ -5032,7 +5030,6 @@ MonoBehaviour:
       renderers:
       - {fileID: 1711813856095320006}
       - {fileID: 1711813855785521548}
-      defaultMat: {fileID: 0}
     unitType: 1
     unitGrouping: 0
     attackPriority: 0
@@ -5215,7 +5212,6 @@ MonoBehaviour:
     heightAttackable: 0
     unitMaterials:
       renderers: []
-      defaultMat: {fileID: 0}
     unitType: 1
     unitGrouping: 0
     attackPriority: 0
@@ -6387,7 +6383,6 @@ MonoBehaviour:
       renderers:
       - {fileID: 695209186}
       - {fileID: 695209184}
-      defaultMat: {fileID: 0}
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
@@ -14642,7 +14637,6 @@ MonoBehaviour:
     heightAttackable: 0
     unitMaterials:
       renderers: []
-      defaultMat: {fileID: 0}
     unitType: 1
     unitGrouping: 0
     attackPriority: 0
@@ -17297,7 +17291,6 @@ MonoBehaviour:
     heightAttackable: 0
     unitMaterials:
       renderers: []
-      defaultMat: {fileID: 0}
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
@@ -18153,7 +18146,6 @@ MonoBehaviour:
     heightAttackable: 0
     unitMaterials:
       renderers: []
-      defaultMat: {fileID: 0}
     unitType: 1
     unitGrouping: 0
     attackPriority: 0
@@ -19918,7 +19910,6 @@ MonoBehaviour:
     heightAttackable: 0
     unitMaterials:
       renderers: []
-      defaultMat: {fileID: 0}
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
@@ -22929,7 +22920,6 @@ MonoBehaviour:
     heightAttackable: 0
     unitMaterials:
       renderers: []
-      defaultMat: {fileID: 0}
     unitType: 1
     unitGrouping: 0
     attackPriority: 0
@@ -28045,7 +28035,6 @@ MonoBehaviour:
       renderers:
       - {fileID: 1903344500}
       - {fileID: 1903344502}
-      defaultMat: {fileID: 0}
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
@@ -28369,7 +28358,6 @@ MonoBehaviour:
       renderers:
       - {fileID: 1711813854865836185}
       - {fileID: 1711813855578582284}
-      defaultMat: {fileID: 0}
     unitType: 1
     unitGrouping: 0
     attackPriority: 0
@@ -28907,7 +28895,6 @@ MonoBehaviour:
       renderers:
       - {fileID: 1711813854615142998}
       - {fileID: 1711813855360797332}
-      defaultMat: {fileID: 0}
     unitType: 1
     unitGrouping: 0
     attackPriority: 0
@@ -30077,32 +30064,61 @@ MonoBehaviour:
   playersDeck:
     cards:
     - index: 0
-      name: Unit 1
-      icon: {fileID: 21300000, guid: 78cd5f19747f13a4895c5a28e72a73d1, type: 3}
-      cost: 2
-      spawnZoneRestrictions: 2
-      prefab:
-      - {fileID: 4332999100709516610, guid: 4d38356404b172542bbbb06b5950ec16, type: 3}
-      - {fileID: 4332999100709516610, guid: 4d38356404b172542bbbb06b5950ec16, type: 3}
-      previewPrefab: {fileID: 0}
-      previewDelays:
-      - 0
-      - 0.5
-      unitIndex: -1
-    - index: 0
-      name: Unit 1
-      icon: {fileID: 21300000, guid: 78cd5f19747f13a4895c5a28e72a73d1, type: 3}
-      cost: 3
+      name: Isla
+      icon: {fileID: 21300000, guid: 3705379fccc4e694d861698406ce8912, type: 3}
+      cost: 4
       spawnZoneRestrictions: 0
       prefab:
-      - {fileID: 4300487081235283213, guid: 5adae2a12427f2c42a05621d251f2e18, type: 3}
-      - {fileID: 1224647179923901261, guid: 9f95a636396da294c8b3f8bf1ae79e27, type: 3}
-      previewPrefab: {fileID: 7317817158688808453, guid: c00283b83b82b8643b43162d89268e96, type: 3}
+      - {fileID: 3925836232371597723, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
+      previewPrefab: {fileID: 881476954545742613, guid: 5186c23a5998e7d4d90f336cba1d6aba, type: 3}
       previewDelays:
-      - 0
       - 0
       unitIndex: 0
     - index: 1
+      name: Bao Zu
+      icon: {fileID: 21300000, guid: 616f99a5a0da8bc4696cec0e5e538437, type: 3}
+      cost: 5
+      spawnZoneRestrictions: 0
+      prefab:
+      - {fileID: 4489671066153867563, guid: 97143c3ff03398a4a9833e0cbbd1d5ea, type: 3}
+      previewPrefab: {fileID: 9061750350620061380, guid: 6b106a57a97597b41b5b3ce5f3de747f, type: 3}
+      previewDelays:
+      - 0
+      unitIndex: 0
+    - index: 2
+      name: Cornut
+      icon: {fileID: 21300000, guid: e351a62f6e3266644b0accb868e6a820, type: 3}
+      cost: 5
+      spawnZoneRestrictions: 0
+      prefab:
+      - {fileID: 4300487081235283213, guid: 5adae2a12427f2c42a05621d251f2e18, type: 3}
+      previewPrefab: {fileID: 7317817158688808453, guid: c00283b83b82b8643b43162d89268e96, type: 3}
+      previewDelays:
+      - 0
+      unitIndex: 0
+    - index: 5
+      name: Steamwyrm
+      icon: {fileID: 21300000, guid: a3615353b88c90a448ef598d9e2409e7, type: 3}
+      cost: 4
+      spawnZoneRestrictions: 0
+      prefab:
+      - {fileID: 3415333900699297907, guid: 88d8d05153de23e43a8727beab575034, type: 3}
+      previewPrefab: {fileID: 2091876083188452919, guid: ef0564141109bcb4281b5660d1246051, type: 3}
+      previewDelays:
+      - 0
+      unitIndex: 0
+    - index: 3
+      name: Monsoon Gunners
+      icon: {fileID: 21300000, guid: 526f2e41c56666847a887ac31f5fff5b, type: 3}
+      cost: 2
+      spawnZoneRestrictions: 0
+      prefab:
+      - {fileID: 4489671066153867563, guid: 8cf03c9655e5bea4fb85d248243bb54a, type: 3}
+      previewPrefab: {fileID: 9061750350620061380, guid: 169c0ab4dc9d6a740b2b39ad298d7286, type: 3}
+      previewDelays:
+      - 0
+      unitIndex: 0
+    - index: 4
       name: Freeze
       icon: {fileID: 21300000, guid: 04d58490ded8c4c4aa64bca7867d7969, type: 3}
       cost: 3
@@ -30113,29 +30129,7 @@ MonoBehaviour:
       previewDelays:
       - 0.5
       unitIndex: -1
-    - index: 2
-      name: Bao Zu
-      icon: {fileID: 21300000, guid: 616f99a5a0da8bc4696cec0e5e538437, type: 3}
-      cost: 2
-      spawnZoneRestrictions: 1
-      prefab:
-      - {fileID: 4489671066153867563, guid: 97143c3ff03398a4a9833e0cbbd1d5ea, type: 3}
-      previewPrefab: {fileID: 9061750350620061380, guid: 6b106a57a97597b41b5b3ce5f3de747f, type: 3}
-      previewDelays:
-      - 0
-      unitIndex: 0
-    - index: 3
-      name: Knight
-      icon: {fileID: 21300000, guid: a3615353b88c90a448ef598d9e2409e7, type: 3}
-      cost: 4
-      spawnZoneRestrictions: 0
-      prefab:
-      - {fileID: 3415333900699297907, guid: 88d8d05153de23e43a8727beab575034, type: 3}
-      previewPrefab: {fileID: 2091876083188452919, guid: ef0564141109bcb4281b5660d1246051, type: 3}
-      previewDelays:
-      - 0
-      unitIndex: 0
-    - index: 5
+    - index: 6
       name: Unit 6
       icon: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
       cost: 1
@@ -30146,7 +30140,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - index: 6
+    - index: 7
       name: Slime
       icon: {fileID: 21300000, guid: e351a62f6e3266644b0accb868e6a820, type: 3}
       cost: 4
@@ -30154,17 +30148,6 @@ MonoBehaviour:
       prefab:
       - {fileID: 4300487081235283213, guid: 5adae2a12427f2c42a05621d251f2e18, type: 3}
       previewPrefab: {fileID: 7317817158688808453, guid: c00283b83b82b8643b43162d89268e96, type: 3}
-      previewDelays:
-      - 0
-      unitIndex: 0
-    - index: 7
-      name: Isla
-      icon: {fileID: 21300000, guid: 3705379fccc4e694d861698406ce8912, type: 3}
-      cost: 0
-      spawnZoneRestrictions: 0
-      prefab:
-      - {fileID: 3925836232371597723, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      previewPrefab: {fileID: 881476954545742613, guid: 5186c23a5998e7d4d90f336cba1d6aba, type: 3}
       previewDelays:
       - 0
       unitIndex: 0
