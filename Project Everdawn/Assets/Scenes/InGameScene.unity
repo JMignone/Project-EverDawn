@@ -3895,16 +3895,25 @@ MonoBehaviour:
       - 0
       unitIndex: 0
     - index: 4
-      name: Unit 1
-      icon: {fileID: 21300000, guid: 78cd5f19747f13a4895c5a28e72a73d1, type: 3}
-      cost: 3
+      name: Monsoon Insurgents
+      icon: {fileID: 21300000, guid: 116f885df4bcb584e99223536431f6c1, type: 3}
+      cost: 2
       spawnZoneRestrictions: 0
       prefab:
-      - {fileID: 4300487081235283213, guid: 5adae2a12427f2c42a05621d251f2e18, type: 3}
-      - {fileID: 1224647179923901261, guid: 9f95a636396da294c8b3f8bf1ae79e27, type: 3}
-      previewPrefab: {fileID: 7317817158688808453, guid: c00283b83b82b8643b43162d89268e96, type: 3}
+      - {fileID: 4489671066153867563, guid: 7c4e20b9b5d8b9244869e823b032ceba, type: 3}
+      previewPrefab: {fileID: 9061750350620061380, guid: bcfa36079f7216e41844bb43b02676ce, type: 3}
       previewDelays:
       - 0
+      unitIndex: 0
+    - index: 7
+      name: Mizuchi Kaidarin
+      icon: {fileID: 21300000, guid: c40d383de808e504bbe06e137eaa18ca, type: 3}
+      cost: 4
+      spawnZoneRestrictions: 0
+      prefab:
+      - {fileID: 1701868425468477452, guid: 2bedcad420ef25749bc48f0b7524c165, type: 3}
+      previewPrefab: {fileID: 881476954545742613, guid: 8a90ecf8a6884d74e8c8514f13dea9e2, type: 3}
+      previewDelays:
       - 0
       unitIndex: 0
     - index: 5
@@ -3918,17 +3927,6 @@ MonoBehaviour:
       previewDelays:
       - 0.5
       unitIndex: -1
-    - index: 7
-      name: Unit 6
-      icon: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
-      cost: 1
-      spawnZoneRestrictions: 0
-      prefab:
-      - {fileID: 3887690281620728188, guid: f33c3c6d021417745a6999784b7030e5, type: 3}
-      previewPrefab: {fileID: 1401404796868230813, guid: c302e0fd1b2fabc4ea2aa8c0abbc667c, type: 3}
-      previewDelays:
-      - 0
-      unitIndex: 0
     hand: []
     nextCard:
       index: 0
@@ -4317,6 +4315,7 @@ MonoBehaviour:
     attackDelay: 4
     currAttackDelay: 0
     moveSpeed: 0
+    noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 0
@@ -4366,8 +4365,6 @@ MonoBehaviour:
       rootedStats:
         cantBeRooted: 0
         isRooted: 0
-        rootDelay: 0
-        currentRootDelay: 0
       poisonedStats:
         cantBePoisoned: 0
         isPoisoned: 0
@@ -4402,6 +4399,8 @@ MonoBehaviour:
         strengthDelay: 0
         currentDelay: 0
         currentStrengthIntensity: 0
+      blindedStats:
+        cantBeBlinded: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -4412,6 +4411,7 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+        resistedBlind: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -5010,6 +5010,7 @@ MonoBehaviour:
     attackDelay: 0.85
     currAttackDelay: 0
     moveSpeed: 0
+    noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 0
@@ -5059,8 +5060,6 @@ MonoBehaviour:
       rootedStats:
         cantBeRooted: 0
         isRooted: 0
-        rootDelay: 0
-        currentRootDelay: 0
       poisonedStats:
         cantBePoisoned: 0
         isPoisoned: 0
@@ -5095,6 +5094,8 @@ MonoBehaviour:
         strengthDelay: 0
         currentDelay: 0
         currentStrengthIntensity: 0
+      blindedStats:
+        cantBeBlinded: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -5105,6 +5106,7 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+        resistedBlind: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -5194,6 +5196,7 @@ MonoBehaviour:
     attackDelay: 0.85
     currAttackDelay: 0
     moveSpeed: 0
+    noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 0
@@ -5241,8 +5244,6 @@ MonoBehaviour:
       rootedStats:
         cantBeRooted: 0
         isRooted: 0
-        rootDelay: 0
-        currentRootDelay: 0
       poisonedStats:
         cantBePoisoned: 0
         isPoisoned: 0
@@ -5277,6 +5278,8 @@ MonoBehaviour:
         strengthDelay: 0
         currentDelay: 0
         currentStrengthIntensity: 0
+      blindedStats:
+        cantBeBlinded: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -5287,6 +5290,7 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+        resistedBlind: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -6363,6 +6367,7 @@ MonoBehaviour:
     attackDelay: 2
     currAttackDelay: 0
     moveSpeed: 10
+    noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 0
@@ -6412,8 +6417,6 @@ MonoBehaviour:
       rootedStats:
         cantBeRooted: 0
         isRooted: 0
-        rootDelay: 0
-        currentRootDelay: 0
       poisonedStats:
         cantBePoisoned: 0
         isPoisoned: 0
@@ -6448,6 +6451,8 @@ MonoBehaviour:
         strengthDelay: 0
         currentDelay: 0
         currentStrengthIntensity: 0
+      blindedStats:
+        cantBeBlinded: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -6458,6 +6463,7 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+        resistedBlind: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -14052,6 +14058,8 @@ MonoBehaviour:
     rgDuration: 0
     resistPull: 0
     rpullDuration: 0
+    resistBlind: 0
+    rbDuration: 0
   abilityUI:
     cooldownDelay: 2
     currCooldownDelay: 0.4
@@ -14103,6 +14111,8 @@ MonoBehaviour:
     rgDuration: 0
     resistPull: 0
     rpullDuration: 0
+    resistBlind: 0
+    rbDuration: 0
   abilityUI:
     cooldownDelay: 5
     currCooldownDelay: 5
@@ -14619,6 +14629,7 @@ MonoBehaviour:
     attackDelay: 0.85
     currAttackDelay: 0
     moveSpeed: 0
+    noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 0
@@ -14666,8 +14677,6 @@ MonoBehaviour:
       rootedStats:
         cantBeRooted: 0
         isRooted: 0
-        rootDelay: 0
-        currentRootDelay: 0
       poisonedStats:
         cantBePoisoned: 0
         isPoisoned: 0
@@ -14702,6 +14711,8 @@ MonoBehaviour:
         strengthDelay: 0
         currentDelay: 0
         currentStrengthIntensity: 0
+      blindedStats:
+        cantBeBlinded: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -14712,6 +14723,7 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+        resistedBlind: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -17273,6 +17285,7 @@ MonoBehaviour:
     attackDelay: 2.5
     currAttackDelay: 0
     moveSpeed: 0
+    noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 0
@@ -17320,8 +17333,6 @@ MonoBehaviour:
       rootedStats:
         cantBeRooted: 0
         isRooted: 0
-        rootDelay: 0
-        currentRootDelay: 0
       poisonedStats:
         cantBePoisoned: 0
         isPoisoned: 0
@@ -17356,6 +17367,8 @@ MonoBehaviour:
         strengthDelay: 0
         currentDelay: 0
         currentStrengthIntensity: 0
+      blindedStats:
+        cantBeBlinded: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -17366,6 +17379,7 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+        resistedBlind: 0
   attackStats:
     firesProjectiles: 1
     attackType: 1
@@ -18128,6 +18142,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 0
+    noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 0
@@ -18175,8 +18190,6 @@ MonoBehaviour:
       rootedStats:
         cantBeRooted: 0
         isRooted: 0
-        rootDelay: 0
-        currentRootDelay: 0
       poisonedStats:
         cantBePoisoned: 0
         isPoisoned: 0
@@ -18211,6 +18224,8 @@ MonoBehaviour:
         strengthDelay: 0
         currentDelay: 0
         currentStrengthIntensity: 0
+      blindedStats:
+        cantBeBlinded: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -18221,6 +18236,7 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+        resistedBlind: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -19262,6 +19278,8 @@ MonoBehaviour:
     rgDuration: 0
     resistPull: 0
     rpullDuration: 0
+    resistBlind: 0
+    rbDuration: 0
   abilityUI:
     cooldownDelay: 1
     currCooldownDelay: 1
@@ -19313,6 +19331,8 @@ MonoBehaviour:
     rgDuration: 0
     resistPull: 0
     rpullDuration: 0
+    resistBlind: 0
+    rbDuration: 0
   abilityUI:
     cooldownDelay: 5
     currCooldownDelay: 5
@@ -19892,6 +19912,7 @@ MonoBehaviour:
     attackDelay: 2
     currAttackDelay: 0
     moveSpeed: 0
+    noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 0.5
@@ -19939,8 +19960,6 @@ MonoBehaviour:
       rootedStats:
         cantBeRooted: 0
         isRooted: 0
-        rootDelay: 0
-        currentRootDelay: 0
       poisonedStats:
         cantBePoisoned: 0
         isPoisoned: 0
@@ -19975,6 +19994,8 @@ MonoBehaviour:
         strengthDelay: 0
         currentDelay: 0
         currentStrengthIntensity: 0
+      blindedStats:
+        cantBeBlinded: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -19985,6 +20006,7 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+        resistedBlind: 0
   attackStats:
     firesProjectiles: 0
     attackType: 2
@@ -22902,6 +22924,7 @@ MonoBehaviour:
     attackDelay: 4
     currAttackDelay: 0
     moveSpeed: 0
+    noRotation: 0
     rotationSpeed: 0
     summoningSicknessUI:
       summonSicknessDelay: 0
@@ -22949,8 +22972,6 @@ MonoBehaviour:
       rootedStats:
         cantBeRooted: 0
         isRooted: 0
-        rootDelay: 0
-        currentRootDelay: 0
       poisonedStats:
         cantBePoisoned: 0
         isPoisoned: 0
@@ -22985,6 +23006,8 @@ MonoBehaviour:
         strengthDelay: 0
         currentDelay: 0
         currentStrengthIntensity: 0
+      blindedStats:
+        cantBeBlinded: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -22995,6 +23018,7 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+        resistedBlind: 0
   spawnStats:
     unitToSpawn: {fileID: 5726148247449163227, guid: 304a4c69c2fd919499f930a64e2fda40, type: 3}
   attackStats:
@@ -28015,6 +28039,7 @@ MonoBehaviour:
     attackDelay: 2
     currAttackDelay: 0
     moveSpeed: 15
+    noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 0
@@ -28064,8 +28089,6 @@ MonoBehaviour:
       rootedStats:
         cantBeRooted: 0
         isRooted: 0
-        rootDelay: 0
-        currentRootDelay: 0
       poisonedStats:
         cantBePoisoned: 0
         isPoisoned: 0
@@ -28100,6 +28123,8 @@ MonoBehaviour:
         strengthDelay: 0
         currentDelay: 0
         currentStrengthIntensity: 0
+      blindedStats:
+        cantBeBlinded: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -28110,6 +28135,7 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+        resistedBlind: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -28338,6 +28364,7 @@ MonoBehaviour:
     attackDelay: 1
     currAttackDelay: 0
     moveSpeed: 0
+    noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 0
@@ -28387,8 +28414,6 @@ MonoBehaviour:
       rootedStats:
         cantBeRooted: 0
         isRooted: 0
-        rootDelay: 0
-        currentRootDelay: 0
       poisonedStats:
         cantBePoisoned: 0
         isPoisoned: 0
@@ -28423,6 +28448,8 @@ MonoBehaviour:
         strengthDelay: 0
         currentDelay: 0
         currentStrengthIntensity: 0
+      blindedStats:
+        cantBeBlinded: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -28433,6 +28460,7 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+        resistedBlind: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -28875,6 +28903,7 @@ MonoBehaviour:
     attackDelay: 0.85
     currAttackDelay: 0
     moveSpeed: 0
+    noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 0
@@ -28924,8 +28953,6 @@ MonoBehaviour:
       rootedStats:
         cantBeRooted: 0
         isRooted: 0
-        rootDelay: 0
-        currentRootDelay: 0
       poisonedStats:
         cantBePoisoned: 0
         isPoisoned: 0
@@ -28960,6 +28987,8 @@ MonoBehaviour:
         strengthDelay: 0
         currentDelay: 0
         currentStrengthIntensity: 0
+      blindedStats:
+        cantBeBlinded: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -28970,6 +28999,7 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+        resistedBlind: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -30055,7 +30085,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   computerStats:
     isComputer: 1
-    currResource: 8
+    currResource: 6
     isPlaying: 0
     order: 
     playIndex: 0
@@ -30119,16 +30149,16 @@ MonoBehaviour:
       - 0
       unitIndex: 0
     - index: 4
-      name: Freeze
-      icon: {fileID: 21300000, guid: 04d58490ded8c4c4aa64bca7867d7969, type: 3}
-      cost: 3
-      spawnZoneRestrictions: 2
+      name: Monsoon Insurgents
+      icon: {fileID: 21300000, guid: 116f885df4bcb584e99223536431f6c1, type: 3}
+      cost: 2
+      spawnZoneRestrictions: 0
       prefab:
-      - {fileID: 1224647179923901261, guid: 9f95a636396da294c8b3f8bf1ae79e27, type: 3}
-      previewPrefab: {fileID: 0}
+      - {fileID: 4489671066153867563, guid: 7c4e20b9b5d8b9244869e823b032ceba, type: 3}
+      previewPrefab: {fileID: 9061750350620061380, guid: bcfa36079f7216e41844bb43b02676ce, type: 3}
       previewDelays:
-      - 0.5
-      unitIndex: -1
+      - 0
+      unitIndex: 0
     - index: 6
       name: Unit 6
       icon: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
@@ -30141,13 +30171,13 @@ MonoBehaviour:
       - 0
       unitIndex: 0
     - index: 7
-      name: Slime
-      icon: {fileID: 21300000, guid: e351a62f6e3266644b0accb868e6a820, type: 3}
+      name: Mizuchi Kaidarin
+      icon: {fileID: 21300000, guid: c40d383de808e504bbe06e137eaa18ca, type: 3}
       cost: 4
       spawnZoneRestrictions: 0
       prefab:
-      - {fileID: 4300487081235283213, guid: 5adae2a12427f2c42a05621d251f2e18, type: 3}
-      previewPrefab: {fileID: 7317817158688808453, guid: c00283b83b82b8643b43162d89268e96, type: 3}
+      - {fileID: 1701868425468477452, guid: 2bedcad420ef25749bc48f0b7524c165, type: 3}
+      previewPrefab: {fileID: 881476954545742613, guid: 8a90ecf8a6884d74e8c8514f13dea9e2, type: 3}
       previewDelays:
       - 0
       unitIndex: 0
@@ -30173,7 +30203,7 @@ MonoBehaviour:
   - {fileID: 1653762970}
   - {fileID: 461507697}
   - {fileID: 98790728}
-  currResource: 8
+  currResource: 6
   textCurrResource: {fileID: 0}
   textScore: {fileID: 1708688850}
   cardPrefab: {fileID: 8713341601375373046, guid: 54e466b045fd0fe4b8ffb9df03b19928, type: 3}

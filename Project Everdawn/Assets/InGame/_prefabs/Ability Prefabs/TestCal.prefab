@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 2760993291048611903}
   - component: {fileID: 1224647179923901248}
   m_Layer: 0
-  m_Name: TempProjectile4
+  m_Name: TestCal
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134,61 +134,66 @@ MonoBehaviour:
   abilityControl: 0
   hidePreview: 0
   freezeStats:
-    canFreeze: 1
-    freezeDuration: 3
+    canFreeze: 0
+    freezeDuration: 0
   slowStats:
     canSlow: 0
-    slowDuration: 3.5
-    slowIntensity: 0.5
+    slowDuration: 0
+    slowIntensity: 0
   rootStats:
     canRoot: 0
-    rootDuration: 0.5
+    rootDuration: 0
   poisonStats:
     canPoison: 0
-    poisonDamage: 100
-    poisonDuration: 6
-    poisonTick: 0.5
+    poisonDamage: 0
+    poisonDuration: 0
+    poisonTick: 0
   knockbackStats:
     canKnockback: 0
-    knockbackDuration: 1.5
-    initialSpeed: 20
+    knockbackDuration: 0
+    initialSpeed: 0
   pullStats:
     canPull: 0
     radius: 0
     speed: 0
   grabStats:
     canGrab: 0
-    pullDuration: 0.5
-    stunDuration: 1.5
+    pullDuration: 0
+    stunDuration: 0
   strengthStats:
     canStrength: 0
-    strengthDuration: 5.8
-    strengthIntensity: 3
+    strengthDuration: 0
+    strengthIntensity: 1
+  blindStats:
+    canBlind: 1
+    blindDuration: 3
+    visionRadius: 3
+    attackRadius: 2
   lingeringStats:
     lingering: 0
     lingerAtEnd: 0
     lingerDuringFlight: 0
     lingeringEffect: {fileID: 0}
-    lingeringDamage: 25
+    lingeringDamage: 0
     towerDamage: 0
     lingeringRadius: 0
-    lingeringDuration: 8
-    lingeringTick: 1
+    lingeringDuration: 0
+    lingeringTick: 0
     currentLingeringTime: 0
   selfDestructStats:
     selfDestructs: 1
     explosionEffect: {fileID: 0}
-    explosionDamage: 100
-    towerDamage: 20
+    explosionDamage: 20
+    towerDamage: 10
     explosionRadius: 15
   linearStats:
     isLinear: 0
-    isVertical: 1
-    isHorizontal: 1
+    isVertical: 0
+    isHorizontal: 0
     explosionEffect: {fileID: 0}
-    explosionDamage: 50
+    explosionDamage: 0
     towerDamage: 0
-    explosionWidth: 5
+    explosionWidth: 0
   teleportStats:
     isWarp: 0
     teleportsAllies: 0
@@ -223,6 +228,8 @@ MonoBehaviour:
     rgDuration: 0
     resistPull: 0
     rpullDuration: 0
+    resistBlind: 0
+    rbDuration: 0
   chosenTarget: {fileID: 0}
 --- !u!54 &1224647179923901248
 Rigidbody:

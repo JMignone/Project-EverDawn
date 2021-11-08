@@ -31,7 +31,7 @@ public class AOEStats
 
     public void Explode(GameObject go) {
         //Instantiate(explosionEffect, go.transform.position, go.transform.rotation);
-        Vector3 position = new Vector3(go.transform.position.x, 0, go.transform.position.y);
+        Vector3 position = new Vector3(go.transform.position.x, 0, go.transform.position.z);
         Collider[] colliders = Physics.OverlapSphere(position, explosionRadius);
         Projectile projectile = go.GetComponent<Projectile>();
 

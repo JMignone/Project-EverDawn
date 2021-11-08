@@ -57,6 +57,9 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     private StrengthStats strengthStats;
 
     [SerializeField]
+    private BlindStats blindStats;
+
+    [SerializeField]
     private LingeringStats lingeringStats;
 
     [SerializeField]
@@ -162,6 +165,11 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     public StrengthStats StrengthStats
     {
         get { return strengthStats; }
+    }
+
+    public BlindStats BlindStats
+    {
+        get { return blindStats; }
     }
 
     public Vector3 Position()
@@ -289,6 +297,8 @@ public class CreateAtLocation : MonoBehaviour, IAbility
             (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.PullDuration, grabStats.StunDuration, unit);
         if(strengthStats.CanStrength)
             (damageable as IDamageable).Stats.EffectStats.StrengthenedStats.Strengthen(strengthStats.StrengthDuration, StrengthStats.StrengthIntensity);
+        if(blindStats.CanBlind)
+            (damageable as IDamageable).Stats.EffectStats.BlindedStats.Blind(blindStats.BlindDuration);
         applyResistanceStats.ApplyResistance((damageable as IDamageable));
     }
 }

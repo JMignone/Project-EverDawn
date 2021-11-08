@@ -12,10 +12,7 @@ public class RootedStats
     [SerializeField]
     private bool isRooted;
 
-    [SerializeField]
     private float rootDelay;
-
-    [SerializeField]
     private float currentRootDelay;
 
     private IDamageable unit;
@@ -61,8 +58,6 @@ public class RootedStats
         unit = go;
         speed = unit.Stats.MoveSpeed;
         isRooted = false;
-        rootDelay = 0;
-        currentRootDelay = 0;
     }
 
     public void UpdateRootedStats() {

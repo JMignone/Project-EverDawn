@@ -28,6 +28,8 @@ public class EffectStats
     [SerializeField]
     private StrengthenedStats strengthenedStats;
     [SerializeField]
+    private BlindedStats blindedStats;
+    [SerializeField]
     private ResistStats resistStats;
 
     public UAOEStats AOEStats
@@ -85,6 +87,11 @@ public class EffectStats
         get { return strengthenedStats; }
     }
 
+    public BlindedStats BlindedStats
+    {
+        get { return blindedStats; }
+    }
+
     public ResistStats ResistStats
     {
         get { return resistStats; }
@@ -100,6 +107,7 @@ public class EffectStats
         pulledStats.StartPulledStats(go);
         grabbedStats.StartGrabbedStats(go);
         strengthenedStats.StartStrengthenedStats(go);
+        blindedStats.StartStats(go);
         aoeStats.StartStats(go);
         resistStats.StartResistStats(go);
     }
@@ -113,6 +121,7 @@ public class EffectStats
         pulledStats.UpdatePulledStats();
         grabbedStats.UpdateGrabbedStats();
         strengthenedStats.UpdateStrengthenedStats();
+        blindedStats.UpdateStats();
         resistStats.UpdateResistanceStats();
     }
 

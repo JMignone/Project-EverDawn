@@ -170,6 +170,7 @@ public class Building : MonoBehaviour, IDamageable
                     ReTarget();
 
                 stats.UpdateStats(ChargeAttack, inRangeTargets.Count, agent, hitTargets, target);
+                buildUpStats.UpdateStats();
                 shadowStats.UpdateShadowStats();
                 Attack();
 
@@ -179,7 +180,7 @@ public class Building : MonoBehaviour, IDamageable
                             lookAtTarget();
                     }
                 }
-                else if(target != null && !attackStats.AttacksLocation  && rotates)
+                else if(target != null && !attackStats.AttacksLocation && rotates)
                     lookAtTarget();
             }
         }
@@ -208,6 +209,7 @@ public class Building : MonoBehaviour, IDamageable
         if(target != null) {
             if(attackStats.FiresProjectiles) { //if the unit fires projectiles rather than simply doing damage when attacking
                 if(stats.CurrAttackDelay >= stats.AttackDelay && !attackStats.IsFiring) {
+                    print("testsdfsdf");
                     Component damageable = target.GetComponent(typeof(IDamageable));
                     if(damageable) { //is the target damageable
                         if(hitTargets.Contains(target)) //this is needed for the rare occurance that a unit is 90% done with attack delay and the target leaves its range. It can still do its attack if its within vision given that its attack was already *90% thru
@@ -241,7 +243,7 @@ public class Building : MonoBehaviour, IDamageable
     }
 
     public void SetTarget(GameObject newTarget) {
-        if(newTarget != target) {
+        if((newTarget != target && stats.CanAct && !stats.IsCastingAbility) || newTarget == null) {
             if(target != null)
                 (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
             if(newTarget != null)
@@ -306,7 +308,7 @@ public class Building : MonoBehaviour, IDamageable
                         if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) { //only if the unit can actually target this one should we adjust this value
                             if(!(unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Add(gameObject);
-                            if(((unit as IDamageable).InRangeTargets.Count == 1 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct) {
+                            if( ((unit as IDamageable).InRangeTargets.Count == 1 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct) {
                                 GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
                                 if(go != null)
                                     (unit as IDamageable).SetTarget(go);

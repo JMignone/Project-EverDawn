@@ -499,7 +499,8 @@ MonoBehaviour:
     baseDamage: 0
     attackDelay: 1.8
     currAttackDelay: 0
-    moveSpeed: 7
+    moveSpeed: 6
+    noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 1
@@ -523,11 +524,10 @@ MonoBehaviour:
       - {fileID: 5609493880757351295}
       - {fileID: 5609493880757351289}
       - {fileID: 3273760215413355028}
-      defaultMat: {fileID: 0}
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
-    unitRange: 0
+    unitRange: 1
     effectStats:
       aoeStats:
         areaOfEffect: 0
@@ -766,7 +766,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7301237269583115198}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 2
+  m_Radius: 1.75
   m_Speed: 7
   m_Acceleration: 100
   avoidancePriority: 50

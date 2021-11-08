@@ -29,6 +29,9 @@ public class BaseStats
     private float currAttackDelay;
     [SerializeField] [Min(0)]
     private float moveSpeed;
+    [Tooltip("Determines if a unit must rotate towards it target to fire")]
+    [SerializeField]
+    private bool noRotation;
     [SerializeField] [Min(0)]
     private float rotationSpeed;
     [SerializeField]
@@ -120,13 +123,13 @@ public class BaseStats
     public float Range
     {
         get { return range; }
-        //set { range = value; }
+        set { range = value; }
     }
 
     public float VisionRange
     {
         get { return visionRange; }
-        //set { visionRange = value; }
+        set { visionRange = value; }
     }
 
     public float BaseDamage
@@ -316,7 +319,11 @@ public class BaseStats
         unitAgent.Agent.speed = moveSpeed * SpeedMultiplier();
 
         detectionObject.radius = range;
-        visionObject.radius = visionRange;
+        //this is nessesary because we need the vision collider to go off first, as bigger colliders will go off first
+        if(range == visionRange)
+            visionObject.radius = visionRange + .01f;
+        else
+            visionObject.radius = visionRange;
 
         if(IsReady) {
             if(healthDecay > 0)
@@ -332,7 +339,7 @@ public class BaseStats
                     directionToTarget.y = 0; // Ignore Y, usful for airborne units
                     float angle = Vector3.Angle(unitAgent.transform.forward, directionToTarget); 
 
-                    if(Mathf.Abs(angle) < GameConstants.MAXIMUM_ATTACK_ANGLE) {
+                    if(noRotation || Mathf.Abs(angle) < GameConstants.MAXIMUM_ATTACK_ANGLE) {
                         if(currAttackDelay < attackDelay) 
                             currAttackDelay += Time.deltaTime * effectStats.SlowedStats.CurrentSlowIntensity;
                         else

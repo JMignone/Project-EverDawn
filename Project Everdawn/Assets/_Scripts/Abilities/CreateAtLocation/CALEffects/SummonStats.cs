@@ -104,7 +104,7 @@ public class SummonStats
         MonoBehaviour.Destroy(go);
         Vector3 position = cal.TargetLocation;
 
-        GameObject summonGo = GameFunctions.SpawnUnit(summonUnit, GameManager.GetUnitsFolder(), position);
+        GameObject summonGo = GameFunctions.SpawnUnit(summonUnit, GameManager.GetUnitsFolder(), position, cal.gameObject.tag);
 
         Component damageable = summonGo.GetComponent(typeof(IDamageable));
 

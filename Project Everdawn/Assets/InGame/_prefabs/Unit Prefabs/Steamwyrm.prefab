@@ -405,6 +405,7 @@ MonoBehaviour:
     attackDelay: 1.6
     currAttackDelay: 0
     moveSpeed: 11
+    noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 1
@@ -425,7 +426,6 @@ MonoBehaviour:
       renderers:
       - {fileID: 3415333899985350642}
       - {fileID: 3415333899985350640}
-      defaultMat: {fileID: 0}
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
@@ -760,7 +760,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3415333901079641158}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 4
+  m_Radius: 3
   m_Speed: 10
   m_Acceleration: 100
   avoidancePriority: 50
