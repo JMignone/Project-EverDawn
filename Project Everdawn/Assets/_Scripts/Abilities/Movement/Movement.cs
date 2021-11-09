@@ -43,8 +43,6 @@ public class Movement : Projectile
     {
         if(!Unit.Equals(null)) {
             Unit.Agent.Agent.enabled = true;
-            if(AbilityControl)
-                Unit.Stats.IsCastingAbility = false;
             StopStats();
         }
     }

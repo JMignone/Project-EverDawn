@@ -46,6 +46,15 @@ public class Projectile : MonoBehaviour, IAbility
     [SerializeField]
     private bool abilityControl;
 
+    private bool hit; //used for the below 2 variables
+    [Tooltip("If checked, the skillshot will continue once this projectile is destroyed")]
+    [SerializeField]
+    private bool pauseAbility;
+
+    [Tooltip("If checked, the skillshot will have its exitOverride value flagged on a miss, meaning it will stop firing further")]
+    [SerializeField]
+    private bool stopOnMiss;
+
     [Tooltip("If checked, the preview will not display")]
     [SerializeField]
     private bool hidePreview;
@@ -99,12 +108,11 @@ public class Projectile : MonoBehaviour, IAbility
     private ApplyResistanceStats applyResistanceStats; //what resistances the projectile gives to its target or the user for a duration
 
     private Vector3 targetLocation;
-
-    [SerializeField]
     private Actor3D chosenTarget;
 
-    //Below 2 are currently only used for boomerang, but may be needed for others
+    private ICaster caster;
     private IDamageable unit;
+    //Currently only used for boomerang, but may be needed for others. This variable gets updated wiith the location of the unit until it dies
     private Vector3 lastKnownLocation;
 
     public SphereCollider HitBox
@@ -170,6 +178,12 @@ public class Projectile : MonoBehaviour, IAbility
     public bool AbilityControl
     {
         get { return abilityControl; }
+    }
+
+    public bool SetHit
+    {
+        get { return hit; }
+        set { hit = value; }
     }
 
     public bool HidePreview
@@ -280,6 +294,12 @@ public class Projectile : MonoBehaviour, IAbility
         set { blockable = value; }
     }
 
+    public ICaster Caster
+    {
+        get { return caster; }
+        set { caster = value; }
+    }
+
     public IDamageable Unit
     {
         get { return unit; }
@@ -315,6 +335,9 @@ public class Projectile : MonoBehaviour, IAbility
         if(unit != null && !unit.Equals(null)) {
             resistEffects.StartResistance(unit);
             applyResistanceStats.StartResistance(unit);
+
+            if(caster != null)
+                caster.PauseFiring = pauseAbility;
         }
 
         if(towerDamage == 0)
@@ -322,15 +345,22 @@ public class Projectile : MonoBehaviour, IAbility
     }
 
     protected void StopStats() {
-        if(unit != null && !unit.Equals(null))
+        if(unit != null && !unit.Equals(null)) {
             resistEffects.StopResistance(unit);
+
+            if(abilityControl)
+                unit.Stats.IsCastingAbility = false;
+
+            if(caster != null) {
+                caster.PauseFiring = false;
+                caster.ExitOveride = stopOnMiss && !hit;
+            }
+        }
     }
 
     private void OnDestroy()
     {
         StopStats();
-        if(unit != null && !unit.Equals(null) && abilityControl)
-            unit.Stats.IsCastingAbility = false;
     }
 
     private void Update() {
@@ -391,10 +421,12 @@ public class Projectile : MonoBehaviour, IAbility
         }
     }
 
-    public void hit(Component damageable) {
+    public void Hit(Component damageable) {
         if(blockable || (damageable as IDamageable).Agent == chosenTarget) { //if the projectile is blockable, or this is infact the chosen target
-
+        
             if(GameFunctions.WillHit(heightAttackable, typeAttackable, damageable)) {
+                hit = true;
+
                 if(aoeStats.AreaOfEffect)
                     aoeStats.Explode(gameObject);
                 else {

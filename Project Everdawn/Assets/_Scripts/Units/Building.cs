@@ -286,7 +286,7 @@ public class Building : MonoBehaviour, IDamageable
             if(other.CompareTag("Projectile")) { //Did we get hit by a skill shot?
                 Projectile projectile = other.transform.parent.parent.GetComponent<Projectile>();
                 Component unit = this.GetComponent(typeof(IDamageable));
-                projectile.hit(unit);
+                projectile.Hit(unit);
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an abililty?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();

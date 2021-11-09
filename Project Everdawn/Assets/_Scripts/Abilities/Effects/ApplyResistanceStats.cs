@@ -9,6 +9,9 @@ public class ApplyResistanceStats //this type of resistance persists for a given
     private bool applyToSelf;
 
     [SerializeField]
+    private bool applyToOthers;
+
+    [SerializeField]
     private bool resistDamage;
     [SerializeField]
     private float rdDuration;
@@ -84,25 +87,27 @@ public class ApplyResistanceStats //this type of resistance persists for a given
     }
 
     public void ApplyResistance(IDamageable unit) {
-        if(resistDamage)
-            unit.Stats.EffectStats.ResistStats.ResistDamage(rdDuration);
-        if(untargetable)
-                unit.Stats.EffectStats.ResistStats.ResistTarget(rtDuration);
-        if(resistFreeze)
-            unit.Stats.EffectStats.ResistStats.ResistFreeze(rfDuration);
-        if(resistSlow)
-            unit.Stats.EffectStats.ResistStats.ResistSlow(rsDuration);
-        if(resistRoot)
-            unit.Stats.EffectStats.ResistStats.ResistRoot(rrDuration);
-        if(resistPoison)
-            unit.Stats.EffectStats.ResistStats.ResistPoison(rpDuration);
-        if(resistKnockback)
-            unit.Stats.EffectStats.ResistStats.ResistKnockback(rkDuration);
-        if(resistGrab)
-            unit.Stats.EffectStats.ResistStats.ResistGrab(rgDuration);
-        if(resistPull)
-            unit.Stats.EffectStats.ResistStats.ResistPull(rpullDuration);
-        if(resistBlind)
-            unit.Stats.EffectStats.ResistStats.ResistBlind(rbDuration);
+        if(applyToOthers) {
+            if(resistDamage)
+                unit.Stats.EffectStats.ResistStats.ResistDamage(rdDuration);
+            if(untargetable)
+                    unit.Stats.EffectStats.ResistStats.ResistTarget(rtDuration);
+            if(resistFreeze)
+                unit.Stats.EffectStats.ResistStats.ResistFreeze(rfDuration);
+            if(resistSlow)
+                unit.Stats.EffectStats.ResistStats.ResistSlow(rsDuration);
+            if(resistRoot)
+                unit.Stats.EffectStats.ResistStats.ResistRoot(rrDuration);
+            if(resistPoison)
+                unit.Stats.EffectStats.ResistStats.ResistPoison(rpDuration);
+            if(resistKnockback)
+                unit.Stats.EffectStats.ResistStats.ResistKnockback(rkDuration);
+            if(resistGrab)
+                unit.Stats.EffectStats.ResistStats.ResistGrab(rgDuration);
+            if(resistPull)
+                unit.Stats.EffectStats.ResistStats.ResistPull(rpullDuration);
+            if(resistBlind)
+                unit.Stats.EffectStats.ResistStats.ResistBlind(rbDuration);
+        }
     }
 }

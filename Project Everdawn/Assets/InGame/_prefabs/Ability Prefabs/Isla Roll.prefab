@@ -51,11 +51,14 @@ MonoBehaviour:
   speed: 25
   range: 20
   baseDamage: 0
+  towerDamage: 0
   heightAttackable: 0
   typeAttackable: 0
   canPierce: 1
   blockable: 0
   abilityControl: 0
+  pauseAbility: 1
+  stopOnMiss: 0
   hidePreview: 1
   aoeStats:
     areaOfEffect: 0
@@ -92,6 +95,9 @@ MonoBehaviour:
     canStrength: 0
     strengthDuration: 0
     strengthIntensity: 0
+  blindStats:
+    canBlind: 0
+    blindDuration: 0
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 5
@@ -101,6 +107,7 @@ MonoBehaviour:
     lingerDuringFlight: 0
     lingeringEffect: {fileID: 0}
     lingeringDamage: 0
+    towerDamage: 0
     lingeringRadius: 0
     lingeringDuration: 0
     lingeringTick: 0
@@ -109,13 +116,13 @@ MonoBehaviour:
     selfDestructs: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 0
-    explosionRadius: 2.5
+    towerDamage: 0
+    explosionRadius: 0
   grenadeStats:
     isGrenade: 0
     isAirStrike: 0
     startLocation: 0
     explosionEffect: {fileID: 0}
-    explosionDamage: 0
     explosionRadius: 1.5
     grenadeArcMultiplier: 0
   resistEffects:
@@ -126,8 +133,10 @@ MonoBehaviour:
     resistKnockback: 0
     resistGrab: 0
     resistPull: 0
+    resistBlind: 0
   applyResistanceStats:
     applyToSelf: 0
+    applyToOthers: 0
     resistDamage: 0
     rdDuration: 0
     untargetable: 0
@@ -146,7 +155,8 @@ MonoBehaviour:
     rgDuration: 0
     resistPull: 0
     rpullDuration: 0
-  chosenTarget: {fileID: 0}
+    resistBlind: 0
+    rbDuration: 0
   passObstacles: 0
   highlightEnemies: 0
   retreatStats:

@@ -12,7 +12,7 @@ using UnityEngine.EventSystems;
 
     When using a movement ability, 'passObstacles' should be set to true
 */
-public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
+public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     [SerializeField]
     private Unit unit;
@@ -61,6 +61,11 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     private bool abilityControl; //sets it so the skillshot doesnt unset unit casting, but rather the projectile. Usful for movements like dashes or maybe pulls
     private float maxRange;
 
+    //a flag set if an ability controls when the skillshot will continue. Usage: a unit fires a grappler and will not be pulled forward until the grappler has hit somthing
+    private bool pauseFiring;
+    //a flag set by an ability to stop continuing the skillshot regardless if there are more abilities to follow
+    private bool exitOveride;
+
     public Unit Unit
     {
         get { return unit; }
@@ -95,22 +100,22 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         set { currentProjectileIndex = value; }
     }
 
-    public Vector3 FireStartPosition
-    {
-        get { return fireStartPosition; }
-        set { fireStartPosition = value; }
-    }
-
-    public Vector3 FireDirection
-    {
-        get { return fireDirection; }
-        set { fireDirection = value; }
-    }
-
     public AbilityUI AbilityUI
     {
         get { return abilityUI; }
         //set { abilityUI = value; }
+    }
+
+    public bool PauseFiring
+    {
+        get { return pauseFiring; }
+        set { pauseFiring = value; }
+    }
+
+    public bool ExitOveride
+    {
+        get { return exitOveride; }
+        set { exitOveride = value; }
     }
 
     void Start()
@@ -328,18 +333,19 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
     private void Fire()
     {
-        if (!unit.Stats.CanAct || target == null)
+        if (!unit.Stats.CanAct || target == null || exitOveride)
         {
             if (currentProjectileIndex == 0) //if we started firing a target projectile, but before one goes off the target dies, reset the cooldown
                 abilityUI.CurrCooldownDelay = abilityUI.CooldownDelay;
 
             isFiring = false;
+            exitOveride = false;
             currentProjectileIndex = 0;
             currentDelay = 0;
-            if (!abilityControl)
+            //if (!abilityControl)
                 unit.Stats.IsCastingAbility = false;
         }
-        else if (currentDelay < abilityDelays[currentProjectileIndex]) //if we havnt reached the delay yet
+        else if (currentDelay < abilityDelays[currentProjectileIndex] || pauseFiring) //if we havnt reached the delay yet
             currentDelay += Time.deltaTime * unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
         else if (currentProjectileIndex == abilityPrefabs.Count)
         { //if we completed the last delay
@@ -354,9 +360,9 @@ public class Target : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         { //if we completed a delay
             fireStartPosition = abilityPreviewCanvas.transform.position;
             if (abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
-                GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], fireStartPosition, target, fireDirection, unit, transform.parent.tag, 1);
+                GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], fireStartPosition, target, fireDirection, unit, transform.parent.tag, 1, this);
             else if (abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], fireStartPosition, target, fireDirection, unit, transform.parent.tag, 1);
+                GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], fireStartPosition, target, fireDirection, unit, transform.parent.tag, 1, this);
             currentDelay = 0;
             currentProjectileIndex++;
         }

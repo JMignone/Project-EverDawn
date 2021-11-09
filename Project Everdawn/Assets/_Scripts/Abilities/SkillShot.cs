@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
+public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     [SerializeField]
     private Unit unit;
@@ -15,8 +15,6 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     [SerializeField]
     private List<float> abilityDelays;
-
-    [SerializeField]
     private float currentDelay;
 
     [SerializeField]
@@ -56,6 +54,11 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private float maxRange;
     private int areaMask;
 
+    //a flag set if an ability controls when the skillshot will continue. Usage: a unit fires a grappler and will not be pulled forward until the grappler has hit somthing
+    private bool pauseFiring;
+    //a flag set by an ability to stop continuing the skillshot regardless if there are more abilities to follow
+    private bool exitOveride;
+
     public Unit Unit
     {
         get { return unit; }
@@ -90,28 +93,22 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         set { currentProjectileIndex = value; }
     }
 
-    public Vector3 FireStartPosition
-    {
-        get { return fireStartPosition; }
-        set { fireStartPosition = value; }
-    }
-
-    public Vector3 FireMousePosition
-    {
-        get { return fireMousePosition; }
-        set { fireMousePosition = value; }
-    }
-
-    public Vector3 FireDirection
-    {
-        get { return fireDirection; }
-        set { fireDirection = value; }
-    }
-
     public AbilityUI AbilityUI
     {
         get { return abilityUI; }
         //set { abilityUI = value; }
+    }
+
+    public bool PauseFiring
+    {
+        get { return pauseFiring; }
+        set { pauseFiring = value; }
+    }
+
+    public bool ExitOveride
+    {
+        get { return exitOveride; }
+        set { exitOveride = value; }
     }
 
     void Start()
@@ -132,13 +129,13 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         foreach (GameObject ability in abilityPrefabs)
         { //this finds the largest range of all the abilitys shot by this skillshot
             Component component = ability.GetComponent(typeof(IAbility));
-            if ((component as IAbility).AbilityControl)
+            if((component as IAbility).AbilityControl)
                 abilityControl = true;
-            if ((component as IAbility).Range > maxRange)
+            if((component as IAbility).Range > maxRange)
                 maxRange = (component as IAbility).Range;
-            if ((component as IAbility).AreaMask() > areaMask)
+            if((component as IAbility).AreaMask() > areaMask)
                 areaMask = (component as IAbility).AreaMask();
-            if (ability.GetComponent<Movement>())
+            if(ability.GetComponent<Movement>())
                 shootRaycast = !ability.GetComponent<Movement>().PassObstacles;
         }
     }
@@ -331,15 +328,16 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     private void Fire()
     {
-        if (!unit.Stats.CanAct)
+        if (!unit.Stats.CanAct || exitOveride)
         {
             isFiring = false;
+            exitOveride = false;
             currentProjectileIndex = 0;
             currentDelay = 0;
-            if (!abilityControl)
+            //if (!abilityControl)
                 unit.Stats.IsCastingAbility = false;
         }
-        else if (currentDelay < abilityDelays[currentProjectileIndex]) //if we havnt reached the delay yet
+        else if (currentDelay < abilityDelays[currentProjectileIndex] || pauseFiring) //if we havnt reached the delay yet
             currentDelay += Time.deltaTime * unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
         else if (currentProjectileIndex == abilityPrefabs.Count)
         { //if we completed the last delay
@@ -359,9 +357,9 @@ public class SkillShot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 startPos = abilityPreviewCanvas.transform.position;
             }
             if (abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
-                GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPos, fireMousePosition, fireDirection, unit, transform.parent.tag, 1, rangeIncrease);
+                GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPos, fireMousePosition, fireDirection, unit, transform.parent.tag, 1, rangeIncrease, this);
             else if (abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], startPos, fireMousePosition, fireDirection, unit, transform.parent.tag, 1, rangeIncrease);
+                GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], startPos, fireMousePosition, fireDirection, unit, transform.parent.tag, 1, rangeIncrease, this);
             currentDelay = 0;
             currentProjectileIndex++;
         }

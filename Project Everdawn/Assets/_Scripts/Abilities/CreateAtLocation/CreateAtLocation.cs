@@ -28,6 +28,15 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     [SerializeField]
     private bool abilityControl;
 
+    private bool hit; //used for the below 2 variables
+    [Tooltip("If checked, the skillshot will continue once this projectile is destroyed")]
+    [SerializeField]
+    private bool pauseAbility;
+
+    [Tooltip("If checked, the skillshot will have its exitOverride value flagged on a miss, meaning it will stop firing further")]
+    [SerializeField]
+    private bool stopOnMiss;
+
     [Tooltip("If checked, the preview will not display")]
     [SerializeField]
     private bool hidePreview;
@@ -79,6 +88,7 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     private ApplyResistanceStats applyResistanceStats; //what resistances the projectile gives to its target or the user for a duration
 
     private Vector3 targetLocation;
+    private ICaster caster;
     private IDamageable unit;
 
     [SerializeField]
@@ -120,6 +130,12 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     public bool AbilityControl
     {
         get { return abilityControl; }
+    }
+
+    public bool SetHit
+    {
+        get { return hit; }
+        set { hit = value; }
     }
 
     public bool HidePreview
@@ -220,6 +236,13 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         set { unit = value; }
     }
 
+    public ICaster Caster
+    {
+        get { return caster; }
+        set { caster = value; }
+    }
+
+
     public int AreaMask()
     {
         if(summonStats.IsSummon)
@@ -248,8 +271,12 @@ public class CreateAtLocation : MonoBehaviour, IAbility
             linearStats.StartLinearStats(damageMultiplier);
         teleportStats.StartStats(unit);
 
-        if(unit != null && !unit.Equals(null))
+        if(unit != null && !unit.Equals(null)) {
             applyResistanceStats.StartResistance(unit);
+
+            if(caster != null)
+                caster.PauseFiring = pauseAbility;
+        }
 
         //if(chosenTarget == null)
         //    blockable = true;
@@ -257,8 +284,14 @@ public class CreateAtLocation : MonoBehaviour, IAbility
 
     private void OnDestroy()
     {
-        if(unit != null && !unit.Equals(null) && abilityControl)
+        if(unit != null && !unit.Equals(null) && abilityControl) {
             unit.Stats.IsCastingAbility = false;
+
+            if(caster != null) {
+                caster.PauseFiring = false;
+                caster.ExitOveride = stopOnMiss && !hit;
+            }
+        }
     }
 
     private void Update() {

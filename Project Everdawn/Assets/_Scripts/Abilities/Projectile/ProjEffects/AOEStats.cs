@@ -40,6 +40,7 @@ public class AOEStats
                 Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
 
                 if(GameFunctions.WillHit(projectile.HeightAttackable, projectile.TypeAttackable, damageable)) {
+                    projectile.SetHit = true;
 
                     float damage = projectile.BaseDamage*projectile.DamageMultiplier;
                     if(damageable.GetComponent<Tower>())

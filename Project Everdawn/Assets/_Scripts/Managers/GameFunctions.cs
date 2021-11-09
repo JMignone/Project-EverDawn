@@ -107,7 +107,7 @@ public static class GameFunctions
     }
 
     //damage increase is needed for range units that fire projectiles in its auto attack
-    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, float rangeIncrease = 0) {
+    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, float rangeIncrease = 0, ICaster skillshot = null) {
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         float distance = Vector3.Distance(startPosition, mousePosition);
         Vector3 endPosition = mousePosition;
@@ -140,9 +140,10 @@ public static class GameFunctions
         if(unit != null)
             proj.Unit = unit;
         proj.DamageMultiplier = damageMultiplier;
+        proj.Caster = skillshot;
     }
 
-    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f) {
+    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, ICaster targeter = null) {
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         float distance = Vector3.Distance(startPosition, chosenTarget.transform.position);
         Vector3 endPosition = chosenTarget.transform.position;
@@ -166,10 +167,11 @@ public static class GameFunctions
         if(unit != null) 
             proj.Unit = unit;
         proj.DamageMultiplier = damageMultiplier;
+        proj.Caster = targeter;
     }
 
 
-    public static void FireCAL(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, float rangeIncrease = 0) {
+    public static void FireCAL(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, float rangeIncrease = 0, ICaster skillshot = null) {
         Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
         float distance = Vector3.Distance(startPosition, mousePosition);
         Vector3 endPosition = mousePosition;
@@ -195,18 +197,21 @@ public static class GameFunctions
         if(unit != null)
             goCal.Unit = unit;
         goCal.DamageMultiplier = damageMultiplier;
+        goCal.Caster = skillshot;
     }
 
-    public static void FireCAL(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, float rangeIncrease = 0) {
+    public static void FireCAL(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, ICaster targeter = null) {
         Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
         float distance = Vector3.Distance(startPosition, chosenTarget.transform.position);
         Vector3 endPosition = chosenTarget.transform.position;
         CreateAtLocation cal = prefab.GetComponent<CreateAtLocation>();
 
+        /* The CAL should hit the target regardless of how far its target runs after initiation
         float range = cal.Range + rangeIncrease;
         float radius = cal.Radius;
         if(distance > (range - radius))
             endPosition = startPosition + (direction.normalized * (range - radius));
+        */
 
         GameObject go = GameObject.Instantiate(prefab, endPosition, targetRotation, GameManager.GetUnitsFolder());
         go.tag = tag;
@@ -217,6 +222,7 @@ public static class GameFunctions
         if(unit != null)
             goCal.Unit = unit;
         goCal.DamageMultiplier = damageMultiplier;
+        goCal.Caster = targeter;
     }
 
     //This code was found from https://answers.unity.com/questions/566519/camerascreentoworldpoint-in-perspective.html

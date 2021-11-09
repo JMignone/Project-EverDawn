@@ -53,6 +53,7 @@ public class SelfDestructStats
                     Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
 
                     if(GameFunctions.WillHit((ability as IAbility).HeightAttackable, (ability as IAbility).TypeAttackable, damageable)) {
+                        (ability as IAbility).SetHit = true;
 
                         float damage = explosionDamage*(ability as IAbility).DamageMultiplier;
                         if(towerDamage > 0 && damageable.GetComponent<Tower>())

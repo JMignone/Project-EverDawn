@@ -14037,9 +14037,9 @@ MonoBehaviour:
   abilityDelays:
   - 0.2
   - 1
-  currentDelay: 0
   applyResistanceStats:
     applyToSelf: 0
+    applyToOthers: 0
     resistDamage: 0
     rdDuration: 0
     untargetable: 0
@@ -14093,6 +14093,7 @@ MonoBehaviour:
   currentDelay: 0
   applyResistanceStats:
     applyToSelf: 0
+    applyToOthers: 0
     resistDamage: 0
     rdDuration: 0
     untargetable: 0
@@ -19257,9 +19258,9 @@ MonoBehaviour:
   abilityDelays:
   - 0.1
   - 0.5
-  currentDelay: 0
   applyResistanceStats:
     applyToSelf: 0
+    applyToOthers: 0
     resistDamage: 0
     rdDuration: 0
     untargetable: 0
@@ -19313,6 +19314,7 @@ MonoBehaviour:
   currentDelay: 0
   applyResistanceStats:
     applyToSelf: 0
+    applyToOthers: 0
     resistDamage: 0
     rdDuration: 0
     untargetable: 0
