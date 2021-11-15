@@ -60,6 +60,11 @@ public class GameManager : MonoBehaviour
         get { return timeLimit; }
     }
 
+    public int ResourceMultiplier
+    {
+        get { return timeLeft <= timeLimit/3.0f ? 2 : 1; }
+    }
+
     private void Awake()
     {
         if(instance != this)
@@ -208,7 +213,7 @@ public class GameManager : MonoBehaviour
     }
 
     //this is mainly used, if not only used for locating towers, maybe usful for ability targeting later on
-    public static List<GameObject> GetAllEnemies(Vector3 pos, List<GameObject> objects, string tag) {
+    public static List<GameObject> GetAllEnemies(List<GameObject> objects, string tag) {
         List<GameObject> listOfEnemies = new List<GameObject>();
 
         foreach (GameObject go in objects) {

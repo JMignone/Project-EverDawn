@@ -59,10 +59,10 @@ public class ComputerStats
             } //if there are any 0 cost cards, there is a very small chance that a bot plays only a 0 cost card at 10 resource, causing the bot to stop playing cards
             if(playerInfo.GetCurrResource == currResource + 1 && !isPlaying) {
                 currResource = playerInfo.GetCurrResource;
-                MonoBehaviour.print(currResource);
+                //MonoBehaviour.print(currResource);
                 if(playDecision()) {
                     order = playOrder();
-                    MonoBehaviour.print("cardIndexOrder: " + string.Join(",", order));
+                    //MonoBehaviour.print("cardIndexOrder: " + string.Join(",", order));
                     foreach(int index in order)
                         cardOrder.Add(playerInfo.HandParent.transform.GetChild(index).GetComponent<Card>());
                         
@@ -112,7 +112,7 @@ public class ComputerStats
         potentialCardCombos[random].Sort();
         potentialCardCombos[random].Reverse();
 
-        MonoBehaviour.print("cardCostCombo: " + string.Join(",", potentialCardCombos[random]));
+        //MonoBehaviour.print("cardCostCombo: " + string.Join(",", potentialCardCombos[random]));
         int cost = 0;
 
         int[] cardIndex = new int[] {0, 1, 2, 3};

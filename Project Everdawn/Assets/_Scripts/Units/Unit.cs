@@ -152,7 +152,8 @@ public class Unit : MonoBehaviour, IDamageable
                 lookAtTarget();
             else if(target != null && !attackStats.IsFiring) {
                 Vector3 direction = target.transform.GetChild(0).position - agent.transform.position;
-                agent.Agent.SetDestination(target.transform.GetChild(0).position - (direction.normalized * .25f));
+                direction.y = 0;
+                agent.Agent.SetDestination(new Vector3(target.transform.GetChild(0).position.x, 0, target.transform.GetChild(0).position.z) - (direction.normalized * .25f));
                 if(hitTargets.Contains(target)) {
                     if(inRangeTargets.Count > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) { //is in range, OR is 90% thru attack cycle -
                         lookAtTarget();
@@ -233,13 +234,13 @@ public class Unit : MonoBehaviour, IDamageable
                 SetTarget(go);
             else {
                 List<GameObject> towers = GameManager.Instance.TowerObjects;
-                towers = GameManager.GetAllEnemies(transform.GetChild(0).position, towers, gameObject.tag); //sending in only towers
+                towers = GameManager.GetAllEnemies(towers, gameObject.tag); //sending in only towers
                 SetTarget(GameFunctions.GetNearestTarget(towers, gameObject.tag, stats));
             }
         }
         else {
             List<GameObject> towers = GameManager.Instance.TowerObjects;
-            towers = GameManager.GetAllEnemies(transform.GetChild(0).position, towers, gameObject.tag); //sending in only towers
+            towers = GameManager.GetAllEnemies(towers, gameObject.tag); //sending in only towers
             SetTarget(GameFunctions.GetNearestTarget(towers, gameObject.tag, stats));
         }
     }

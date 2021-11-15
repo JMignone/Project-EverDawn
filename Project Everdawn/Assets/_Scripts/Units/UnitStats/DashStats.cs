@@ -65,7 +65,7 @@ public class DashStats
     public void UpdateDashStats() {
         if(dashes && isDashing) {
             if(!unit.Stats.CanAct || unit.Target == null || unit.Stats.IsCastingAbility
-               || Vector3.Distance(unit.Agent.transform.position, unit.Target.transform.GetChild(0).position) > dashRange + (unit.Target.GetComponent(typeof(IDamageable)) as IDamageable).Agent.HitBox.radius) {
+               || Vector3.Distance(new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z), new Vector3(unit.Target.transform.GetChild(0).position.x, 0, unit.Target.transform.GetChild(0).position.z)) > dashRange + (unit.Target.GetComponent(typeof(IDamageable)) as IDamageable).Agent.HitBox.radius) {
                 currentDelay = 0;
                 isDashing = false;
                 isMoving = false;
@@ -106,7 +106,7 @@ public class DashStats
 
     public void StartDash(GameObject go) {
         if(go == unit.Target && unit.Stats.CanAct && !unit.Stats.IsAttacking && !isDashing && !unit.Stats.IsCastingAbility
-           && Vector3.Distance(unit.Agent.transform.position, go.transform.GetChild(0).position) >= dashRange) {
+           && Vector3.Distance(new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z), new Vector3(go.transform.GetChild(0).position.x, 0, go.transform.GetChild(0).position.z)) >= dashRange) {
             isDashing = true;
             unit.Agent.Agent.ResetPath();
         }

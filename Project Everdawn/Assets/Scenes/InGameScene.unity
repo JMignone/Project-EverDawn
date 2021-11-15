@@ -3101,7 +3101,6 @@ MonoBehaviour:
   - {fileID: 415252723}
   - {fileID: 2007464376}
   - {fileID: 1631093152}
-  - {fileID: 2390579349507958368}
   towerObjects:
   - {fileID: 897687317}
   - {fileID: 415934419}
@@ -3117,7 +3116,7 @@ MonoBehaviour:
   enemyTextScore: {fileID: 1708688850}
   timeLeft: 181
   textTimer: {fileID: 1922791558}
-  testSetup: 1
+  testSetup: 0
 --- !u!224 &252408392 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2683724732824738253, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
@@ -3839,7 +3838,7 @@ MonoBehaviour:
     currentDelay: 0
   playersDeck:
     cards:
-    - index: 0
+    - cardId: 0
       name: Isla
       icon: {fileID: 21300000, guid: 3705379fccc4e694d861698406ce8912, type: 3}
       cost: 4
@@ -3850,7 +3849,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - index: 1
+    - cardId: 1
       name: Bao Zu
       icon: {fileID: 21300000, guid: 616f99a5a0da8bc4696cec0e5e538437, type: 3}
       cost: 5
@@ -3861,7 +3860,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - index: 2
+    - cardId: 2
       name: Cornut
       icon: {fileID: 21300000, guid: e351a62f6e3266644b0accb868e6a820, type: 3}
       cost: 5
@@ -3872,7 +3871,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - index: 6
+    - cardId: 3
       name: Steamwyrm
       icon: {fileID: 21300000, guid: a3615353b88c90a448ef598d9e2409e7, type: 3}
       cost: 4
@@ -3883,7 +3882,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - index: 3
+    - cardId: 4
       name: Monsoon Gunners
       icon: {fileID: 21300000, guid: 526f2e41c56666847a887ac31f5fff5b, type: 3}
       cost: 2
@@ -3894,7 +3893,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - index: 4
+    - cardId: 5
       name: Monsoon Insurgents
       icon: {fileID: 21300000, guid: 116f885df4bcb584e99223536431f6c1, type: 3}
       cost: 2
@@ -3905,7 +3904,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - index: 7
+    - cardId: 6
       name: Mizuchi Kaidarin
       icon: {fileID: 21300000, guid: c40d383de808e504bbe06e137eaa18ca, type: 3}
       cost: 4
@@ -3916,7 +3915,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - index: 5
+    - cardId: 7
       name: Freeze
       icon: {fileID: 21300000, guid: 04d58490ded8c4c4aa64bca7867d7969, type: 3}
       cost: 3
@@ -3929,7 +3928,7 @@ MonoBehaviour:
       unitIndex: -1
     hand: []
     nextCard:
-      index: 0
+      cardId: 0
       name: Unit 1
       icon: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
       cost: 2
@@ -4390,8 +4389,7 @@ MonoBehaviour:
         cantBeGrabbed: 0
         isGrabbed: 0
         direction: {x: 0, y: 0, z: 0}
-        pullDelay: 0
-        currentPullDelay: 0
+        grabDelay: 0
         currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
@@ -4470,7 +4468,7 @@ Transform:
   - {fileID: 191223122}
   - {fileID: 2093067394}
   m_Father: {fileID: 1074732862}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!54 &367080429
 Rigidbody:
@@ -4965,7 +4963,7 @@ Transform:
   - {fileID: 2137932695}
   - {fileID: 43494273}
   m_Father: {fileID: 1074732862}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!54 &415252725
 Rigidbody:
@@ -5085,8 +5083,7 @@ MonoBehaviour:
         cantBeGrabbed: 1
         isGrabbed: 0
         direction: {x: 0, y: 0, z: 0}
-        pullDelay: 0
-        currentPullDelay: 0
+        grabDelay: 0
         currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
@@ -5151,7 +5148,7 @@ Transform:
   - {fileID: 502710457}
   - {fileID: 1829838035}
   m_Father: {fileID: 1074732862}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &415934422
 Rigidbody:
@@ -5269,8 +5266,7 @@ MonoBehaviour:
         cantBeGrabbed: 1
         isGrabbed: 0
         direction: {x: 0, y: 0, z: 0}
-        pullDelay: 0
-        currentPullDelay: 0
+        grabDelay: 0
         currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
@@ -6442,8 +6438,7 @@ MonoBehaviour:
         cantBeGrabbed: 0
         isGrabbed: 0
         direction: {x: 0, y: 0, z: 0}
-        pullDelay: 0
-        currentPullDelay: 0
+        grabDelay: 0
         currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
@@ -14033,9 +14028,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 1390792290}
   abilityPrefabs:
-  - {fileID: 7745593707573550172, guid: 625775f3e76e1604f8d2c87051714185, type: 3}
+  - {fileID: 8128849533423555255, guid: 81ca3e3c8e3685c4ebd73ddcb0fb73db, type: 3}
+  - {fileID: 2538035110669741027, guid: 13a17977caf49464a90a86e954b0a79e, type: 3}
   abilityDelays:
   - 0.2
+  - 0.1
   - 1
   applyResistanceStats:
     applyToSelf: 0
@@ -14061,7 +14058,7 @@ MonoBehaviour:
     resistBlind: 0
     rbDuration: 0
   abilityUI:
-    cooldownDelay: 2
+    cooldownDelay: 1
     currCooldownDelay: 0.4
     abilitySprite: {fileID: 49292948}
     cooldownMask: {fileID: 729379469}
@@ -14585,7 +14582,7 @@ Transform:
   - {fileID: 1315974519}
   - {fileID: 2038985490}
   m_Father: {fileID: 1074732862}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &897687320
 Rigidbody:
@@ -14703,8 +14700,7 @@ MonoBehaviour:
         cantBeGrabbed: 1
         isGrabbed: 0
         direction: {x: 0, y: 0, z: 0}
-        pullDelay: 0
-        currentPullDelay: 0
+        grabDelay: 0
         currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
@@ -16840,7 +16836,6 @@ Transform:
   - {fileID: 1390792289}
   - {fileID: 483495842}
   - {fileID: 1995249272}
-  - {fileID: 2390579349507958371}
   - {fileID: 367080428}
   - {fileID: 1114531619}
   - {fileID: 897687318}
@@ -17359,8 +17354,7 @@ MonoBehaviour:
         cantBeGrabbed: 0
         isGrabbed: 0
         direction: {x: 0, y: 0, z: 0}
-        pullDelay: 0
-        currentPullDelay: 0
+        grabDelay: 0
         currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
@@ -17450,7 +17444,7 @@ Transform:
   - {fileID: 1574630169}
   - {fileID: 781495026}
   m_Father: {fileID: 1074732862}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1114531620
 Rigidbody:
@@ -18098,7 +18092,7 @@ Transform:
   - {fileID: 478127563}
   - {fileID: 1160133796}
   m_Father: {fileID: 1074732862}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1223951559
 Rigidbody:
@@ -18216,8 +18210,7 @@ MonoBehaviour:
         cantBeGrabbed: 1
         isGrabbed: 0
         direction: {x: 0, y: 0, z: 0}
-        pullDelay: 0
-        currentPullDelay: 0
+        grabDelay: 0
         currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
@@ -19879,7 +19872,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1390792288}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.7, y: 0, z: -55.6}
+  m_LocalPosition: {x: 27.2, y: 0, z: -57.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 997561209}
@@ -19913,7 +19906,7 @@ MonoBehaviour:
     baseDamage: 10
     attackDelay: 2
     currAttackDelay: 0
-    moveSpeed: 0
+    moveSpeed: 6
     noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
@@ -19987,8 +19980,7 @@ MonoBehaviour:
         cantBeGrabbed: 0
         isGrabbed: 0
         direction: {x: 0, y: 0, z: 0}
-        pullDelay: 0
-        currentPullDelay: 0
+        grabDelay: 0
         currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
@@ -20034,7 +20026,7 @@ MonoBehaviour:
     chargeDelay: 0.5
     currentDelay: 0
   dashStats:
-    dashes: 1
+    dashes: 0
     isDashing: 0
     dashDamage: 50
     dashSpeed: 85
@@ -22878,7 +22870,7 @@ Transform:
   - {fileID: 558896019}
   - {fileID: 2102655988}
   m_Father: {fileID: 1074732862}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1631093154
 Rigidbody:
@@ -22999,8 +22991,7 @@ MonoBehaviour:
         cantBeGrabbed: 1
         isGrabbed: 0
         direction: {x: 0, y: 0, z: 0}
-        pullDelay: 0
-        currentPullDelay: 0
+        grabDelay: 0
         currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
@@ -28030,7 +28021,7 @@ MonoBehaviour:
   unitSprite: {fileID: 856313650}
   target: {fileID: 0}
   stats:
-    currHealth: 1000
+    currHealth: 0
     maxHealth: 1000
     currArmor: 0
     maxArmor: 0
@@ -28116,8 +28107,7 @@ MonoBehaviour:
         cantBeGrabbed: 0
         isGrabbed: 0
         direction: {x: 0, y: 0, z: 0}
-        pullDelay: 0
-        currentPullDelay: 0
+        grabDelay: 0
         currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
@@ -28321,7 +28311,7 @@ Transform:
   - {fileID: 688873987}
   - {fileID: 1007869743}
   m_Father: {fileID: 1074732862}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!54 &2007464378
 Rigidbody:
@@ -28441,8 +28431,7 @@ MonoBehaviour:
         cantBeGrabbed: 1
         isGrabbed: 0
         direction: {x: 0, y: 0, z: 0}
-        pullDelay: 0
-        currentPullDelay: 0
+        grabDelay: 0
         currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
@@ -28860,7 +28849,7 @@ Transform:
   - {fileID: 158509297}
   - {fileID: 1040924143}
   m_Father: {fileID: 1074732862}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!54 &2043514517
 Rigidbody:
@@ -28980,8 +28969,7 @@ MonoBehaviour:
         cantBeGrabbed: 1
         isGrabbed: 0
         direction: {x: 0, y: 0, z: 0}
-        pullDelay: 0
-        currentPullDelay: 0
+        grabDelay: 0
         currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
@@ -30080,7 +30068,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140046817}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0fa5ddd15ea602e4a85a61fd90c5dbdb, type: 3}
   m_Name: 
@@ -30095,7 +30083,7 @@ MonoBehaviour:
     currentDelay: 0
   playersDeck:
     cards:
-    - index: 0
+    - cardId: 0
       name: Isla
       icon: {fileID: 21300000, guid: 3705379fccc4e694d861698406ce8912, type: 3}
       cost: 4
@@ -30106,7 +30094,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - index: 1
+    - cardId: 0
       name: Bao Zu
       icon: {fileID: 21300000, guid: 616f99a5a0da8bc4696cec0e5e538437, type: 3}
       cost: 5
@@ -30117,7 +30105,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - index: 2
+    - cardId: 0
       name: Cornut
       icon: {fileID: 21300000, guid: e351a62f6e3266644b0accb868e6a820, type: 3}
       cost: 5
@@ -30128,7 +30116,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - index: 5
+    - cardId: 0
       name: Steamwyrm
       icon: {fileID: 21300000, guid: a3615353b88c90a448ef598d9e2409e7, type: 3}
       cost: 4
@@ -30139,7 +30127,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - index: 3
+    - cardId: 0
       name: Monsoon Gunners
       icon: {fileID: 21300000, guid: 526f2e41c56666847a887ac31f5fff5b, type: 3}
       cost: 2
@@ -30150,7 +30138,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - index: 4
+    - cardId: 0
       name: Monsoon Insurgents
       icon: {fileID: 21300000, guid: 116f885df4bcb584e99223536431f6c1, type: 3}
       cost: 2
@@ -30161,7 +30149,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - index: 6
+    - cardId: 0
       name: Unit 6
       icon: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
       cost: 1
@@ -30172,7 +30160,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - index: 7
+    - cardId: 0
       name: Mizuchi Kaidarin
       icon: {fileID: 21300000, guid: c40d383de808e504bbe06e137eaa18ca, type: 3}
       cost: 4
@@ -30185,7 +30173,7 @@ MonoBehaviour:
       unitIndex: 0
     hand: []
     nextCard:
-      index: 0
+      cardId: 0
       name: Unit 1
       icon: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
       cost: 2
@@ -30534,123 +30522,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1001 &1681623871894296571
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1074732862}
-    m_Modifications:
-    - target: {fileID: 3925836231184498327, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: abilityUI.abilityCancel
-      value: 
-      objectReference: {fileID: 63724459}
-    - target: {fileID: 3925836231184498327, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: abilityUI.cooldownDelay
-      value: 17
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836231184498327, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: abilityDelays.Array.data[0]
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836231184498327, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: abilityDelays.Array.data[1]
-      value: 0.55
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836231184498327, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: abilityUI.currCooldownDelay
-      value: 17
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836231430602715, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836231430602715, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836231430602715, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836231506596151, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: isPreview
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836232371597720, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836232371597720, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 31.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836232371597720, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836232371597720, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -18.63
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836232371597720, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836232371597720, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836232371597720, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836232371597720, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836232371597720, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836232371597720, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836232371597720, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836232371597721, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: stats.attackDelay
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836232371597721, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: stats.visionRange
-      value: 31
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836232371597721, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: stats.summoningSicknessUI.summonSicknessDelay
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925836232371597723, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_Name
-      value: Isla
-      objectReference: {fileID: 0}
-    - target: {fileID: 6160463879896391647, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6160463879896391647, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6160463879896391647, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 5
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
 --- !u!23 &1711813854615142998
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -30897,16 +30768,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &2390579349507958368 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3925836232371597723, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-  m_PrefabInstance: {fileID: 1681623871894296571}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2390579349507958371 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3925836232371597720, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-  m_PrefabInstance: {fileID: 1681623871894296571}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2683724731482225739
 PrefabInstance:
   m_ObjectHideFlags: 0

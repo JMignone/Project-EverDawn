@@ -177,7 +177,7 @@ public class PlayerStats : MonoBehaviour
     {
         if(GetCurrResource < GameConstants.RESOURCE_MAX + 1) {
             if(!computerStats.IsComputer) resources[GetCurrResource].fillAmount = currResource - GetCurrResource;
-            currResource += Time.deltaTime * GameConstants.RESOURCE_SPEED;
+            currResource += Time.deltaTime * GameConstants.RESOURCE_SPEED * GameManager.Instance.ResourceMultiplier;
         }
         //Could add somthing here to make sure that we dont overflow over 10 by somthing like 0.001, but is it worth the extra computation?
         if(!computerStats.IsComputer) {

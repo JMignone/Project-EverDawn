@@ -17,10 +17,7 @@ public class GrabbedStats
     private Vector3 direction;
 
     [SerializeField] [Min(0)]
-    private float pullDelay;
-
-    [SerializeField] [Min(0)]
-    private float currentPullDelay;
+    private float grabDelay;
 
     [SerializeField] [Min(0)]
     private float currentStunDelay;
@@ -53,16 +50,10 @@ public class GrabbedStats
         set { direction = value; }
     }
 
-    public float PullDelay
+    public float GrabDelay
     {
-        get { return pullDelay; }
-        set { pullDelay = value; }
-    }
-
-    public float CurrentPullDelay
-    {
-        get { return currentPullDelay; }
-        set { currentPullDelay = value; }
+        get { return grabDelay; }
+        set { grabDelay = value; }
     }
 
     public float CurrentStunDelay
@@ -77,11 +68,21 @@ public class GrabbedStats
 
     public void UpdateGrabbedStats() {
         if(isGrabbed) {
-            if(enemyUnit.Agent != null && enemyUnit.Stats.CanAct && Vector3.Distance(unit.Agent.Agent.transform.position, enemyUnit.Agent.Agent.transform.position) > 
-            unit.Agent.HitBox.radius + enemyUnit.Agent.HitBox.radius ) {
-                Vector3 direction = (enemyUnit.Agent.Agent.transform.position - unit.Agent.Agent.transform.position).normalized;
+
+            Vector3 unitAgentPos = Vector3.zero;
+            Vector3 enemyAgentPos = Vector3.zero;
+
+            bool enemyCanAct = false;
+            if(enemyUnit.Agent != null && enemyUnit.Stats.CanAct) {
+                unitAgentPos = new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z);
+                enemyAgentPos = new Vector3(enemyUnit.Agent.transform.position.x, 0, enemyUnit.Agent.transform.position.z);
+                enemyCanAct = true;
+            }
+            
+            if(enemyCanAct && Vector3.Distance(unitAgentPos, enemyAgentPos) > unit.Agent.HitBox.radius + enemyUnit.Agent.HitBox.radius) {
+                Vector3 direction = enemyAgentPos - unitAgentPos;
                 direction.y = 0;
-                unit.Agent.Agent.transform.position += direction * totalDistance/pullDelay * Time.deltaTime;
+                unit.Agent.transform.position += direction.normalized * totalDistance/grabDelay * Time.deltaTime;
             }
             else if(currentStunDelay > 0) {
                 unit.Agent.Agent.enabled = true;
@@ -92,15 +93,21 @@ public class GrabbedStats
         }
     }
 
-    public void Grab(float pullDuration, float stunDuration, IDamageable unit) {
+    public void Grab(float grabSpeed, float grabDuration, float stunDuration, IDamageable enemy) {
         if(!cantBeGrabbed && !outSideResistance && unit.Agent != null && unit.Stats.CanAct) {
             isGrabbed = true;
-            pullDelay = pullDuration;
-            currentPullDelay = pullDuration;
+            grabDelay = grabDuration;
             currentStunDelay = stunDuration;
-            enemyUnit = unit;
+            enemyUnit = enemy;
 
-            totalDistance = Vector3.Distance(unit.Agent.Agent.transform.position, enemyUnit.Agent.Agent.transform.position);
+            Vector3 unitAgentPos = new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z);
+            Vector3 enemyAgentPos = new Vector3(enemyUnit.Agent.transform.position.x, 0, enemyUnit.Agent.transform.position.z);
+
+            totalDistance = Vector3.Distance(unitAgentPos, enemyAgentPos);
+
+            //if the speed option was used, set for correct speed
+            if(grabSpeed != 0) 
+                grabDelay = totalDistance/grabSpeed;
 
             unit.Agent.Agent.enabled = false;
             unit.SetTarget(null);

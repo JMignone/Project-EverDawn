@@ -58,6 +58,8 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     private bool pauseFiring;
     //a flag set by an ability to stop continuing the skillshot regardless if there are more abilities to follow
     private bool exitOveride;
+    //gives abilities the power to enable targets for the future abilities of the skill shot
+    private Actor3D targetOverride;
 
     public Unit Unit
     {
@@ -328,45 +330,50 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
 
     private void Fire()
     {
-        if (!unit.Stats.CanAct || exitOveride)
-        {
+        if(!unit.Stats.CanAct || exitOveride) {
             isFiring = false;
             exitOveride = false;
+            pauseFiring = false;
+            targetOverride = null;
             currentProjectileIndex = 0;
             currentDelay = 0;
-            //if (!abilityControl)
-                unit.Stats.IsCastingAbility = false;
+            unit.Stats.IsCastingAbility = false;
         }
-        else if (currentDelay < abilityDelays[currentProjectileIndex] || pauseFiring) //if we havnt reached the delay yet
+        else if(currentDelay < abilityDelays[currentProjectileIndex] || pauseFiring) //if we havnt reached the delay yet
             currentDelay += Time.deltaTime * unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
-        else if (currentProjectileIndex == abilityPrefabs.Count)
-        { //if we completed the last delay
+        else if(currentProjectileIndex == abilityPrefabs.Count) { //if we completed the last delay
             isFiring = false;
             currentProjectileIndex = 0;
             currentDelay = 0;
-            if (!abilityControl)
+            if(!abilityControl)
                 unit.Stats.IsCastingAbility = false;
         }
-        else
-        { //if we completed a delay
+        else { //if we completed a delay
             float rangeIncrease = 0;
             Vector3 startPos = fireStartPosition;
-            if (fireStartPosition != abilityPreviewCanvas.transform.position)
-            {
+            if(fireStartPosition != abilityPreviewCanvas.transform.position) { //if the unit has moved since starting its ability ei: movement abilities, increase/decrease the range of the abilities accordingly
                 rangeIncrease = Vector3.Distance(abilityPreviewCanvas.transform.position, fireMousePosition) - Vector3.Distance(fireStartPosition, fireMousePosition);
                 startPos = abilityPreviewCanvas.transform.position;
             }
-            if (abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
-                GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPos, fireMousePosition, fireDirection, unit, transform.parent.tag, 1, rangeIncrease, this);
-            else if (abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], startPos, fireMousePosition, fireDirection, unit, transform.parent.tag, 1, rangeIncrease, this);
+
+            if(targetOverride != null) {
+                if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
+                    GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPos, targetOverride, fireDirection, unit, transform.parent.tag, 1, this);
+                else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
+                    GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], startPos, targetOverride, fireDirection, unit, transform.parent.tag, 1, this);
+            }
+            else {
+                if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
+                    GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPos, fireMousePosition, fireDirection, unit, transform.parent.tag, 1, rangeIncrease, this);
+                else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
+                    GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], startPos, fireMousePosition, fireDirection, unit, transform.parent.tag, 1, rangeIncrease, this);
+            }
             currentDelay = 0;
             currentProjectileIndex++;
         }
     }
 
-    private void AdjustProjectilePreview(GameObject preview, Projectile proj, Vector3 position, Vector3 direction)
-    {
+    private void AdjustProjectilePreview(GameObject preview, Projectile proj, Vector3 position, Vector3 direction) {
         float range = proj.Range;
         float radius = proj.Radius;
 
@@ -377,12 +384,11 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         //if its not a grenade, doesnt selfdestruct, and lingers at the end its true        
         bool previewCircleAtBeginning = previewCircleAtEnd && proj.BoomerangStats.IsBoomerang;
 
-        if (previewCircleAtEnd && !previewCircleAtBeginning)
+        if(previewCircleAtEnd && !previewCircleAtBeginning)
             position = abilityPreviewCanvas.transform.position + (direction.normalized * (range - radius) * -1); //locks the circle at the furthest position
-        else if (previewCircleAtBeginning)
+        else if(previewCircleAtBeginning)
             position = abilityPreviewCanvas.transform.position;
-        else if (distance > range - radius)
-        {
+        else if(distance > range - radius) {
             Vector3 distFromRadius = position - abilityPreviewCanvas.transform.position;
             distFromRadius *= (range - radius) / distance;
             position = abilityPreviewCanvas.transform.position + distFromRadius;
@@ -391,18 +397,15 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         preview.GetComponent<RectTransform>().position = position;
     }
 
-    private void AdjustMovementPreview(GameObject preview, Movement move, Vector3 position, Vector3 direction)
-    {
+    private void AdjustMovementPreview(GameObject preview, Movement move, Vector3 position, Vector3 direction) {
         float range = move.Range;
         float radius = move.Radius;
 
         RectTransform previewTransform = preview.GetComponent<RectTransform>();
         float distance = Vector3.Distance(position, abilityPreviewCanvas.transform.position);
 
-        if (preview.GetComponent<BoxCollider>())
-        { //if the projectile is not a grenade
-            if (distance > range - radius)
-            {
+        if (preview.GetComponent<BoxCollider>()) { //if the projectile is not a grenade
+            if(distance > range - radius) {
                 Vector3 distFromRadius = position - abilityPreviewCanvas.transform.position;
                 distFromRadius *= (range - radius) / distance;
                 position = abilityPreviewCanvas.transform.position + distFromRadius;
@@ -410,12 +413,11 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             }
 
             UnityEngine.AI.NavMeshHit hit;
-            if (unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING) //if the unit is flying, disregard all obstacles
+            if(unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING) //if the unit is flying, disregard all obstacles
                 position = GameFunctions.adjustForBoundary(position);
-            else if (move.PassObstacles)
-            { //if the movment is able to pass through obstacles
+            else if(move.PassObstacles) { //if the movment is able to pass through obstacles
                 position = GameFunctions.adjustForBoundary(position);
-                if (UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, 9))
+                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, 9))
                     position = hit.position;
 
                 Vector3 newDirection = abilityPreviewCanvas.transform.position - position;
@@ -423,8 +425,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 Quaternion rotation = Quaternion.LookRotation(newDirection);
                 abilityPreviewCanvas.transform.rotation = Quaternion.Lerp(rotation, abilityPreviewCanvas.transform.rotation, 0f);
             }
-            else
-            {
+            else {
                 UnityEngine.AI.NavMesh.Raycast(unit.Agent.Agent.transform.position, position, out hit, 1);
                 //position = GameFunctions.adjustForTowers(hit.position, radius);
                 position = hit.position;
@@ -436,19 +437,17 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
 
             preview.GetComponent<BoxCollider>().size = new Vector3(move.Radius * 2, distance, 1);
         }
-        else
-        { //else if the projectile is a grenade
+        else { //else if the projectile is a grenade
             bool previewCircleAtEnd = !move.GrenadeStats.IsGrenade && !move.SelfDestructStats.SelfDestructs &&
                                   (move.LingeringStats.Lingering && move.LingeringStats.LingerAtEnd);
             //if its not a grenade, doesnt selfdestruct, and lingers at the end its true        
             bool previewCircleAtBeginning = previewCircleAtEnd && move.BoomerangStats.IsBoomerang;
 
-            if (previewCircleAtEnd && !previewCircleAtBeginning)
+            if(previewCircleAtEnd && !previewCircleAtBeginning)
                 position = abilityPreviewCanvas.transform.position + (direction.normalized * (range - radius) * -1); //locks the circle at the furthest position
-            else if (previewCircleAtBeginning)
+            else if(previewCircleAtBeginning)
                 position = abilityPreviewCanvas.transform.position;
-            else if (distance > range - radius)
-            {
+            else if(distance > range - radius) {
                 Vector3 distFromRadius = position - abilityPreviewCanvas.transform.position;
                 distFromRadius *= (range - radius) / distance;
                 position = abilityPreviewCanvas.transform.position + distFromRadius;
@@ -456,14 +455,12 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             }
 
             UnityEngine.AI.NavMeshHit hit;
-            if (move.PassObstacles)
-            { //if the movment is able to pass through obstacles
+            if(move.PassObstacles) { //if the movment is able to pass through obstacles
                 position = GameFunctions.adjustForBoundary(position);
-                if (UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, 9))
+                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, 9))
                     position = hit.position;
             }
-            else
-            {
+            else {
                 UnityEngine.AI.NavMesh.Raycast(unit.Agent.Agent.transform.position, position, out hit, 1);
                 //position = GameFunctions.adjustForTowers(hit.position, radius);
                 position = hit.position;
@@ -474,14 +471,12 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         fireMousePosition = position;
     }
 
-    private void AdjustCALPreview(GameObject preview, CreateAtLocation cal, Vector3 position, Vector3 direction)
-    {
+    private void AdjustCALPreview(GameObject preview, CreateAtLocation cal, Vector3 position, Vector3 direction) {
         float range = cal.Range;
         float radius = cal.Radius;
         float distance = Vector3.Distance(position, abilityPreviewCanvas.transform.position);
 
-        if (distance > range - radius)
-        {
+        if(distance > range - radius) {
             Vector3 distFromRadius = position - abilityPreviewCanvas.transform.position;
             distFromRadius *= (range - radius) / distance;
             position = abilityPreviewCanvas.transform.position + distFromRadius;
@@ -489,22 +484,20 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
 
         position = GameFunctions.adjustForBoundary(position);
 
-        if (cal.SummonStats.IsSummon)
-        { //if its a summon, we dont want the preview to appear in places the summon cant spawn
+        if(cal.SummonStats.IsSummon) { //if its a summon, we dont want the preview to appear in places the summon cant spawn
             position.y = 0;
 
             int areaMask = cal.SummonStats.AreaMask();
 
             UnityEngine.AI.NavMeshHit hit;
-            if (UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, areaMask))
+            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, areaMask))
                 position = hit.position;
-            if (preview.transform.childCount > 1)
+            if(preview.transform.childCount > 1)
                 preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(position); //this moves the summon part of the preview
             else
                 preview.GetComponent<RectTransform>().position = position; //this moves the other parts, perhaps an explosion around the summon
         }
-        else
-        {
+        else {
             RectTransform previewRect = preview.GetComponent<RectTransform>();
 
             UnityEngine.AI.NavMeshHit hit;
@@ -910,6 +903,15 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
 
         goBoomRange.SetActive(true);
         abilityPreviews.Add(goBoomRange);
+    }
+
+    public void SetNewLocation(Vector3 newLocation, Vector3 newDirection) {
+        fireMousePosition = newLocation;
+        fireDirection = newDirection;
+    }
+
+    public void SetNewTarget(Actor3D newTarget) {
+        targetOverride = newTarget;
     }
 
 }

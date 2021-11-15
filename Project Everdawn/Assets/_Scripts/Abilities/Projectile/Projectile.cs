@@ -55,9 +55,16 @@ public class Projectile : MonoBehaviour, IAbility
     [SerializeField]
     private bool stopOnMiss;
 
+    [Tooltip("If checked, a target will be sent to the skillshot script for the future abilities")]
+    [SerializeField]
+    private bool overridesTarget;
+
     [Tooltip("If checked, the preview will not display")]
     [SerializeField]
     private bool hidePreview;
+
+    [SerializeField]
+    private LocationStats locationStats;
 
     [SerializeField]
     private AOEStats aoeStats;
@@ -330,6 +337,7 @@ public class Projectile : MonoBehaviour, IAbility
         slowStats.StartSlowStats();
         pullStats.StartPullStats(gameObject);
         strengthStats.StartStrengthStats();
+        locationStats.StartStats(unit, gameObject, caster);
 
         
         if(unit != null && !unit.Equals(null)) {
@@ -361,6 +369,8 @@ public class Projectile : MonoBehaviour, IAbility
     private void OnDestroy()
     {
         StopStats();
+        if(unit != null && !unit.Equals(null) && locationStats.OverridesLocation && locationStats.OverridesAtEnd)
+            locationStats.LocationOveride();
     }
 
     private void Update() {
@@ -378,6 +388,7 @@ public class Projectile : MonoBehaviour, IAbility
                 transform.rotation = targetRotation;
             }
         }
+        locationStats.UpdateStats();
         if(lingeringStats.CurrentlyLingering) //if currently lingering
             lingeringStats.UpdateLingeringStats(gameObject);
         float speedReduction = 1; //a multiply used by boomerang projectiles to slow down near the end of flight
@@ -407,17 +418,15 @@ public class Projectile : MonoBehaviour, IAbility
             }
             if(grenadeStats.IsGrenade)
                 grenadeStats.UpdateGrenadeStats(gameObject, targetLocation, speed);
-            else {
-                if(boomerangStats.IsBoomerang && boomerangStats.GoingBack) {
-                    Vector3 direction = transform.position - lastKnownLocation;
-                    Quaternion targetRotation = Quaternion.LookRotation(direction);
-                    transform.rotation = targetRotation;
-                    transform.position -= transform.forward * speed * speedReduction * Time.deltaTime;
-                    boomerangStats.UpdateBoomerangStats();
-                }
-                else
-                    transform.position += transform.forward * speed * speedReduction * Time.deltaTime;
+            else if(boomerangStats.IsBoomerang && boomerangStats.GoingBack) {
+                Vector3 direction = transform.position - lastKnownLocation;
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                transform.rotation = targetRotation;
+                transform.position -= transform.forward * speed * speedReduction * Time.deltaTime;
+                boomerangStats.UpdateBoomerangStats();
             }
+            else
+                transform.position += transform.forward * speed * speedReduction * Time.deltaTime;
         }
     }
 
@@ -426,6 +435,9 @@ public class Projectile : MonoBehaviour, IAbility
         
             if(GameFunctions.WillHit(heightAttackable, typeAttackable, damageable)) {
                 hit = true;
+
+                if(overridesTarget && caster != null)
+                    caster.SetNewTarget((damageable as IDamageable).Agent);
 
                 if(aoeStats.AreaOfEffect)
                     aoeStats.Explode(gameObject);
@@ -465,7 +477,7 @@ public class Projectile : MonoBehaviour, IAbility
         if(knockbackStats.CanKnockback)
             (damageable as IDamageable).Stats.EffectStats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position);
         if(grabStats.CanGrab)
-            (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.PullDuration, grabStats.StunDuration, unit);
+            (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.Speed, grabStats.PullDuration, grabStats.StunDuration, unit);
         if(strengthStats.CanStrength)
             (damageable as IDamageable).Stats.EffectStats.StrengthenedStats.Strengthen(strengthStats.StrengthDuration, StrengthStats.StrengthIntensity);
         if(blindStats.CanBlind)

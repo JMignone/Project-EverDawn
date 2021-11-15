@@ -6,7 +6,7 @@ using UnityEngine;
 public class CardStats
 {
     [SerializeField]
-    private int index;
+    private int cardId;
     [SerializeField]
     private string name;
     [SerializeField]
@@ -27,10 +27,10 @@ public class CardStats
     //[SerializeField] uncomment for debug purposes
     private int layoutIndex;
 
-    public int Index
+    public int CardId
     {
-        get { return index; }
-        set { index = value; }
+        get { return cardId; }
+        set { cardId = value; }
     }
 
     public string Name

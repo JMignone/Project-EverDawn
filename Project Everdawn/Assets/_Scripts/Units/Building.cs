@@ -260,13 +260,13 @@ public class Building : MonoBehaviour, IDamageable
                 SetTarget(go);
             else {
                 List<GameObject> towers = GameManager.Instance.TowerObjects;
-                towers = GameManager.GetAllEnemies(transform.GetChild(0).position, towers, gameObject.tag); //sending in only towers
+                towers = GameManager.GetAllEnemies(towers, gameObject.tag); //sending in only towers
                 SetTarget(GameFunctions.GetNearestTarget(towers, gameObject.tag, stats));
             }
         }
         else {
             List<GameObject> towers = GameManager.Instance.TowerObjects;
-            towers = GameManager.GetAllEnemies(transform.GetChild(0).position, towers, gameObject.tag); //sending in only towers
+            towers = GameManager.GetAllEnemies(towers, gameObject.tag); //sending in only towers
             SetTarget(GameFunctions.GetNearestTarget(towers, gameObject.tag, stats));
         }
     }

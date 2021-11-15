@@ -11,6 +11,10 @@ public class GrabStats
     [SerializeField] [Min(0)]
     private float pullDuration;
 
+    [Tooltip("If not set to 0, speed will override the duration")]
+    [SerializeField] [Min(0)]
+    private float speed;
+
     [SerializeField] [Min(0)]
     private float stunDuration;
 
@@ -22,6 +26,11 @@ public class GrabStats
     public float PullDuration
     {
         get { return pullDuration; }
+    }
+
+    public float Speed
+    {
+        get { return speed; }
     }
 
     public float StunDuration

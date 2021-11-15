@@ -71,6 +71,13 @@ public static class GameConstants
         SIDE
     }
 
+    //The new location an ability will fire to via LocationStats
+    public enum NEW_ABILITY_LOCATION {
+        ON_ABILITY,
+        HALFWAY,
+        ON_UNIT
+    }
+
     //What a unit should do in the event its target dies while mid firing a volley of projectiles
     public enum CONTINUE_FIRING_TYPE {
         NONE,

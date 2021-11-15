@@ -344,7 +344,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public void QueCard(Vector3 position) {
         if(playerInfo.GetCurrResource >= cardInfo.Cost) //do I need this if the call to this function requires this anyway? Just a santiy check maybe?
         {
-            playerInfo.PlayersDeck.RemoveHand(cardInfo.Index);
+            playerInfo.PlayersDeck.RemoveHand(cardInfo.CardId);
             playerInfo.RemoveResource(cardInfo.Cost);
 
             gameObject.transform.SetParent(playerInfo.QuedSpells);

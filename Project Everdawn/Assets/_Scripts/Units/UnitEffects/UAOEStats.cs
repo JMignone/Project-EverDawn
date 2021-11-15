@@ -47,9 +47,9 @@ public class UAOEStats
         //Instantiate(explosionEffect, go.transform.position, go.transform.rotation);
         Collider[] colliders;
         if(unitCentered)
-            colliders = Physics.OverlapSphere(go.transform.GetChild(0).position, explosionRadius);
+            colliders = Physics.OverlapSphere(new Vector3(go.transform.GetChild(0).position.x, 0, go.transform.GetChild(0).position.z), explosionRadius);
         else
-            colliders = Physics.OverlapSphere(target.transform.GetChild(0).position, explosionRadius);
+            colliders = Physics.OverlapSphere(new Vector3(target.transform.GetChild(0).position.x, 0, target.transform.GetChild(0).position.z), explosionRadius);
 
         foreach(Collider collider in colliders) {
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {

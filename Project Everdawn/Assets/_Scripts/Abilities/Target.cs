@@ -333,35 +333,32 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
 
     private void Fire()
     {
-        if (!unit.Stats.CanAct || target == null || exitOveride)
-        {
-            if (currentProjectileIndex == 0) //if we started firing a target projectile, but before one goes off the target dies, reset the cooldown
+        if (!unit.Stats.CanAct || target == null || exitOveride) {
+            if(currentProjectileIndex == 0) //if we started firing a target projectile, but before one goes off the target dies, reset the cooldown
                 abilityUI.CurrCooldownDelay = abilityUI.CooldownDelay;
 
             isFiring = false;
             exitOveride = false;
+            pauseFiring = false;
             currentProjectileIndex = 0;
             currentDelay = 0;
-            //if (!abilityControl)
-                unit.Stats.IsCastingAbility = false;
+            unit.Stats.IsCastingAbility = false;
         }
-        else if (currentDelay < abilityDelays[currentProjectileIndex] || pauseFiring) //if we havnt reached the delay yet
+        else if(currentDelay < abilityDelays[currentProjectileIndex] || pauseFiring) //if we havnt reached the delay yet
             currentDelay += Time.deltaTime * unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
-        else if (currentProjectileIndex == abilityPrefabs.Count)
-        { //if we completed the last delay
+        else if(currentProjectileIndex == abilityPrefabs.Count) { //if we completed the last delay
             isFiring = false;
             currentProjectileIndex = 0;
             currentDelay = 0;
-            if (!abilityControl)
+            if(!abilityControl)
                 unit.Stats.IsCastingAbility = false;
             target = null;
         }
-        else
-        { //if we completed a delay
+        else { //if we completed a delay
             fireStartPosition = abilityPreviewCanvas.transform.position;
-            if (abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
+            if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
                 GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], fireStartPosition, target, fireDirection, unit, transform.parent.tag, 1, this);
-            else if (abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
+            else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
                 GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], fireStartPosition, target, fireDirection, unit, transform.parent.tag, 1, this);
             currentDelay = 0;
             currentProjectileIndex++;
@@ -693,5 +690,14 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
             goAWarp.SetActive(true);
             abilityPreviews.Add(goAWarp);
         }
+    }
+    
+    //LocationStats should only be used on skillshots
+    public void SetNewLocation(Vector3 newLocation, Vector3 newDirection) {
+        //pass
+    }
+    //this should only be used by skillshot
+    public void SetNewTarget(Actor3D newTarget) {
+        //pass
     }
 }
