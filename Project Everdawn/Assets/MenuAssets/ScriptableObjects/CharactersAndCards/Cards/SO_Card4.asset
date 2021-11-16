@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b3502398de43fb45a495109caba68e7, type: 3}
   m_Name: SO_Card4
   m_EditorClassIdentifier: 
+  CardID: 4
   character: {fileID: 0}
   cardName: Human cobra
   menuBackgroundImage: {fileID: 21300000, guid: 98aff2b77b15853469d0081fa839055d, type: 3}
@@ -20,5 +21,5 @@ MonoBehaviour:
   affiliation: []
   resourceCost: 4
   unit: {fileID: 0}
-  obtained: 0
+  obtained: 1
   selectedSkin: 0

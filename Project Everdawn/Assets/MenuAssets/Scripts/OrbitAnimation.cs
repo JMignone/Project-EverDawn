@@ -4,36 +4,31 @@ using UnityEngine;
 
 public class OrbitAnimation : MonoBehaviour
 {
-    [SerializeField] private GameObject objectToRotateAround;
-    [SerializeField] private Vector3 axisOfRotation;
-    [SerializeField] [Range(1,10)] private float timeToOrbit;
-    private float orbitRadius;
-    private float orbitLength;
-    private float orbitVelocity;
-    private float orbitAngle;
+    [SerializeField] private GameObject objectToOrbit;
+    [SerializeField] [Tooltip("Axis to rotate around")] private Vector3 axisOfRotation;
+    [SerializeField] [Tooltip("Time to orbit in seconds")] [Range(1,10)] private float timeToOrbit;
+    private Transform initialTransform;
 
-    // Awake is called before start
-    void Awake()
+    private void Awake()
     {
-        #region Velocity Calculation
-            Vector3 rotationCenter = objectToRotateAround.transform.position;
-            orbitRadius = Vector3.Distance(transform.position, rotationCenter);
-            orbitLength = orbitRadius * 2 * Mathf.PI;
-            orbitVelocity = orbitLength / timeToOrbit;
-        #endregion
+        initialTransform = transform;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
+        transform.transform.SetPositionAndRotation(initialTransform.position, initialTransform.rotation);
         transform.LeanRotateAround(axisOfRotation, 360f, timeToOrbit).setLoopClamp();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        orbitAngle = orbitVelocity * Time.deltaTime;
-        Vector3 rotationCenter = objectToRotateAround.transform.position;
-        transform.RotateAround(rotationCenter, axisOfRotation, orbitAngle);
+        // TODO Set logic to pause animation
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+        Vector3 rotationCenter = objectToOrbit.transform.position;
+        transform.RotateAround(rotationCenter, axisOfRotation, (360f * Time.deltaTime) / timeToOrbit);
     }
 }

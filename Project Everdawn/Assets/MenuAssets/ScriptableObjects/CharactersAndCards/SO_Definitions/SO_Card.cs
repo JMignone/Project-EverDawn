@@ -8,6 +8,10 @@ public class SO_Card : ScriptableObject
 {
     #region Card Variables
     [Header("General Attributes")]
+        public int CardID;
+
+        [Space]
+
         public SO_Character character;
         
         [Space]
@@ -27,7 +31,7 @@ public class SO_Card : ScriptableObject
     [Header("Gameplay Attributes")]
         [Range(1,10)] public int resourceCost;
         //public Spell skill;
-        public Unit unit;
+        public CardStats cardStats;
 
     [Space]
 
