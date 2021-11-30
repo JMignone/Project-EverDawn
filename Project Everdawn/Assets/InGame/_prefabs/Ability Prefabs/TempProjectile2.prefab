@@ -289,7 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBox: {fileID: 2538035109296080467}
   unitSprite: {fileID: 2538035109743312923}
-  radius: 2
+  radius: 0.25
   speed: 40
   range: 40
   baseDamage: 0
@@ -301,7 +301,10 @@ MonoBehaviour:
   abilityControl: 0
   pauseAbility: 1
   stopOnMiss: 0
+  skipLastOnMiss: 0
+  skipNumber: 0
   overridesTarget: 0
+  onlyDamageIfTargeted: 0
   hidePreview: 1
   locationStats:
     overridesLocation: 0
@@ -331,14 +334,15 @@ MonoBehaviour:
     poisonTick: 0
   knockbackStats:
     canKnockback: 0
-    knockbackDuration: 0
-    initialSpeed: 0
+    knockbackDuration: 0.33
+    initialSpeed: 30
   pullStats:
     canPull: 0
     radius: 0
     speed: 0
   grabStats:
     canGrab: 0
+    obstaclesBlockGrab: 0
     pullDuration: 0
     speed: 0
     stunDuration: 0
@@ -349,6 +353,9 @@ MonoBehaviour:
   blindStats:
     canBlind: 0
     blindDuration: 0
+  stunStats:
+    canStun: 0
+    stunDuration: 0
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0
@@ -364,11 +371,11 @@ MonoBehaviour:
     lingeringTick: 0
     currentLingeringTime: 0
   selfDestructStats:
-    selfDestructs: 1
+    selfDestructs: 0
     explosionEffect: {fileID: 0}
-    explosionDamage: 100
+    explosionDamage: 0
     towerDamage: 0
-    explosionRadius: 5
+    explosionRadius: 0
   grenadeStats:
     isGrenade: 0
     isAirStrike: 0
@@ -385,6 +392,7 @@ MonoBehaviour:
     resistGrab: 0
     resistPull: 0
     resistBlind: 0
+    resistStun: 0
   applyResistanceStats:
     applyToSelf: 0
     applyToOthers: 0
@@ -408,7 +416,10 @@ MonoBehaviour:
     rpullDuration: 0
     resistBlind: 0
     rbDuration: 0
+    resistStun: 0
+    rstunDuration: 0
   passObstacles: 1
+  landInsideTarget: 0
   highlightEnemies: 0
   retreatStats:
     retreats: 0

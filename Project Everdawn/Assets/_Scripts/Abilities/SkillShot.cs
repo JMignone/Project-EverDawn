@@ -57,7 +57,9 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     //a flag set if an ability controls when the skillshot will continue. Usage: a unit fires a grappler and will not be pulled forward until the grappler has hit somthing
     private bool pauseFiring;
     //a flag set by an ability to stop continuing the skillshot regardless if there are more abilities to follow
-    private bool exitOveride;
+    private bool exitOverride;
+    //an amount of abilities to skip starting from the last ability
+    private int skipOverride;
     //gives abilities the power to enable targets for the future abilities of the skill shot
     private Actor3D targetOverride;
 
@@ -107,14 +109,19 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         set { pauseFiring = value; }
     }
 
-    public bool ExitOveride
+    public bool ExitOverride
     {
-        get { return exitOveride; }
-        set { exitOveride = value; }
+        get { return exitOverride; }
+        set { exitOverride = value; }
     }
 
-    void Start()
+    public int SkipOverride
     {
+        get { return skipOverride; }
+        set { skipOverride = value; }
+    }
+
+    void Start() {
         abilityPreviews = new List<GameObject>();
         createAbilityPreviews();
         currentDelay = 0;
@@ -128,8 +135,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         //Below sets up what will be needed for clicking the ability, such that we only need to calculate maxRange and areaMask once.
         maxRange = 0;
         areaMask = 1;
-        foreach (GameObject ability in abilityPrefabs)
-        { //this finds the largest range of all the abilitys shot by this skillshot
+        foreach (GameObject ability in abilityPrefabs) { //this finds the largest range of all the abilitys shot by this skillshot
             Component component = ability.GetComponent(typeof(IAbility));
             if((component as IAbility).AbilityControl)
                 abilityControl = true;
@@ -147,10 +153,8 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         abilityUI.LateUpdateStats();
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        if (!isDragging && unit.Stats.IsReady && abilityUI.CanDrag)
-        {
+    public void OnBeginDrag(PointerEventData eventData) {
+        if(!isDragging && unit.Stats.IsReady && abilityUI.CanDrag) {
             isDragging = true;
 
             unit.Stats.IsHoveringAbility = true;
@@ -158,17 +162,14 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             abilityUI.AbilitySprite.enabled = false;
             abilityUI.AbilityCancel.enabled = true;
 
-            foreach (GameObject preview in abilityPreviews)
-            {
-                if (preview.CompareTag("Player"))
-                { //this is a summon preview, as its more complicated
+            foreach(GameObject preview in abilityPreviews) {
+                if(preview.CompareTag("Player")) { //this is a summon preview, as its more complicated
                     preview.transform.GetChild(1).GetChild(0).GetComponent<Image>().enabled = true;
                     //preview.transform.GetChild(1).GetChild(0).GetComponent<Collider>().enabled = true;
                 }
-                else
-                {
-                    preview.GetComponent<Image>().enabled = true;
-                    if (preview.GetComponent<Collider>())
+                else {
+                    preview.transform.GetChild(0).GetComponent<Image>().enabled = true;
+                    if(preview.GetComponent<Collider>())
                         preview.GetComponent<Collider>().enabled = true;
                 }
             }
@@ -183,43 +184,36 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         At the moment, a boomerang that selfdestructs and lingers at the end does not have the preview that id like (the linger circle around the unit wont be there,
         as the selfdestruct location takes precidence). But this kind of projectile is probably unlikely to happen anyway
     */
-    private void Update()
-    {
+    private void Update() {
         abilityUI.UpdateStats();
-        if (isDragging)
-        {
+        if (isDragging) {
             Vector3 position = GameFunctions.getPosition(false);
-            Vector3 direction = abilityPreviewCanvas.transform.position - position;
+            Vector3 direction = (abilityPreviewCanvas.transform.position - position);
             direction.y = 0;
-            position.y = 1;
+            position.y = 0;
 
             Quaternion rotation = Quaternion.LookRotation(direction);
             abilityPreviewCanvas.transform.rotation = Quaternion.Lerp(rotation, abilityPreviewCanvas.transform.rotation, 0f);
 
-            foreach (GameObject preview in abilityPreviews)
-            {
-                if (preview.GetComponent<SphereCollider>() || preview.GetComponent<BoxCollider>())
-                {
+            foreach(GameObject preview in abilityPreviews) {
+                if(preview.GetComponent<SphereCollider>() || preview.GetComponent<BoxCollider>()) {
                     GameObject go = abilityPrefabs.Find(go => go.name == preview.name);
-                    if (go.GetComponent<Movement>())
+                    if(go.GetComponent<Movement>())
                         AdjustMovementPreview(preview, go.GetComponent<Movement>(), position, direction);
-                    else if (go.GetComponent<Projectile>() && !preview.GetComponent<BoxCollider>()) //if the preview corresponds to a projectile and doesnt have a box collider. Reason being, all projectiles with a box collider doesnt move away from the unit and only rotates
+                    else if(go.GetComponent<Projectile>() && !preview.GetComponent<BoxCollider>() && !preview.GetComponent<MeshCollider>()) //if the preview corresponds to a projectile and doesnt have a box collider. Reason being, all projectiles with a box collider doesnt move away from the unit and only rotates. Projectiles will have other collider if it linngers of selfdestructs at the end
                         AdjustProjectilePreview(preview, go.GetComponent<Projectile>(), position, direction);
-                    else if (go.GetComponent<CreateAtLocation>())
-                    {
+                    else if(go.GetComponent<CreateAtLocation>())
                         AdjustCALPreview(preview, go.GetComponent<CreateAtLocation>(), position, direction);
-                    }
                 }
             }
         }
-        else if (isFiring)
+        else if(isFiring)
             Fire();
         else
             fireMousePosition = new Vector3(-1, -1, -1); //this is to reset the mouse position, needed because of special summon location conditions
     }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
+    public void OnEndDrag(PointerEventData eventData) {
         if(isDragging) {
             isDragging = false;
             unit.Stats.IsHoveringAbility = false;
@@ -227,17 +221,14 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             abilityUI.AbilitySprite.enabled = true;
             abilityUI.AbilityCancel.enabled = false;
 
-            foreach (GameObject preview in abilityPreviews)
-            {
-                if (preview.CompareTag("Player"))
-                { //this is a summon preview, as its more complicated
+            foreach(GameObject preview in abilityPreviews) {
+                if(preview.CompareTag("Player")) { //this is a summon preview, as its more complicated
                     fireMousePosition = preview.transform.GetChild(0).position;
                     preview.transform.GetChild(1).GetChild(0).GetComponent<Image>().enabled = false;
                     //preview.transform.GetChild(1).GetChild(0).GetComponent<Collider>().enabled = false;
-                }
-                else
-                {
-                    preview.GetComponent<Image>().enabled = false;
+                } 
+                else {
+                    preview.transform.GetChild(0).GetComponent<Image>().enabled = false;
                     if (preview.GetComponent<Collider>())
                         preview.GetComponent<Collider>().enabled = false;
                 }
@@ -245,11 +236,9 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
 
             GameManager.removeAbililtyIndicators();
 
-            if (abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y && unit.Stats.CanAct)
-            {
+            if(abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y && unit.Stats.CanAct) {
                 fireStartPosition = abilityPreviewCanvas.transform.position;
-                if (fireMousePosition == new Vector3(-1, -1, -1))
-                { //if the ability was not a summon or a movement, get the position
+                if(fireMousePosition == new Vector3(-1, -1, -1)) { //if the ability was not a summon or a movement, get the position
                     fireMousePosition = GameFunctions.getPosition(false);
                     fireMousePosition.y = 0;
                 }
@@ -265,28 +254,21 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         }
     }
 
-    public void OnPointerClick(PointerEventData pointerEventData)
-    {
-        if (!isDragging && abilityUI.CanDrag && unit.Stats.IsReady)
-        { //if the abililty can be dragged
+    public void OnPointerClick(PointerEventData pointerEventData) {
+        if(!isDragging && abilityUI.CanDrag && unit.Stats.IsReady) { //if the abililty can be dragged
             Collider[] colliders = Physics.OverlapSphere(unit.Agent.Agent.transform.position, maxRange);
             Component testComponent = abilityPrefabs[0].GetComponent(typeof(IAbility));
 
             Vector3 closestTargetPosition = new Vector3(-1, -1, -1);
-            if (colliders.Length > 0)
-            {
+            if(colliders.Length > 0) {
                 float closestDistance = 9999;
                 float distance;
-                foreach (Collider collider in colliders)
-                {
-                    if (!collider.CompareTag(abilityPrefabs[0].tag) && collider.name == "Agent")
-                    {
+                foreach(Collider collider in colliders) {
+                    if(!collider.CompareTag(abilityPrefabs[0].tag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-                        if (GameFunctions.WillHit((testComponent as IAbility).HeightAttackable, (testComponent as IAbility).TypeAttackable, damageable))
-                        {
+                        if(GameFunctions.WillHit((testComponent as IAbility).HeightAttackable, (testComponent as IAbility).TypeAttackable, damageable)) {
                             distance = Vector3.Distance(unit.Agent.Agent.transform.position, collider.transform.position);
-                            if (distance < closestDistance)
-                            {
+                            if(distance < closestDistance) {
                                 closestDistance = distance;
                                 closestTargetPosition = collider.transform.position;
                             }
@@ -295,21 +277,18 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 }
             }
 
-            if (closestTargetPosition != new Vector3(-1, -1, -1) && unit.Stats.CanAct)
-            { //if there is a valid target within the max range
+            if(closestTargetPosition != new Vector3(-1, -1, -1) && unit.Stats.CanAct) { //if there is a valid target within the max range
                 fireStartPosition = abilityPreviewCanvas.transform.position;
                 fireStartPosition.y = 0;
 
-                if (areaMask != 1)
-                {
+                if(areaMask != 1) {
                     UnityEngine.AI.NavMeshHit hit;
-                    if (UnityEngine.AI.NavMesh.SamplePosition(closestTargetPosition, out hit, 12f, areaMask))
+                    if(UnityEngine.AI.NavMesh.SamplePosition(closestTargetPosition, out hit, 12f, areaMask))
                         fireMousePosition = hit.position;
                     else
                         fireMousePosition = closestTargetPosition;
                 }
-                else if (shootRaycast)
-                {
+                else if(shootRaycast) {
                     UnityEngine.AI.NavMeshHit hit;
                     UnityEngine.AI.NavMesh.Raycast(unit.Agent.Agent.transform.position, closestTargetPosition, out hit, 1);
                     fireMousePosition = hit.position;
@@ -328,21 +307,25 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         }
     }
 
-    private void Fire()
-    {
-        if(!unit.Stats.CanAct || exitOveride) {
+    private void Fire() {
+        if(!unit.Stats.CanAct || exitOverride) {
             isFiring = false;
-            exitOveride = false;
+            exitOverride = false;
             pauseFiring = false;
             targetOverride = null;
+            skipOverride = 0;
             currentProjectileIndex = 0;
             currentDelay = 0;
             unit.Stats.IsCastingAbility = false;
         }
         else if(currentDelay < abilityDelays[currentProjectileIndex] || pauseFiring) //if we havnt reached the delay yet
             currentDelay += Time.deltaTime * unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
-        else if(currentProjectileIndex == abilityPrefabs.Count) { //if we completed the last delay
+        else if(currentProjectileIndex == abilityPrefabs.Count - skipOverride) { //if we completed the last delay
             isFiring = false;
+            exitOverride = false;
+            pauseFiring = false;
+            targetOverride = null;
+            skipOverride = 0;
             currentProjectileIndex = 0;
             currentDelay = 0;
             if(!abilityControl)
@@ -392,16 +375,16 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             Vector3 distFromRadius = position - abilityPreviewCanvas.transform.position;
             distFromRadius *= (range - radius) / distance;
             position = abilityPreviewCanvas.transform.position + distFromRadius;
-            position.y = 1;
         }
-        preview.GetComponent<RectTransform>().position = position;
+        position.y = .1f;
+        preview.transform.position = position;
     }
 
     private void AdjustMovementPreview(GameObject preview, Movement move, Vector3 position, Vector3 direction) {
         float range = move.Range;
         float radius = move.Radius;
 
-        RectTransform previewTransform = preview.GetComponent<RectTransform>();
+        RectTransform previewImageTransform = preview.transform.GetChild(0).GetComponent<RectTransform>();
         float distance = Vector3.Distance(position, abilityPreviewCanvas.transform.position);
 
         if (preview.GetComponent<BoxCollider>()) { //if the projectile is not a grenade
@@ -409,7 +392,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 Vector3 distFromRadius = position - abilityPreviewCanvas.transform.position;
                 distFromRadius *= (range - radius) / distance;
                 position = abilityPreviewCanvas.transform.position + distFromRadius;
-                position.y = 1;
+                position.y = 0;
             }
 
             UnityEngine.AI.NavMeshHit hit;
@@ -432,10 +415,11 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             }
             distance = Vector3.Distance(position, abilityPreviewCanvas.transform.position);
 
-            previewTransform.sizeDelta = new Vector2(previewTransform.sizeDelta.x, distance);
-            previewTransform.localPosition = new Vector3(0, 0, -distance / 2);
+            previewImageTransform.sizeDelta = new Vector2(previewImageTransform.sizeDelta.x, distance);
+            previewImageTransform.localPosition = new Vector3(0, 0, -distance / 2);
 
-            preview.GetComponent<BoxCollider>().size = new Vector3(move.Radius * 2, distance, 1);
+            preview.GetComponent<BoxCollider>().size = new Vector3(move.Radius * 2, 1, distance);
+            preview.GetComponent<BoxCollider>().center = new Vector3(0, 0, -distance / 2);
         }
         else { //else if the projectile is a grenade
             bool previewCircleAtEnd = !move.GrenadeStats.IsGrenade && !move.SelfDestructStats.SelfDestructs &&
@@ -451,8 +435,8 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 Vector3 distFromRadius = position - abilityPreviewCanvas.transform.position;
                 distFromRadius *= (range - radius) / distance;
                 position = abilityPreviewCanvas.transform.position + distFromRadius;
-                position.y = 1;
             }
+            position.y = .1f;
 
             UnityEngine.AI.NavMeshHit hit;
             if(move.PassObstacles) { //if the movment is able to pass through obstacles
@@ -466,7 +450,8 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 position = hit.position;
             }
 
-            previewTransform.position = position;
+            position.y = .1f;
+            previewImageTransform.position = position;
         }
         fireMousePosition = position;
     }
@@ -481,7 +466,6 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             distFromRadius *= (range - radius) / distance;
             position = abilityPreviewCanvas.transform.position + distFromRadius;
         }
-
         position = GameFunctions.adjustForBoundary(position);
 
         if(cal.SummonStats.IsSummon) { //if its a summon, we dont want the preview to appear in places the summon cant spawn
@@ -498,48 +482,28 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 preview.GetComponent<RectTransform>().position = position; //this moves the other parts, perhaps an explosion around the summon
         }
         else {
-            RectTransform previewRect = preview.GetComponent<RectTransform>();
-
             UnityEngine.AI.NavMeshHit hit;
-            if (cal.TeleportStats.IsWarp && unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND)
-            {
-                if (UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, 9))
+            if(cal.TeleportStats.IsWarp && unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND) {
+                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, 9))
                     position = hit.position;
             }
 
-            previewRect.rotation = Quaternion.Euler(90f, 0f, 0f);
-            if (previewRect.sizeDelta.x < previewRect.sizeDelta.y) //this is the vertical component for a linear cal
-                previewRect.position = new Vector3(position.x, 1, 0);
-            else if (previewRect.sizeDelta.x > previewRect.sizeDelta.y) //this is the horizontal component for a linear cal
-                previewRect.position = new Vector3(0, 1, position.z);
-            else
-            { //these are any other components
+            if(preview.GetComponent<BoxCollider>()) {
+                BoxCollider previewCollider = preview.GetComponent<BoxCollider>();
+                if(previewCollider.size.x < previewCollider.size.y) //this is the vertical component for a linear cal
+                    preview.transform.position = new Vector3(position.x, .1f, 0);
+                else if(previewCollider.size.x > previewCollider.size.y) //this is the horizontal component for a linear cal
+                    preview.transform.position = new Vector3(0, .1f, position.z);
+            }
+            else { //these are any other components
                 //if the preview in question is NOT the ally radius part of the warp, which requires a sphere collider
-                if (!(cal.TeleportStats.IsWarp && cal.TeleportStats.TeleportsAllies && preview.GetComponent<SphereCollider>().radius == cal.TeleportStats.AllyRadius))
-                {
-                    position.y = 1;
-                    previewRect.position = position;
+                if (!(cal.TeleportStats.IsWarp && cal.TeleportStats.TeleportsAllies && preview.GetComponent<SphereCollider>().radius == cal.TeleportStats.AllyRadius)) {
+                    position.y = .1f;
+                    preview.transform.position = position;
                 }
             }
+            preview.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
         }
-
-        /*
-        else if(cal.LinearStats.IsLinear) {
-            RectTransform previewRect = preview.GetComponent<RectTransform>();
-            previewRect.rotation = Quaternion.Euler(90f, 0f, 0f);
-            if(previewRect.sizeDelta.x < previewRect.sizeDelta.y) //this is the vertical component
-                previewRect.position = new Vector3(position.x, 1, 0); 
-            else if(previewRect.sizeDelta.x > previewRect.sizeDelta.y) //this is the horizontal component
-                previewRect.position = new Vector3(0, 1, position.z); 
-            else { //these are any other components
-                position.y = 1;
-                previewRect.position = position;
-            }
-        }
-        else {
-            position.y = 1;
-            preview.GetComponent<RectTransform>().position = position;
-        }*/
         fireMousePosition = position;
     }
 
@@ -566,109 +530,140 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         Projectile projectile = goProj.GetComponent<Projectile>();
         if (!projectile.GrenadeStats.IsGrenade)
         {
+            float range = projectile.Range;
+            float width = projectile.Radius * 2;
 
+            /* -- Create the base GameObject -- */
             GameObject go = new GameObject(); //Create the GameObject
             go.name = goProj.name;
 
+            if(goProj.GetComponent<Movement>()) {
+                if(goProj.GetComponent<Movement>().HighlightEnemies)
+                    go.tag = "AbilityHighlight";
+                //not all movement abilities need to highlight enemies, so we dont add the tag if it does not
+            }
+            else
+                go.tag = "AbilityHighlight"; 
+
+            /* -- Add the AbilityPreview component  -- */
             AbilityPreview aPrev = go.AddComponent<AbilityPreview>();
             aPrev.HeightAttackable = projectile.HeightAttackable;
             aPrev.TypeAttackable = projectile.TypeAttackable;
 
-            Image previewImage = go.AddComponent<Image>(); //Add the Image Component script
+            /* -- Creates the Image GameObject and component -- */
+            GameObject previewImageGo = new GameObject();
+            previewImageGo.name = "Sprite";
+            Image previewImage = previewImageGo.AddComponent<Image>(); //Add the Image Component script
             previewImage.color = new Color32(255, 255, 255, 100);
             previewImage.sprite = abilityPreviewLine; //Set the Sprite of the Image Component on the new GameObject
             previewImage.enabled = false;
 
-            float range = projectile.Range;
-            float width = projectile.Radius * 2;
+            RectTransform imageTransform = previewImageGo.GetComponent<RectTransform>();
+            imageTransform.anchorMin = new Vector2(.5f, 0);
+            imageTransform.anchorMax = new Vector2(.5f, 0);
+            imageTransform.pivot = new Vector2(.5f, .5f);
+            imageTransform.SetParent(go.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+            imageTransform.localPosition = new Vector3(0, 0, -1 * range / 2);
+            imageTransform.localRotation = Quaternion.Euler(270, 0, 0);
+            imageTransform.sizeDelta = new Vector2(width, range);
 
-            BoxCollider previewHitBox = go.AddComponent<BoxCollider>();
-            previewHitBox.size = new Vector3(width, range, 1);
-            previewHitBox.center = new Vector3(0, 0, 0);
-            previewHitBox.enabled = false;
+            /* -- Creates the Collider component -- */
+            if(projectile.CustomPathStats.HasCustomPath) {
+                previewImage.sprite = projectile.CustomPathStats.CustomImage; //Set the Sprite of the Image Component on the new GameObject
 
-            //not all movement abilities need to highlight enemies
-            if (goProj.GetComponent<Movement>())
-            {
-                if (goProj.GetComponent<Movement>().HighlightEnemies)
-                    go.tag = "AbilityHighlight";
+                MeshCollider previewHitBox = go.AddComponent<MeshCollider>();
+                previewHitBox.sharedMesh = projectile.CustomPathStats.CustomCollider;
+                previewHitBox.enabled = false;
             }
-            else
-                go.tag = "AbilityHighlight";
+            else {
+                BoxCollider previewHitBox = go.AddComponent<BoxCollider>();
+                previewHitBox.size = new Vector3(width, 1, range);
+                previewHitBox.center = new Vector3(0, 0, -1 * range / 2);
+                previewHitBox.enabled = false;
+            }
 
-            RectTransform previewTransform = go.GetComponent<RectTransform>();
-            previewTransform.anchorMin = new Vector2(.5f, 0);
-            previewTransform.anchorMax = new Vector2(.5f, 0);
-            previewTransform.pivot = new Vector2(.5f, .5f);
-            previewTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-            previewTransform.localPosition = new Vector3(0, 0, -1 * range / 2);
-            previewTransform.localRotation = Quaternion.Euler(270, 0, 0);
-            previewTransform.sizeDelta = new Vector2(width, range);
-
+            /* -- Adjust the GameObjects transform, directly affecting the collider -- */
+            go.transform.SetParent(abilityPreviewCanvas.transform); 
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localRotation = Quaternion.Euler(Vector3.zero);
             go.SetActive(true);
             abilityPreviews.Add(go);
         }
 
-        if (projectile.SelfDestructStats.SelfDestructs || projectile.GrenadeStats.IsGrenade ||
-          (projectile.LingeringStats.Lingering && projectile.LingeringStats.LingerAtEnd))
-        { //we must also add the blow up range
-            GameObject goBoom = new GameObject(); //Create the GameObject
-            goBoom.name = goProj.name;
-
-            AbilityPreview aPrev = goBoom.AddComponent<AbilityPreview>();
-            aPrev.HeightAttackable = projectile.HeightAttackable;
-            aPrev.TypeAttackable = projectile.TypeAttackable;
-
-            Image previewImageBoom = goBoom.AddComponent<Image>(); //Add the Image Component script
-            previewImageBoom.GetComponent<Image>().color = new Color32(255, 255, 255, 100);
-            previewImageBoom.sprite = abilityPreviewBomb; //Set the Sprite of the Image Component on the new GameObject
-            previewImageBoom.enabled = false;
-
+        if(projectile.SelfDestructStats.SelfDestructs || projectile.GrenadeStats.IsGrenade ||
+          (projectile.LingeringStats.Lingering && projectile.LingeringStats.LingerAtEnd)) { //we must also add the blow up range
             float radius;
-            if (projectile.SelfDestructStats.SelfDestructs)
+            if(projectile.SelfDestructStats.SelfDestructs)
                 radius = projectile.SelfDestructStats.ExplosionRadius;
-            else if (projectile.GrenadeStats.IsGrenade)
+            else if(projectile.GrenadeStats.IsGrenade)
                 radius = projectile.GrenadeStats.ExplosionRadius;
             else
                 radius = projectile.LingeringStats.LingeringRadius;
 
+            /* -- Create the base GameObject -- */
+            GameObject goBoom = new GameObject();
+            goBoom.name = goProj.name;
+            goBoom.tag = "AbilityHighlight";
+
+            /* -- Add the AbilityPreview component  -- */
+            AbilityPreview aPrev = goBoom.AddComponent<AbilityPreview>();
+            aPrev.HeightAttackable = projectile.HeightAttackable;
+            aPrev.TypeAttackable = projectile.TypeAttackable;
+
+            /* -- Creates the Image GameObject and component -- */
+            GameObject previewImageGo = new GameObject();
+            previewImageGo.name = "Sprite";
+            Image previewImage = previewImageGo.AddComponent<Image>(); //Add the Image Component script
+            previewImage.color = new Color32(255, 255, 255, 100);
+            previewImage.sprite = abilityPreviewBomb; //Set the Sprite of the Image Component on the new GameObject
+            previewImage.enabled = false;
+
+            RectTransform imageTransform = previewImageGo.GetComponent<RectTransform>();
+            imageTransform.anchorMin = new Vector2(.5f, 0);
+            imageTransform.anchorMax = new Vector2(.5f, 0);
+            imageTransform.pivot = new Vector2(.5f, .5f);
+            imageTransform.SetParent(goBoom.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+            imageTransform.localPosition = new Vector3(0, 0, 0);
+            imageTransform.localRotation = Quaternion.Euler(270, 0, 0);
+            imageTransform.sizeDelta = new Vector2(radius * 2, radius * 2);
+
+            /* -- Creates the Collider component -- */
             SphereCollider previewHitBoxBoom = goBoom.AddComponent<SphereCollider>();
             previewHitBoxBoom.radius = radius;
             previewHitBoxBoom.center = new Vector3(0, 0, 0);
             previewHitBoxBoom.enabled = false;
 
-            goBoom.tag = "AbilityHighlight";
-            RectTransform previewBoomTransform = goBoom.GetComponent<RectTransform>();
-            previewBoomTransform.anchorMin = new Vector2(.5f, 0);
-            previewBoomTransform.anchorMax = new Vector2(.5f, 0);
-            previewBoomTransform.pivot = new Vector2(.5f, .5f);
-            previewBoomTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-            previewBoomTransform.localPosition = new Vector3(0, 0, 0);
-            previewBoomTransform.localRotation = Quaternion.Euler(270, 0, 0);
-            previewBoomTransform.sizeDelta = new Vector2(radius * 2, radius * 2);
-
+             /* -- Adjust the GameObjects transform, directly affecting the collider -- */
+            goBoom.transform.SetParent(abilityPreviewCanvas.transform); 
+            goBoom.transform.localPosition = Vector3.zero;
+            goBoom.transform.localRotation = Quaternion.Euler(Vector3.zero);
             goBoom.SetActive(true);
             abilityPreviews.Add(goBoom);
 
-
-            //now add the range circle
+            /* ----- Add the range circle ----- */
             GameObject goBoomRange = new GameObject();
             goBoomRange.name = goProj.name;
 
-            Image previewImageRange = goBoomRange.AddComponent<Image>();
-            previewImageRange.GetComponent<Image>().color = new Color32(255, 255, 255, 100);
-            previewImageRange.sprite = abilityPreviewRange;
-            previewImageRange.enabled = false;
+            /* -- Creates the Image GameObject and component -- */
+            GameObject previewRangeImageGo = new GameObject();
+            previewRangeImageGo.name = "Sprite";
+            Image previewRangeImage = previewRangeImageGo.AddComponent<Image>(); //Add the Image Component script
+            previewRangeImage.color = new Color32(255, 255, 255, 100);
+            previewRangeImage.sprite = abilityPreviewRange; //Set the Sprite of the Image Component on the new GameObject
+            previewRangeImage.enabled = false;
 
-            RectTransform previewBoomRangeTransform = goBoomRange.GetComponent<RectTransform>();
-            previewBoomRangeTransform.anchorMin = new Vector2(.5f, 0);
-            previewBoomRangeTransform.anchorMax = new Vector2(.5f, 0);
-            previewBoomRangeTransform.pivot = new Vector2(.5f, .5f);
-            previewBoomRangeTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-            previewBoomRangeTransform.localPosition = new Vector3(0, 0, 0);
-            previewBoomRangeTransform.localRotation = Quaternion.Euler(270, 0, 0);
-            previewBoomRangeTransform.sizeDelta = new Vector2(projectile.Range * 2, projectile.Range * 2);
+            RectTransform imageRangeTransform = previewRangeImageGo.GetComponent<RectTransform>();
+            imageRangeTransform.anchorMin = new Vector2(.5f, 0);
+            imageRangeTransform.anchorMax = new Vector2(.5f, 0);
+            imageRangeTransform.pivot = new Vector2(.5f, .5f);
+            imageRangeTransform.SetParent(goBoomRange.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+            imageRangeTransform.localPosition = Vector3.zero;
+            imageRangeTransform.localRotation = Quaternion.Euler(270, 0, 0);
+            imageRangeTransform.sizeDelta = new Vector2(projectile.Range * 2, projectile.Range * 2);
 
+            goBoomRange.transform.SetParent(abilityPreviewCanvas.transform);
+            goBoomRange.transform.localPosition = Vector3.zero;
+            goBoomRange.transform.localRotation = Quaternion.Euler(Vector3.zero);
             goBoomRange.SetActive(true);
             abilityPreviews.Add(goBoomRange);
         }
@@ -678,32 +673,32 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     {
         CreateAtLocation cal = goCAL.GetComponent<CreateAtLocation>();
 
-        if (cal.SummonStats.IsSummon)
-        {
+        if(cal.SummonStats.IsSummon) {
+            /* -- Create the base GameObject -- */
             GameObject go = Instantiate(cal.SummonStats.SummonPreview);
             go.name = goCAL.name;
 
+            /* -- Obtain the preset components of the summon preview -- */
             Image previewImageBoom = go.transform.GetChild(1).GetChild(0).GetComponent<Image>();
             RectTransform previewBoomTransform = go.transform.GetChild(1).GetChild(0).GetComponent<RectTransform>();
             UnityEngine.AI.NavMeshAgent previewAgent = go.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>();
 
+            /* -- Determine the correct radius and give the agent type the corresponding id  -- */
             float radius;
-            if (cal.SummonStats.Size == GameConstants.SUMMON_SIZE.BIG)
-            {
+            if(cal.SummonStats.Size == GameConstants.SUMMON_SIZE.BIG) {
                 radius = 6;
                 previewAgent.agentTypeID = 287145453;
             }
-            else if (cal.SummonStats.Size == GameConstants.SUMMON_SIZE.SMALL)
-            {
+            else if(cal.SummonStats.Size == GameConstants.SUMMON_SIZE.SMALL) {
                 radius = 3;
                 previewAgent.agentTypeID = -902729914;
             }
-            else
-            {
+            else {
                 radius = 3;
                 previewAgent.agentTypeID = 0;
             }
 
+            /* -- Adjust the final values and add it to the scene  -- */
             previewImageBoom.enabled = false;
             previewBoomTransform.sizeDelta = new Vector2(radius * 2, radius * 2);
 
@@ -712,195 +707,247 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             go.SetActive(true);
             abilityPreviews.Add(go);
         }
-        if (cal.LinearStats.IsLinear)
-        {
+        if(cal.LinearStats.IsLinear) {
             float width = cal.LinearStats.ExplosionWidth;
 
-            if (cal.LinearStats.IsVertical || (!cal.LinearStats.IsVertical && !cal.LinearStats.IsHorizontal))
-            {//if the linear attack has the vertical component
+            if(cal.LinearStats.IsVertical || (!cal.LinearStats.IsVertical && !cal.LinearStats.IsHorizontal)) { //if the linear attack has the vertical component
+                /* -- Create the base GameObject -- */
                 GameObject goLinearVert = new GameObject();
                 goLinearVert.name = goCAL.name;
+                goLinearVert.tag = "AbilityHighlight";
 
+                /* -- Add the AbilityPreview component  -- */
                 AbilityPreview aPrev = goLinearVert.AddComponent<AbilityPreview>();
                 aPrev.HeightAttackable = cal.HeightAttackable;
                 aPrev.TypeAttackable = cal.TypeAttackable;
 
-                Image previewImageLinearVert = goLinearVert.AddComponent<Image>(); //Add the Image Component script
-                previewImageLinearVert.GetComponent<Image>().color = new Color32(255, 255, 255, 100);
-                previewImageLinearVert.sprite = abilityPreviewLinear; //Set the Sprite of the Image Component on the new GameObject
-                previewImageLinearVert.enabled = false;
+                /* -- Creates the Image GameObject and component -- */
+                GameObject previewImageLinearVertGo = new GameObject();
+                previewImageLinearVertGo.name = "Sprite";
+                Image previewLinearVertImage = previewImageLinearVertGo.AddComponent<Image>(); //Add the Image Component script
+                previewLinearVertImage.color = new Color32(255, 255, 255, 100);
+                previewLinearVertImage.sprite = abilityPreviewLinear; //Set the Sprite of the Image Component on the new GameObject
+                previewLinearVertImage.enabled = false;
+
+                RectTransform imageLinearVertTransform = previewImageLinearVertGo.GetComponent<RectTransform>();
+                imageLinearVertTransform.anchorMin = new Vector2(.5f, 0);
+                imageLinearVertTransform.anchorMax = new Vector2(.5f, 0);
+                imageLinearVertTransform.pivot = new Vector2(.5f, .5f);
+                imageLinearVertTransform.SetParent(goLinearVert.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+                imageLinearVertTransform.localPosition = Vector3.zero;
+                imageLinearVertTransform.localRotation = Quaternion.Euler(Vector3.zero);
+                imageLinearVertTransform.sizeDelta = new Vector2(width, GameManager.Instance.Ground.transform.localScale.z * 10);
 
                 BoxCollider previewHitBoxLinearVert = goLinearVert.AddComponent<BoxCollider>();
                 previewHitBoxLinearVert.size = new Vector3(width, GameManager.Instance.Ground.transform.localScale.z * 10, .5f);
-                previewHitBoxLinearVert.center = new Vector3(0, 0, 0);
+                previewHitBoxLinearVert.center = Vector3.zero;
                 previewHitBoxLinearVert.enabled = false;
 
-                goLinearVert.tag = "AbilityHighlight";
-                RectTransform previewLinearTransformVert = goLinearVert.GetComponent<RectTransform>();
-                previewLinearTransformVert.anchorMin = new Vector2(.5f, 0);
-                previewLinearTransformVert.anchorMax = new Vector2(.5f, 0);
-                previewLinearTransformVert.pivot = new Vector2(.5f, .5f);
-                previewLinearTransformVert.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-                previewLinearTransformVert.localPosition = new Vector3(0, 0, 0);
-                previewLinearTransformVert.localRotation = Quaternion.Euler(270, 0, 0);
-                previewLinearTransformVert.sizeDelta = new Vector2(width, GameManager.Instance.Ground.transform.localScale.z * 10);
+                /* -- Adjust the GameObjects transform, directly affecting the collider -- */
+                goLinearVert.transform.SetParent(abilityPreviewCanvas.transform); 
+                goLinearVert.transform.localPosition = Vector3.zero;
+                goLinearVert.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                goLinearVert.SetActive(true);
                 abilityPreviews.Add(goLinearVert);
             }
-            if (cal.LinearStats.IsHorizontal)
-            { //if the linear attack has the horizontal component
+            if(cal.LinearStats.IsHorizontal) { //if the linear attack has the horizontal component
+                /* -- Create the base GameObject -- */
                 GameObject goLinearHorz = new GameObject();
                 goLinearHorz.name = goCAL.name;
+                goLinearHorz.tag = "AbilityHighlight";
 
+                /* -- Add the AbilityPreview component  -- */
                 AbilityPreview aPrev = goLinearHorz.AddComponent<AbilityPreview>();
                 aPrev.HeightAttackable = cal.HeightAttackable;
                 aPrev.TypeAttackable = cal.TypeAttackable;
 
-                Image previewImageLinearHorz = goLinearHorz.AddComponent<Image>(); //Add the Image Component script
-                previewImageLinearHorz.GetComponent<Image>().color = new Color32(255, 255, 255, 100);
-                previewImageLinearHorz.sprite = abilityPreviewLinear;
-                previewImageLinearHorz.enabled = false;
+                /* -- Creates the Image GameObject and component -- */
+                GameObject previewImageLinearHorzGo = new GameObject();
+                previewImageLinearHorzGo.name = "Sprite";
+                Image previewLinearHorzImage = previewImageLinearHorzGo.AddComponent<Image>(); //Add the Image Component script
+                previewLinearHorzImage.color = new Color32(255, 255, 255, 100);
+                previewLinearHorzImage.sprite = abilityPreviewLinear; //Set the Sprite of the Image Component on the new GameObject
+                previewLinearHorzImage.enabled = false;
+
+                RectTransform imageLinearHorzTransform = previewImageLinearHorzGo.GetComponent<RectTransform>();
+                imageLinearHorzTransform.anchorMin = new Vector2(.5f, 0);
+                imageLinearHorzTransform.anchorMax = new Vector2(.5f, 0);
+                imageLinearHorzTransform.pivot = new Vector2(.5f, .5f);
+                imageLinearHorzTransform.SetParent(goLinearHorz.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+                imageLinearHorzTransform.localPosition = Vector3.zero;
+                imageLinearHorzTransform.localRotation = Quaternion.Euler(Vector3.zero);
+                imageLinearHorzTransform.sizeDelta = new Vector2(GameManager.Instance.Ground.transform.localScale.x * 10, width);
 
                 BoxCollider previewHitBoxLinearHorz = goLinearHorz.AddComponent<BoxCollider>();
                 previewHitBoxLinearHorz.size = new Vector3(GameManager.Instance.Ground.transform.localScale.x * 10, width, .5f);
-                previewHitBoxLinearHorz.center = new Vector3(0, 0, 0);
+                previewHitBoxLinearHorz.center = Vector3.zero;
                 previewHitBoxLinearHorz.enabled = false;
 
-                goLinearHorz.tag = "AbilityHighlight";
-                RectTransform previewLinearTransformHorz = goLinearHorz.GetComponent<RectTransform>();
-                previewLinearTransformHorz.anchorMin = new Vector2(.5f, 0);
-                previewLinearTransformHorz.anchorMax = new Vector2(.5f, 0);
-                previewLinearTransformHorz.pivot = new Vector2(.5f, .5f);
-                previewLinearTransformHorz.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-                previewLinearTransformHorz.localPosition = new Vector3(0, 0, 0);
-                previewLinearTransformHorz.localRotation = Quaternion.Euler(270, 0, 0);
-                previewLinearTransformHorz.sizeDelta = new Vector2(GameManager.Instance.Ground.transform.localScale.x * 10, width);
+                /* -- Adjust the GameObjects transform, directly affecting the collider -- */
+                goLinearHorz.transform.SetParent(abilityPreviewCanvas.transform); 
+                goLinearHorz.transform.localPosition = Vector3.zero;
+                goLinearHorz.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                goLinearHorz.SetActive(true);
                 abilityPreviews.Add(goLinearHorz);
             }
         }
 
-        if (cal.LingeringStats.Lingering || cal.SelfDestructStats.SelfDestructs)
-        {
-            GameObject goBoom = new GameObject(); //Create the GameObject
-            goBoom.name = goCAL.name;
+        if(cal.LingeringStats.Lingering || cal.SelfDestructStats.SelfDestructs) {
+            float radius = Math.Max(cal.LingeringStats.LingeringRadius, cal.SelfDestructStats.ExplosionRadius);
 
+            /* -- Create the base GameObject -- */
+            GameObject goBoom = new GameObject();
+            goBoom.name = goCAL.name;
+            goBoom.tag = "AbilityHighlight";
+
+            /* -- Add the AbilityPreview component  -- */
             AbilityPreview aPrev = goBoom.AddComponent<AbilityPreview>();
             aPrev.HeightAttackable = cal.HeightAttackable;
             aPrev.TypeAttackable = cal.TypeAttackable;
 
-            Image previewImageBoom = goBoom.AddComponent<Image>(); //Add the Image Component script
-            previewImageBoom.GetComponent<Image>().color = new Color32(255, 255, 255, 100);
-            previewImageBoom.sprite = abilityPreviewBomb; //Set the Sprite of the Image Component on the new GameObject
-            previewImageBoom.enabled = false;
+            /* -- Creates the Image GameObject and component -- */
+            GameObject previewImageGo = new GameObject();
+            previewImageGo.name = "Sprite";
+            Image previewImage = previewImageGo.AddComponent<Image>(); //Add the Image Component script
+            previewImage.color = new Color32(255, 255, 255, 100);
+            previewImage.sprite = abilityPreviewBomb; //Set the Sprite of the Image Component on the new GameObject
+            previewImage.enabled = false;
 
-            float radius = Math.Max(cal.LingeringStats.LingeringRadius, cal.SelfDestructStats.ExplosionRadius);
+            RectTransform imageTransform = previewImageGo.GetComponent<RectTransform>();
+            imageTransform.anchorMin = new Vector2(.5f, 0);
+            imageTransform.anchorMax = new Vector2(.5f, 0);
+            imageTransform.pivot = new Vector2(.5f, .5f);
+            imageTransform.SetParent(goBoom.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+            imageTransform.localPosition = Vector3.zero;
+            imageTransform.localRotation = Quaternion.Euler(Vector3.zero);
+            imageTransform.sizeDelta = new Vector2(radius * 2, radius * 2);
 
+            /* -- Creates the Collider component -- */
             SphereCollider previewHitBoxBoom = goBoom.AddComponent<SphereCollider>();
             previewHitBoxBoom.radius = radius;
             previewHitBoxBoom.center = new Vector3(0, 0, 0);
             previewHitBoxBoom.enabled = false;
 
-            goBoom.tag = "AbilityHighlight";
-            RectTransform previewBoomTransform = goBoom.GetComponent<RectTransform>();
-            previewBoomTransform.anchorMin = new Vector2(.5f, 0);
-            previewBoomTransform.anchorMax = new Vector2(.5f, 0);
-            previewBoomTransform.pivot = new Vector2(.5f, .5f);
-            previewBoomTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-            previewBoomTransform.localPosition = new Vector3(0, 0, 0);
-            previewBoomTransform.localRotation = Quaternion.Euler(270, 0, 0);
-            previewBoomTransform.sizeDelta = new Vector2(radius * 2, radius * 2);
-
+             /* -- Adjust the GameObjects transform, directly affecting the collider -- */
+            goBoom.transform.SetParent(abilityPreviewCanvas.transform); 
+            goBoom.transform.localPosition = Vector3.zero;
+            goBoom.transform.localRotation = Quaternion.Euler(Vector3.zero);
             goBoom.SetActive(true);
             abilityPreviews.Add(goBoom);
         }
 
-        if (cal.TeleportStats.IsWarp)
-        {
-            GameObject goWarp = new GameObject(); //Create the GameObject
-            goWarp.name = goCAL.name;
+        if(cal.TeleportStats.IsWarp) {
+            float radius = unit.Agent.Agent.radius;
 
-            AbilityPreview aPrev = goWarp.AddComponent<AbilityPreview>();
+            /* -- Create the base GameObject -- */
+            GameObject goBoom = new GameObject();
+            goBoom.name = goCAL.name;
+            goBoom.tag = "AbilityHighlight";
+
+            /* -- Add the AbilityPreview component  -- */
+            AbilityPreview aPrev = goBoom.AddComponent<AbilityPreview>();
             aPrev.HeightAttackable = cal.HeightAttackable;
             aPrev.TypeAttackable = cal.TypeAttackable;
 
-            Image previewImageWarp = goWarp.AddComponent<Image>(); //Add the Image Component script
-            previewImageWarp.GetComponent<Image>().color = new Color32(255, 255, 255, 100);
-            previewImageWarp.sprite = abilityPreviewBomb; //Set the Sprite of the Image Component on the new GameObject
-            previewImageWarp.enabled = false;
+            /* -- Creates the Image GameObject and component -- */
+            GameObject previewImageGo = new GameObject();
+            previewImageGo.name = "Sprite";
+            Image previewImage = previewImageGo.AddComponent<Image>(); //Add the Image Component script
+            previewImage.color = new Color32(255, 255, 255, 100);
+            previewImage.sprite = abilityPreviewBomb; //Set the Sprite of the Image Component on the new GameObject
+            previewImage.enabled = false;
 
-            float radius = unit.Agent.Agent.radius;
+            RectTransform imageTransform = previewImageGo.GetComponent<RectTransform>();
+            imageTransform.anchorMin = new Vector2(.5f, 0);
+            imageTransform.anchorMax = new Vector2(.5f, 0);
+            imageTransform.pivot = new Vector2(.5f, .5f);
+            imageTransform.SetParent(goBoom.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+            imageTransform.localPosition = new Vector3(0, 0, 0);
+            imageTransform.localRotation = Quaternion.Euler(Vector3.zero);
+            imageTransform.sizeDelta = new Vector2(radius * 2, radius * 2);
 
-            SphereCollider previewHitBoxWarp = goWarp.AddComponent<SphereCollider>();
-            previewHitBoxWarp.radius = radius;
-            previewHitBoxWarp.center = new Vector3(0, 0, 0);
-            previewHitBoxWarp.enabled = false;
+            /* -- Creates the Collider component -- */
+            SphereCollider previewHitBoxBoom = goBoom.AddComponent<SphereCollider>();
+            previewHitBoxBoom.radius = radius;
+            previewHitBoxBoom.center = new Vector3(0, 0, 0);
+            previewHitBoxBoom.enabled = false;
 
-            //goWarp.tag = "AbilityHighlight"; //we dont need it to highlight enemies
-            RectTransform previewWarpTransform = goWarp.GetComponent<RectTransform>();
-            previewWarpTransform.anchorMin = new Vector2(.5f, 0);
-            previewWarpTransform.anchorMax = new Vector2(.5f, 0);
-            previewWarpTransform.pivot = new Vector2(.5f, .5f);
-            previewWarpTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-            previewWarpTransform.localPosition = new Vector3(0, 0, 0);
-            previewWarpTransform.localRotation = Quaternion.Euler(270, 0, 0);
-            previewWarpTransform.sizeDelta = new Vector2(radius * 2, radius * 2);
+             /* -- Adjust the GameObjects transform, directly affecting the collider -- */
+            goBoom.transform.SetParent(abilityPreviewCanvas.transform); 
+            goBoom.transform.localPosition = Vector3.zero;
+            goBoom.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            goBoom.SetActive(true);
+            abilityPreviews.Add(goBoom);
 
-            goWarp.SetActive(true);
-            abilityPreviews.Add(goWarp);
-
-            if (cal.TeleportStats.TeleportsAllies)
-            {
-                GameObject goAWarp = new GameObject(); //Create the GameObject
-                goAWarp.name = goCAL.name;
-
-                AbilityPreview aPrevAlly = goAWarp.AddComponent<AbilityPreview>();
-                aPrevAlly.HeightAttackable = cal.HeightAttackable;
-                aPrevAlly.TypeAttackable = cal.TypeAttackable;
-
-                Image previewImageAWarp = goAWarp.AddComponent<Image>(); //Add the Image Component script
-                previewImageAWarp.GetComponent<Image>().color = new Color32(255, 255, 255, 100);
-                previewImageAWarp.sprite = abilityPreviewBomb; //Set the Sprite of the Image Component on the new GameObject
-                previewImageAWarp.enabled = false;
-
+            if(cal.TeleportStats.TeleportsAllies) {
                 radius = cal.TeleportStats.AllyRadius;
 
+                /* -- Create the base GameObject -- */
+                GameObject goAWarp = new GameObject();
+                goAWarp.name = goCAL.name;
+                goAWarp.tag = "FriendlyAbilityHighlight";
+
+                /* -- Add the AbilityPreview component  -- */
+                AbilityPreview aAWarpPrev = goAWarp.AddComponent<AbilityPreview>();
+                aAWarpPrev.HeightAttackable = cal.HeightAttackable;
+                aAWarpPrev.TypeAttackable = cal.TypeAttackable;
+
+                /* -- Creates the Image GameObject and component -- */
+                GameObject previewAWarpImageGo = new GameObject();
+                previewAWarpImageGo.name = "Sprite";
+                Image previewAWarpImage = previewAWarpImageGo.AddComponent<Image>(); //Add the Image Component script
+                previewAWarpImage.color = new Color32(255, 255, 255, 100);
+                previewAWarpImage.sprite = abilityPreviewBomb; //Set the Sprite of the Image Component on the new GameObject
+                previewAWarpImage.enabled = false;
+
+                RectTransform imageAWarpTransform = previewAWarpImageGo.GetComponent<RectTransform>();
+                imageAWarpTransform.anchorMin = new Vector2(.5f, 0);
+                imageAWarpTransform.anchorMax = new Vector2(.5f, 0);
+                imageAWarpTransform.pivot = new Vector2(.5f, .5f);
+                imageAWarpTransform.SetParent(goAWarp.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+                imageAWarpTransform.localPosition = new Vector3(0, 0, 0);
+                imageAWarpTransform.localRotation = Quaternion.Euler(Vector3.zero);
+                imageAWarpTransform.sizeDelta = new Vector2(radius * 2, radius * 2);
+
+                /* -- Creates the Collider component -- */
                 SphereCollider previewHitBoxAWarp = goAWarp.AddComponent<SphereCollider>();
                 previewHitBoxAWarp.radius = radius;
                 previewHitBoxAWarp.center = new Vector3(0, 0, 0);
                 previewHitBoxAWarp.enabled = false;
 
-                goAWarp.tag = "FriendlyAbilityHighlight"; //we need this to highlight allies
-                RectTransform previewAWarpTransform = goAWarp.GetComponent<RectTransform>();
-                previewAWarpTransform.anchorMin = new Vector2(.5f, 0);
-                previewAWarpTransform.anchorMax = new Vector2(.5f, 0);
-                previewAWarpTransform.pivot = new Vector2(.5f, .5f);
-                previewAWarpTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-                previewAWarpTransform.localPosition = new Vector3(0, 0, 0);
-                previewAWarpTransform.localRotation = Quaternion.Euler(270, 0, 0);
-                previewAWarpTransform.sizeDelta = new Vector2(radius * 2, radius * 2);
-
+                /* -- Adjust the GameObjects transform, directly affecting the collider -- */
+                goAWarp.transform.SetParent(abilityPreviewCanvas.transform); 
+                goAWarp.transform.localPosition = Vector3.zero;
+                goAWarp.transform.localRotation = Quaternion.Euler(Vector3.zero);
                 goAWarp.SetActive(true);
                 abilityPreviews.Add(goAWarp);
             }
         }
 
-        //now add the range circle
+        /* ----- Add the range circle ----- */
         GameObject goBoomRange = new GameObject();
         goBoomRange.name = goCAL.name;
 
-        Image previewImageRange = goBoomRange.AddComponent<Image>();
-        previewImageRange.GetComponent<Image>().color = new Color32(255, 255, 255, 100);
-        previewImageRange.sprite = abilityPreviewRange;
-        previewImageRange.enabled = false;
+        /* -- Creates the Image GameObject and component -- */
+        GameObject previewRangeImageGo = new GameObject();
+        previewRangeImageGo.name = "Sprite";
+        Image previewRangeImage = previewRangeImageGo.AddComponent<Image>(); //Add the Image Component script
+        previewRangeImage.color = new Color32(255, 255, 255, 100);
+        previewRangeImage.sprite = abilityPreviewRange; //Set the Sprite of the Image Component on the new GameObject
+        previewRangeImage.enabled = false;
 
-        RectTransform previewBoomRangeTransform = goBoomRange.GetComponent<RectTransform>();
-        previewBoomRangeTransform.anchorMin = new Vector2(.5f, 0);
-        previewBoomRangeTransform.anchorMax = new Vector2(.5f, 0);
-        previewBoomRangeTransform.pivot = new Vector2(.5f, .5f);
-        previewBoomRangeTransform.SetParent(abilityPreviewCanvas.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-        previewBoomRangeTransform.localPosition = new Vector3(0, 0, 0);
-        previewBoomRangeTransform.localRotation = Quaternion.Euler(270, 0, 0);
-        previewBoomRangeTransform.sizeDelta = new Vector2(cal.Range * 2, cal.Range * 2);
+        RectTransform imageRangeTransform = previewRangeImageGo.GetComponent<RectTransform>();
+        imageRangeTransform.anchorMin = new Vector2(.5f, 0);
+        imageRangeTransform.anchorMax = new Vector2(.5f, 0);
+        imageRangeTransform.pivot = new Vector2(.5f, .5f);
+        imageRangeTransform.SetParent(goBoomRange.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+        imageRangeTransform.localPosition = Vector3.zero;
+        imageRangeTransform.localRotation = Quaternion.Euler(270, 0, 0);
+        imageRangeTransform.sizeDelta = new Vector2(cal.Range * 2, cal.Range * 2);
 
+        goBoomRange.transform.SetParent(abilityPreviewCanvas.transform);
+        goBoomRange.transform.localPosition = Vector3.zero;
+        goBoomRange.transform.localRotation = Quaternion.Euler(Vector3.zero);
         goBoomRange.SetActive(true);
         abilityPreviews.Add(goBoomRange);
     }

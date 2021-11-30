@@ -4350,7 +4350,6 @@ MonoBehaviour:
         outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
-        currentFrozenDelay: 0
       slowStats:
         canSlow: 0
         slowDuration: 0
@@ -4399,6 +4398,11 @@ MonoBehaviour:
         currentStrengthIntensity: 0
       blindedStats:
         cantBeBlinded: 0
+      stunnedStats:
+        cantBeStunned: 0
+        outSideResistance: 0
+        isStunned: 0
+        stunDelay: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -4410,6 +4414,7 @@ MonoBehaviour:
         resistedGrab: 0
         resistedPull: 0
         resistedBlind: 0
+        resistedStun: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -5044,7 +5049,6 @@ MonoBehaviour:
         outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
-        currentFrozenDelay: 0
       slowStats:
         canSlow: 0
         slowDuration: 0
@@ -5093,6 +5097,11 @@ MonoBehaviour:
         currentStrengthIntensity: 0
       blindedStats:
         cantBeBlinded: 0
+      stunnedStats:
+        cantBeStunned: 0
+        outSideResistance: 0
+        isStunned: 0
+        stunDelay: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -5104,6 +5113,7 @@ MonoBehaviour:
         resistedGrab: 0
         resistedPull: 0
         resistedBlind: 0
+        resistedStun: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -5227,7 +5237,6 @@ MonoBehaviour:
         outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
-        currentFrozenDelay: 0
       slowStats:
         canSlow: 0
         slowDuration: 0
@@ -5276,6 +5285,11 @@ MonoBehaviour:
         currentStrengthIntensity: 0
       blindedStats:
         cantBeBlinded: 0
+      stunnedStats:
+        cantBeStunned: 0
+        outSideResistance: 0
+        isStunned: 0
+        stunDelay: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -5287,6 +5301,7 @@ MonoBehaviour:
         resistedGrab: 0
         resistedPull: 0
         resistedBlind: 0
+        resistedStun: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -6399,7 +6414,6 @@ MonoBehaviour:
         outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
-        currentFrozenDelay: 0
       slowStats:
         canSlow: 0
         slowDuration: 0
@@ -6448,6 +6462,11 @@ MonoBehaviour:
         currentStrengthIntensity: 0
       blindedStats:
         cantBeBlinded: 0
+      stunnedStats:
+        cantBeStunned: 0
+        outSideResistance: 0
+        isStunned: 0
+        stunDelay: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -6459,6 +6478,7 @@ MonoBehaviour:
         resistedGrab: 0
         resistedPull: 0
         resistedBlind: 0
+        resistedStun: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -6509,7 +6529,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 483495840}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 17.1, y: 0, z: 26.9}
+  m_LocalPosition: {x: 3.51, y: -0.32, z: 23.31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1010337152}
@@ -13910,6 +13930,7 @@ GameObject:
   - component: {fileID: 855631261}
   - component: {fileID: 855631266}
   - component: {fileID: 855631267}
+  - component: {fileID: 855631268}
   - component: {fileID: 855631265}
   - component: {fileID: 855631264}
   - component: {fileID: 855631263}
@@ -14021,7 +14042,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 855631260}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b328a17fda14f74aaa845052562795a, type: 3}
   m_Name: 
@@ -14030,8 +14051,10 @@ MonoBehaviour:
   abilityPrefabs:
   - {fileID: 8128849533423555255, guid: 81ca3e3c8e3685c4ebd73ddcb0fb73db, type: 3}
   - {fileID: 2538035110669741027, guid: 13a17977caf49464a90a86e954b0a79e, type: 3}
+  - {fileID: 5725336417940768639, guid: b2e57ab9f97012c4691347bb6ad85456, type: 3}
   abilityDelays:
   - 0.2
+  - 0.1
   - 0.1
   - 1
   applyResistanceStats:
@@ -14057,6 +14080,8 @@ MonoBehaviour:
     rpullDuration: 0
     resistBlind: 0
     rbDuration: 0
+    resistStun: 0
+    rstunDuration: 0
   abilityUI:
     cooldownDelay: 1
     currCooldownDelay: 0.4
@@ -14076,14 +14101,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 855631260}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75740db13975d504fbe3a97a1fead2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 1390792290}
   abilityPrefabs:
-  - {fileID: 4332999100709516610, guid: 4d38356404b172542bbbb06b5950ec16, type: 3}
+  - {fileID: 1224647179923901261, guid: 9f95a636396da294c8b3f8bf1ae79e27, type: 3}
   abilityDelays:
   - 0.3
   - 0
@@ -14111,9 +14136,66 @@ MonoBehaviour:
     rpullDuration: 0
     resistBlind: 0
     rbDuration: 0
+    resistStun: 0
+    rstunDuration: 0
   abilityUI:
     cooldownDelay: 5
     currCooldownDelay: 5
+    abilitySprite: {fileID: 49292948}
+    cooldownMask: {fileID: 729379469}
+    abilityCancel: {fileID: 63724459}
+  abilityPreviewCanvas: {fileID: 1404963360}
+  abilityPreviews: []
+  abilityPreviewLine: {fileID: 21300000, guid: d24184dab2f7f3d418f3a20dc032fa78, type: 3}
+  abilityPreviewLinear: {fileID: 21300000, guid: 3d46296629f72914da3ffeb630c82832, type: 3}
+  abilityPreviewBomb: {fileID: 21300000, guid: 68c0303b57e53ce4188ea1bbcf918c1a, type: 3}
+  abilityPreviewRange: {fileID: 21300000, guid: 658bc1bba667d16429506ad48b1602a0, type: 3}
+--- !u!114 &855631268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855631260}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b328a17fda14f74aaa845052562795a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unit: {fileID: 1390792290}
+  abilityPrefabs:
+  - {fileID: 4332999100709516610, guid: 461d1ec22a28d824cb4de8c059579f1b, type: 3}
+  abilityDelays:
+  - 0.2
+  - 0.7
+  applyResistanceStats:
+    applyToSelf: 0
+    applyToOthers: 0
+    resistDamage: 0
+    rdDuration: 0
+    untargetable: 0
+    rtDuration: 0
+    resistFreeze: 0
+    rfDuration: 0
+    resistSlow: 0
+    rsDuration: 0
+    resistRoot: 0
+    rrDuration: 0
+    resistPoison: 0
+    rpDuration: 0
+    resistKnockback: 0
+    rkDuration: 0
+    resistGrab: 0
+    rgDuration: 0
+    resistPull: 0
+    rpullDuration: 0
+    resistBlind: 0
+    rbDuration: 0
+    resistStun: 0
+    rstunDuration: 0
+  abilityUI:
+    cooldownDelay: 1
+    currCooldownDelay: 0.4
     abilitySprite: {fileID: 49292948}
     cooldownMask: {fileID: 729379469}
     abilityCancel: {fileID: 63724459}
@@ -14661,7 +14743,6 @@ MonoBehaviour:
         outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
-        currentFrozenDelay: 0
       slowStats:
         canSlow: 0
         slowDuration: 0
@@ -14710,6 +14791,11 @@ MonoBehaviour:
         currentStrengthIntensity: 0
       blindedStats:
         cantBeBlinded: 0
+      stunnedStats:
+        cantBeStunned: 0
+        outSideResistance: 0
+        isStunned: 0
+        stunDelay: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -14721,6 +14807,7 @@ MonoBehaviour:
         resistedGrab: 0
         resistedPull: 0
         resistedBlind: 0
+        resistedStun: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -15815,7 +15902,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 997561208}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 3
+  m_Radius: 1.75
   m_Speed: 6
   m_Acceleration: 100
   avoidancePriority: 50
@@ -15839,7 +15926,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 4
+  m_Radius: 2.75
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &997561213
 MeshRenderer:
@@ -17315,7 +17402,6 @@ MonoBehaviour:
         outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
-        currentFrozenDelay: 0
       slowStats:
         canSlow: 0
         slowDuration: 0
@@ -17364,6 +17450,11 @@ MonoBehaviour:
         currentStrengthIntensity: 0
       blindedStats:
         cantBeBlinded: 0
+      stunnedStats:
+        cantBeStunned: 0
+        outSideResistance: 0
+        isStunned: 0
+        stunDelay: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -17375,6 +17466,7 @@ MonoBehaviour:
         resistedGrab: 0
         resistedPull: 0
         resistedBlind: 0
+        resistedStun: 0
   attackStats:
     firesProjectiles: 1
     attackType: 1
@@ -18171,7 +18263,6 @@ MonoBehaviour:
         outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
-        currentFrozenDelay: 0
       slowStats:
         canSlow: 0
         slowDuration: 0
@@ -18220,6 +18311,11 @@ MonoBehaviour:
         currentStrengthIntensity: 0
       blindedStats:
         cantBeBlinded: 0
+      stunnedStats:
+        cantBeStunned: 0
+        outSideResistance: 0
+        isStunned: 0
+        stunDelay: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -18231,6 +18327,7 @@ MonoBehaviour:
         resistedGrab: 0
         resistedPull: 0
         resistedBlind: 0
+        resistedStun: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -19274,6 +19371,8 @@ MonoBehaviour:
     rpullDuration: 0
     resistBlind: 0
     rbDuration: 0
+    resistStun: 0
+    rstunDuration: 0
   abilityUI:
     cooldownDelay: 1
     currCooldownDelay: 1
@@ -19328,6 +19427,8 @@ MonoBehaviour:
     rpullDuration: 0
     resistBlind: 0
     rbDuration: 0
+    resistStun: 0
+    rstunDuration: 0
   abilityUI:
     cooldownDelay: 5
     currCooldownDelay: 5
@@ -19871,8 +19972,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1390792288}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.2, y: 0, z: -57.8}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.1, y: 0, z: -54.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 997561209}
@@ -19906,7 +20007,7 @@ MonoBehaviour:
     baseDamage: 10
     attackDelay: 2
     currAttackDelay: 0
-    moveSpeed: 6
+    moveSpeed: 0
     noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
@@ -19941,7 +20042,6 @@ MonoBehaviour:
         outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
-        currentFrozenDelay: 0
       slowStats:
         canSlow: 0
         slowDuration: 0
@@ -19990,6 +20090,11 @@ MonoBehaviour:
         currentStrengthIntensity: 0
       blindedStats:
         cantBeBlinded: 0
+      stunnedStats:
+        cantBeStunned: 0
+        outSideResistance: 0
+        isStunned: 0
+        stunDelay: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -20001,6 +20106,7 @@ MonoBehaviour:
         resistedGrab: 0
         resistedPull: 0
         resistedBlind: 0
+        resistedStun: 0
   attackStats:
     firesProjectiles: 0
     attackType: 2
@@ -20040,7 +20146,7 @@ MonoBehaviour:
     currentDelay: 0
     mats: []
   deathStats:
-    deathSkill: 1
+    deathSkill: 0
     abilityPrefabs:
     - {fileID: 1224647179923901261, guid: 9f95a636396da294c8b3f8bf1ae79e27, type: 3}
     - {fileID: 2538035110669741027, guid: 13a17977caf49464a90a86e954b0a79e, type: 3}
@@ -22952,7 +23058,6 @@ MonoBehaviour:
         outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
-        currentFrozenDelay: 0
       slowStats:
         canSlow: 0
         slowDuration: 0
@@ -23001,6 +23106,11 @@ MonoBehaviour:
         currentStrengthIntensity: 0
       blindedStats:
         cantBeBlinded: 0
+      stunnedStats:
+        cantBeStunned: 0
+        outSideResistance: 0
+        isStunned: 0
+        stunDelay: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -23012,6 +23122,7 @@ MonoBehaviour:
         resistedGrab: 0
         resistedPull: 0
         resistedBlind: 0
+        resistedStun: 0
   spawnStats:
     unitToSpawn: {fileID: 5726148247449163227, guid: 304a4c69c2fd919499f930a64e2fda40, type: 3}
   attackStats:
@@ -28068,7 +28179,6 @@ MonoBehaviour:
         outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
-        currentFrozenDelay: 0
       slowStats:
         canSlow: 0
         slowDuration: 0
@@ -28117,6 +28227,11 @@ MonoBehaviour:
         currentStrengthIntensity: 0
       blindedStats:
         cantBeBlinded: 0
+      stunnedStats:
+        cantBeStunned: 0
+        outSideResistance: 0
+        isStunned: 0
+        stunDelay: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -28128,6 +28243,7 @@ MonoBehaviour:
         resistedGrab: 0
         resistedPull: 0
         resistedBlind: 0
+        resistedStun: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -28392,7 +28508,6 @@ MonoBehaviour:
         outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
-        currentFrozenDelay: 0
       slowStats:
         canSlow: 0
         slowDuration: 0
@@ -28441,6 +28556,11 @@ MonoBehaviour:
         currentStrengthIntensity: 0
       blindedStats:
         cantBeBlinded: 0
+      stunnedStats:
+        cantBeStunned: 0
+        outSideResistance: 0
+        isStunned: 0
+        stunDelay: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -28452,6 +28572,7 @@ MonoBehaviour:
         resistedGrab: 0
         resistedPull: 0
         resistedBlind: 0
+        resistedStun: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -28930,7 +29051,6 @@ MonoBehaviour:
         outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
-        currentFrozenDelay: 0
       slowStats:
         canSlow: 0
         slowDuration: 0
@@ -28979,6 +29099,11 @@ MonoBehaviour:
         currentStrengthIntensity: 0
       blindedStats:
         cantBeBlinded: 0
+      stunnedStats:
+        cantBeStunned: 0
+        outSideResistance: 0
+        isStunned: 0
+        stunDelay: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -28990,6 +29115,7 @@ MonoBehaviour:
         resistedGrab: 0
         resistedPull: 0
         resistedBlind: 0
+        resistedStun: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0

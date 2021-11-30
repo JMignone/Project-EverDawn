@@ -55,13 +55,27 @@ public class Projectile : MonoBehaviour, IAbility
     [SerializeField]
     private bool stopOnMiss;
 
+    [Tooltip("If checked, the skillshot will skip the last number of abilities")]
+    [SerializeField]
+    private bool skipLastOnMiss;
+
+    [SerializeField] [Min(0)]
+    private int skipNumber;
+
     [Tooltip("If checked, a target will be sent to the skillshot script for the future abilities")]
     [SerializeField]
     private bool overridesTarget;
 
+    [Tooltip("If checked, the ability will not do damage unless its on a target")]
+    [SerializeField]
+    private bool onlyDamageIfTargeted;
+
     [Tooltip("If checked, the preview will not display")]
     [SerializeField]
     private bool hidePreview;
+    
+    [SerializeField]
+    private CustomPathStats customPathStats;
 
     [SerializeField]
     private LocationStats locationStats;
@@ -95,6 +109,9 @@ public class Projectile : MonoBehaviour, IAbility
     
     [SerializeField]
     private BlindStats blindStats;
+
+    [SerializeField]
+    private StunStats stunStats;
 
     [SerializeField]
     private BoomerangStats boomerangStats;
@@ -196,6 +213,16 @@ public class Projectile : MonoBehaviour, IAbility
     public bool HidePreview
     {
         get { return hidePreview; }
+    }
+
+    public bool OnlyDamageIfTargeted
+    {
+        get { return onlyDamageIfTargeted; }
+    }
+
+    public CustomPathStats CustomPathStats
+    {
+        get { return customPathStats; }
     }
 
     public AOEStats AOEStats
@@ -326,7 +353,7 @@ public class Projectile : MonoBehaviour, IAbility
         if(boomerangStats.IsBoomerang && grenadeStats.IsGrenade)
             boomerangStats.IsBoomerang = false;
 
-        if(chosenTarget == null)
+        if(chosenTarget == null && !onlyDamageIfTargeted)
             blockable = true;
     }
 
@@ -338,7 +365,7 @@ public class Projectile : MonoBehaviour, IAbility
         pullStats.StartPullStats(gameObject);
         strengthStats.StartStrengthStats();
         locationStats.StartStats(unit, gameObject, caster);
-
+        customPathStats.StartStats(gameObject, targetLocation);
         
         if(unit != null && !unit.Equals(null)) {
             resistEffects.StartResistance(unit);
@@ -361,7 +388,9 @@ public class Projectile : MonoBehaviour, IAbility
 
             if(caster != null) {
                 caster.PauseFiring = false;
-                caster.ExitOveride = stopOnMiss && !hit;
+                caster.ExitOverride = stopOnMiss && !hit;
+                if(skipLastOnMiss && !hit)
+                    caster.SkipOverride = skipNumber;
             }
         }
     }
@@ -425,6 +454,8 @@ public class Projectile : MonoBehaviour, IAbility
                 transform.position -= transform.forward * speed * speedReduction * Time.deltaTime;
                 boomerangStats.UpdateBoomerangStats();
             }
+            else if(customPathStats.HasCustomPath)
+                customPathStats.UpdateStats(targetLocation);
             else
                 transform.position += transform.forward * speed * speedReduction * Time.deltaTime;
         }
@@ -477,11 +508,13 @@ public class Projectile : MonoBehaviour, IAbility
         if(knockbackStats.CanKnockback)
             (damageable as IDamageable).Stats.EffectStats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position);
         if(grabStats.CanGrab)
-            (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.Speed, grabStats.PullDuration, grabStats.StunDuration, unit);
+            (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.Speed, grabStats.PullDuration, grabStats.StunDuration, grabStats.ObstaclesBlockGrab, unit);
         if(strengthStats.CanStrength)
             (damageable as IDamageable).Stats.EffectStats.StrengthenedStats.Strengthen(strengthStats.StrengthDuration, StrengthStats.StrengthIntensity);
         if(blindStats.CanBlind)
             (damageable as IDamageable).Stats.EffectStats.BlindedStats.Blind(blindStats.BlindDuration);
+        if(stunStats.CanStun)
+            (damageable as IDamageable).Stats.EffectStats.StunnedStats.Stun(stunStats.StunDuration);
         applyResistanceStats.ApplyResistance((damageable as IDamageable));
     }
 }

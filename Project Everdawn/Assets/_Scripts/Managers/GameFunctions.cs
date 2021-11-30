@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public static class GameFunctions
 {
@@ -127,8 +128,13 @@ public static class GameFunctions
             endPosition = startPosition + (direction.normalized * range);
         if(!isMovement)
             startPosition += direction.normalized * radius;
-        else
+        else {
             endPosition += direction.normalized * radius;
+            NavMeshHit hit;
+            endPosition = GameFunctions.adjustForBoundary(endPosition);
+            if(NavMesh.SamplePosition(endPosition, out hit, 12f, 9))
+                endPosition = hit.position;
+        }
         
         if(isGrenade && projectile.GrenadeStats.IsAirStrike)
             startPosition = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
@@ -313,6 +319,29 @@ public static class GameFunctions
 
     public static void giveAbilityTeam(GameObject go, string tag) {
         go.tag = tag;
+    }
+
+    //sets the ability previews to red to display that they are disabled
+    public static void DisableAbilities(GameObject go) {
+        if(go.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors to red
+            foreach(Transform child in go.transform.GetChild(1).GetChild(5).GetChild(2)) {
+                if(child.childCount > 0) //this means its a complicated summon preview
+                    child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,0,0,50);
+                else
+                    child.GetComponent<Image>().color = new Color32(255,0,0,50);
+            }
+        }
+    }
+
+    public static void EnableAbilities(GameObject go) {
+        if(go.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors back to green
+            foreach(Transform child in go.transform.GetChild(1).GetChild(5).GetChild(2)) {
+                if(child.childCount > 0) //this means its a complicated summon preview
+                    child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,255,255,100);
+                else
+                    child.GetComponent<Image>().color = new Color32(255,255,255,100);
+            }
+        }
     }
 
     public static Transform GetCanvas() {

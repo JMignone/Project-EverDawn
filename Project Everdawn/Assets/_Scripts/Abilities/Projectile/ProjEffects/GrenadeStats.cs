@@ -82,6 +82,7 @@ public class GrenadeStats
             else {
                 arcStart = go.transform.position;
                 arcApex = arcStart + (arcEnd - arcStart)/2 + Vector3.up * Vector3.Distance(arcStart, arcEnd) * grenadeArcMultiplier;
+                //this value arpApex is actually twice as high as the projectile would actually go, being fixed by the strange lerps below
             }
         }
     }

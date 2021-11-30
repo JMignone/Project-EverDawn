@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 [System.Serializable]
 public class GrabbedStats
@@ -18,13 +19,16 @@ public class GrabbedStats
 
     [SerializeField] [Min(0)]
     private float grabDelay;
-
+    private bool stunned;
     [SerializeField] [Min(0)]
     private float currentStunDelay;
 
     private float totalDistance;
     private IDamageable unit;
     private IDamageable enemyUnit;
+
+    private Vector3 destination;
+    private bool obstacleDetected;
 
     public bool CantBeGrabbed
     {
@@ -44,24 +48,6 @@ public class GrabbedStats
         set { isGrabbed = value; }
     }
 
-    public Vector3 Direction
-    {
-        get { return direction; }
-        set { direction = value; }
-    }
-
-    public float GrabDelay
-    {
-        get { return grabDelay; }
-        set { grabDelay = value; }
-    }
-
-    public float CurrentStunDelay
-    {
-        get { return currentStunDelay; }
-        set { currentStunDelay = value; }
-    }
-
     public void StartGrabbedStats(IDamageable go) {
         unit = go;
     }
@@ -69,22 +55,47 @@ public class GrabbedStats
     public void UpdateGrabbedStats() {
         if(isGrabbed) {
 
-            Vector3 unitAgentPos = Vector3.zero;
+            Vector3 unitAgentPos = new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z);
             Vector3 enemyAgentPos = Vector3.zero;
 
             bool enemyCanAct = false;
             if(enemyUnit.Agent != null && enemyUnit.Stats.CanAct) {
-                unitAgentPos = new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z);
-                enemyAgentPos = new Vector3(enemyUnit.Agent.transform.position.x, 0, enemyUnit.Agent.transform.position.z);
+                if(obstacleDetected)
+                    enemyAgentPos = destination;
+                else
+                    enemyAgentPos = new Vector3(enemyUnit.Agent.transform.position.x, 0, enemyUnit.Agent.transform.position.z);
                 enemyCanAct = true;
             }
-            
-            if(enemyCanAct && Vector3.Distance(unitAgentPos, enemyAgentPos) > unit.Agent.HitBox.radius + enemyUnit.Agent.HitBox.radius) {
-                Vector3 direction = enemyAgentPos - unitAgentPos;
+
+            Debug.DrawLine(unitAgentPos, enemyAgentPos, Color.green);
+            Debug.DrawRay(enemyAgentPos, Vector3.up*10, Color.red);
+
+            NavMeshHit hit;
+            float obstacleAdjustment = 0;
+            if(obstacleDetected)
+                obstacleAdjustment = unit.Agent.HitBox.radius/2 + enemyUnit.Agent.HitBox.radius;
+            if(enemyCanAct && !stunned && Vector3.Distance(unitAgentPos, enemyAgentPos) > unit.Agent.HitBox.radius + enemyUnit.Agent.HitBox.radius - obstacleAdjustment) {
+                direction = enemyAgentPos - unitAgentPos;
                 direction.y = 0;
                 unit.Agent.transform.position += direction.normalized * totalDistance/grabDelay * Time.deltaTime;
             }
+            else if(!NavMesh.SamplePosition(unitAgentPos, out hit, 1f, 9)) { //if the grabbed unit ended up in an obstacle
+                //NavMesh.Raycast(enemyAgentPos, unitAgentPos, out hit, 1); //find where the navmesh starts
+                //Debug.DrawLine(unitAgentPos, hit.position, Color.green);
+                //Debug.DrawRay(hit.position, Vector3.up*20, Color.yellow);
+                if(enemyUnit.Agent != null) {
+                    direction = enemyAgentPos - unitAgentPos;
+                    direction.y = 0;
+                    enemyUnit.Agent.transform.position += direction.normalized * totalDistance/grabDelay * Time.deltaTime;
+                }
+                unit.Agent.transform.position += direction.normalized * totalDistance/grabDelay * Time.deltaTime;
+                /*
+                    If somehow a weird interaction causes the unit to move in the direction outside the boundary, the unit will float away from the arena
+                    forever, however I don't think there is any possible way for this to happen. Hopefully I am not wrong.
+                */
+            }
             else if(currentStunDelay > 0) {
+                stunned = true;
                 unit.Agent.Agent.enabled = true;
                 currentStunDelay -= Time.deltaTime;
             }
@@ -93,7 +104,7 @@ public class GrabbedStats
         }
     }
 
-    public void Grab(float grabSpeed, float grabDuration, float stunDuration, IDamageable enemy) {
+    public void Grab(float grabSpeed, float grabDuration, float stunDuration, bool obstaclesBlockGrab, IDamageable enemy) {
         if(!cantBeGrabbed && !outSideResistance && unit.Agent != null && unit.Stats.CanAct) {
             isGrabbed = true;
             grabDelay = grabDuration;
@@ -102,6 +113,14 @@ public class GrabbedStats
 
             Vector3 unitAgentPos = new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z);
             Vector3 enemyAgentPos = new Vector3(enemyUnit.Agent.transform.position.x, 0, enemyUnit.Agent.transform.position.z);
+
+            if(obstaclesBlockGrab && unit.Stats.MovementType != GameConstants.MOVEMENT_TYPE.FLYING) {
+                NavMeshHit hit;
+                if(NavMesh.Raycast(unit.Agent.transform.position, enemyAgentPos, out hit, 1)) { //if an obstacle is detected
+                    obstacleDetected = true;
+                    destination = enemyAgentPos = hit.position;
+                }
+            }
 
             totalDistance = Vector3.Distance(unitAgentPos, enemyAgentPos);
 
@@ -112,26 +131,14 @@ public class GrabbedStats
             unit.Agent.Agent.enabled = false;
             unit.SetTarget(null);
             unit.Stats.CurrAttackDelay = 0;
-            if((unit as Component).transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors to red
-                foreach(Transform child in (unit as Component).transform.GetChild(1).GetChild(5).GetChild(2)) {
-                    if(child.childCount > 0) //this means its a complicated summon preview
-                        child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,0,0,50);
-                    else
-                        child.GetComponent<Image>().color = new Color32(255,0,0,50);
-                }
-            }
+            GameFunctions.DisableAbilities((unit as Component).gameObject);
         }
     }
 
     public void unGrab() {
         isGrabbed = false;
-        if((unit as Component).transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors back to green
-            foreach(Transform child in (unit as Component).transform.GetChild(1).GetChild(5).GetChild(2)) {
-                if(child.childCount > 0) //this means its a complicated summon preview
-                    child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,255,255,100);
-                else
-                    child.GetComponent<Image>().color = new Color32(255,255,255,100);
-            }
-        }
+        stunned = false;
+        obstacleDetected = false;
+        GameFunctions.EnableAbilities((unit as Component).gameObject);
     }
 }

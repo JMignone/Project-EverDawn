@@ -29,6 +29,9 @@ public class ResistEffects //this type of resistance persists as long as the pro
     [SerializeField]
     private bool resistBlind;
 
+    [SerializeField]
+    private bool resistStun;
+
     public void StartResistance(IDamageable unit) {
         if(unit.Stats.EffectStats.FrozenStats.CantBeFrozen)
             resistFreeze = false;
@@ -69,6 +72,11 @@ public class ResistEffects //this type of resistance persists as long as the pro
             resistBlind = false;
         else if(resistBlind)
             unit.Stats.EffectStats.BlindedStats.CantBeBlinded = true;
+
+        if(unit.Stats.EffectStats.StunnedStats.CantBeStunned)
+            resistStun = false;
+        else if(resistStun)
+            unit.Stats.EffectStats.StunnedStats.CantBeStunned = true;
     }
 
     public void StopResistance(IDamageable unit) {

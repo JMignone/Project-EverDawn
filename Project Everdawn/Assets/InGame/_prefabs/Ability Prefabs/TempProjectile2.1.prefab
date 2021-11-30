@@ -48,7 +48,7 @@ MonoBehaviour:
   hitBox: {fileID: 8128849535359254279}
   unitSprite: {fileID: 8128849534643583311}
   radius: 2
-  speed: 50
+  speed: 30
   range: 40
   baseDamage: 0
   towerDamage: 0
@@ -59,8 +59,16 @@ MonoBehaviour:
   abilityControl: 0
   pauseAbility: 1
   stopOnMiss: 0
+  skipLastOnMiss: 1
+  skipNumber: 1
   overridesTarget: 1
+  onlyDamageIfTargeted: 0
   hidePreview: 0
+  customPathStats:
+    hasCustomPath: 0
+    lerpPoints: []
+    speedToLastPoint: 1
+    arcMultiplierToLastPoint: 0.51
   locationStats:
     overridesLocation: 1
     overridesAtEnd: 1
@@ -97,6 +105,7 @@ MonoBehaviour:
     speed: 0
   grabStats:
     canGrab: 1
+    obstaclesBlockGrab: 1
     pullDuration: 0
     speed: 40
     stunDuration: 0.5
@@ -107,6 +116,9 @@ MonoBehaviour:
   blindStats:
     canBlind: 0
     blindDuration: 0
+  stunStats:
+    canStun: 0
+    stunDuration: 0
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0
@@ -143,6 +155,7 @@ MonoBehaviour:
     resistGrab: 0
     resistPull: 0
     resistBlind: 0
+    resistStun: 0
   applyResistanceStats:
     applyToSelf: 0
     applyToOthers: 0
@@ -166,6 +179,8 @@ MonoBehaviour:
     rpullDuration: 0
     resistBlind: 0
     rbDuration: 0
+    resistStun: 0
+    rstunDuration: 0
 --- !u!54 &8128849533423555258
 Rigidbody:
   m_ObjectHideFlags: 0

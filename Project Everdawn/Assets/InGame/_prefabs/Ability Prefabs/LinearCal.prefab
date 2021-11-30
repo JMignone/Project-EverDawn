@@ -177,6 +177,11 @@ MonoBehaviour:
   range: 80
   heightAttackable: 0
   typeAttackable: 0
+  abilityControl: 0
+  pauseAbility: 0
+  stopOnMiss: 0
+  exitTimer: 0
+  hidePreview: 1
   freezeStats:
     canFreeze: 0
     freezeDuration: 3
@@ -203,17 +208,22 @@ MonoBehaviour:
   grabStats:
     canGrab: 0
     pullDuration: 0.5
+    speed: 0
     stunDuration: 1.5
   strengthStats:
     canStrength: 0
     strengthDuration: 5.8
     strengthIntensity: 3
+  blindStats:
+    canBlind: 0
+    blindDuration: 0
   lingeringStats:
     lingering: 0
     lingerAtEnd: 1
     lingerDuringFlight: 0
     lingeringEffect: {fileID: 0}
     lingeringDamage: 25
+    towerDamage: 0
     lingeringRadius: 0
     lingeringDuration: 8
     lingeringTick: 1
@@ -222,6 +232,7 @@ MonoBehaviour:
     selfDestructs: 1
     explosionEffect: {fileID: 0}
     explosionDamage: 100
+    towerDamage: 0
     explosionRadius: 15
   linearStats:
     isLinear: 1
@@ -229,11 +240,13 @@ MonoBehaviour:
     isHorizontal: 1
     explosionEffect: {fileID: 0}
     explosionDamage: 50
+    towerDamage: 0
     explosionWidth: 5
   teleportStats:
     isWarp: 0
     teleportsAllies: 0
     allyRadius: 0
+    allyWarpSickness: 0
     explosionEffect: {fileID: 0}
   summonStats:
     isSummon: 0
@@ -245,6 +258,7 @@ MonoBehaviour:
     currentSummonTime: 0
   applyResistanceStats:
     applyToSelf: 0
+    applyToOthers: 0
     resistDamage: 0
     rdDuration: 0
     untargetable: 0
@@ -263,6 +277,8 @@ MonoBehaviour:
     rgDuration: 0
     resistPull: 0
     rpullDuration: 0
+    resistBlind: 0
+    rbDuration: 0
   chosenTarget: {fileID: 0}
 --- !u!54 &5725336417940768626
 Rigidbody:

@@ -8,6 +8,9 @@ public class GrabStats
     [SerializeField]
     private bool canGrab;
 
+    [SerializeField]
+    private bool obstaclesBlockGrab;
+
     [SerializeField] [Min(0)]
     private float pullDuration;
 
@@ -21,6 +24,11 @@ public class GrabStats
     public bool CanGrab
     {
         get { return canGrab; }
+    }
+
+    public bool ObstaclesBlockGrab
+    {
+        get { return obstaclesBlockGrab; }
     }
 
     public float PullDuration

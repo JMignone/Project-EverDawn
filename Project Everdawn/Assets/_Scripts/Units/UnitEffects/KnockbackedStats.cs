@@ -106,14 +106,7 @@ public class KnockbackedStats
             currentSpeed = speed;
             unit.SetTarget(null);
             unit.Stats.CurrAttackDelay = 0;
-            if((unit as Component).transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors to red
-                foreach(Transform child in (unit as Component).transform.GetChild(1).GetChild(5).GetChild(2)) {
-                    if(child.childCount > 0) //this means its a complicated summon preview
-                        child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,0,0,50);
-                    else
-                        child.GetComponent<Image>().color = new Color32(255,0,0,50);
-                }
-            }
+            GameFunctions.DisableAbilities((unit as Component).gameObject);
 
             direction = (unit.Agent.transform.position - sourcePosition).normalized;
             direction.y = 0;
@@ -122,13 +115,6 @@ public class KnockbackedStats
 
     public void unKnockback() {
         isKnockbacked = false;
-        if((unit as Component).transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors back to green
-            foreach(Transform child in (unit as Component).transform.GetChild(1).GetChild(5).GetChild(2)) {
-                if(child.childCount > 0) //this means its a complicated summon preview
-                    child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,255,255,100);
-                else
-                    child.GetComponent<Image>().color = new Color32(255,255,255,100);
-            }
-        }
+        GameFunctions.EnableAbilities((unit as Component).gameObject);
     }
 }

@@ -45,6 +45,10 @@ public class ResistStats
     private bool resistedBlind;
     private float rbDuration;
 
+    [SerializeField]
+    private bool resistedStun;
+    private float rstunDuration;
+
     private IDamageable unit;
 
     public bool ResistedDamage
@@ -160,6 +164,18 @@ public class ResistStats
         get { return rbDuration; }
         set { rbDuration = value; }
     }
+
+    public bool ResistedStun
+    {
+        get { return resistedStun; }
+        set { resistedStun = value; }
+    }
+
+    public float RstunDuration
+    {
+        get { return rstunDuration; }
+        set { rstunDuration = value; }
+    }
     
     public IDamageable Unit
     {
@@ -250,6 +266,14 @@ public class ResistStats
         }
     }
 
+    public void ResistStun(float duration) {
+        if(!resistedStun) {
+            resistedStun = true;
+            rstunDuration = duration;
+            unit.Stats.EffectStats.StunnedStats.OutSideResistance = true;
+        }
+    }
+
     public void UpdateResistanceStats() {
         if(resistedDamage) {
             if(rdDuration > 0)
@@ -327,6 +351,14 @@ public class ResistStats
             else {
                 resistedBlind = false;
                 unit.Stats.EffectStats.BlindedStats.OutSideResistance = false;
+            }
+        }
+        if(resistedStun) {
+            if(rstunDuration > 0)
+                rstunDuration -= Time.deltaTime;
+            else {
+                resistedStun = false;
+                unit.Stats.EffectStats.StunnedStats.OutSideResistance = false;
             }
         }
     }

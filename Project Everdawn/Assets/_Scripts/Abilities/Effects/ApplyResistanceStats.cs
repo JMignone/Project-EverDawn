@@ -61,6 +61,11 @@ public class ApplyResistanceStats //this type of resistance persists for a given
     [SerializeField]
     private float rbDuration;
 
+    [SerializeField]
+    private bool resistStun;
+    [SerializeField]
+    private float rstunDuration;
+
     public void StartResistance(IDamageable unit) {
         if(applyToSelf) {
             if(resistDamage)
@@ -83,6 +88,8 @@ public class ApplyResistanceStats //this type of resistance persists for a given
                 unit.Stats.EffectStats.ResistStats.ResistPull(rpullDuration);
             if(resistBlind)
                 unit.Stats.EffectStats.ResistStats.ResistBlind(rbDuration);
+            if(resistStun)
+                unit.Stats.EffectStats.ResistStats.ResistStun(rstunDuration);
         }
     }
 
@@ -108,6 +115,8 @@ public class ApplyResistanceStats //this type of resistance persists for a given
                 unit.Stats.EffectStats.ResistStats.ResistPull(rpullDuration);
             if(resistBlind)
                 unit.Stats.EffectStats.ResistStats.ResistBlind(rbDuration);
+            if(resistStun)
+                unit.Stats.EffectStats.ResistStats.ResistStun(rstunDuration);
         }
     }
 }
