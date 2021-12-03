@@ -36,6 +36,9 @@ public class Unit : MonoBehaviour, IDamageable
     private DeathStats deathStats;
 
     [SerializeField]
+    private NoseDiveStats noseDiveStats;
+
+    [SerializeField]
     private List<GameObject> hitTargets;
 
     [SerializeField]
@@ -128,6 +131,7 @@ public class Unit : MonoBehaviour, IDamageable
         chargeStats.StartChargeStats(unit);
         dashStats.StartDashStats(unit);
         shadowStats.StartShadowStats(unit);
+        noseDiveStats.StartStats(unit);
 
         stats.IsHoveringAbility = false;
         stats.AbilityIndicator.enabled = false;
@@ -137,7 +141,9 @@ public class Unit : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        if(stats.CurrHealth > 0) {
+        if(noseDiveStats.IsDiving)
+            noseDiveStats.UpdateStats();
+        else if(stats.CurrHealth > 0) {
             if((target == null || inRangeTargets.Count == 0) && stats.CanAct && !stats.IsCastingAbility) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                 ReTarget();
 
@@ -182,7 +188,10 @@ public class Unit : MonoBehaviour, IDamageable
 
     void Attack() {
         if(target != null) {
-            if(attackStats.FiresProjectiles) { //if the unit fires projectiles rather than simply doing damage when attacking
+            if(noseDiveStats.NoseDives)
+                if(stats.CurrAttackDelay >= stats.AttackDelay)
+                    noseDiveStats.StartDive((target.GetComponent(typeof(IDamageable)) as IDamageable));
+            else if(attackStats.FiresProjectiles) { //if the unit fires projectiles rather than simply doing damage when attacking
                 if(stats.CurrAttackDelay >= stats.AttackDelay && !attackStats.IsFiring) {
                     Component damageable = target.GetComponent(typeof(IDamageable));
                     if(damageable) { //is the target damageable

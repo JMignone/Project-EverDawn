@@ -23,6 +23,12 @@ public class CustomPathStats
     [SerializeField]
     private Sprite customImage;
 
+    [SerializeField]
+    private Vector2 pivot;
+
+    [SerializeField]
+    private Vector2 sizeDelta;
+
     private GameObject proj;
     private float angle;
 
@@ -36,19 +42,26 @@ public class CustomPathStats
     public bool HasCustomPath
     {
         get { return hasCustomPath; }
-        set { hasCustomPath = value; }
     }
 
     public Mesh CustomCollider
     {
         get { return customCollider; }
-        set { customCollider = value; }
     }
 
     public Sprite CustomImage
     {
         get { return customImage; }
-        set { customImage = value; }
+    }
+
+    public Vector2 Pivot
+    {
+        get { return pivot; }
+    }
+
+    public Vector2 SizeDelta
+    {
+        get { return sizeDelta; }
     }
 
     /*
@@ -64,10 +77,6 @@ public class CustomPathStats
             angle = Vector3.SignedAngle((targetLocation - go.transform.position).normalized, Vector3.forward, Vector3.up) * Mathf.Deg2Rad;
             arcStart = go.transform.position;
             if(lerpPoints.Count != 0) {
-                //arcEnd = new Vector3(lerpPoints[0].point.x * Mathf.Cos(angle) - lerpPoints[0].point.z * Mathf.Sin(angle), 0, lerpPoints[0].point.z * Mathf.Cos(angle) + lerpPoints[0].point.x * Mathf.Sin(angle)) + proj.transform.position;
-                //arcEnd = new Vector3(Mathf.Cos(angle) * (lerpPoints[0].point.x - go.transform.position.x) - Mathf.Sin(angle) * (lerpPoints[0].point.z - go.transform.position.z) + go.transform.position.x,
-                //                     0,
-                //                     Mathf.Sin(angle) * (lerpPoints[0].point.x - go.transform.position.x) + Mathf.Cos(angle) * (lerpPoints[0].point.z - go.transform.position.z) + go.transform.position.z);
                 arcEnd = new Vector3(Mathf.Cos(angle) * lerpPoints[0].point.x - Mathf.Sin(angle) * lerpPoints[0].point.z + go.transform.position.x,
                                      0,
                                      Mathf.Sin(angle) * lerpPoints[0].point.x + Mathf.Cos(angle) * lerpPoints[0].point.z + go.transform.position.z);
@@ -81,8 +90,6 @@ public class CustomPathStats
                     Vector3.Cross(arcEnd - arcStart, Vector3.up).normalized * Vector3.Distance(arcStart, arcEnd) * arcMultiplierToLastPoint;
                 speed = speedToLastPoint;
             }
-            
-            
         }
     }
 
@@ -95,8 +102,8 @@ public class CustomPathStats
         //distanceCovered += (speed * Time.deltaTime);
 
         if(proj.transform.position != destination) {
-            Vector3 m1 = Vector3.Lerp( arcStart, arcApex, distanceCovered);
-            Vector3 m2 = Vector3.Lerp( arcApex, destination, distanceCovered);
+            Vector3 m1 = Vector3.Lerp(arcStart, arcApex, distanceCovered);
+            Vector3 m2 = Vector3.Lerp(arcApex, destination, distanceCovered);
 
             Vector3 direction = Vector3.Lerp(m1, m2, distanceCovered) - proj.transform.position;
             if(direction != Vector3.zero)
@@ -107,10 +114,6 @@ public class CustomPathStats
             index++;
             if(index < lerpPoints.Count) {
                 arcStart = destination;
-                //arcEnd = new Vector3(lerpPoints[index].point.x * Mathf.Cos(angle) - lerpPoints[index].point.z * Mathf.Sin(angle), lerpPoints[index].point.z * Mathf.Cos(angle) - lerpPoints[index].point.x * Mathf.Sin(angle)) + proj.transform.position;
-                //arcEnd = new Vector3(Mathf.Cos(angle) * (lerpPoints[0].point.x - proj.transform.position.x) - Mathf.Sin(angle) * (lerpPoints[0].point.z - proj.transform.position.z) + proj.transform.position.x,
-                //                     0,
-                //                     Mathf.Sin(angle) * (lerpPoints[0].point.x - proj.transform.position.x) + Mathf.Cos(angle) * (lerpPoints[0].point.z - proj.transform.position.z) + proj.transform.position.z);
                 arcEnd = new Vector3(Mathf.Cos(angle) * lerpPoints[index].point.x - Mathf.Sin(angle) * lerpPoints[index].point.z + proj.transform.position.x,
                                      0,
                                      Mathf.Sin(angle) * lerpPoints[index].point.x + Mathf.Cos(angle) * lerpPoints[index].point.z + proj.transform.position.z);

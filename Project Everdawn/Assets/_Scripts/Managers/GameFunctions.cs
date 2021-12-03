@@ -126,6 +126,7 @@ public static class GameFunctions
         }
         else if(distance < range && !isGrenade && !selfDestructs && !isMovement)
             endPosition = startPosition + (direction.normalized * range);
+
         if(!isMovement)
             startPosition += direction.normalized * radius;
         else {
@@ -161,6 +162,7 @@ public static class GameFunctions
             startPosition += direction.normalized * radius;
         else
             endPosition += direction.normalized * radius;
+            
         if(isGrenade && projectile.GrenadeStats.IsAirStrike)
             startPosition = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
 
@@ -325,10 +327,10 @@ public static class GameFunctions
     public static void DisableAbilities(GameObject go) {
         if(go.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors to red
             foreach(Transform child in go.transform.GetChild(1).GetChild(5).GetChild(2)) {
-                if(child.childCount > 0) //this means its a complicated summon preview
+                if(child.childCount > 1) //this means its a complicated summon preview
                     child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,0,0,50);
                 else
-                    child.GetComponent<Image>().color = new Color32(255,0,0,50);
+                    child.GetChild(0).GetComponent<Image>().color = new Color32(255,0,0,50);
             }
         }
     }
@@ -336,10 +338,10 @@ public static class GameFunctions
     public static void EnableAbilities(GameObject go) {
         if(go.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors back to green
             foreach(Transform child in go.transform.GetChild(1).GetChild(5).GetChild(2)) {
-                if(child.childCount > 0) //this means its a complicated summon preview
+                if(child.childCount > 1) //this means its a complicated summon preview
                     child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,255,255,100);
                 else
-                    child.GetComponent<Image>().color = new Color32(255,255,255,100);
+                    child.GetChild(0).GetComponent<Image>().color = new Color32(255,255,255,100);
             }
         }
     }

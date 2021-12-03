@@ -570,6 +570,12 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             /* -- Creates the Collider component -- */
             if(projectile.CustomPathStats.HasCustomPath) {
                 previewImage.sprite = projectile.CustomPathStats.CustomImage; //Set the Sprite of the Image Component on the new GameObject
+                previewImage.preserveAspect = true;
+                imageTransform.localRotation = Quaternion.Euler(270, 180, 0);
+                imageTransform.pivot = projectile.CustomPathStats.Pivot;
+                imageTransform.sizeDelta = projectile.CustomPathStats.SizeDelta;
+                //imageTransform.pivot = new Vector2(.92f, .525f);
+                //imageTransform.sizeDelta = new Vector2(30f, 31f);
 
                 MeshCollider previewHitBox = go.AddComponent<MeshCollider>();
                 previewHitBox.sharedMesh = projectile.CustomPathStats.CustomCollider;

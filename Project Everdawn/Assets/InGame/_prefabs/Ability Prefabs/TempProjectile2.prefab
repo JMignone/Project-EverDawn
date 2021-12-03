@@ -291,7 +291,7 @@ MonoBehaviour:
   unitSprite: {fileID: 2538035109743312923}
   radius: 0.25
   speed: 40
-  range: 40
+  range: 30
   baseDamage: 0
   towerDamage: 0
   heightAttackable: 1
@@ -306,6 +306,13 @@ MonoBehaviour:
   overridesTarget: 0
   onlyDamageIfTargeted: 0
   hidePreview: 1
+  customPathStats:
+    hasCustomPath: 0
+    lerpPoints: []
+    speedToLastPoint: 0
+    arcMultiplierToLastPoint: 0
+    customCollider: {fileID: 0}
+    customImage: {fileID: 0}
   locationStats:
     overridesLocation: 0
     overridesAtEnd: 0

@@ -47,9 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBox: {fileID: 8128849535359254279}
   unitSprite: {fileID: 8128849534643583311}
-  radius: 2
+  radius: 1.5
   speed: 30
-  range: 40
+  range: 30
   baseDamage: 0
   towerDamage: 0
   heightAttackable: 1
@@ -65,10 +65,14 @@ MonoBehaviour:
   onlyDamageIfTargeted: 0
   hidePreview: 0
   customPathStats:
-    hasCustomPath: 0
+    hasCustomPath: 1
     lerpPoints: []
-    speedToLastPoint: 1
-    arcMultiplierToLastPoint: 0.51
+    speedToLastPoint: 30
+    arcMultiplierToLastPoint: 0.7002105
+    customCollider: {fileID: 532591105809680800, guid: 3371c5ec0730356438b172c793a1bb3f, type: 3}
+    customImage: {fileID: 21300000, guid: ac27ebfb92bbb1344be71a51aa516b14, type: 3}
+    pivot: {x: 0.92, y: 0.525}
+    sizeDelta: {x: 30, y: 31}
   locationStats:
     overridesLocation: 1
     overridesAtEnd: 1
