@@ -28148,7 +28148,7 @@ MonoBehaviour:
   unitSprite: {fileID: 856313650}
   target: {fileID: 0}
   stats:
-    currHealth: 0
+    currHealth: 100
     maxHealth: 1000
     currArmor: 0
     maxArmor: 0
@@ -28156,7 +28156,7 @@ MonoBehaviour:
     range: 7
     visionRange: 25
     baseDamage: 25
-    attackDelay: 2
+    attackDelay: 16
     currAttackDelay: 0
     moveSpeed: 15
     noRotation: 0

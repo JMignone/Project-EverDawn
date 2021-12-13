@@ -16,7 +16,7 @@ public class Keep : Tower
                     }
                 }
 
-                stats.UpdateStats(true, InRangeTargets.Count, agent, hitTargets, target);
+                stats.UpdateStats(true, InRangeTargets.Count, agent, hitTargets, target, gameObject);
                 Attack();
 
                 if(stats.CanAct) { //if its stunend, we want to keep the tower looking in the same direction
@@ -28,7 +28,10 @@ public class Keep : Tower
             }
             else {
                 print(gameObject.name + "has died!");
+                stats.ResetKillFlags(gameObject, target);
                 GameManager.RemoveObjectsFromList(gameObject, false, true);
+                if(target != null)
+                    (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
                 Destroy(gameObject);
             }
         }

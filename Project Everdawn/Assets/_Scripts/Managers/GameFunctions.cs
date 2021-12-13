@@ -10,6 +10,10 @@ public static class GameFunctions
     public static bool CanAttack(string playerTag, string enemyTag, Component damageable, BaseStats stats) { //returns if a unit can attack another
         if(damageable) {
             if(playerTag != enemyTag && (damageable as IDamageable).Stats.Targetable) {
+                if((damageable as IDamageable).Stats.SoonToBeKilled) {
+                    if(!stats.SoonToKill && !stats.SoonToKillOverride)
+                        return false;
+                }
                 bool heightAttackable = false;
                 if(stats.HeightAttackable == GameConstants.HEIGHT_ATTACKABLE.BOTH) //If the unit can attack the flying or ground unit, continue
                     heightAttackable = true;

@@ -147,7 +147,7 @@ public class Unit : MonoBehaviour, IDamageable
             if((target == null || inRangeTargets.Count == 0) && stats.CanAct && !stats.IsCastingAbility) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                 ReTarget();
 
-            stats.UpdateStats(ChargeAttack, inRangeTargets.Count, agent, hitTargets, target);
+            stats.UpdateStats(ChargeAttack, inRangeTargets.Count, agent, hitTargets, target, gameObject);
             buildUpStats.UpdateStats();
             chargeStats.UpdateChargeStats();
             dashStats.UpdateDashStats();
@@ -179,6 +179,7 @@ public class Unit : MonoBehaviour, IDamageable
         }
         else {
             print(gameObject.name + " has died!");
+            stats.ResetKillFlags(gameObject, target);
             GameManager.RemoveObjectsFromList(gameObject);
             if(target != null)
                 (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
@@ -199,6 +200,7 @@ public class Unit : MonoBehaviour, IDamageable
                         if(hitTargets.Contains(target)) //this is needed for the rare occurance that a unit is 90% done with attack delay and the target leaves its range. It can still do its attack if its within vision given that its attack was already *90% thru
                             attackStats.BeginFiring();
                     }
+                    stats.ResetKillFlags(gameObject, target);
                 }
             }
             else {
@@ -215,6 +217,7 @@ public class Unit : MonoBehaviour, IDamageable
                             buildUpStats.BuildUp();
                             stats.Appear(gameObject, shadowStats, agent);
                             stats.CurrAttackDelay = 0;
+                            stats.ResetKillFlags(gameObject, target);
                         }
                     }
                 }
@@ -228,8 +231,10 @@ public class Unit : MonoBehaviour, IDamageable
 
     public void SetTarget(GameObject newTarget) {
         if((newTarget != target && stats.CanAct && !stats.IsCastingAbility) || newTarget == null) {
-            if(target != null)
+            if(target != null) {
                 (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
+                stats.ResetKillFlags(gameObject, target);
+            }
             if(newTarget != null)
                 (newTarget.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Add(gameObject);
             target = newTarget;

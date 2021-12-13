@@ -80,6 +80,10 @@ public class BaseStats
     private bool isAttacking; //attacking is if the unit attacks in the normal method
     private bool isShadow;
 
+    private bool soonToBeKilled;     //a flag set if the unit is about to be killed
+    private bool soonToKill;         //a flag set if the unit is about to kill
+    private bool soonToKillOverride; //a flag set if the target is about to be killed and is granted access to finish an attack on a soonToBeKilled target
+
     public float PercentHealth {
         get { return currHealth/maxHealth; }
     }
@@ -287,6 +291,24 @@ public class BaseStats
         set { isShadow = value; }
     }
 
+    public bool SoonToBeKilled
+    {
+        get { return soonToBeKilled; }
+        set { soonToBeKilled = value; }
+    }
+
+    public bool SoonToKill
+    {
+        get { return soonToKill; }
+        set { soonToKill = value; }
+    }
+
+    public bool SoonToKillOverride
+    {
+        get { return soonToKillOverride; }
+        set { soonToKillOverride = value; }
+    }
+
     public bool Targetable {
         get { return !isShadow; }
     }
@@ -306,7 +328,7 @@ public class BaseStats
             return effectStats.SlowedStats.CurrentSlowIntensity;
     }
 
-    public void UpdateStats(bool chargeAttack, int inRange, Actor3D unitAgent, List<GameObject> hitTargets, GameObject target) {
+    public void UpdateStats(bool chargeAttack, int inRange, Actor3D unitAgent, List<GameObject> hitTargets, GameObject target, GameObject unit) {
         /*
         if(PercentHealth == 1) {
             HealthBar.enabled = false;
@@ -352,6 +374,9 @@ public class BaseStats
                     float angle = Vector3.Angle(unitAgent.transform.forward, directionToTarget); 
 
                     if(noRotation || Mathf.Abs(angle) < GameConstants.MAXIMUM_ATTACK_ANGLE) {
+                        if(!soonToKill && !soonToKillOverride && currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE)
+                            SetKillFlags(unit, target);
+
                         if(currAttackDelay < attackDelay) 
                             currAttackDelay += Time.deltaTime * effectStats.SlowedStats.CurrentSlowIntensity;
                         else
@@ -360,21 +385,25 @@ public class BaseStats
                     else {
                         if(currAttackDelay < attackDelay*GameConstants.ATTACK_READY_PERCENTAGE) 
                             currAttackDelay += Time.deltaTime * effectStats.SlowedStats.CurrentSlowIntensity;
+                        ResetKillFlags(unit, target);
                     }
                 }
                 else { //this may occur for a few frames when a units target dies, but there are still other units it can target, it just has not updated to the new target yet
                     if(currAttackDelay < attackDelay*GameConstants.ATTACK_READY_PERCENTAGE) 
                         currAttackDelay += Time.deltaTime * effectStats.SlowedStats.CurrentSlowIntensity;
+                    ResetKillFlags(unit, target);
                 }
             }
             else if(inVision && !IsCastingAbility && chargeAttack) { //if the target is within vision
                 isAttacking = false;
                 if(currAttackDelay < attackDelay*GameConstants.ATTACK_CHARGE_LIMITER) 
                     currAttackDelay += Time.deltaTime * effectStats.SlowedStats.CurrentSlowIntensity;
+                ResetKillFlags(unit, target);
             }
             else {
                 isAttacking = false;
                 currAttackDelay = 0;
+                ResetKillFlags(unit, target);
             }
         }
     }
@@ -413,23 +442,75 @@ public class BaseStats
         }
     }
 
-    public void Vanish(GameObject unit, GameObject[] enemyHitTargets) {
-        if(!isShadow) {
-            isShadow = true;
-            foreach(GameObject go in enemyHitTargets) {
-                Component targetComponent = go.GetComponent(typeof(IDamageable));
-                if(targetComponent) {
-                    (targetComponent as IDamageable).SetTarget(null);
-                    if((targetComponent as IDamageable).InRangeTargets.Contains(unit))
-                        (targetComponent as IDamageable).InRangeTargets.Remove(unit);
-                    if((targetComponent as IDamageable).HitTargets.Contains(unit))
-                        (targetComponent as IDamageable).HitTargets.Remove(unit);
+    public void ResetKillFlags(GameObject unit, GameObject target) {
+        soonToKillOverride = false;
 
-                    if((targetComponent as IDamageable).InRangeTargets.Count == 0)
-                        (targetComponent as IDamageable).Stats.IncRange = false;
+        if(soonToKill) {
+            soonToKill = false;
+            if(target != null) {
+                IDamageable enemyUnit = (target.GetComponent(typeof(IDamageable)) as IDamageable);
+                enemyUnit.Stats.SoonToBeKilled = false;
+
+                foreach(GameObject go in enemyUnit.EnemyHitTargets) { //go through every unit targeting our target and see if any of them will kill this unit first
+                    if(go != unit) {
+                        IDamageable friendlyUnit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+                        friendlyUnit.Stats.SoonToKillOverride = false;
+                        soonToKill = false;
+                    }
+                }
+
+                Collider[] colliders = Physics.OverlapSphere(target.transform.GetChild(0).position, target.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().radius);
+                foreach(Collider collider in colliders) {
+                    Component enemy = collider.transform.parent.parent.GetComponent(typeof(IDamageable));
+                    if(enemy) {
+                        if(!enemy.CompareTag(target.tag) && collider.CompareTag("Range")) {
+                            if(GameFunctions.CanAttack(enemy.tag, target.tag, target.GetComponent(typeof(IDamageable)), (enemy as IDamageable).Stats)) { //only if the unit can actually target this one should we adjust this value
+                                if(!(enemy as IDamageable).InRangeTargets.Contains(target))
+                                    (enemy as IDamageable).InRangeTargets.Add(target);
+                                if( ((enemy as IDamageable).InRangeTargets.Count == 1 || (enemy as IDamageable).Target == null) && (enemy as IDamageable).Stats.CanAct) { //we need this block here as well as stay in the case that a unit is placed inside a units range
+                                    GameObject go = GameFunctions.GetNearestTarget((enemy as IDamageable).HitTargets, collider.transform.parent.parent.tag, (enemy as IDamageable).Stats);
+                                    if(go != null) {
+                                        (enemy as IDamageable).SetTarget(go);
+                                        (enemy as IDamageable).Stats.IncRange = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            //make unit transparent
+        }
+    }
+
+    public void SetKillFlags(GameObject unit, GameObject target) {
+        IDamageable enemyUnit = (target.GetComponent(typeof(IDamageable)) as IDamageable);
+        if(enemyUnit.Stats.CurrArmor == 0 && enemyUnit.Stats.CurrHealth <= baseDamage*effectStats.StrengthenedStats.CurrentStrengthIntensity && !soonToBeKilled) {
+
+            foreach(GameObject go in enemyUnit.EnemyHitTargets) { //go through every unit targeting our target and see if any of them will kill this unit first
+                if(go != unit) {
+                    IDamageable friendlyUnit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+                    float timeToKill = ( ((int) (enemyUnit.Stats.CurrHealth/(friendlyUnit.Stats.BaseDamage*friendlyUnit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity))) * friendlyUnit.Stats.AttackDelay) - friendlyUnit.Stats.CurrAttackDelay;
+                    if(currAttackDelay > timeToKill)
+                        return;
+                }
+            }
+
+            soonToKill = true;
+            enemyUnit.Stats.SoonToBeKilled = true;
+            foreach(GameObject go in enemyUnit.EnemyHitTargets.ToArray()) { //go through every unit targeting our target and see if any of them will kill this unit first
+                if(go != unit) {
+                    IDamageable friendlyUnit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+                    if(friendlyUnit.Stats.CurrAttackDelay > friendlyUnit.Stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER)
+                        friendlyUnit.Stats.SoonToKillOverride = true;
+                    else {
+                        friendlyUnit.SetTarget(null);
+                        if(friendlyUnit.InRangeTargets.Contains(target))
+                            friendlyUnit.InRangeTargets.Remove(target);
+                        if(friendlyUnit.InRangeTargets.Count == 0)
+                            friendlyUnit.Stats.IncRange = false;
+                    }
+                }
+            }
         }
     }
 
@@ -458,6 +539,26 @@ public class BaseStats
                 healthBar.transform.GetChild(0).gameObject.SetActive(true);
             }
             healthBar.fillAmount = PercentHealth;
+        }
+    }
+
+    public void Vanish(GameObject unit, GameObject[] enemyHitTargets) {
+        if(!isShadow) {
+            isShadow = true;
+            foreach(GameObject go in enemyHitTargets) {
+                Component targetComponent = go.GetComponent(typeof(IDamageable));
+                if(targetComponent) {
+                    (targetComponent as IDamageable).SetTarget(null);
+                    if((targetComponent as IDamageable).InRangeTargets.Contains(unit))
+                        (targetComponent as IDamageable).InRangeTargets.Remove(unit);
+                    if((targetComponent as IDamageable).HitTargets.Contains(unit))
+                        (targetComponent as IDamageable).HitTargets.Remove(unit);
+
+                    if((targetComponent as IDamageable).InRangeTargets.Count == 0)
+                        (targetComponent as IDamageable).Stats.IncRange = false;
+                }
+            }
+            //make unit transparent
         }
     }
 

@@ -124,7 +124,7 @@ public class Tower : MonoBehaviour, IDamageable
             if((target == null || inRangeTargets.Count == 0) && stats.CanAct) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                 ReTarget();
 
-            stats.UpdateStats(true, inRangeTargets.Count, agent, hitTargets, target);
+            stats.UpdateStats(true, inRangeTargets.Count, agent, hitTargets, target, gameObject);
             Attack();
 
             if(stats.CanAct) { //if its stunned, we want to keep the tower looking in the same direction
@@ -136,7 +136,10 @@ public class Tower : MonoBehaviour, IDamageable
         }
         else {
             print(gameObject.name + " has died!");
+            stats.ResetKillFlags(gameObject, target);
             GameManager.RemoveObjectsFromList(gameObject, leftTower, false);
+            if(target != null)
+               (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
             Destroy(gameObject);
         }
     }
@@ -150,6 +153,7 @@ public class Tower : MonoBehaviour, IDamageable
                         if(hitTargets.Contains(target)) //this is needed for the rare occurance that a unit is 90% done with attack delay and the target leaves its range. It can still do its attack if its within vision given that its attack was already *90% thru
                             attackStats.BeginFiring();
                     }
+                    stats.ResetKillFlags(gameObject, target);
                 }
             }
             else {
@@ -164,6 +168,7 @@ public class Tower : MonoBehaviour, IDamageable
                                 stats.ApplyAffects(damageable);
                             }
                             stats.CurrAttackDelay = 0;
+                            stats.ResetKillFlags(gameObject, target);
                         }
                     }
                 }
@@ -175,8 +180,10 @@ public class Tower : MonoBehaviour, IDamageable
 
     public void SetTarget(GameObject newTarget) {
         if(newTarget != target) {
-            if(target != null)
+            if(target != null) {
                 (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
+                stats.ResetKillFlags(gameObject, target);
+            }
             if(newTarget != null)
                 (newTarget.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Add(gameObject);
             target = newTarget;

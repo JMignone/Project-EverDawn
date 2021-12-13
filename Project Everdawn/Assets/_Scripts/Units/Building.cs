@@ -169,7 +169,7 @@ public class Building : MonoBehaviour, IDamageable
                 if((target == null || inRangeTargets.Count == 0) && stats.CanAct && !stats.IsCastingAbility) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                     ReTarget();
 
-                stats.UpdateStats(ChargeAttack, inRangeTargets.Count, agent, hitTargets, target);
+                stats.UpdateStats(ChargeAttack, inRangeTargets.Count, agent, hitTargets, target, gameObject);
                 buildUpStats.UpdateStats();
                 shadowStats.UpdateShadowStats();
                 Attack();
@@ -186,7 +186,10 @@ public class Building : MonoBehaviour, IDamageable
         }
         else {
             print(gameObject.name + " has died!");
+            stats.ResetKillFlags(gameObject, target);
             GameManager.RemoveObjectsFromList(gameObject);
+            if(target != null)
+               (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
             Destroy(gameObject);
         }
     }
@@ -209,12 +212,12 @@ public class Building : MonoBehaviour, IDamageable
         if(target != null) {
             if(attackStats.FiresProjectiles) { //if the unit fires projectiles rather than simply doing damage when attacking
                 if(stats.CurrAttackDelay >= stats.AttackDelay && !attackStats.IsFiring) {
-                    print("testsdfsdf");
                     Component damageable = target.GetComponent(typeof(IDamageable));
                     if(damageable) { //is the target damageable
                         if(hitTargets.Contains(target)) //this is needed for the rare occurance that a unit is 90% done with attack delay and the target leaves its range. It can still do its attack if its within vision given that its attack was already *90% thru
                             attackStats.BeginFiring();
                     }
+                    stats.ResetKillFlags(gameObject, target);
                 }
             }
             else {
@@ -231,6 +234,7 @@ public class Building : MonoBehaviour, IDamageable
                             buildUpStats.BuildUp();
                             stats.Appear(gameObject, shadowStats, agent);
                             stats.CurrAttackDelay = 0;
+                            stats.ResetKillFlags(gameObject, target);
                         }
                     }
                 }
@@ -244,8 +248,10 @@ public class Building : MonoBehaviour, IDamageable
 
     public void SetTarget(GameObject newTarget) {
         if((newTarget != target && stats.CanAct && !stats.IsCastingAbility) || newTarget == null) {
-            if(target != null)
+            if(target != null) {
                 (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
+                stats.ResetKillFlags(gameObject, target);
+            }
             if(newTarget != null)
                 (newTarget.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Add(gameObject);
             target = newTarget;
