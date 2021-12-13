@@ -6379,7 +6379,7 @@ MonoBehaviour:
     range: 15
     visionRange: 25
     baseDamage: 25
-    attackDelay: 0.25
+    attackDelay: 2
     currAttackDelay: 0
     moveSpeed: 10
     noRotation: 0
@@ -6491,7 +6491,7 @@ MonoBehaviour:
     abilityDelays: []
     currentDelay: 0
   buildUpStats:
-    buildsUp: 1
+    buildsUp: 0
     retainOnRetarget: 0
     damageIncrease: 15
     delayDecrease: 0.2
@@ -6523,7 +6523,7 @@ MonoBehaviour:
     abilityPrefabs: []
     abilityDelays: []
   noseDiveStats:
-    noseDives: 1
+    noseDives: 0
     createAtLocation: {fileID: 1224647179923901261, guid: b9b13d8fe00ea5b4c87f1be703988fd6, type: 3}
     speed: 30
   hitTargets: []
@@ -6537,7 +6537,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 483495840}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 24.1, y: -0.32, z: 10.9}
+  m_LocalPosition: {x: 7.8, y: -0.32, z: 21.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1010337152}
@@ -19985,7 +19985,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1390792288}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.4, y: 0, z: -32.9}
+  m_LocalPosition: {x: 0.9, y: 0, z: -21.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 997561209}

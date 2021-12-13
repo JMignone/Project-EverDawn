@@ -313,6 +313,8 @@ MonoBehaviour:
     arcMultiplierToLastPoint: 0
     customCollider: {fileID: 0}
     customImage: {fileID: 0}
+    pivot: {x: 0, y: 0}
+    sizeDelta: {x: 0, y: 0}
   locationStats:
     overridesLocation: 0
     overridesAtEnd: 0

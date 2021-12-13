@@ -45,6 +45,8 @@ public class NoseDiveStats
         unit.Agent.Agent.enabled = false;
         unit.Agent.transform.rotation = Quaternion.LookRotation(direction);
 
+        unit.Stats.HealthBar.transform.parent.GetComponent<Canvas>().enabled = false;
+
         unit.Stats.EffectStats.ResistStats.ResistDamage(100);
         unit.Stats.EffectStats.ResistStats.ResistTarget(100);
     }

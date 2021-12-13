@@ -118,6 +118,9 @@ public class GameManager : MonoBehaviour
                         (component as IDamageable).Target = null;                    //make target null
                     if((component as IDamageable).InRangeTargets.Contains(objectToRemove))
                         (component as IDamageable).InRangeTargets.Remove(objectToRemove); 
+
+                    if((component as IDamageable).InRangeTargets.Count == 0)
+                        (component as IDamageable).Stats.IncRange = false;
                 }
             }
         }
@@ -151,6 +154,9 @@ public class GameManager : MonoBehaviour
                         (component as IDamageable).Target = null;                    //make target null
                     if((component as IDamageable).InRangeTargets.Contains(objectToRemove))
                         (component as IDamageable).InRangeTargets.Remove(objectToRemove); 
+
+                    if((component as IDamageable).InRangeTargets.Count == 0)
+                        (component as IDamageable).Stats.IncRange = false;
                 }
             }
         }

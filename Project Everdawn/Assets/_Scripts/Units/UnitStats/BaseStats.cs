@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class BaseStats
     private float healthDecay;
     [SerializeField] [Min(0)]
     private float range;
+    private bool incRange; //Used to increment the units range by 1 when it has units within its range to prevent chase, stop, chase
     [SerializeField] [Min(0)]
     private float visionRange;
     [SerializeField] [Min(0)]
@@ -126,6 +128,11 @@ public class BaseStats
         set { range = value; }
     }
 
+    public bool IncRange
+    {
+        set { incRange = value; }
+    }
+
     public float VisionRange
     {
         get { return visionRange; }
@@ -175,6 +182,11 @@ public class BaseStats
     public Image HealthBar
     {
         get { return healthBar; }
+    }
+
+    public Image ArmorBar
+    {
+        get { return armorBar; }
     }
 
     public Image AbilityIndicator
@@ -318,10 +330,10 @@ public class BaseStats
 
         unitAgent.Agent.speed = moveSpeed * SpeedMultiplier();
 
-        detectionObject.radius = range;
+        detectionObject.radius = range + Convert.ToInt32(incRange);
         //this is nessesary because we need the vision collider to go off first, as bigger colliders will go off first
-        if(range == visionRange)
-            visionObject.radius = visionRange + .01f;
+        if(detectionObject.radius >= visionRange)
+            visionObject.radius = detectionObject.radius + .01f;
         else
             visionObject.radius = visionRange;
 
@@ -412,6 +424,9 @@ public class BaseStats
                         (targetComponent as IDamageable).InRangeTargets.Remove(unit);
                     if((targetComponent as IDamageable).HitTargets.Contains(unit))
                         (targetComponent as IDamageable).HitTargets.Remove(unit);
+
+                    if((targetComponent as IDamageable).InRangeTargets.Count == 0)
+                        (targetComponent as IDamageable).Stats.IncRange = false;
                 }
             }
             //make unit transparent
@@ -469,8 +484,10 @@ public class BaseStats
                                 (enemy as IDamageable).InRangeTargets.Add(unit);
                             if( ((enemy as IDamageable).InRangeTargets.Count == 1 || (enemy as IDamageable).Target == null) && (enemy as IDamageable).Stats.CanAct) { //we need this block here as well as stay in the case that a unit is placed inside a units range
                                 GameObject go = GameFunctions.GetNearestTarget((enemy as IDamageable).HitTargets, collider.transform.parent.parent.tag, (enemy as IDamageable).Stats);
-                                if(go != null)
+                                if(go != null) {
                                     (enemy as IDamageable).SetTarget(go);
+                                    (enemy as IDamageable).Stats.IncRange = true;
+                                }
                             }
                         }
                     }

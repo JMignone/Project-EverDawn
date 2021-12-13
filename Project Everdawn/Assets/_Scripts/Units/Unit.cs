@@ -188,9 +188,10 @@ public class Unit : MonoBehaviour, IDamageable
 
     void Attack() {
         if(target != null) {
-            if(noseDiveStats.NoseDives)
+            if(noseDiveStats.NoseDives) {
                 if(stats.CurrAttackDelay >= stats.AttackDelay)
                     noseDiveStats.StartDive((target.GetComponent(typeof(IDamageable)) as IDamageable));
+            }
             else if(attackStats.FiresProjectiles) { //if the unit fires projectiles rather than simply doing damage when attacking
                 if(stats.CurrAttackDelay >= stats.AttackDelay && !attackStats.IsFiring) {
                     Component damageable = target.GetComponent(typeof(IDamageable));
@@ -287,8 +288,10 @@ public class Unit : MonoBehaviour, IDamageable
                                 (unit as IDamageable).InRangeTargets.Add(gameObject);
                             if( ((unit as IDamageable).InRangeTargets.Count == 1 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct) { //we need this block here as well as stay in the case that a unit is placed inside a units range
                                 GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
-                                if(go != null)
+                                if(go != null) {
                                     (unit as IDamageable).SetTarget(go);
+                                    (unit as IDamageable).Stats.IncRange = true;
+                                }
                             }
                         }
                     }
@@ -326,10 +329,14 @@ public class Unit : MonoBehaviour, IDamageable
                     //Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                     if(other.CompareTag("Range")) { //Are we in their Range detection object?
                         if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
+                            //do we need the above line? this implies that the unit might already be targeting it. Maybe its because this unit changed itself somehow
                             if((unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Remove(gameObject);
                             if((unit as IDamageable).Target == gameObject)
                                 (unit as IDamageable).SetTarget(null);
+
+                            if((unit as IDamageable).InRangeTargets.Count == 0)
+                                (unit as IDamageable).Stats.IncRange = false;
                         }
                     }
                     else if(other.CompareTag("Vision")) { //Are we in their vision detection object?

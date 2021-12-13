@@ -310,8 +310,10 @@ public class Building : MonoBehaviour, IDamageable
                                 (unit as IDamageable).InRangeTargets.Add(gameObject);
                             if( ((unit as IDamageable).InRangeTargets.Count == 1 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct) {
                                 GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
-                                if(go != null)
+                                if(go != null) {
                                     (unit as IDamageable).SetTarget(go);
+                                    (unit as IDamageable).Stats.IncRange = true;
+                                }
                             }
                         }
                     }
@@ -349,6 +351,9 @@ public class Building : MonoBehaviour, IDamageable
                                 (unit as IDamageable).InRangeTargets.Remove(gameObject);
                             if((unit as IDamageable).Target == gameObject)
                                 (unit as IDamageable).SetTarget(null);
+
+                            if((unit as IDamageable).InRangeTargets.Count == 0)
+                                (unit as IDamageable).Stats.IncRange = false;
                         }
                     }
                     else if(other.CompareTag("Vision")) { //Are we in their vision detection object?

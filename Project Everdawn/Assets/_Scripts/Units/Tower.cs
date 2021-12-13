@@ -219,6 +219,9 @@ public class Tower : MonoBehaviour, IDamageable
                         if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {//anything can attack a tower, ill leave it hear incase somthing with an ability gives a need for this
                             if(!(unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Add(gameObject);
+
+                            if((unit as IDamageable).InRangeTargets.Count == 1)
+                                (unit as IDamageable).Stats.IncRange = true;
                         }
                     }
                     else if(other.CompareTag("Vision")) { //Are we in their vision detection object?
@@ -255,6 +258,9 @@ public class Tower : MonoBehaviour, IDamageable
                                 (unit as IDamageable).InRangeTargets.Remove(gameObject);
                             if((unit as IDamageable).Target == gameObject)
                                 (unit as IDamageable).SetTarget(null);
+
+                            if((unit as IDamageable).InRangeTargets.Count == 0)
+                                (unit as IDamageable).Stats.IncRange = false;
                         }
                     }
                     else if(other.CompareTag("Vision")) { //Are we in their vision detection object?
