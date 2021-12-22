@@ -50,7 +50,7 @@ public class CardDatabaseDisplay : MonoBehaviour
     {
         if(cardsBeingDisplayed != null && transform.childCount != 0) // Check that there are objects that have been instantiated and are in the list
         {
-            for (int i = cardsBeingDisplayed.Count - 1; i >= 0 ; i--) // Reverse loop over objects in list and destroy them
+            for (int i = cardsBeingDisplayed.Count - 1; i >= 0; i--) // Reverse loop over objects in list and destroy them
             {
                 GameObject.Destroy(cardsBeingDisplayed[i]);
                 cardsBeingDisplayed.Remove(cardsBeingDisplayed[i]);

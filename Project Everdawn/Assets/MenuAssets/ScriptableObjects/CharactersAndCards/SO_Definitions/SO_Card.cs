@@ -8,7 +8,7 @@ public class SO_Card : ScriptableObject
 {
     #region Card Variables
     [Header("General Attributes")]
-        public int CardID;
+        public int cardID;
 
         [Space]
 

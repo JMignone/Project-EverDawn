@@ -7,9 +7,10 @@ using System.IO;
 
 public class DataStorage : MonoBehaviour
 {
-    public static DataStorage dataStor;
+    public List<int> Selected_Cards;
 
-    public List<float> Selected_Cards;
+    #region Singleton Pattern
+    public static DataStorage dataStor;
 
     // Awake is called before start
     private void Awake()
@@ -30,6 +31,7 @@ public class DataStorage : MonoBehaviour
         // </singleton code>
 
     }
+    #endregion
 
     public void Save()
     {
@@ -80,5 +82,5 @@ public class DataStorage : MonoBehaviour
 [Serializable]
 class PlayerData
 {
-    public List <float> Selected_Cards;
+    public List <int> Selected_Cards;
 }

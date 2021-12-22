@@ -45,6 +45,7 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
      <Compile Include="Assets\MenuAssets\ScriptableObjects\CharactersAndCards\SO_Definitions\SO_CardDatabase.cs" />
      <Compile Include="Assets\_Scripts\Units\BuildingEffects\SpawnStats.cs" />
+     <Compile Include="Assets\MenuAssets\DeckSaving\DeckSaver.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
      <Compile Include="Assets\_Scripts\Units\UnitEffects\SlowedStats.cs" />
      <Compile Include="Assets\LeanTween\Framework\LeanTweenExt.cs" />
@@ -56,6 +57,7 @@
      <Compile Include="Assets\_Scripts\Units\Actor3D.cs" />
      <Compile Include="Assets\_Scripts\Deck\PlayerStats.cs" />
      <Compile Include="Assets\_Scripts\Abilities\CreateAtLocation\CALEffects\LinearStats.cs" />
+     <Compile Include="Assets\MenuAssets\GameEvents\Listeners\IntListener.cs" />
      <Compile Include="Assets\MenuAssets\GameEvents\Listeners\VoidListener.cs" />
      <Compile Include="Assets\_Scripts\Interface\IAbility.cs" />
      <Compile Include="Assets\_Scripts\Units\Keep.cs" />
@@ -72,12 +74,14 @@
      <Compile Include="Assets\MenuAssets\Scripts\CardDisplay.cs" />
      <Compile Include="Assets\_Scripts\Managers\GameFunctions.cs" />
      <Compile Include="Assets\MenuAssets\ScriptableObjects\CharactersAndCards\SO_Definitions\SO_CharacterDatabase.cs" />
-     <Compile Include="Assets\MenuAssets\ScriptableObjects\CharactersAndCards\CardClickFunctions\SO_CardClickFunction.cs" />
+     <Compile Include="Assets\MenuAssets\DeckSaving\PlayerDeck.cs" />
      <Compile Include="Assets\_Scripts\Deck\CardStats.cs" />
      <Compile Include="Assets\MenuAssets\GameEvents\Listeners\GameEventListener.cs" />
+     <Compile Include="Assets\MenuAssets\Scripts\OnCardClick.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralUISpace.cs" />
      <Compile Include="Assets\_Scripts\Abilities\CreateAtLocation\CALEffects\SummonStats.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\OrbitAnimation.cs" />
+     <Compile Include="Assets\MenuAssets\GameEvents\Listeners\CardListener.cs" />
      <Compile Include="Assets\LeanTween\Framework\LeanAudio.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Effects\LingeringStats.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\UIAnimator.cs" />
@@ -85,12 +89,14 @@
      <Compile Include="Assets\_Scripts\Units\UnitEffects\PulledStats.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
+     <Compile Include="Assets\MenuAssets\DeckSaving\DeckDisplay.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralSimpleUI.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Effects\RootStats.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
      <Compile Include="Assets\_Scripts\Units\PreviewUnit\PreviewActor3D.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\UITabGroup.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\PathSplineEndless.cs" />
+     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Events\CardEvent.cs" />
      <Compile Include="Assets\_Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Projectile\ProjEffects\GrenadeStats.cs" />
      <Compile Include="Assets\_Scripts\Units\UnitEffects\KnockbackedStats.cs" />
@@ -124,13 +130,13 @@
      <Compile Include="Assets\_Scripts\Units\UnitEffects\EffectStats.cs" />
      <Compile Include="Assets\_Scripts\Deck\Spell.cs" />
      <Compile Include="Assets\_Scripts\Abilities\AbilityUI.cs" />
-     <Compile Include="Assets\MenuAssets\Scripts\UnusedOrLegacy\TatekiMath.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralEventsListeners.cs" />
      <Compile Include="Assets\_Scripts\Units\UnitEffects\UKnockbackStats.cs" />
      <Compile Include="Assets\MenuAssets\ScriptableObjects\Managers\SO_Definitions\SO_PlayerPrefsInterface.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Projectile\Projectile.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\PathSplineTrack.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
+     <Compile Include="Assets\MenuAssets\Scripts\ClickableCard.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\UnusedOrLegacy\DataStorage.cs" />
@@ -143,16 +149,18 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\TestingZLegacy.cs" />
      <Compile Include="Assets\_Scripts\Units\UnitEffects\RootedStats.cs" />
-     <Compile Include="Assets\MenuAssets\GameEvents\Events\VoidEvent.cs" />
+     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Events\VoidEvent.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
+     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\UnityEvents\UnityCardEvent.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\PathSpline2d.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
+     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\UnityEvents\UnityIntEvent.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\CardDatabaseDisplay.cs" />
-     <Compile Include="Assets\MenuAssets\ScriptableObjects\CharactersAndCards\SO_Definitions\SO_Deck.cs" />
+     <Compile Include="Assets\MenuAssets\DeckSaving\Decks\SO_Deck.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\TestingZLegacyExt.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\PathSplinePerformance.cs" />
      <Compile Include="Assets\_Scripts\Units\Actor2D.cs" />
-     <Compile Include="Assets\MenuAssets\GameEvents\UnityEvents\UnityVoidEvent.cs" />
+     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\UnityEvents\UnityVoidEvent.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Projectile\ProjEffects\BoomerangStats.cs" />
      <Compile Include="Assets\_Scripts\Units\Unit.cs" />
@@ -165,10 +173,11 @@
      <Compile Include="Assets\_Scripts\Interface\IDamageable.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
-     <Compile Include="Assets\MenuAssets\GameEvents\Events\GameEvent.cs" />
+     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Events\GameEvent.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Effects\PullStats.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
+     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Events\IntEvent.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Effects\GrabStats.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Projectile\ProjActor2D.cs" />
@@ -177,7 +186,7 @@
      <Compile Include="Assets\LeanTween\Framework\LTDescrOptional.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralEasingTypes.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralSequencer.cs" />
-     <Compile Include="Assets\MenuAssets\GameEvents\Void.cs" />
+     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Void.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Effects\PoisonStats.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
      <Compile Include="Assets\LeanTween\Examples\Archived\OldGUIExamplesCS.cs" />
@@ -189,14 +198,6 @@
      <Compile Include="Assets\LeanTween\Examples\Archived\TestingRigidbodyCS.cs" />
      <Compile Include="Assets\_Scripts\Units\UnitEffects\FrozenStats.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\Following.cs" />
-     <Compile Include="Assets\MenuAssets\GameEvents\Events\IntEvent.cs" />
-     <Compile Include="Assets\MenuAssets\GameEvents\UnityEvents\UnityIntEvent.cs" />
-     <Compile Include="Assets\MenuAssets\GameEvents\Listeners\IntListener.cs" />
-     <Compile Include="Assets\MenuAssets\GameEvents\Events\CardEvent.cs" />
-     <Compile Include="Assets\MenuAssets\GameEvents\Listeners\CardListener.cs" />
-     <Compile Include="Assets\MenuAssets\GameEvents\UnityEvents\UnityCardEvent.cs" />
-     <Compile Include="Assets\MenuAssets\Scripts\OnCardClick.cs" />
-     <Compile Include="Assets\MenuAssets\Scripts\OnChildCardClicked.cs" />
      <None Include="Assets\InGame\_Units\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
@@ -835,9 +836,6 @@
     </Reference>
     <Reference Include="Unity.PlasticSCM.Editor">
         <HintPath>C:/Users/Jonathan/Documents/GitHub/Project-Luna/Project Everdawn/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Rider.Editor">
-        <HintPath>C:/Users/Jonathan/Documents/GitHub/Project-Luna/Project Everdawn/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
         <HintPath>C:/Users/Jonathan/Documents/GitHub/Project-Luna/Project Everdawn/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>

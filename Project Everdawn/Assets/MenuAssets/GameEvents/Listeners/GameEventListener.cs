@@ -23,7 +23,7 @@ public abstract class GameEventListener<T, GE, UER> : MonoBehaviour
     [ContextMenu("Trigger Responses")]
     public void TriggerResponses(T val)
     {
-        //UnityEvents do nullcheck
+        //UnityEvents do nullchecks themselves
         unityEventResponse.Invoke(val);
     }
 }

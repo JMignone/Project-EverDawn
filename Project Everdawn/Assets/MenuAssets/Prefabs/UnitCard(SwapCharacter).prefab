@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1885102119395067309, guid: 5294893c2b971c049b80ef7280df4eff, type: 3}
+      propertyPath: cardEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: fe3514194fcdac149ac13d4e8a503eb2, type: 2}
     - target: {fileID: 3543102478144334001, guid: 5294893c2b971c049b80ef7280df4eff, type: 3}
       propertyPath: m_Name
       value: UnitCard(SwapCharacter)
@@ -106,14 +110,14 @@ PrefabInstance:
     - target: {fileID: 7711488337542909278, guid: 5294893c2b971c049b80ef7280df4eff, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 11400000, guid: fe3514194fcdac149ac13d4e8a503eb2, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 7711488337542909278, guid: 5294893c2b971c049b80ef7280df4eff, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7711488337542909278, guid: 5294893c2b971c049b80ef7280df4eff, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Raise
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7711488337542909278, guid: 5294893c2b971c049b80ef7280df4eff, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
