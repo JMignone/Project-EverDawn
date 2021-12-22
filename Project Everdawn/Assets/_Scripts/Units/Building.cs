@@ -275,6 +275,7 @@ public class Building : MonoBehaviour, IDamageable
             towers = GameManager.GetAllEnemies(towers, gameObject.tag); //sending in only towers
             SetTarget(GameFunctions.GetNearestTarget(towers, gameObject.tag, stats));
         }
+        stats.IncRange = false;
     }
 
     // !! THIS WILL LIKELY NEED TO BE CHANGED SUCH THAT ONLY THE TOP OF THE BUILDING ROTATES !!
@@ -314,6 +315,8 @@ public class Building : MonoBehaviour, IDamageable
                         if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) { //only if the unit can actually target this one should we adjust this value
                             if(!(unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Add(gameObject);
+                            if(!(unit as IDamageable).HitTargets.Contains(gameObject))
+                                (unit as IDamageable).HitTargets.Add(gameObject);
                             if( ((unit as IDamageable).InRangeTargets.Count == 1 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct) {
                                 GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
                                 if(go != null) {

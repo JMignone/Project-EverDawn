@@ -128,9 +128,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBox: {fileID: 7239714738040953541}
   radius: 0
-  range: 50
+  range: 75
   heightAttackable: 0
   typeAttackable: 1
+  abilityControl: 0
+  pauseAbility: 0
+  stopOnMiss: 0
+  skipLastOnMiss: 0
+  skipNumber: 0
+  hidePreview: 0
   freezeStats:
     canFreeze: 0
     freezeDuration: 0
@@ -156,18 +162,27 @@ MonoBehaviour:
     speed: 0
   grabStats:
     canGrab: 0
+    obstaclesBlockGrab: 0
     pullDuration: 0
+    speed: 0
     stunDuration: 0
   strengthStats:
     canStrength: 0
     strengthDuration: 0
     strengthIntensity: 0
+  blindStats:
+    canBlind: 0
+    blindDuration: 0
+  stunStats:
+    canStun: 0
+    stunDuration: 0
   lingeringStats:
     lingering: 0
     lingerAtEnd: 0
     lingerDuringFlight: 0
     lingeringEffect: {fileID: 0}
     lingeringDamage: 0
+    towerDamage: 0
     lingeringRadius: 0
     lingeringDuration: 0
     lingeringTick: 0
@@ -176,6 +191,7 @@ MonoBehaviour:
     selfDestructs: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 0
+    towerDamage: 0
     explosionRadius: 0
   linearStats:
     isLinear: 0
@@ -183,6 +199,7 @@ MonoBehaviour:
     isHorizontal: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 0
+    towerDamage: 0
     explosionWidth: 0
   teleportStats:
     isWarp: 1
@@ -200,6 +217,7 @@ MonoBehaviour:
     currentSummonTime: 0
   applyResistanceStats:
     applyToSelf: 0
+    applyToOthers: 0
     resistDamage: 0
     rdDuration: 0
     untargetable: 0
@@ -218,6 +236,10 @@ MonoBehaviour:
     rgDuration: 0
     resistPull: 0
     rpullDuration: 0
+    resistBlind: 0
+    rbDuration: 0
+    resistStun: 0
+    rstunDuration: 0
   chosenTarget: {fileID: 0}
 --- !u!54 &7239714737300649848
 Rigidbody:

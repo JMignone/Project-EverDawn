@@ -8,6 +8,7 @@ public class Keep : Tower
     {
         if(GameManager.isTowerActive(gameObject.tag, stats.PercentHealth)) {
             if(stats.CurrHealth > 0) {
+                stats.IncRange = false;
                 if((target == null || InRangeTargets.Count == 0) && stats.CanAct) { //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                     if(hitTargets.Count > 0) {
                         GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);

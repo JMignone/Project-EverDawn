@@ -121,6 +121,7 @@ public class Tower : MonoBehaviour, IDamageable
     protected virtual void Update()
     {
         if(stats.CurrHealth > 0) {
+            stats.IncRange = false; //towers should never have its range incremented
             if((target == null || inRangeTargets.Count == 0) && stats.CanAct) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                 ReTarget();
 
@@ -226,7 +227,9 @@ public class Tower : MonoBehaviour, IDamageable
                         if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {//anything can attack a tower, ill leave it hear incase somthing with an ability gives a need for this
                             if(!(unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Add(gameObject);
-
+                            if(!(unit as IDamageable).HitTargets.Contains(gameObject))
+                                (unit as IDamageable).HitTargets.Add(gameObject);
+                                
                             if((unit as IDamageable).InRangeTargets.Count == 1)
                                 (unit as IDamageable).Stats.IncRange = true;
                         }

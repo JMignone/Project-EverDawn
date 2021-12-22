@@ -258,6 +258,7 @@ public class Unit : MonoBehaviour, IDamageable
             towers = GameManager.GetAllEnemies(towers, gameObject.tag); //sending in only towers
             SetTarget(GameFunctions.GetNearestTarget(towers, gameObject.tag, stats));
         }
+        stats.IncRange = false;
     }
 
     public void OnTriggerEnter(Collider other) {
@@ -291,6 +292,8 @@ public class Unit : MonoBehaviour, IDamageable
                         if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) { //only if the unit can actually target this one should we adjust this value
                             if(!(unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Add(gameObject);
+                            if(!(unit as IDamageable).HitTargets.Contains(gameObject))
+                                (unit as IDamageable).HitTargets.Add(gameObject);
                             if( ((unit as IDamageable).InRangeTargets.Count == 1 || (unit as IDamageable).Target == null) && (unit as IDamageable).Stats.CanAct) { //we need this block here as well as stay in the case that a unit is placed inside a units range
                                 GameObject go = GameFunctions.GetNearestTarget((unit as IDamageable).HitTargets, other.transform.parent.parent.tag, (unit as IDamageable).Stats);
                                 if(go != null) {

@@ -50,7 +50,7 @@ MonoBehaviour:
   radius: 4
   speed: 30
   range: 40
-  baseDamage: 100
+  baseDamage: 10
   towerDamage: 0
   heightAttackable: 1
   typeAttackable: 1
@@ -71,6 +71,8 @@ MonoBehaviour:
     arcMultiplierToLastPoint: 0
     customCollider: {fileID: 0}
     customImage: {fileID: 0}
+    pivot: {x: 0, y: 0}
+    sizeDelta: {x: 0, y: 0}
   locationStats:
     overridesLocation: 0
     overridesAtEnd: 0
@@ -106,7 +108,7 @@ MonoBehaviour:
     radius: 0
     speed: 0
   grabStats:
-    canGrab: 1
+    canGrab: 0
     obstaclesBlockGrab: 0
     pullDuration: 0.5
     speed: 0
