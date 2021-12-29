@@ -97,7 +97,8 @@ public class ComputerStats
         float chance = Mathf.Pow(currResource, 2.5f + (Mathf.Pow(totalEnemyHP, 2.718f) * (GameConstants.RESOURCE_MAX + 1f - currResource))/100000000f ) 
             / Mathf.Pow(GameConstants.RESOURCE_MAX + 1, 2.5f);
         //MonoBehaviour.print(chance * 100);
-        return chance > random;
+        //MonoBehaviour.print(random * 100);
+        return chance > random; //somtimes this returns an ArgumentOutOfRangeException, but everything continues to run normally. Why!!!
     }
 
     private List<int> playOrder() {

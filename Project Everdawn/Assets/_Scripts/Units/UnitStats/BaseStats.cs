@@ -475,9 +475,11 @@ public class BaseStats
     public void ResetKillFlags(GameObject unit, GameObject target) {
         if(soonToKillOverride) {
             soonToKillOverride = false;
-            IDamageable enemyUnit = (target.GetComponent(typeof(IDamageable)) as IDamageable);
-            if(enemyUnit.Stats.SoonToBeKilled)
-                (unit.GetComponent(typeof(IDamageable)) as IDamageable).SetTarget(null);
+            if(target != null) {
+                IDamageable enemyUnit = (target.GetComponent(typeof(IDamageable)) as IDamageable);
+                if(enemyUnit.Stats.SoonToBeKilled)
+                    (unit.GetComponent(typeof(IDamageable)) as IDamageable).SetTarget(null);
+            }
         }
 
         if(soonToKill) {

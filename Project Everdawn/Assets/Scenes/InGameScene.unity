@@ -4832,7 +4832,7 @@ MonoBehaviour:
   enemyTextScore: {fileID: 1708688850}
   timeLeft: 181
   textTimer: {fileID: 1922791558}
-  testSetup: 0
+  testSetup: 1
 --- !u!1 &234165123
 GameObject:
   m_ObjectHideFlags: 0
@@ -41786,7 +41786,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140046817}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0fa5ddd15ea602e4a85a61fd90c5dbdb, type: 3}
   m_Name: 
@@ -41812,7 +41812,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - cardId: 0
+    - cardId: 1
       name: Bao Zu
       icon: {fileID: 21300000, guid: 616f99a5a0da8bc4696cec0e5e538437, type: 3}
       cost: 5
@@ -41823,7 +41823,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - cardId: 0
+    - cardId: 2
       name: Cornut
       icon: {fileID: 21300000, guid: e351a62f6e3266644b0accb868e6a820, type: 3}
       cost: 5
@@ -41834,7 +41834,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - cardId: 0
+    - cardId: 3
       name: Steamwyrm
       icon: {fileID: 21300000, guid: a3615353b88c90a448ef598d9e2409e7, type: 3}
       cost: 4
@@ -41845,7 +41845,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - cardId: 0
+    - cardId: 4
       name: Monsoon Gunners
       icon: {fileID: 21300000, guid: 526f2e41c56666847a887ac31f5fff5b, type: 3}
       cost: 2
@@ -41856,7 +41856,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - cardId: 0
+    - cardId: 5
       name: Monsoon Insurgents
       icon: {fileID: 21300000, guid: 116f885df4bcb584e99223536431f6c1, type: 3}
       cost: 2
@@ -41867,7 +41867,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - cardId: 0
+    - cardId: 6
       name: Unit 6
       icon: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
       cost: 1
@@ -41878,7 +41878,7 @@ MonoBehaviour:
       previewDelays:
       - 0
       unitIndex: 0
-    - cardId: 0
+    - cardId: 7
       name: Mizuchi Kaidarin
       icon: {fileID: 21300000, guid: c40d383de808e504bbe06e137eaa18ca, type: 3}
       cost: 4
