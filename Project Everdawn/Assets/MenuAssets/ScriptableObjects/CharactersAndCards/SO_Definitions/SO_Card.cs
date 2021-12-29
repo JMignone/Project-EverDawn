@@ -30,8 +30,12 @@ public class SO_Card : ScriptableObject
 
     [Header("Gameplay Attributes")]
         [Range(1,10)] public int resourceCost;
-        //public Spell skill;
-        public CardStats cardStats;
+        //[SerializeField] private GameConstants.SPAWN_ZONE_RESTRICTION spawnZoneRestrictions;
+        [SerializeField] private List<GameObject> prefab;
+        [SerializeField] private GameObject previewPrefab;
+        [SerializeField] private List<float> previewDelays;
+        [Tooltip("The index of the unit in the lists, must match or be -1, meaning there is no unit")]
+        [SerializeField] private int unitIndex;
 
     [Space]
 
