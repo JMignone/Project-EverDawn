@@ -1,0 +1,1 @@
+public class CardListener : GameEventListener<SO_Card, CardEvent, UnityCardEvent> {}
