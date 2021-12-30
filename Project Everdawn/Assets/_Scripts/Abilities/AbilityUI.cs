@@ -6,10 +6,10 @@ using UnityEngine.UI;
 [System.Serializable]
 public class AbilityUI
 {
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float cooldownDelay;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float currCooldownDelay;
 
     [SerializeField]
@@ -67,6 +67,11 @@ public class AbilityUI
 
     public float PercentCooldown {
         get { return currCooldownDelay/cooldownDelay; }
+    }
+
+    public void StartStats() {
+        cardCanvasDim = GameFunctions.GetCanvas().GetChild(0).GetComponent<RectTransform>();
+        abilityCancel = GameFunctions.GetCanvas().GetChild(3).GetComponent<Image>();
     }
 
     public void UpdateStats() {

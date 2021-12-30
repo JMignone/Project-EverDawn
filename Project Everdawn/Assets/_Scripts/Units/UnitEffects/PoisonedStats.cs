@@ -7,26 +7,33 @@ public class PoisonedStats
 {
     [SerializeField]
     private bool cantBePoisoned;
+    private bool outSideResistance;
 
     [SerializeField]
     private bool isPoisoned;
     private float poisonedDamage;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float poisonedDuration;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float poisonedTick;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float currentPoisonDelay;
 
-    private Component damageableComponent;
+    private IDamageable unit;
 
     public bool CantBePoisoned
     {
         get { return cantBePoisoned; }
         set { cantBePoisoned = value; }
+    }
+    
+    public bool OutSideResistance
+    {
+        get { return outSideResistance; }
+        set { outSideResistance = value; }
     }
 
     public bool IsPoisoned
@@ -58,14 +65,8 @@ public class PoisonedStats
         set { currentPoisonDelay = value; }
     }
 
-    public Component DamageableComponent
-    {
-        get { return damageableComponent; }
-        set { damageableComponent = value; }
-    }
-
-    public void StartPoisonedStats(GameObject go) {
-        damageableComponent = go.GetComponent(typeof(IDamageable));
+    public void StartPoisonedStats(IDamageable go) {
+        unit = go;
         isPoisoned = false;
     }
 
@@ -75,18 +76,24 @@ public class PoisonedStats
                 if(currentPoisonDelay < poisonedTick)
                     currentPoisonDelay += Time.deltaTime;
                 else {
-                    GameFunctions.Attack(damageableComponent, poisonedDamage);
+                    GameFunctions.Attack((unit as Component), poisonedDamage);
                     currentPoisonDelay = 0;
                     poisonedDuration -= poisonedTick;
                 }
             }
-            else
+            else {
                 isPoisoned = false;
+
+                unit.Stats.UnitMaterials.RemovePurple();
+            }
         }
     }
 
     public void Poison(float duration, float tick, float damage) {
-        if(!cantBePoisoned) {
+        if(!cantBePoisoned && !outSideResistance) {
+            if(!isPoisoned)
+                unit.Stats.UnitMaterials.TintPurple();
+
             isPoisoned = true;
             poisonedDuration = duration;
             poisonedTick = tick;

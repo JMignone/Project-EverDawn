@@ -6,11 +6,22 @@ using UnityEngine.UI;
 [System.Serializable]
 public class SummoningSicknessUI
 {
+    private IDamageable unit;
+
+    [Tooltip("Determines how long a unit will be able to act after its summonProtectionDelay is up")]
     [SerializeField]
     private float summonSicknessDelay;
 
     [SerializeField]
     private float currSummonSicknessDelay;
+
+    [Tooltip("Determines how long a unit will be undamageable and untargetable when summoned")]
+    [SerializeField]
+    private float summonProtectionDelay;
+
+    //[Tooltip("Keeps the unit ")]
+    //[SerializeField]
+    //private float stayUntargetable;
 
     [SerializeField]
     private Canvas sSCanvas;
@@ -21,31 +32,10 @@ public class SummoningSicknessUI
     [SerializeField]
     private Image sSMask;
 
-    public float SummonSicknessDelay
+    public bool SummonProtection
     {
-        get { return summonSicknessDelay; }
-        set { summonSicknessDelay = value; }
-    }
-
-    public float SurrSummonSicknessDelay
-    {
-        get { return currSummonSicknessDelay; }
-        set { currSummonSicknessDelay = value; }
-    }
-
-    public Canvas SSCanvas
-    {
-        get { return sSCanvas; }
-    }
-
-    public Image SSSprite
-    {
-        get { return sSSprite; }
-    }
-
-    public Image SSMask
-    {
-        get { return sSMask; }
+        get { if(summonProtectionDelay > 0) return true;
+              else return false; }
     }
 
     public float PercentReady 
@@ -61,12 +51,22 @@ public class SummoningSicknessUI
               else return true; }
     }
 
+    public void StartStats(IDamageable go) {
+        unit = go;
+        if(summonSicknessDelay > 0)
+            unit.Agent.HitBox.enabled = false;
+    }
+
     public void UpdateStats() {
-        if(currSummonSicknessDelay < summonSicknessDelay) {
+        if(summonProtectionDelay > 0) {
+            sSCanvas.enabled = false;
+            summonProtectionDelay -= Time.deltaTime;
+        }
+        else if(currSummonSicknessDelay < summonSicknessDelay) {
+            unit.Agent.HitBox.enabled = true;
             sSCanvas.enabled = true;
             currSummonSicknessDelay += Time.deltaTime;
             sSMask.fillAmount = 1 - PercentReady;
-            //sSSprite.transform.parent.rotation = Quaternion.Euler(0.0f, 180.0f, sSSprite.transform.parent.parent.parent.GetChild(0).rotation.z * -1.0f);
         }
         else
             sSCanvas.enabled = false;

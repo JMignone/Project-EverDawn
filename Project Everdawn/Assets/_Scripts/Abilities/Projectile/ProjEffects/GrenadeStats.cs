@@ -19,14 +19,11 @@ public class GrenadeStats
     [SerializeField]
     private GameObject explosionEffect;
 
-    [SerializeField]
-    private float explosionDamage;
-
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float explosionRadius;
 
     [Tooltip("A number from [0-infinity) that determines how large the arc of the grenade. 1 will set the arc to be a circle.")]
-    [SerializeField]
+    [SerializeField] [Min(.1f)]
     private float grenadeArcMultiplier; //1 sets the grenade to a circular arc, a smaller number makes the arc smaller, a bigger number makes the arc larger
 
     public bool IsGrenade
@@ -47,11 +44,6 @@ public class GrenadeStats
     public GameObject ExplosionEffect
     {
         get { return explosionEffect; }
-    }
-
-    public float ExplosionDamage
-    {
-        get { return explosionDamage; }
     }
 
     public float ExplosionRadius
@@ -78,8 +70,6 @@ public class GrenadeStats
             projectile.Radius = .1f; //setting it to zero will not work if targeting moving targets
             projectile.HitBox.enabled = false;
             
-            if(grenadeArcMultiplier < .1) //preventing divide by zero
-                grenadeArcMultiplier = .1f;
             Vector3 arcEnd = projectile.TargetLocation;
             if(isAirStrike) {
                 if(startLocation == GameConstants.AIR_STRIKE_LOCATION.BOTTOM)
@@ -92,6 +82,7 @@ public class GrenadeStats
             else {
                 arcStart = go.transform.position;
                 arcApex = arcStart + (arcEnd - arcStart)/2 + Vector3.up * Vector3.Distance(arcStart, arcEnd) * grenadeArcMultiplier;
+                //this value arpApex is actually twice as high as the projectile would actually go, being fixed by the strange lerps below
             }
         }
     }
@@ -112,14 +103,22 @@ public class GrenadeStats
 
     public void Explode(GameObject go) {
         //Instantiate(explosionEffect, go.transform.position, go.transform.rotation);
-        Collider[] colliders = Physics.OverlapSphere(go.transform.position, explosionRadius);
+        Vector3 position = new Vector3(go.transform.position.x, 0, go.transform.position.z);
+        Collider[] colliders = Physics.OverlapSphere(position, explosionRadius);
         Projectile projectile = go.GetComponent<Projectile>();
 
         foreach(Collider collider in colliders) {
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                 Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
+
                 if(GameFunctions.WillHit(projectile.HeightAttackable, projectile.TypeAttackable, damageable)) {
-                    GameFunctions.Attack(damageable, explosionDamage);
+                    projectile.SetHit = true;
+
+                    float damage = projectile.BaseDamage*projectile.DamageMultiplier;
+                    if(damageable.GetComponent<Tower>())
+                        damage = projectile.TowerDamage*projectile.DamageMultiplier;
+
+                    GameFunctions.Attack(damageable, damage);
                     projectile.ApplyAffects(damageable);
                 }
             }

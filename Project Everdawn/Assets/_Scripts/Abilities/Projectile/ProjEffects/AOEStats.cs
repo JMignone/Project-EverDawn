@@ -11,7 +11,7 @@ public class AOEStats
     [SerializeField]
     private GameObject explosionEffect;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float explosionRadius;
 
     public bool AreaOfEffect
@@ -31,14 +31,21 @@ public class AOEStats
 
     public void Explode(GameObject go) {
         //Instantiate(explosionEffect, go.transform.position, go.transform.rotation);
-        Collider[] colliders = Physics.OverlapSphere(go.transform.position, explosionRadius);
+        Vector3 position = new Vector3(go.transform.position.x, 0, go.transform.position.z);
+        Collider[] colliders = Physics.OverlapSphere(position, explosionRadius);
         Projectile projectile = go.GetComponent<Projectile>();
-        float damage = projectile.BaseDamage;
 
         foreach(Collider collider in colliders) {
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                 Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
+
                 if(GameFunctions.WillHit(projectile.HeightAttackable, projectile.TypeAttackable, damageable)) {
+                    projectile.SetHit = true;
+
+                    float damage = projectile.BaseDamage*projectile.DamageMultiplier;
+                    if(damageable.GetComponent<Tower>())
+                        damage = projectile.TowerDamage*projectile.DamageMultiplier;
+
                     GameFunctions.Attack(damageable, damage);
                     projectile.ApplyAffects(damageable);
                 }

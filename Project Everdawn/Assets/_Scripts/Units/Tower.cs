@@ -12,17 +12,22 @@ public class Tower : MonoBehaviour, IDamageable
     private Actor2D unitSprite;
 
     [SerializeField]
-    protected Image abilityIndicator;
-    private int indicatorNum; //We may need this for abilities that have multiple hit zones
-
-    [SerializeField]
     protected GameObject target;
 
     [SerializeField]
-    protected int inRange;
+    protected BaseStats stats;
 
     [SerializeField]
-    protected BaseStats stats;
+    private AttackStats attackStats;
+
+    //[SerializeField]
+    private DashStats dashStats;
+
+    //[SerializeField]
+    private ShadowStats shadowStats;
+    
+    //[SerializeField]
+    private DeathStats deathStats;
 
     [SerializeField]
     protected List<GameObject> hitTargets;
@@ -45,30 +50,12 @@ public class Tower : MonoBehaviour, IDamageable
     public Actor2D UnitSprite
     {
         get { return unitSprite; }
-        //set { unitSprite = value; }
-    }
-
-    public Image AbilityIndicator
-    {
-        get { return abilityIndicator; }
-    }
-
-    public int IndicatorNum
-    {
-        get { return indicatorNum; }
-        set { indicatorNum = value; }
     }
 
     public GameObject Target 
     {
         get { return target; }
         set { target = value; }
-    }
-
-    public int InRange
-    {
-        get { return inRange; }
-        set { inRange = value; }
     }
 
     public BaseStats Stats 
@@ -91,6 +78,26 @@ public class Tower : MonoBehaviour, IDamageable
         get { return enemyHitTargets; }
     }
 
+    public DashStats DashStats
+    {
+        get { return dashStats; }
+    }
+
+    public ShadowStats ShadowStats
+    {
+        get { return shadowStats; }
+    }
+
+    public DeathStats DeathStats
+    {
+        get { return deathStats; }
+    }
+
+    public bool IsMoving
+    {
+        get { return false; }
+    }
+
     public bool LeftTower
     {
         get { return leftTower; }
@@ -102,58 +109,82 @@ public class Tower : MonoBehaviour, IDamageable
         stats.HealthBar.enabled = false;
         stats.HealthBar.transform.GetChild(0).gameObject.SetActive(false);
 
-        stats.EffectStats.StartStats(gameObject);
+        IDamageable unit = (gameObject.GetComponent(typeof(IDamageable)) as IDamageable);
+        stats.EffectStats.StartStats(unit);
 
         stats.IsHoveringAbility = false;
-        abilityIndicator.enabled = false;
-        abilityIndicator.rectTransform.sizeDelta = new Vector2(2*agent.HitBox.radius + 1, 2*agent.HitBox.radius + 1); 
+        stats.AbilityIndicator.enabled = false;
+        stats.AbilityIndicator.rectTransform.sizeDelta = new Vector2(2*agent.HitBox.radius + 1, 2*agent.HitBox.radius + 1); 
         // + 1 is better for the knob UI, if we get our own UI image, we may want to remove it
     }
 
     protected virtual void Update()
     {
         if(stats.CurrHealth > 0) {
-            if((target == null || inRange == 0) && stats.CanAct) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
+            stats.IncRange = false; //towers should never have its range incremented
+            if((target == null || inRangeTargets.Count == 0) && stats.CanAct) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                 ReTarget();
 
-            stats.UpdateStats(inRange, agent, hitTargets, target);
+            stats.UpdateStats(true, inRangeTargets.Count, agent, hitTargets, target, gameObject);
             Attack();
 
             if(stats.CanAct) { //if its stunned, we want to keep the tower looking in the same direction
-                if((inRange > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) && target != null) //is in range, OR is 90% thru attack cycle -
+                if((inRangeTargets.Count > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) && target != null) //is in range, OR is 90% thru attack cycle -
                     lookAtTarget();
                 else 
                     resetToCenter();
             }
         }
         else {
-            print(gameObject.name + "has died!");
+            print(gameObject.name + " has died!");
+            stats.ResetKillFlags(gameObject, target);
             GameManager.RemoveObjectsFromList(gameObject, leftTower, false);
+            if(target != null)
+               (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
             Destroy(gameObject);
         }
     }
 
     protected void Attack() {
         if(target != null) {
-            if(stats.CurrAttackDelay >= stats.AttackDelay) {
-                Component damageable = target.GetComponent(typeof(IDamageable));
-
-                if(damageable) { //is the target damageable
-                    if(hitTargets.Contains(target)) {  //this and the above may not be needed, more of a santiy check
-                        if(inRange > 0) {
-                            GameFunctions.Attack(damageable, stats.BaseDamage);
+            if(attackStats.FiresProjectiles) { //if the unit fires projectiles rather than simply doing damage when attacking
+                if(stats.CurrAttackDelay >= stats.AttackDelay && !attackStats.IsFiring) {
+                    Component damageable = target.GetComponent(typeof(IDamageable));
+                    if(damageable) { //is the target damageable
+                        if(hitTargets.Contains(target)) //this is needed for the rare occurance that a unit is 90% done with attack delay and the target leaves its range. It can still do its attack if its within vision given that its attack was already *90% thru
+                            attackStats.BeginFiring();
+                    }
+                    stats.ResetKillFlags(gameObject, target);
+                }
+            }
+            else {
+                if(stats.CurrAttackDelay >= stats.AttackDelay) {
+                    Component damageable = target.GetComponent(typeof(IDamageable));
+                    if(damageable) { //is the target damageable
+                        if(hitTargets.Contains(target)) {  //this and the above may not be needed, more of a santiy check
+                            if(stats.EffectStats.AOEStats.AreaOfEffect)
+                                stats.EffectStats.AOEStats.Explode(gameObject, target, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                            else {
+                                GameFunctions.Attack(damageable, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                                stats.ApplyAffects(damageable);
+                            }
                             stats.CurrAttackDelay = 0;
+                            stats.ResetKillFlags(gameObject, target);
                         }
                     }
                 }
             }
         }
+        if(attackStats.FiresProjectiles)
+            attackStats.Fire();
     }
 
     public void SetTarget(GameObject newTarget) {
         if(newTarget != target) {
-            if(target != null)
+            if(target != null) {
                 (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
+                stats.ResetKillFlags(gameObject, target);
+            }
             if(newTarget != null)
                 (newTarget.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Add(gameObject);
             target = newTarget;
@@ -168,19 +199,24 @@ public class Tower : MonoBehaviour, IDamageable
         }
     }
 
-    /* I dont think structres need a vision radius */
+    /* I dont think structres need a vision radius, keep it for now */
     public void OnTriggerEnter(Collider other) {
         if(!other.transform.parent.parent.CompareTag(gameObject.tag)) { //checks to make sure the target isnt on the same team
             if(other.CompareTag("Projectile")) { //Did we get hit by a skill shot?
                 Projectile projectile = other.transform.parent.parent.GetComponent<Projectile>();
                 Component unit = this.GetComponent(typeof(IDamageable));
-                projectile.hit(unit);
+                projectile.Hit(unit);
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an abililty?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {
-                    indicatorNum++;
-                    abilityIndicator.enabled = true;
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) 
+                stats.IncIndicatorNum();
+            }
+            else if(other.CompareTag("Dash")) {
+                Component unit = other.transform.parent.parent.GetComponent(typeof(IDamageable));
+                if(unit) {
+                    if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats))
+                        (unit as IDamageable).DashStats.StartDash(gameObject);
                 }
             }
             else { //is it another units vision/range?
@@ -188,10 +224,15 @@ public class Tower : MonoBehaviour, IDamageable
                 if(unit) {
                     //Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                     if(other.CompareTag("Range")) {//Are we in their range detection object?
-                        //if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) anything can attack a tower, ill leave it hear incase somthing with an ability gives a need for this
-                            (unit as IDamageable).InRange++;
+                        if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {//anything can attack a tower, ill leave it hear incase somthing with an ability gives a need for this
                             if(!(unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Add(gameObject);
+                            if(!(unit as IDamageable).HitTargets.Contains(gameObject))
+                                (unit as IDamageable).HitTargets.Add(gameObject);
+                                
+                            if((unit as IDamageable).InRangeTargets.Count == 1)
+                                (unit as IDamageable).Stats.IncRange = true;
+                        }
                     }
                     else if(other.CompareTag("Vision")) { //Are we in their vision detection object?
                         if(!(unit as IDamageable).HitTargets.Contains(gameObject))
@@ -199,6 +240,11 @@ public class Tower : MonoBehaviour, IDamageable
                     }
                 }
             }
+        }
+        else if(other.CompareTag("FriendlyAbilityHighlight")) { //if the hitbox is from a friendly units ability that hits friendly units
+            AbilityPreview ability = other.GetComponent<AbilityPreview>();
+            if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) 
+                stats.IncIndicatorNum();
         }
     }
 
@@ -209,24 +255,23 @@ public class Tower : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an abililty?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {
-                    indicatorNum--;
-                    if(indicatorNum == 0)
-                        abilityIndicator.enabled = false;
-                }
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) 
+                    stats.DecIndicatorNum();
             }
             else { //is it another units vision/range?
                 Component unit = other.transform.parent.parent.GetComponent(typeof(IDamageable));
                 if(unit) {
                     //Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                     if(other.CompareTag("Range")) { //Are we in their Range detection object?
-                        //if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
-                            (unit as IDamageable).InRange--;
+                        if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
                             if((unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Remove(gameObject);
                             if((unit as IDamageable).Target == gameObject)
                                 (unit as IDamageable).SetTarget(null);
-                        //}
+
+                            if((unit as IDamageable).InRangeTargets.Count == 0)
+                                (unit as IDamageable).Stats.IncRange = false;
+                        }
                     }
                     else if(other.CompareTag("Vision")) { //Are we in their vision detection object?
                         if((unit as IDamageable).HitTargets.Contains(gameObject))
@@ -236,6 +281,11 @@ public class Tower : MonoBehaviour, IDamageable
                     }
                 }
             }
+        }
+        else if(other.CompareTag("FriendlyAbilityHighlight")) { //if the hitbox is from a friendly units ability that hits friendly units
+            AbilityPreview ability = other.GetComponent<AbilityPreview>();
+            if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) 
+                stats.DecIndicatorNum();
         }
     }
 
@@ -259,7 +309,10 @@ public class Tower : MonoBehaviour, IDamageable
     }
 
     void IDamageable.TakeDamage(float amount) {
-        stats.CurrHealth -= amount;
+        if(stats.CurrArmor > 0)
+            stats.CurrArmor -= amount;
+        else
+            stats.CurrHealth -= amount;
     }
 
 }

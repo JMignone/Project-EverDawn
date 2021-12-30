@@ -8,7 +8,8 @@ public class Keep : Tower
     {
         if(GameManager.isTowerActive(gameObject.tag, stats.PercentHealth)) {
             if(stats.CurrHealth > 0) {
-                if((target == null || inRange == 0) && stats.CanAct) { //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
+                stats.IncRange = false;
+                if((target == null || InRangeTargets.Count == 0) && stats.CanAct) { //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                     if(hitTargets.Count > 0) {
                         GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
                         if(go != null)
@@ -16,11 +17,11 @@ public class Keep : Tower
                     }
                 }
 
-                stats.UpdateStats(inRange, agent, hitTargets, target);
+                stats.UpdateStats(true, InRangeTargets.Count, agent, hitTargets, target, gameObject);
                 Attack();
 
                 if(stats.CanAct) { //if its stunend, we want to keep the tower looking in the same direction
-                    if((inRange > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) && target != null) //is in range, OR is 90% thru attack cycle -
+                    if((InRangeTargets.Count > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) && target != null) //is in range, OR is 90% thru attack cycle -
                         lookAtTarget();
                     else 
                         resetToCenter();
@@ -28,7 +29,10 @@ public class Keep : Tower
             }
             else {
                 print(gameObject.name + "has died!");
+                stats.ResetKillFlags(gameObject, target);
                 GameManager.RemoveObjectsFromList(gameObject, false, true);
+                if(target != null)
+                    (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
                 Destroy(gameObject);
             }
         }

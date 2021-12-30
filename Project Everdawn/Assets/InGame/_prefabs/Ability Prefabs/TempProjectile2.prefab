@@ -251,7 +251,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2538035110669741036}
-  - component: {fileID: 2538035110669741039}
+  - component: {fileID: 2943463446231286465}
   - component: {fileID: 2538035110669741038}
   m_Layer: 0
   m_Name: TempProjectile2
@@ -275,7 +275,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2538035110669741039
+--- !u!114 &2943463446231286465
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -284,25 +284,51 @@ MonoBehaviour:
   m_GameObject: {fileID: 2538035110669741027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8431b4c8cdd71b4a8cd1079fcded66a, type: 3}
+  m_Script: {fileID: 11500000, guid: 45dec0ca3c79e464888c742b9fd05d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hitBox: {fileID: 2538035109296080467}
   unitSprite: {fileID: 2538035109743312923}
-  radius: 0
-  speed: 70
-  range: 80
+  radius: 0.25
+  speed: 40
+  range: 30
   baseDamage: 0
-  objectAttackable: 2
-  canPierce: 0
+  towerDamage: 0
+  heightAttackable: 1
+  typeAttackable: 0
+  canPierce: 1
   blockable: 0
+  abilityControl: 0
+  pauseAbility: 1
+  stopOnMiss: 0
+  skipLastOnMiss: 0
+  skipNumber: 0
+  overridesTarget: 0
+  onlyDamageIfTargeted: 0
+  hidePreview: 1
+  customPathStats:
+    hasCustomPath: 0
+    lerpPoints: []
+    speedToLastPoint: 0
+    arcMultiplierToLastPoint: 0
+    customCollider: {fileID: 0}
+    customImage: {fileID: 0}
+    pivot: {x: 0, y: 0}
+    sizeDelta: {x: 0, y: 0}
+  locationStats:
+    overridesLocation: 0
+    overridesAtEnd: 0
+    overridesDuringFlight: 0
+    overrideDelay: 0
+    newLocation: 0
+    forwardAdjustment: 0
   aoeStats:
     areaOfEffect: 0
     explosionEffect: {fileID: 0}
     explosionRadius: 0
   freezeStats:
     canFreeze: 0
-    freezeDuration: 4
+    freezeDuration: 0
   slowStats:
     canSlow: 0
     slowDuration: 0
@@ -317,39 +343,96 @@ MonoBehaviour:
     poisonTick: 0
   knockbackStats:
     canKnockback: 0
-    knockbackDuration: 1
-    initialSpeed: 12
+    knockbackDuration: 0.33
+    initialSpeed: 30
   pullStats:
-    canPull: 1
-    radius: 15
-    speed: 13
+    canPull: 0
+    radius: 0
+    speed: 0
+  grabStats:
+    canGrab: 0
+    obstaclesBlockGrab: 0
+    pullDuration: 0
+    speed: 0
+    stunDuration: 0
+  strengthStats:
+    canStrength: 0
+    strengthDuration: 0
+    strengthIntensity: 0
+  blindStats:
+    canBlind: 0
+    blindDuration: 0
+  stunStats:
+    canStun: 0
+    stunDuration: 0
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0
   lingeringStats:
-    lingering: 1
-    lingerAtEnd: 1
+    lingering: 0
+    lingerAtEnd: 0
     lingerDuringFlight: 0
     lingeringEffect: {fileID: 0}
-    lingeringDamage: 10
-    lingeringRadius: 15
-    lingeringDuration: 6
-    lingeringTick: 1
+    lingeringDamage: 0
+    towerDamage: 0
+    lingeringRadius: 0
+    lingeringDuration: 0
+    lingeringTick: 0
     currentLingeringTime: 0
   selfDestructStats:
     selfDestructs: 0
     explosionEffect: {fileID: 0}
-    explosionDamage: 200
-    explosionRadius: 20
+    explosionDamage: 0
+    towerDamage: 0
+    explosionRadius: 0
   grenadeStats:
-    isGrenade: 1
-    isAirStrike: 1
+    isGrenade: 0
+    isAirStrike: 0
     startLocation: 0
     explosionEffect: {fileID: 0}
-    explosionDamage: 0
-    explosionRadius: 15
-    grenadeArcMultiplier: 0.2
-  chosenTarget: {fileID: 0}
+    explosionRadius: 0
+    grenadeArcMultiplier: 0
+  resistEffects:
+    resistFreeze: 0
+    resistSlow: 0
+    resistRoot: 0
+    resistPoison: 0
+    resistKnockback: 0
+    resistGrab: 0
+    resistPull: 0
+    resistBlind: 0
+    resistStun: 0
+  applyResistanceStats:
+    applyToSelf: 0
+    applyToOthers: 0
+    resistDamage: 0
+    rdDuration: 0
+    untargetable: 0
+    rtDuration: 0
+    resistFreeze: 0
+    rfDuration: 0
+    resistSlow: 0
+    rsDuration: 0
+    resistRoot: 0
+    rrDuration: 0
+    resistPoison: 0
+    rpDuration: 0
+    resistKnockback: 0
+    rkDuration: 0
+    resistGrab: 0
+    rgDuration: 0
+    resistPull: 0
+    rpullDuration: 0
+    resistBlind: 0
+    rbDuration: 0
+    resistStun: 0
+    rstunDuration: 0
+  passObstacles: 1
+  landInsideTarget: 0
+  highlightEnemies: 0
+  retreatStats:
+    retreats: 0
+    distance: 0
 --- !u!54 &2538035110669741038
 Rigidbody:
   m_ObjectHideFlags: 0

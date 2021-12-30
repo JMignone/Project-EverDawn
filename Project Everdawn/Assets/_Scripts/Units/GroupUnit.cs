@@ -13,14 +13,14 @@ public class GroupUnit : MonoBehaviour, IDamageable
     private Actor3D agent;
     private Actor2D unitSprite;
     private GameObject target;
-    private int inRange;
+    private DashStats dashStats;
+    private ShadowStats shadowStats;
+    private DeathStats deathStats;
     private List<GameObject> hitTargets;
     private List<GameObject> inRangeTargets;
     private List<GameObject> enemyHitTargets;
     private bool isHoveringAbility;
     private bool isCastingAbility;
-    private Image abilityIndicator;
-    private int indicatorNum;
     //Right now I need these so it has the interface. I need the interface because other parts of the code retrieve values by looking for the interface component.
     //These values will just be null
 
@@ -46,12 +46,6 @@ public class GroupUnit : MonoBehaviour, IDamageable
     {
         get { return target; }
         set { target = value; }
-    }
-
-    public int InRange
-    {
-        get { return inRange; }
-        set { inRange = value; }
     }
 
     public List<GameObject> HitTargets
@@ -81,21 +75,29 @@ public class GroupUnit : MonoBehaviour, IDamageable
         set { isCastingAbility = value; }
     }
 
-    public Image AbilityIndicator
+    public DashStats DashStats
     {
-        get { return abilityIndicator; }
+        get { return dashStats; }
     }
 
-    public int IndicatorNum
+    public ShadowStats ShadowStats
     {
-        get { return indicatorNum; }
-        set { indicatorNum = value; }
+        get { return shadowStats; }
     }
 
+    public DeathStats DeathStats
+    {
+        get { return deathStats; }
+    }
+
+    public bool IsMoving
+    {
+        get { return false; }
+    }
+/*
     private void Start() {
         isHoveringAbility = false;
-        indicatorNum = 0;
-    }
+    }*/
 
     private void Update()
     {

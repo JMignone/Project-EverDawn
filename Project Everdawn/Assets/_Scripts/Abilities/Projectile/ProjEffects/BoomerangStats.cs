@@ -15,7 +15,7 @@ public class BoomerangStats
     private float speedModifier;
 
     [Tooltip("A number from (0-1], determines how far along the projectile will travel to its destination before starting to slow down. 1 will cause it to not slow down")]
-    [SerializeField]
+    [SerializeField] [Range(0.01f,1)]
     private float percentToSlow; //a number from 0 to 1
 
     public bool IsBoomerang
@@ -51,8 +51,8 @@ public class BoomerangStats
         goingBack = false;
         startLocation = go.transform.position;
         //reboundLocation = go.GetComponent<Projectile>().TargetLocation;
-        if(percentToSlow == 0) //0 will cause the projectile to not move
-            percentToSlow = .05f;
+        //if(percentToSlow == 0) //0 will cause the projectile to not move
+        //  percentToSlow = .05f;
         speedModifier = 1; //this value is to increase the speed as the projectile goes back to prevent it from chasing the unit if the unit gets knocked away
     }
 

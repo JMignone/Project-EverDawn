@@ -14,6 +14,20 @@ public class GameManager : MonoBehaviour
     private List<PlayerStats> players;
     [SerializeField]
     private GameObject ground;
+    private int playerScore;
+    private int enemyScore;
+    [SerializeField]
+    private Text playerTextScore;
+    [SerializeField]
+    private Text enemyTextScore;
+    [Tooltip("Time of the game is in seconds, must be set to 1 more than desired time.")]
+    [SerializeField]
+    private float timeLeft;
+    private float timeLimit;
+    [SerializeField]
+    private Text textTimer;
+    [SerializeField]
+    private bool testSetup;
 
     public static GameManager Instance
     {
@@ -41,10 +55,48 @@ public class GameManager : MonoBehaviour
         get { return ground; }
     }
 
+    public float TimeLimit
+    {
+        get { return timeLimit; }
+    }
+
+    public int ResourceMultiplier
+    {
+        get { return timeLeft <= timeLimit/3.0f ? 2 : 1; }
+    }
+
     private void Awake()
     {
         if(instance != this)
             instance = this;
+
+        timeLimit = timeLeft - 1;
+
+        //for testing purposes, removes all non towers from the game immediatly
+        if(testSetup) {
+            foreach (GameObject objectToRemove in Instance.Objects) {
+                if(!Instance.TowerObjects.Contains(objectToRemove))
+                    Destroy(objectToRemove);
+            }
+
+            for (var i = Instance.Objects.Count-1; i >=0; i--) {
+                GameObject objectToRemove = Instance.Objects[i];
+                if(objectToRemove.GetComponent<Tower>() == null)
+                    Instance.Objects.RemoveAt(i);
+            }
+        }
+    }
+
+    //updates the timer
+    private void Update() {
+        timeLeft -= Time.deltaTime;
+        if(timeLeft > 0) {
+            string text = ((int) timeLeft/60).ToString();
+            text += ":" + ((int) timeLeft%60).ToString();
+            if(text.Length != 4)
+                text = text.Substring(0, 2) + "0" + text.Substring(2);
+            textTimer.text = text;
+        }
     }
 
     public static void RemoveObjectsFromList(GameObject objectToRemove)
@@ -64,10 +116,11 @@ public class GameManager : MonoBehaviour
                     (component as IDamageable).HitTargets.Remove(objectToRemove);    //remove it from their possible targets
                     if((component as IDamageable).Target == objectToRemove)          //if an object has this now dead unit as a target ...
                         (component as IDamageable).Target = null;                    //make target null
-                    if((component as IDamageable).InRangeTargets.Contains(objectToRemove)) {
-                        (component as IDamageable).InRange--;
+                    if((component as IDamageable).InRangeTargets.Contains(objectToRemove))
                         (component as IDamageable).InRangeTargets.Remove(objectToRemove); 
-                    }
+
+                    if((component as IDamageable).InRangeTargets.Count == 0)
+                        (component as IDamageable).Stats.IncRange = false;
                 }
             }
         }
@@ -99,8 +152,11 @@ public class GameManager : MonoBehaviour
                     (component as IDamageable).HitTargets.Remove(objectToRemove);    //remove it from their possible targets
                     if((component as IDamageable).Target == objectToRemove)          //if an object has this now dead unit as a target ...
                         (component as IDamageable).Target = null;                    //make target null
-                    if( Vector3.Distance(objectToRemovePosition, new Vector3(go.transform.GetChild(0).position.x, 0, go.transform.GetChild(0).position.z)) <= ((component as IDamageable).Stats.Range + objectToRemoveAgent.HitBox.radius) ) //If the unit that died is within range
-                        (component as IDamageable).InRange--;
+                    if((component as IDamageable).InRangeTargets.Contains(objectToRemove))
+                        (component as IDamageable).InRangeTargets.Remove(objectToRemove); 
+
+                    if((component as IDamageable).InRangeTargets.Count == 0)
+                        (component as IDamageable).Stats.IncRange = false;
                 }
             }
         }
@@ -119,14 +175,20 @@ public class GameManager : MonoBehaviour
                     Instance.Players[0].Score++;
             }
         }
-    /*  else { //we may send the enemy score information over the internet rather than the players side instead
-            if(leftTower) 
-                Instance.Players[1].LeftZone = true;
-            else 
-                Instance.Players[1].RightZone = true;
-            Instance.Players[1].Score++;
+        else { //we may send the enemy score information over the internet rather than the players side instead
+            if(isKeep) {
+                Instance.Players[1].Score = 3;
+                //END THE GAME
+            }
+            else {
+                if(leftTower) 
+                    Instance.Players[1].LeftZone = true;
+                else 
+                    Instance.Players[1].RightZone = true;
+                if(Instance.Players[1].Score < 3)
+                    Instance.Players[1].Score++;
+            }
         }
-    */
 
         /*
             We would only need this if towers have abilities.
@@ -157,7 +219,7 @@ public class GameManager : MonoBehaviour
     }
 
     //this is mainly used, if not only used for locating towers, maybe usful for ability targeting later on
-    public static List<GameObject> GetAllEnemies(Vector3 pos, List<GameObject> objects, string tag) {
+    public static List<GameObject> GetAllEnemies(List<GameObject> objects, string tag) {
         List<GameObject> listOfEnemies = new List<GameObject>();
 
         foreach (GameObject go in objects) {
@@ -187,12 +249,11 @@ public class GameManager : MonoBehaviour
     public static void removeAbililtyIndicators() {
         foreach (GameObject go in Instance.Objects) {
             Component component = go.GetComponent(typeof(IDamageable));
-            if((component as IDamageable).IndicatorNum > 0) {
-                (component as IDamageable).AbilityIndicator.enabled = false;
-                (component as IDamageable).IndicatorNum = 0;
+            if((component as IDamageable).Stats.IndicatorNum > 0) {
+                (component as IDamageable).Stats.IndicatorNum = 0;
+                (component as IDamageable).Stats.UnitMaterials.RemoveAbilityHover();
             }
         }
-        GameObject hud = GameObject.Find(GameConstants.HUD_CANVAS);
-        hud.transform.GetChild(2).GetComponent<Image>().enabled = false;
+        GameFunctions.GetCanvas().GetChild(3).GetComponent<Image>().enabled = false;
     }
 }

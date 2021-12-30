@@ -25,6 +25,14 @@ public class EffectStats
     private PulledStats pulledStats;
     [SerializeField]
     private GrabbedStats grabbedStats;
+    [SerializeField]
+    private StrengthenedStats strengthenedStats;
+    [SerializeField]
+    private BlindedStats blindedStats;
+    [SerializeField]
+    private StunnedStats stunnedStats;
+    [SerializeField]
+    private ResistStats resistStats;
 
     public UAOEStats AOEStats
     {
@@ -76,7 +84,27 @@ public class EffectStats
         get { return grabbedStats; }
     }
 
-    public void StartStats(GameObject go) {
+    public StrengthenedStats StrengthenedStats
+    {
+        get { return strengthenedStats; }
+    }
+
+    public BlindedStats BlindedStats
+    {
+        get { return blindedStats; }
+    }
+
+    public StunnedStats StunnedStats
+    {
+        get { return stunnedStats; }
+    }
+
+    public ResistStats ResistStats
+    {
+        get { return resistStats; }
+    }
+
+    public void StartStats(IDamageable go) {
         frozenStats.StartFrozenStats(go);
         slowedStats.StartSlowedStats(go);
         poisonedStats.StartPoisonedStats(go);
@@ -85,6 +113,11 @@ public class EffectStats
         knockbackStats.StartKnockbackStats(go);
         pulledStats.StartPulledStats(go);
         grabbedStats.StartGrabbedStats(go);
+        strengthenedStats.StartStrengthenedStats(go);
+        blindedStats.StartStats(go);
+        stunnedStats.StartStats(go);
+        aoeStats.StartStats(go);
+        resistStats.StartResistStats(go);
     }
 
     public void UpdateStats() {
@@ -95,6 +128,10 @@ public class EffectStats
         knockbackedStats.UpdateKnockbackedStats();
         pulledStats.UpdatePulledStats();
         grabbedStats.UpdateGrabbedStats();
+        strengthenedStats.UpdateStrengthenedStats();
+        blindedStats.UpdateStats();
+        stunnedStats.UpdateStats();
+        resistStats.UpdateResistanceStats();
     }
 
     public bool CanAct() {
@@ -103,6 +140,8 @@ public class EffectStats
         if(knockbackedStats.IsKnockbacked)
             return false;
         if(grabbedStats.IsGrabbed)
+            return false;
+        if(stunnedStats.IsStunned)
             return false;
         return true;
     }

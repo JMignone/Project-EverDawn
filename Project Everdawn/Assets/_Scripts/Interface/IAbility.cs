@@ -4,7 +4,11 @@ using UnityEngine;
 public interface IAbility
 {
     Vector3 Position();
-    float Range { get; }
+    float Range { get; set; }
+    bool SetHit { get; set; }
+    bool AbilityControl { get; }
+    bool HidePreview { get; }
+    float DamageMultiplier { get; }
     int AreaMask();
     PullStats PullStats { get; }
     GameConstants.HEIGHT_ATTACKABLE HeightAttackable { get; }

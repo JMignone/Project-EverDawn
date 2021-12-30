@@ -17,8 +17,12 @@ public class LinearStats
     [SerializeField]
     private GameObject explosionEffect;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float explosionDamage;
+
+    [SerializeField] [Min(0)]
+    private float towerDamage;
+    private float damageMultiplier;
 
     [SerializeField]
     private float explosionWidth;
@@ -54,9 +58,10 @@ public class LinearStats
         set { explosionWidth = value; }
     }
 
-    public void StartLinearStats() {
+    public void StartLinearStats(float dMultiplier) {
         if(!isVertical && !isHorizontal) //if neither option was selected, just default vertical
             isVertical = true;
+        damageMultiplier = dMultiplier;
     }
 
     public void Explode(GameObject go) {
@@ -69,7 +74,13 @@ public class LinearStats
                     if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
                         if(GameFunctions.WillHit((ability as IAbility).HeightAttackable, (ability as IAbility).TypeAttackable, damageable)) {
-                            GameFunctions.Attack(damageable, explosionDamage);
+                            (ability as IAbility).SetHit = true;
+
+                            float damage = explosionDamage*(ability as IAbility).DamageMultiplier;
+                            if(towerDamage > 0 && damageable.GetComponent<Tower>())
+                                damage = towerDamage*(ability as IAbility).DamageMultiplier;
+
+                            GameFunctions.Attack(damageable, explosionDamage*damageMultiplier);
                             (ability as IAbility).ApplyAffects(damageable);
                         }
                     }
@@ -81,7 +92,13 @@ public class LinearStats
                     if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
                         if(GameFunctions.WillHit((ability as IAbility).HeightAttackable, (ability as IAbility).TypeAttackable, damageable)) {
-                            GameFunctions.Attack(damageable, explosionDamage);
+                            (ability as IAbility).SetHit = true;
+
+                            float damage = explosionDamage*(ability as IAbility).DamageMultiplier;
+                            if(towerDamage > 0 && damageable.GetComponent<Tower>())
+                                damage = towerDamage*(ability as IAbility).DamageMultiplier;
+
+                            GameFunctions.Attack(damageable, explosionDamage*damageMultiplier);
                             (ability as IAbility).ApplyAffects(damageable);
                         }
                     }

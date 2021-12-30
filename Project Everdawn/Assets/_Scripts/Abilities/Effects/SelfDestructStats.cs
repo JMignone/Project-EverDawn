@@ -11,10 +11,13 @@ public class SelfDestructStats
     [SerializeField]
     private GameObject explosionEffect;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float explosionDamage;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
+    private float towerDamage;
+
+    [SerializeField] [Min(0)]
     private float explosionRadius;
 
     public bool SelfDestructs
@@ -41,14 +44,22 @@ public class SelfDestructStats
     public void Explode(GameObject go) {
         //Instantiate(explosionEffect, go.transform.position, go.transform.rotation);
         if(explosionDamage > 0) { //have this here incase we want to have a selfdestruct effect but just for show, perhaps for a lingering damage projectile
-            Collider[] colliders = Physics.OverlapSphere(go.transform.position, explosionRadius);
+            Vector3 position = new Vector3(go.transform.position.x, 0, go.transform.position.z);
+            Collider[] colliders = Physics.OverlapSphere(position, explosionRadius);
             Component ability = go.GetComponent(typeof(IAbility));
 
             foreach(Collider collider in colliders) {
                 if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                     Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
+
                     if(GameFunctions.WillHit((ability as IAbility).HeightAttackable, (ability as IAbility).TypeAttackable, damageable)) {
-                        GameFunctions.Attack(damageable, explosionDamage);
+                        (ability as IAbility).SetHit = true;
+
+                        float damage = explosionDamage*(ability as IAbility).DamageMultiplier;
+                        if(towerDamage > 0 && damageable.GetComponent<Tower>())
+                            damage = towerDamage*(ability as IAbility).DamageMultiplier;
+
+                        GameFunctions.Attack(damageable, damage);
                         (ability as IAbility).ApplyAffects(damageable);
                     }
                 }

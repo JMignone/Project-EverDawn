@@ -10,17 +10,22 @@ public class Projectile : MonoBehaviour, IAbility
     [SerializeField]
     private ProjActor2D unitSprite;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float radius;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float speed;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float range;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float baseDamage;
+
+    [Tooltip("If set to 0, towerDamage will be set to baseDamage")]
+    [SerializeField] [Min(0)]
+    private float towerDamage;
+    private float damageMultiplier; //used for units that may have had its damage increased/decreased and fires projectiles as a ranged attack
 
     [Tooltip("Determines if the projectile can hit units on the ground, flying, or both")]
     [SerializeField]
@@ -36,6 +41,44 @@ public class Projectile : MonoBehaviour, IAbility
     [Tooltip("If checked, a targeted ability will be able to hit a unit that is not its target given the unit blocked its path")]
     [SerializeField]
     private bool blockable; //simply means that a projectile can hit somthing that it didnt nessesarly target. Automatically set to true if there is no specific target
+
+    [Tooltip("If checked, the skillshot script will not tell BaseStats that the unit is done casting. This job will be left to the ability")]
+    [SerializeField]
+    private bool abilityControl;
+
+    private bool hit; //used for the below 2 variables
+    [Tooltip("If checked, the skillshot will continue once this projectile is destroyed")]
+    [SerializeField]
+    private bool pauseAbility;
+
+    [Tooltip("If checked, the skillshot will have its exitOverride value flagged on a miss, meaning it will stop firing further")]
+    [SerializeField]
+    private bool stopOnMiss;
+
+    [Tooltip("If checked, the skillshot will skip the last number of abilities")]
+    [SerializeField]
+    private bool skipLastOnMiss;
+
+    [SerializeField] [Min(0)]
+    private int skipNumber;
+
+    [Tooltip("If checked, a target will be sent to the skillshot script for the future abilities")]
+    [SerializeField]
+    private bool overridesTarget;
+
+    [Tooltip("If checked, the ability will not do damage unless its on a target")]
+    [SerializeField]
+    private bool onlyDamageIfTargeted;
+
+    [Tooltip("If checked, the preview will not display")]
+    [SerializeField]
+    private bool hidePreview;
+    
+    [SerializeField]
+    private CustomPathStats customPathStats;
+
+    [SerializeField]
+    private LocationStats locationStats;
 
     [SerializeField]
     private AOEStats aoeStats;
@@ -62,6 +105,15 @@ public class Projectile : MonoBehaviour, IAbility
     private GrabStats grabStats;
 
     [SerializeField]
+    private StrengthStats strengthStats;
+    
+    [SerializeField]
+    private BlindStats blindStats;
+
+    [SerializeField]
+    private StunStats stunStats;
+
+    [SerializeField]
     private BoomerangStats boomerangStats;
 
     [SerializeField]
@@ -73,13 +125,18 @@ public class Projectile : MonoBehaviour, IAbility
     [SerializeField]
     private GrenadeStats grenadeStats;
 
-    private Vector3 targetLocation;
+    [SerializeField]
+    private ResistEffects resistEffects; //gives the shooting unit resistance while the projectile is in play
 
     [SerializeField]
+    private ApplyResistanceStats applyResistanceStats; //what resistances the projectile gives to its target or the user for a duration
+
+    private Vector3 targetLocation;
     private Actor3D chosenTarget;
 
-    //Below 2 are currently only used for boomerang, but may be needed for others
+    private ICaster caster;
     private IDamageable unit;
+    //Currently only used for boomerang, but may be needed for others. This variable gets updated wiith the location of the unit until it dies
     private Vector3 lastKnownLocation;
 
     public SphereCollider HitBox
@@ -106,12 +163,25 @@ public class Projectile : MonoBehaviour, IAbility
     public float Range
     {
         get { return range; }
+        set { range = value; }
     }
 
     public float BaseDamage
     {
         get { return baseDamage; }
-        //set { baseDamage = value; }
+        set { baseDamage = value; }
+    }
+
+    public float TowerDamage
+    {
+        get { return towerDamage; }
+        set { towerDamage = value; }
+    }
+
+    public float DamageMultiplier
+    {
+        get { return damageMultiplier; }
+        set { damageMultiplier = value; }
     }
 
     public GameConstants.HEIGHT_ATTACKABLE HeightAttackable
@@ -127,6 +197,32 @@ public class Projectile : MonoBehaviour, IAbility
     public bool CanPierce
     {
         get { return canPierce; }
+    }
+
+    public bool AbilityControl
+    {
+        get { return abilityControl; }
+    }
+
+    public bool SetHit
+    {
+        get { return hit; }
+        set { hit = value; }
+    }
+
+    public bool HidePreview
+    {
+        get { return hidePreview; }
+    }
+
+    public bool OnlyDamageIfTargeted
+    {
+        get { return onlyDamageIfTargeted; }
+    }
+
+    public CustomPathStats CustomPathStats
+    {
+        get { return customPathStats; }
     }
 
     public AOEStats AOEStats
@@ -167,6 +263,16 @@ public class Projectile : MonoBehaviour, IAbility
     public GrabStats GrabStats
     {
         get { return grabStats; }
+    }
+
+    public StrengthStats StrengthStats
+    {
+        get { return strengthStats; }
+    }
+
+    public BlindStats BlindStats
+    {
+        get { return blindStats; }
     }
 
     public Vector3 Position()
@@ -222,6 +328,12 @@ public class Projectile : MonoBehaviour, IAbility
         set { blockable = value; }
     }
 
+    public ICaster Caster
+    {
+        get { return caster; }
+        set { caster = value; }
+    }
+
     public IDamageable Unit
     {
         get { return unit; }
@@ -233,32 +345,66 @@ public class Projectile : MonoBehaviour, IAbility
         return 1; //1 represents the 'walkable' area
     }
 
-    /*public Vector3 Target() {
-        if(chosenTarget != null)
-            return chosenTarget.transform.position;
-        else
-            return targetLocation;
-    }*/
-
     private void Start() {
         hitBox.radius = radius;
-        boomerangStats.StartBoomerangStats(gameObject);
-        grenadeStats.StartGrenadeStats(gameObject);
-        lingeringStats.StartLingeringStats(gameObject);
-        slowStats.StartSlowStats();
-        pullStats.StartPullStats(gameObject);
+        StartStats();
 
         //we cant have a grenade and a boomerang
         if(boomerangStats.IsBoomerang && grenadeStats.IsGrenade)
             boomerangStats.IsBoomerang = false;
 
-        if(chosenTarget == null)
+        if(chosenTarget == null && !onlyDamageIfTargeted)
             blockable = true;
+    }
 
+    protected void StartStats() {
+        boomerangStats.StartBoomerangStats(gameObject);
+        grenadeStats.StartGrenadeStats(gameObject);
+        lingeringStats.StartLingeringStats(gameObject);
+        slowStats.StartSlowStats();
+        pullStats.StartPullStats(gameObject);
+        strengthStats.StartStrengthStats();
+        locationStats.StartStats(unit, gameObject, caster);
+        customPathStats.StartStats(gameObject, targetLocation);
+        
+        if(unit != null && !unit.Equals(null)) {
+            resistEffects.StartResistance(unit);
+            applyResistanceStats.StartResistance(unit);
+
+            if(caster != null)
+                caster.PauseFiring = pauseAbility;
+        }
+
+        if(towerDamage == 0)
+            towerDamage = baseDamage;
+    }
+
+    protected void StopStats() {
+        if(unit != null && !unit.Equals(null)) {
+            resistEffects.StopResistance(unit);
+
+            if(abilityControl)
+                unit.Stats.IsCastingAbility = false;
+
+            if(caster != null) {
+                caster.PauseFiring = false;
+                caster.ExitOverride = stopOnMiss && !hit;
+                if(skipLastOnMiss && !hit)
+                    caster.SkipOverride = skipNumber;
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        StopStats();
+        if(unit != null && !unit.Equals(null) && locationStats.OverridesLocation && locationStats.OverridesAtEnd)
+            locationStats.LocationOveride();
     }
 
     private void Update() {
-        if(unit != null && unit.Agent != null) { //This is currently only used for boomerang
+        hitBox.transform.position = new Vector3(hitBox.transform.position.x, 0, hitBox.transform.position.z);
+        if(unit != null && !unit.Equals(null)) { //This is currently only used for boomerang
             lastKnownLocation = unit.Agent.transform.position;
             lastKnownLocation.y = 0;
         }
@@ -271,6 +417,7 @@ public class Projectile : MonoBehaviour, IAbility
                 transform.rotation = targetRotation;
             }
         }
+        locationStats.UpdateStats();
         if(lingeringStats.CurrentlyLingering) //if currently lingering
             lingeringStats.UpdateLingeringStats(gameObject);
         float speedReduction = 1; //a multiply used by boomerang projectiles to slow down near the end of flight
@@ -300,27 +447,37 @@ public class Projectile : MonoBehaviour, IAbility
             }
             if(grenadeStats.IsGrenade)
                 grenadeStats.UpdateGrenadeStats(gameObject, targetLocation, speed);
-            else {
-                if(boomerangStats.IsBoomerang && boomerangStats.GoingBack) {
-                    Vector3 direction = transform.position - lastKnownLocation;
-                    Quaternion targetRotation = Quaternion.LookRotation(direction);
-                    transform.rotation = targetRotation;
-                    transform.position -= transform.forward * speed * speedReduction * Time.deltaTime;
-                    boomerangStats.UpdateBoomerangStats();
-                }
-                else
-                    transform.position += transform.forward * speed * speedReduction * Time.deltaTime;
+            else if(boomerangStats.IsBoomerang && boomerangStats.GoingBack) {
+                Vector3 direction = transform.position - lastKnownLocation;
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                transform.rotation = targetRotation;
+                transform.position -= transform.forward * speed * speedReduction * Time.deltaTime;
+                boomerangStats.UpdateBoomerangStats();
             }
+            else if(customPathStats.HasCustomPath)
+                customPathStats.UpdateStats(targetLocation);
+            else
+                transform.position += transform.forward * speed * speedReduction * Time.deltaTime;
         }
     }
 
-    public void hit(Component damageable) {
+    public void Hit(Component damageable) {
         if(blockable || (damageable as IDamageable).Agent == chosenTarget) { //if the projectile is blockable, or this is infact the chosen target
+        
             if(GameFunctions.WillHit(heightAttackable, typeAttackable, damageable)) {
+                hit = true;
+
+                if(overridesTarget && caster != null)
+                    caster.SetNewTarget((damageable as IDamageable).Agent);
+
                 if(aoeStats.AreaOfEffect)
                     aoeStats.Explode(gameObject);
                 else {
-                    GameFunctions.Attack(damageable, baseDamage);
+                    float damage = baseDamage*damageMultiplier;
+                    if(damageable.GetComponent<Tower>())
+                        damage = towerDamage*damageMultiplier;
+
+                    GameFunctions.Attack(damageable, damage);
                     ApplyAffects(damageable);
                 }
                 if(!canPierce) {
@@ -351,6 +508,13 @@ public class Projectile : MonoBehaviour, IAbility
         if(knockbackStats.CanKnockback)
             (damageable as IDamageable).Stats.EffectStats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position);
         if(grabStats.CanGrab)
-            (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.PullDuration, grabStats.StunDuration, unit);
+            (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.Speed, grabStats.PullDuration, grabStats.StunDuration, grabStats.ObstaclesBlockGrab, unit);
+        if(strengthStats.CanStrength)
+            (damageable as IDamageable).Stats.EffectStats.StrengthenedStats.Strengthen(strengthStats.StrengthDuration, StrengthStats.StrengthIntensity);
+        if(blindStats.CanBlind)
+            (damageable as IDamageable).Stats.EffectStats.BlindedStats.Blind(blindStats.BlindDuration);
+        if(stunStats.CanStun)
+            (damageable as IDamageable).Stats.EffectStats.StunnedStats.Stun(stunStats.StunDuration);
+        applyResistanceStats.ApplyResistance((damageable as IDamageable));
     }
 }

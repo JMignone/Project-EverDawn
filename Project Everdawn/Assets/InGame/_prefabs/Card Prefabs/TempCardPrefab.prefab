@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.7830189, g: 0.39215687, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.7843138, g: 0.3921569, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -369,7 +369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0.19607843}
+  m_Color: {r: 0.7843138, g: 0.3921569, b: 0, a: 0.19607843}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -523,7 +523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0.19607843}
+  m_Color: {r: 0.78823537, g: 0.40784317, b: 0.023529414, a: 0.19607843}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -553,9 +553,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4512529289071855712}
+  - component: {fileID: 8788458502210562232}
   - component: {fileID: 2009313510499288145}
   - component: {fileID: 5947538440291926618}
-  - component: {fileID: 6362623073002118013}
   m_Layer: 5
   m_Name: TempCardPrefab
   m_TagString: Untagged
@@ -586,6 +586,40 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 155, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8788458502210562232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8713341601375373046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 456cd3b763d28f94992633aec8321440, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInfo: {fileID: 0}
+  cardInfo:
+    index: 0
+    name: Name
+    icon: {fileID: 0}
+    cost: 0
+    spawnZoneRestrictions: 0
+    prefab: []
+    previewPrefab: {fileID: 0}
+    previewDelays: []
+    unitIndex: 0
+  transparentIcon: {fileID: 7643329798772556452}
+  transparentCardName: {fileID: 8843364796709465244}
+  transparentCost: {fileID: 4056869922160189389}
+  icon: {fileID: 2016539752623499543}
+  cardName: {fileID: 6127564538597853963}
+  cost: {fileID: 7811432696469595731}
+  canDrag: 1
+  abilityPreviewLine: {fileID: 21300000, guid: d24184dab2f7f3d418f3a20dc032fa78, type: 3}
+  abilityPreviewLinear: {fileID: 21300000, guid: 3d46296629f72914da3ffeb630c82832, type: 3}
+  abilityPreviewBomb: {fileID: 21300000, guid: 68c0303b57e53ce4188ea1bbcf918c1a, type: 3}
+  abilityPreviewRange: {fileID: 21300000, guid: 658bc1bba667d16429506ad48b1602a0, type: 3}
 --- !u!222 &2009313510499288145
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -624,30 +658,3 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6362623073002118013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8713341601375373046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 732edcbb2a19cf948bc41c256a754dcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerInfo: {fileID: 0}
-  cardInfo:
-    index: 0
-    name: Name
-    icon: {fileID: 0}
-    cost: 0
-    prefab: {fileID: 0}
-    previewPrefab: {fileID: 0}
-  transparentIcon: {fileID: 7643329798772556452}
-  transparentCardName: {fileID: 8843364796709465244}
-  transparentCost: {fileID: 4056869922160189389}
-  icon: {fileID: 2016539752623499543}
-  cardName: {fileID: 6127564538597853963}
-  cost: {fileID: 7811432696469595731}
-  canDrag: 1

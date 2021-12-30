@@ -8,7 +8,7 @@ public class RootStats
     [SerializeField]
     private bool canRoot;
 
-    [SerializeField]
+    [SerializeField] [Min(0)]
     private float rootDuration;
 
     public bool CanRoot

@@ -70,9 +70,9 @@ public class Deck
         return cs;
     }
 
-    public void RemoveHand(int index) {
+    public void RemoveHand(int cardId) {
         foreach(CardStats cs in hand) {
-            if(cs.Index == index) {
+            if(cs.CardId == cardId) {
                 hand.Remove(cs);
                 cards.Add(cs);
                 break;

@@ -3,12 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public static class GameFunctions
 {
     public static bool CanAttack(string playerTag, string enemyTag, Component damageable, BaseStats stats) { //returns if a unit can attack another
         if(damageable) {
-            if(playerTag != enemyTag) {
+            if(playerTag != enemyTag && (damageable as IDamageable).Stats.Targetable) {
+                if((damageable as IDamageable).Stats.SoonToBeKilled) {
+                    if(!stats.SoonToKill && !stats.SoonToKillOverride)
+                        return false;
+                }
                 bool heightAttackable = false;
                 if(stats.HeightAttackable == GameConstants.HEIGHT_ATTACKABLE.BOTH) //If the unit can attack the flying or ground unit, continue
                     heightAttackable = true;
@@ -29,6 +34,8 @@ public static class GameFunctions
 
     public static bool WillHit(GameConstants.HEIGHT_ATTACKABLE heightAttackable, GameConstants.TYPE_ATTACKABLE typeAttackable, Component damageable) { //returns if an ability will hit its target
         bool willHit = false;
+        if(!(damageable as IDamageable).Stats.Damageable)
+            return false;
         if(heightAttackable == GameConstants.HEIGHT_ATTACKABLE.BOTH) //If the unit can attack the flying or ground unit, continue
             willHit = true;
         else if(heightAttackable == GameConstants.HEIGHT_ATTACKABLE.GROUND && (damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND)
@@ -48,7 +55,8 @@ public static class GameFunctions
 
     public static void Attack(Component damageable, float baseDamage) {
         if(damageable) {
-            (damageable as IDamageable).TakeDamage(baseDamage);
+            if((damageable as IDamageable).Stats.Damageable)
+                (damageable as IDamageable).TakeDamage(baseDamage);
         }
     }
 
@@ -65,7 +73,7 @@ public static class GameFunctions
                 targetComponent = hitTarget.GetComponent(typeof(IDamageable));
 
                 if(targetComponent) {
-                    if(GameFunctions.CanAttack(tag, hitTarget.tag, targetComponent, stats)) {
+                    if((targetComponent as IDamageable).Stats.Targetable && GameFunctions.CanAttack(tag, hitTarget.tag, targetComponent, stats)) {
                         targetSc = (targetComponent as IDamageable).Stats.DetectionObject;
                         float newDist = Vector3.Distance(stats.DetectionObject.transform.position, targetSc.transform.position);
 
@@ -83,47 +91,70 @@ public static class GameFunctions
         return null;
     }
 
-    public static Transform GetCanvas() {
-        return GameObject.Find(GameConstants.HUD_CANVAS).transform;
-    }
-
-    public static GameObject SpawnUnit(GameObject prefab, Transform parent, Vector3 position) 
+    public static GameObject SpawnUnit(GameObject prefab, Transform parent, Vector3 position, string tag = "Player") 
     {
+        int playerOffset = 100;
+        if(tag == "Enemy")
+            playerOffset = -100;
+
         var targetPosition = position;
-        targetPosition.z = 100; //What about the enemy player? Does this need to be -100?
-        Vector3 direction = position - targetPosition;
+        targetPosition.z = playerOffset; //What about the enemy player? Does this need to be -100?
+        Vector3 direction = targetPosition - position;
+        
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         //This makes sure the unit is rotated the corect way
 
         GameObject go = GameObject.Instantiate(prefab, position, targetRotation, parent);
+        giveUnitTeam(go, tag);
+
         GameManager.AddObjectToList(go);
         return go;
     }
 
-    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit) {
+    //damage increase is needed for range units that fire projectiles in its auto attack
+    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, float rangeIncrease = 0, ICaster skillshot = null) {
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         float distance = Vector3.Distance(startPosition, mousePosition);
         Vector3 endPosition = mousePosition;
         Projectile projectile = prefab.GetComponent<Projectile>();
 
-        float range = projectile.Range;
+        float range = projectile.Range + rangeIncrease;
         float radius = projectile.Radius;
         bool isGrenade = projectile.GrenadeStats.IsGrenade;
         bool selfDestructs = projectile.SelfDestructStats.SelfDestructs;
-        if(distance > (range - radius))
+        bool isMovement = prefab.GetComponent<Movement>();
+        if(distance > (range - radius)) {
             endPosition = startPosition + (direction.normalized * range);
-        else if(distance < range && !isGrenade && !selfDestructs)
+            if(isMovement)
+                endPosition -= direction.normalized * radius;
+        }
+        else if(distance < range && !isGrenade && !selfDestructs && !isMovement)
             endPosition = startPosition + (direction.normalized * range);
-        startPosition += direction.normalized * radius;
+
+        if(!isMovement)
+            startPosition += direction.normalized * radius;
+        else {
+            endPosition += direction.normalized * radius;
+            NavMeshHit hit;
+            endPosition = GameFunctions.adjustForBoundary(endPosition);
+            if(NavMesh.SamplePosition(endPosition, out hit, 12f, 9))
+                endPosition = hit.position;
+        }
+        
         if(isGrenade && projectile.GrenadeStats.IsAirStrike)
             startPosition = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
-
         GameObject go = GameObject.Instantiate(prefab, startPosition, targetRotation, GameManager.GetUnitsFolder());
-        go.GetComponent<Projectile>().TargetLocation = endPosition;
-        go.GetComponent<Projectile>().Unit = unit;
+        go.tag = tag;
+
+        Projectile proj = go.GetComponent<Projectile>();
+        proj.TargetLocation = endPosition;
+        if(unit != null)
+            proj.Unit = unit;
+        proj.DamageMultiplier = damageMultiplier;
+        proj.Caster = skillshot;
     }
 
-    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit) {
+    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, ICaster targeter = null) {
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         float distance = Vector3.Distance(startPosition, chosenTarget.transform.position);
         Vector3 endPosition = chosenTarget.transform.position;
@@ -131,24 +162,34 @@ public static class GameFunctions
 
         float radius = projectile.Radius;
         bool isGrenade = projectile.GrenadeStats.IsGrenade;
-
-        startPosition += direction.normalized * radius;
+        if(!prefab.GetComponent<Movement>())
+            startPosition += direction.normalized * radius;
+        else
+            endPosition += direction.normalized * radius;
+            
         if(isGrenade && projectile.GrenadeStats.IsAirStrike)
             startPosition = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
 
         GameObject go = GameObject.Instantiate(prefab, startPosition, targetRotation, GameManager.GetUnitsFolder());
-        go.GetComponent<Projectile>().TargetLocation = endPosition;
-        go.GetComponent<Projectile>().ChosenTarget = chosenTarget;
-        go.GetComponent<Projectile>().Unit = unit;
+        go.tag = tag;
+
+        Projectile proj = go.GetComponent<Projectile>();
+        proj.TargetLocation = endPosition;
+        proj.ChosenTarget = chosenTarget;
+        if(unit != null) 
+            proj.Unit = unit;
+        proj.DamageMultiplier = damageMultiplier;
+        proj.Caster = targeter;
     }
 
-    public static void FireCAL(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit) {
+
+    public static void FireCAL(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, float rangeIncrease = 0, ICaster skillshot = null) {
         Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
         float distance = Vector3.Distance(startPosition, mousePosition);
         Vector3 endPosition = mousePosition;
         CreateAtLocation cal = prefab.GetComponent<CreateAtLocation>();
 
-        float range = cal.Range;
+        float range = cal.Range + rangeIncrease;
         float radius = cal.Radius;
         if(distance > (range - radius))
             endPosition = startPosition + (direction.normalized * (range - radius));
@@ -161,25 +202,39 @@ public static class GameFunctions
                 endPosition = hit.position;
         }
         GameObject go = GameObject.Instantiate(prefab, endPosition, targetRotation, GameManager.GetUnitsFolder());
-        go.GetComponent<CreateAtLocation>().TargetLocation = endPosition;
-        go.GetComponent<CreateAtLocation>().Unit = unit;
+        go.tag = tag;
+
+        CreateAtLocation goCal = go.GetComponent<CreateAtLocation>();
+        goCal.TargetLocation = endPosition;
+        if(unit != null)
+            goCal.Unit = unit;
+        goCal.DamageMultiplier = damageMultiplier;
+        goCal.Caster = skillshot;
     }
 
-    public static void FireCAL(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit) {
+    public static void FireCAL(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, ICaster targeter = null) {
         Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
         float distance = Vector3.Distance(startPosition, chosenTarget.transform.position);
         Vector3 endPosition = chosenTarget.transform.position;
         CreateAtLocation cal = prefab.GetComponent<CreateAtLocation>();
 
-        float range = cal.Range;
+        /* The CAL should hit the target regardless of how far its target runs after initiation
+        float range = cal.Range + rangeIncrease;
         float radius = cal.Radius;
         if(distance > (range - radius))
             endPosition = startPosition + (direction.normalized * (range - radius));
+        */
 
         GameObject go = GameObject.Instantiate(prefab, endPosition, targetRotation, GameManager.GetUnitsFolder());
-        go.GetComponent<CreateAtLocation>().TargetLocation = endPosition;
-        go.GetComponent<CreateAtLocation>().ChosenTarget = chosenTarget;
-        go.GetComponent<CreateAtLocation>().Unit = unit;
+        go.tag = tag;
+        
+        CreateAtLocation goCal = go.GetComponent<CreateAtLocation>();
+        goCal.TargetLocation = endPosition;
+        goCal.ChosenTarget = chosenTarget;
+        if(unit != null)
+            goCal.Unit = unit;
+        goCal.DamageMultiplier = damageMultiplier;
+        goCal.Caster = targeter;
     }
 
     //This code was found from https://answers.unity.com/questions/566519/camerascreentoworldpoint-in-perspective.html
@@ -188,7 +243,7 @@ public static class GameFunctions
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane xy;
         if(isFlying)
-            xy = new Plane(Vector3.up, new Vector3(0, 20, 0));
+            xy = new Plane(Vector3.up, new Vector3(0, GameConstants.FLY_ZONE_HEIGHT, 0));
         else
             xy = new Plane(Vector3.up, new Vector3(0, 0, 0));
         
@@ -198,6 +253,10 @@ public static class GameFunctions
     }
 
     public static Vector3 adjustForTowers(Vector3 position, float radius) {
+        return position; 
+
+        // !!! IT SEEMS THIS FUNCTION MAY NOT BE NEEDED WITH THE ADDITION OF THE TOWER BARRIERS, ILL KEEP IT LIKE THIS FOR NOW !!!
+        /*
         foreach(GameObject go in GameManager.Instance.TowerObjects) {
             Component component = go.GetComponent(typeof(IDamageable));
             float towerRadius = (component as IDamageable).Agent.HitBox.radius;
@@ -226,6 +285,7 @@ public static class GameFunctions
                }        
         }
         return position;
+        */
     }
 
     public static Vector3 adjustForBoundary(Vector3 position) {
@@ -248,4 +308,49 @@ public static class GameFunctions
         return position;
     }
 
+    // ! This function will fall into an endless loop or fail outright if a group unit has another group unit inside it, which shouldn't be the case !
+    public static void giveUnitTeam(GameObject go, string tag) {
+        IDamageable unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+
+        if(unit.Stats.UnitGrouping == GameConstants.UNIT_GROUPING.GROUP) {
+            for(int unitIndex=1; unitIndex<go.transform.childCount; unitIndex++)
+                giveUnitTeam(go.transform.GetChild(unitIndex).gameObject, tag);
+        }
+        else {
+            go.tag = tag;
+            unit.Agent.transform.tag = tag;
+            unit.UnitSprite.Ability.transform.tag = tag;
+        }
+    }
+
+    public static void giveAbilityTeam(GameObject go, string tag) {
+        go.tag = tag;
+    }
+
+    //sets the ability previews to red to display that they are disabled
+    public static void DisableAbilities(GameObject go) {
+        if(go.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors to red
+            foreach(Transform child in go.transform.GetChild(1).GetChild(5).GetChild(2)) {
+                if(child.childCount > 1) //this means its a complicated summon preview
+                    child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,0,0,50);
+                else
+                    child.GetChild(0).GetComponent<Image>().color = new Color32(255,0,0,50);
+            }
+        }
+    }
+
+    public static void EnableAbilities(GameObject go) {
+        if(go.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors back to green
+            foreach(Transform child in go.transform.GetChild(1).GetChild(5).GetChild(2)) {
+                if(child.childCount > 1) //this means its a complicated summon preview
+                    child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,255,255,100);
+                else
+                    child.GetChild(0).GetComponent<Image>().color = new Color32(255,255,255,100);
+            }
+        }
+    }
+
+    public static Transform GetCanvas() {
+        return GameObject.Find(GameConstants.HUD_CANVAS).transform;
+    }
 }
