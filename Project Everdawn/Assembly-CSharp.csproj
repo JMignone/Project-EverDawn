@@ -97,7 +97,7 @@
      <Compile Include="Assets\MenuAssets\Scripts\UITabGroup.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\PathSplineEndless.cs" />
      <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Events\CardEvent.cs" />
-     <Compile Include="Assets\_Scripts\Managers\GameManager.cs" />
+     <Compile Include="Assets\_Scripts\Managers\t-GameManager.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Projectile\ProjEffects\GrenadeStats.cs" />
      <Compile Include="Assets\_Scripts\Units\UnitEffects\KnockbackedStats.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\UIAnimTest1.cs" />
