@@ -42,9 +42,13 @@ public class SelfDestructStats
     }
 
     public void Explode(GameObject go) {
-        //Instantiate(explosionEffect, go.transform.position, go.transform.rotation);
+        Vector3 position = new Vector3(go.transform.position.x, 0, go.transform.position.z);
+        
+        GameObject damageZone = MonoBehaviour.Instantiate(explosionEffect, position, Quaternion.identity);
+        damageZone.transform.localScale = new Vector3(explosionRadius*2, .1f, explosionRadius*2);
+
         if(explosionDamage > 0) { //have this here incase we want to have a selfdestruct effect but just for show, perhaps for a lingering damage projectile
-            Vector3 position = new Vector3(go.transform.position.x, 0, go.transform.position.z);
+            
             Collider[] colliders = Physics.OverlapSphere(position, explosionRadius);
             Component ability = go.GetComponent(typeof(IAbility));
 

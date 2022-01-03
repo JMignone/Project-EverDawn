@@ -64,6 +64,15 @@ MonoBehaviour:
   overridesTarget: 0
   onlyDamageIfTargeted: 0
   hidePreview: 0
+  customPathStats:
+    hasCustomPath: 0
+    lerpPoints: []
+    speedToLastPoint: 0
+    arcMultiplierToLastPoint: 0
+    customCollider: {fileID: 0}
+    customImage: {fileID: 0}
+    pivot: {x: 0, y: 0}
+    sizeDelta: {x: 0, y: 0}
   locationStats:
     overridesLocation: 0
     overridesAtEnd: 0
@@ -73,6 +82,7 @@ MonoBehaviour:
     forwardAdjustment: 0
   aoeStats:
     areaOfEffect: 0
+    unitCentered: 0
     explosionEffect: {fileID: 0}
     explosionRadius: 0
   freezeStats:
@@ -138,7 +148,7 @@ MonoBehaviour:
     isGrenade: 1
     isAirStrike: 0
     startLocation: 0
-    explosionEffect: {fileID: 0}
+    explosionEffect: {fileID: 8690222435761223237, guid: 6da804001015963439247141d19a1ee2, type: 3}
     explosionRadius: 5
     grenadeArcMultiplier: 1
   resistEffects:

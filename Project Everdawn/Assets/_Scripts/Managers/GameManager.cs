@@ -165,6 +165,7 @@ public class GameManager : MonoBehaviour
             if(isKeep) {
                 Instance.Players[0].Score = 3;
                 //END THE GAME
+                GameEnd();
             }
             else {
                 if(leftTower) 
@@ -179,6 +180,7 @@ public class GameManager : MonoBehaviour
             if(isKeep) {
                 Instance.Players[1].Score = 3;
                 //END THE GAME
+                GameEnd();
             }
             else {
                 if(leftTower) 
@@ -234,7 +236,7 @@ public class GameManager : MonoBehaviour
     public static bool isTowerActive(string tag, float percHp) {
         List<GameObject> listOfFriendlyTowers = new List<GameObject>();
 
-        foreach (GameObject go in Instance.TowerObjects) {
+        foreach(GameObject go in Instance.TowerObjects) {
             if(go.CompareTag(tag)) {
                 listOfFriendlyTowers.Add(go);
             }
@@ -247,7 +249,7 @@ public class GameManager : MonoBehaviour
     }
 
     public static void removeAbililtyIndicators() {
-        foreach (GameObject go in Instance.Objects) {
+        foreach(GameObject go in Instance.Objects) {
             Component component = go.GetComponent(typeof(IDamageable));
             if((component as IDamageable).Stats.IndicatorNum > 0) {
                 (component as IDamageable).Stats.IndicatorNum = 0;
@@ -255,5 +257,17 @@ public class GameManager : MonoBehaviour
             }
         }
         GameFunctions.GetCanvas().GetChild(3).GetComponent<Image>().enabled = false;
+    }
+
+    public static void GameEnd() {
+        for (int i = Instance.Objects.Count - 1; i >= 0; i--) // Reverse loop over objects in list and destroy them
+        {
+            GameObject.Destroy(Instance.Objects[i]);
+            Instance.Objects.Remove(Instance.Objects[i]);
+        }
+        Instance.TowerObjects.Clear();
+
+        //Instance.GameplayHUD.SetActive(false);
+        //Instance.EndGameScreen.SetActive(true);
     }
 }

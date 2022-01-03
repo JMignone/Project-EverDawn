@@ -82,6 +82,7 @@ MonoBehaviour:
     forwardAdjustment: 0
   aoeStats:
     areaOfEffect: 0
+    unitCentered: 0
     explosionEffect: {fileID: 0}
     explosionRadius: 0
   freezeStats:
@@ -147,7 +148,7 @@ MonoBehaviour:
     isGrenade: 1
     isAirStrike: 0
     startLocation: 0
-    explosionEffect: {fileID: 0}
+    explosionEffect: {fileID: 8690222435761223237, guid: 6da804001015963439247141d19a1ee2, type: 3}
     explosionRadius: 4
     grenadeArcMultiplier: 0.75
   resistEffects:

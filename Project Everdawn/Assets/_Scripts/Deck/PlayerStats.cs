@@ -43,6 +43,9 @@ public class PlayerStats : MonoBehaviour
     private bool leftZone;
     private bool rightZone;
 
+    [SerializeField] private SO_CardDatabase cardDatabase;
+    [SerializeField] private DeckSaver deckSaver;
+
     public Deck PlayersDeck
     {
         get { return playersDeck; }
@@ -166,6 +169,20 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
+        if(!computerStats.IsComputer) {
+            deckSaver.Load();
+            
+            List<int> cardIDList = deckSaver.selectedCards;
+            List<CardStats> cards = new List<CardStats>();
+
+            for (int i = 0; i < cardIDList.Count; i++)
+            {
+                cards.Add(cardDatabase.cardList[cardIDList[i]].GetCardStats());
+            }
+            playersDeck.Cards = cards;
+        }
+
+
         playersDeck.Start();
         //SetSpawnZone();
         spawnZone = GameConstants.SPAWN_ZONE_RESTRICTION.NONE;

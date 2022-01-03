@@ -9,6 +9,9 @@ public class AOEStats
     private bool areaOfEffect;
 
     [SerializeField]
+    private bool unitCentered;
+
+    [SerializeField]
     private GameObject explosionEffect;
 
     [SerializeField] [Min(0)]
@@ -29,11 +32,26 @@ public class AOEStats
         get { return explosionRadius; }
     }
 
-    public void Explode(GameObject go) {
-        //Instantiate(explosionEffect, go.transform.position, go.transform.rotation);
-        Vector3 position = new Vector3(go.transform.position.x, 0, go.transform.position.z);
-        Collider[] colliders = Physics.OverlapSphere(position, explosionRadius);
-        Projectile projectile = go.GetComponent<Projectile>();
+    public void Explode(GameObject go) {    
+        Collider[] colliders;
+        Projectile projectile = go.GetComponent<Projectile>(); 
+
+        if(unitCentered && projectile.ChosenTarget.Agent != null) { 
+            Vector3 position = new Vector3(projectile.ChosenTarget.Agent.transform.position.x, 0, projectile.ChosenTarget.Agent.transform.position.z);
+
+            GameObject damageZone = MonoBehaviour.Instantiate(explosionEffect, position, Quaternion.identity);
+            damageZone.transform.localScale = new Vector3(explosionRadius*2, .1f, explosionRadius*2);
+
+            colliders = Physics.OverlapSphere(position, explosionRadius);
+        }
+        else {
+            Vector3 position = new Vector3(go.transform.position.x, 0, go.transform.position.z);
+
+            GameObject damageZone = MonoBehaviour.Instantiate(explosionEffect, position, Quaternion.identity);
+            damageZone.transform.localScale = new Vector3(explosionRadius*2, .1f, explosionRadius*2);
+
+            colliders = Physics.OverlapSphere(position, explosionRadius);
+        }
 
         foreach(Collider collider in colliders) {
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {

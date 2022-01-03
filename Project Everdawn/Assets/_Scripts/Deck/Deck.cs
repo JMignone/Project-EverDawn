@@ -15,7 +15,7 @@ public class Deck
     public List<CardStats> Cards
     {
         get { return cards; }
-        //set { cards = value; }
+        set { cards = value; }
     }
 
     public List<CardStats> Hand

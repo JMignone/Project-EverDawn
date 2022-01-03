@@ -30,7 +30,7 @@ public class SO_Card : ScriptableObject
 
     [Header("Gameplay Attributes")]
         [Range(1,10)] public int resourceCost;
-        //[SerializeField] private GameConstants.SPAWN_ZONE_RESTRICTION spawnZoneRestrictions;
+        [SerializeField] private GameConstants.SPAWN_ZONE_RESTRICTION spawnZoneRestrictions;
         [SerializeField] private List<GameObject> prefab;
         [SerializeField] private GameObject previewPrefab;
         [SerializeField] private List<float> previewDelays;
@@ -44,4 +44,20 @@ public class SO_Card : ScriptableObject
         //public List<UnitSkin> availableSkins;
         [Min(0)] public int selectedSkin;
     #endregion
+
+    public CardStats GetCardStats() {
+        CardStats cs = new CardStats();
+
+        cs.CardId = cardID;
+        cs.Name = cardName;
+        cs.Icon = cardImage;
+        cs.Cost = resourceCost;
+        cs.SpawnZoneRestrictions = spawnZoneRestrictions;
+        cs.Prefab = prefab;
+        cs.PreviewPrefab = previewPrefab;
+        cs.PreviewDelays = previewDelays;
+        cs.UnitIndex = unitIndex;
+
+        return cs;
+    }
 }

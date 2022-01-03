@@ -44,13 +44,24 @@ public class UAOEStats
     }
 
     public void Explode(GameObject go, GameObject target, float damage) {
-        //Instantiate(explosionEffect, go.transform.position, go.transform.rotation);
-        Collider[] colliders;
-        if(unitCentered)
-            colliders = Physics.OverlapSphere(new Vector3(go.transform.GetChild(0).position.x, 0, go.transform.GetChild(0).position.z), explosionRadius);
-        else
-            colliders = Physics.OverlapSphere(new Vector3(target.transform.GetChild(0).position.x, 0, target.transform.GetChild(0).position.z), explosionRadius);
 
+        Collider[] colliders;
+        if(unitCentered) { 
+            Vector3 position = new Vector3(go.transform.GetChild(0).position.x, 0, go.transform.GetChild(0).position.z);
+
+            GameObject damageZone = MonoBehaviour.Instantiate(explosionEffect, position, Quaternion.identity);
+            damageZone.transform.localScale = new Vector3(explosionRadius*2, .1f, explosionRadius*2);
+
+            colliders = Physics.OverlapSphere(position, explosionRadius);
+        }
+        else {
+            Vector3 position = new Vector3(target.transform.GetChild(0).position.x, 0, target.transform.GetChild(0).position.z);
+
+            GameObject damageZone = MonoBehaviour.Instantiate(explosionEffect, position, Quaternion.identity);
+            damageZone.transform.localScale = new Vector3(explosionRadius*2, .1f, explosionRadius*2);
+
+            colliders = Physics.OverlapSphere(position, explosionRadius);
+        }
         foreach(Collider collider in colliders) {
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                 Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));

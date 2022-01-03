@@ -102,8 +102,11 @@ public class GrenadeStats
     }
 
     public void Explode(GameObject go) {
-        //Instantiate(explosionEffect, go.transform.position, go.transform.rotation);
         Vector3 position = new Vector3(go.transform.position.x, 0, go.transform.position.z);
+
+        GameObject damageZone = MonoBehaviour.Instantiate(explosionEffect, position, Quaternion.identity);
+        damageZone.transform.localScale = new Vector3(explosionRadius*2, .1f, explosionRadius*2);
+
         Collider[] colliders = Physics.OverlapSphere(position, explosionRadius);
         Projectile projectile = go.GetComponent<Projectile>();
 
