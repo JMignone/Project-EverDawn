@@ -4832,7 +4832,7 @@ MonoBehaviour:
   enemyTextScore: {fileID: 1708688850}
   timeLeft: 181
   textTimer: {fileID: 1922791558}
-  testSetup: 0
+  testSetup: 1
 --- !u!1 &234165123
 GameObject:
   m_ObjectHideFlags: 0
@@ -6224,7 +6224,7 @@ MonoBehaviour:
     - cardId: 7
       name: Freeze
       icon: {fileID: 21300000, guid: 04d58490ded8c4c4aa64bca7867d7969, type: 3}
-      cost: 3
+      cost: 1
       spawnZoneRestrictions: 2
       prefab:
       - {fileID: 5725336417940768639, guid: b2e57ab9f97012c4691347bb6ad85456, type: 3}
@@ -6265,8 +6265,8 @@ MonoBehaviour:
   topArea: {fileID: 1393908569}
   leftArea: {fileID: 478460013}
   rightArea: {fileID: 320920543}
-  cardDatabase: {fileID: 0}
-  deckSaver: {fileID: 0}
+  cardDatabase: {fileID: 11400000, guid: cc38779267dc05442b08f8fe72dbedce, type: 2}
+  deckSaver: {fileID: 11400000, guid: 313ddc1f94fd05c448ee5af3100e0d6c, type: 2}
 --- !u!1 &336064879
 GameObject:
   m_ObjectHideFlags: 0
@@ -42056,7 +42056,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140046817}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0fa5ddd15ea602e4a85a61fd90c5dbdb, type: 3}
   m_Name: 

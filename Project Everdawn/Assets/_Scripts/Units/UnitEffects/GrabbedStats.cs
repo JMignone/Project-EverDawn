@@ -28,6 +28,7 @@ public class GrabbedStats
     private IDamageable enemyUnit;
 
     private Vector3 destination;
+    private bool obstaclesBlockGrab;
     private bool obstacleDetected;
 
     public bool CantBeGrabbed
@@ -56,21 +57,27 @@ public class GrabbedStats
         if(isGrabbed) {
 
             Vector3 unitAgentPos = new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z);
-            Vector3 enemyAgentPos = Vector3.zero;
+            Vector3 enemyAgentPos = new Vector3(enemyUnit.Agent.transform.position.x, 0, enemyUnit.Agent.transform.position.z);
+
+            NavMeshHit hit;
 
             bool enemyCanAct = false;
             if(enemyUnit.Agent != null && enemyUnit.Stats.CanAct) {
-                if(obstacleDetected)
-                    enemyAgentPos = destination;
-                else
-                    enemyAgentPos = new Vector3(enemyUnit.Agent.transform.position.x, 0, enemyUnit.Agent.transform.position.z);
+                
+                obstacleDetected = false;
+                if(obstaclesBlockGrab && unit.Stats.MovementType != GameConstants.MOVEMENT_TYPE.FLYING) {
+                    if(NavMesh.Raycast(unit.Agent.transform.position, enemyAgentPos, out hit, 1)) { //if an obstacle is detected
+                        obstacleDetected = true;
+                        enemyAgentPos = hit.position;
+                    }
+                }
+
                 enemyCanAct = true;
             }
 
             Debug.DrawLine(unitAgentPos, enemyAgentPos, Color.green);
             Debug.DrawRay(enemyAgentPos, Vector3.up*10, Color.red);
 
-            NavMeshHit hit;
             float obstacleAdjustment = 0;
             if(obstacleDetected)
                 obstacleAdjustment = unit.Agent.HitBox.radius/2 + enemyUnit.Agent.HitBox.radius;
@@ -110,17 +117,10 @@ public class GrabbedStats
             grabDelay = grabDuration;
             currentStunDelay = stunDuration;
             enemyUnit = enemy;
+            this.obstaclesBlockGrab = obstaclesBlockGrab;
 
             Vector3 unitAgentPos = new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z);
             Vector3 enemyAgentPos = new Vector3(enemyUnit.Agent.transform.position.x, 0, enemyUnit.Agent.transform.position.z);
-
-            if(obstaclesBlockGrab && unit.Stats.MovementType != GameConstants.MOVEMENT_TYPE.FLYING) {
-                NavMeshHit hit;
-                if(NavMesh.Raycast(unit.Agent.transform.position, enemyAgentPos, out hit, 1)) { //if an obstacle is detected
-                    obstacleDetected = true;
-                    destination = enemyAgentPos = hit.position;
-                }
-            }
 
             totalDistance = Vector3.Distance(unitAgentPos, enemyAgentPos);
 

@@ -572,7 +572,7 @@ GameObject:
   - component: {fileID: 7317817158688808451}
   - component: {fileID: 7317817158688808450}
   m_Layer: 0
-  m_Name: Cornut
+  m_Name: Cornut Preview
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

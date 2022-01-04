@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitBox: {fileID: 1224647180710323965}
-  radius: 3
+  radius: 5
   range: 120
   heightAttackable: 0
   typeAttackable: 0
@@ -171,8 +171,8 @@ MonoBehaviour:
     strengthDuration: 0
     strengthIntensity: 1
   blindStats:
-    canBlind: 1
-    blindDuration: 3
+    canBlind: 0
+    blindDuration: 0
   stunStats:
     canStun: 0
     stunDuration: 0
@@ -189,30 +189,30 @@ MonoBehaviour:
     currentLingeringTime: 0
   selfDestructStats:
     selfDestructs: 1
-    explosionEffect: {fileID: 0}
+    explosionEffect: {fileID: 8690222435761223237, guid: 6da804001015963439247141d19a1ee2, type: 3}
     explosionDamage: 40
     towerDamage: 10
     explosionRadius: 10
   linearStats:
     isLinear: 0
     isVertical: 0
-    isHorizontal: 1
+    isHorizontal: 0
     explosionEffect: {fileID: 0}
-    explosionDamage: 30
+    explosionDamage: 0
     towerDamage: 0
-    explosionWidth: 3
+    explosionWidth: 0
   teleportStats:
     isWarp: 0
     teleportsAllies: 0
-    allyRadius: 6.21
+    allyRadius: 0
     allyWarpSickness: 0
     explosionEffect: {fileID: 0}
   summonStats:
     isSummon: 0
     summonEffect: {fileID: 0}
-    summonUnit: {fileID: 6233150844707143716, guid: d7c397a1cb858434a8225ba56741ec23, type: 3}
+    summonUnit: {fileID: 0}
     size: 0
-    summonPreview: {fileID: 4409346719447776896, guid: 545779cf297333045a5ad086e79fd511, type: 3}
+    summonPreview: {fileID: 0}
     timeToSummon: 6
     currentSummonTime: 0
   applyResistanceStats:

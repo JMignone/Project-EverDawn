@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b3502398de43fb45a495109caba68e7, type: 3}
-  m_Name: SO_Card3
+  m_Name: SO_Card11
   m_EditorClassIdentifier: 
-  cardID: 3
+  cardID: 11
   character: {fileID: 0}
-  cardName: Steamwyrm
-  menuBackgroundImage: {fileID: 21300000, guid: a3615353b88c90a448ef598d9e2409e7, type: 3}
-  cardImage: {fileID: 21300000, guid: a3615353b88c90a448ef598d9e2409e7, type: 3}
+  cardName: Spawner
+  menuBackgroundImage: {fileID: 21300000, guid: 7f882429056c706469331bd077366681, type: 3}
+  cardImage: {fileID: 21300000, guid: 7f882429056c706469331bd077366681, type: 3}
   cardLore: 
   affiliation: []
-  resourceCost: 4
-  spawnZoneRestrictions: 0
+  resourceCost: 3
+  spawnZoneRestrictions: 2
   prefab:
-  - {fileID: 3415333900699297907, guid: 88d8d05153de23e43a8727beab575034, type: 3}
-  previewPrefab: {fileID: 2091876083188452919, guid: ef0564141109bcb4281b5660d1246051, type: 3}
+  - {fileID: 3887690281620728188, guid: f33c3c6d021417745a6999784b7030e5, type: 3}
+  previewPrefab: {fileID: 1401404796868230813, guid: c302e0fd1b2fabc4ea2aa8c0abbc667c, type: 3}
   previewDelays:
   - 0
   unitIndex: 0

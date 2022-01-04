@@ -586,7 +586,7 @@ MonoBehaviour:
     baseDamage: 90
     attackDelay: 1
     currAttackDelay: 0
-    moveSpeed: 12
+    moveSpeed: 10
     noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
@@ -629,7 +629,6 @@ MonoBehaviour:
         outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
-        currentFrozenDelay: 0
       slowStats:
         canSlow: 0
         slowDuration: 0
@@ -668,8 +667,7 @@ MonoBehaviour:
         cantBeGrabbed: 0
         isGrabbed: 0
         direction: {x: 0, y: 0, z: 0}
-        pullDelay: 0
-        currentPullDelay: 0
+        grabDelay: 0
         currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
@@ -679,6 +677,11 @@ MonoBehaviour:
         currentStrengthIntensity: 0
       blindedStats:
         cantBeBlinded: 0
+      stunnedStats:
+        cantBeStunned: 0
+        outSideResistance: 0
+        isStunned: 0
+        stunDelay: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -690,6 +693,7 @@ MonoBehaviour:
         resistedGrab: 0
         resistedPull: 0
         resistedBlind: 0
+        resistedStun: 0
   attackStats:
     firesProjectiles: 1
     attackType: 0
@@ -732,6 +736,10 @@ MonoBehaviour:
     deathSkill: 0
     abilityPrefabs: []
     abilityDelays: []
+  noseDiveStats:
+    noseDives: 0
+    createAtLocation: {fileID: 0}
+    speed: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -1093,6 +1101,54 @@ PrefabInstance:
     - target: {fileID: 5880290126714348102, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
+      propertyPath: m_AABB.m_Center.x
+      value: 0.18565744
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
+      propertyPath: m_AABB.m_Center.y
+      value: 0.19065468
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
+      propertyPath: m_AABB.m_Center.z
+      value: -0.005315706
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 0.30198053
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 0.094101086
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 0.1798024
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
+      propertyPath: m_AABB.m_Center.x
+      value: 0.13018349
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
+      propertyPath: m_AABB.m_Center.y
+      value: 0.032174587
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
+      propertyPath: m_AABB.m_Center.z
+      value: 0.13420847
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 0.2940298
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 0.1430172
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 0.33716944
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126723731848, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_Name
