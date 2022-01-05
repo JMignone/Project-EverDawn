@@ -279,7 +279,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 unitPreviewAgent.Warp(position);
                 position = unitPreviewAgent.transform.position;
             }
-            position.y = 1;
+            position.y = .1f;
 
             foreach(GameObject preview in abilityPreviews) {
                 GameObject go = cardInfo.Prefab.Find(go => go.name == preview.name);
@@ -312,7 +312,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 unitPreviewAgent.Warp(position);
                 position = unitPreviewAgent.transform.position;
             }
-            position.y = 1;
+            position.y = .1f;
 
             foreach(GameObject preview in abilityPreviews)
                 preview.SetActive(false);

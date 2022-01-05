@@ -181,7 +181,7 @@ MonoBehaviour:
     lingerAtEnd: 1
     lingerDuringFlight: 0
     lingeringEffect: {fileID: 8690222435761223237, guid: 6da804001015963439247141d19a1ee2, type: 3}
-    lingeringDamage: 15
+    lingeringDamage: 30
     towerDamage: 0
     lingeringRadius: 15
     lingeringDuration: 5

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -60,6 +61,11 @@ public class GameManager : MonoBehaviour
         get { return timeLimit; }
     }
 
+    public float TimeLeft
+    {
+        get { return timeLeft; }
+    }
+
     public int ResourceMultiplier
     {
         get { return timeLeft <= timeLimit/3.0f ? 2 : 1; }
@@ -89,8 +95,8 @@ public class GameManager : MonoBehaviour
 
     //updates the timer
     private void Update() {
-        timeLeft -= Time.deltaTime;
         if(timeLeft > 0) {
+            timeLeft -= Time.deltaTime;
             string text = ((int) timeLeft/60).ToString();
             text += ":" + ((int) timeLeft%60).ToString();
             if(text.Length != 4)
@@ -206,7 +212,7 @@ public class GameManager : MonoBehaviour
 
     public static void AddObjectToList(GameObject objectToAdd){
         Component component = objectToAdd.GetComponent(typeof(IDamageable));
-        if((component as IDamageable).Stats.UnitGrouping == GameConstants.UNIT_GROUPING.SOLO)
+        if((component as IDamageable).Stats.UnitGrouping != GameConstants.UNIT_GROUPING.GROUP)
             Instance.Objects.Add(objectToAdd);
         else {
             foreach(Transform go in objectToAdd.transform){
@@ -269,5 +275,6 @@ public class GameManager : MonoBehaviour
 
         //Instance.GameplayHUD.SetActive(false);
         //Instance.EndGameScreen.SetActive(true);
+        //SceneManager.LoadSceneAsync("MainMenuScene");
     }
 }

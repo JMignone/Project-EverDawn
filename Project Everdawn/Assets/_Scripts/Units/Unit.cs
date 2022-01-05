@@ -183,7 +183,27 @@ public class Unit : MonoBehaviour, IDamageable
             GameManager.RemoveObjectsFromList(gameObject);
             if(target != null)
                 (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
-            Destroy(gameObject);
+
+            //if the unit was a group unit, check if it was the last one alive
+            if(stats.UnitGrouping == GameConstants.UNIT_GROUPING.GROUPCHILD) {
+                /* This doesnt work because the other dead unit may not have gotten as far in this function and didnt not perform the
+                    important gamemanager functions
+                bool delete = true;
+                for(int x=1; x<transform.parent.childCount; x++) {
+                    if((transform.parent.GetChild(x).GetComponent(typeof(IDamageable)) as IDamageable).Stats.CurrHealth > 0) {
+                        delete = false;
+                        break;
+                    }
+                }
+                if(delete)
+                */
+                if(transform.parent.childCount == 2)
+                    Destroy(transform.parent.gameObject);
+                else
+                    Destroy(gameObject);
+            }
+            else
+                Destroy(gameObject);
         }
     }
 

@@ -263,9 +263,9 @@ MonoBehaviour:
     currentSummonTime: 0
   applyResistanceStats:
     applyToSelf: 0
-    applyToOthers: 1
-    resistDamage: 1
-    rdDuration: 10
+    applyToOthers: 0
+    resistDamage: 0
+    rdDuration: 0
     untargetable: 0
     rtDuration: 0
     resistFreeze: 0

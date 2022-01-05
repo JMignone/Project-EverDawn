@@ -615,7 +615,7 @@ MonoBehaviour:
       - {fileID: 1145796126000115316}
       - {fileID: 2667973773233923504}
     unitType: 0
-    unitGrouping: 0
+    unitGrouping: 2
     attackPriority: 0
     unitRange: 0
     effectStats:

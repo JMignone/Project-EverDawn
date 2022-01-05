@@ -389,7 +389,7 @@ MonoBehaviour:
       - {fileID: 8416434254322649759}
       - {fileID: 6141479714811142270}
     unitType: 0
-    unitGrouping: 0
+    unitGrouping: 2
     attackPriority: 0
     unitRange: 1
     effectStats:
@@ -403,7 +403,6 @@ MonoBehaviour:
         outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
-        currentFrozenDelay: 0
       slowStats:
         canSlow: 0
         slowDuration: 0
@@ -442,8 +441,7 @@ MonoBehaviour:
         cantBeGrabbed: 0
         isGrabbed: 0
         direction: {x: 0, y: 0, z: 0}
-        pullDelay: 0
-        currentPullDelay: 0
+        grabDelay: 0
         currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
@@ -453,6 +451,11 @@ MonoBehaviour:
         currentStrengthIntensity: 0
       blindedStats:
         cantBeBlinded: 0
+      stunnedStats:
+        cantBeStunned: 0
+        outSideResistance: 0
+        isStunned: 0
+        stunDelay: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -464,6 +467,7 @@ MonoBehaviour:
         resistedGrab: 0
         resistedPull: 0
         resistedBlind: 0
+        resistedStun: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -503,6 +507,10 @@ MonoBehaviour:
     deathSkill: 0
     abilityPrefabs: []
     abilityDelays: []
+  noseDiveStats:
+    noseDives: 0
+    createAtLocation: {fileID: 0}
+    speed: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []

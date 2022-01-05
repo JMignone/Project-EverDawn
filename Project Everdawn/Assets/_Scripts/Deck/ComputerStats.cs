@@ -40,7 +40,7 @@ public class ComputerStats
     }
 
     public void UpdateComputerStats() {
-        if(isComputer) {
+        if(isComputer && GameManager.Instance.TimeLeft > 0) {
             if(isPlaying) {
                 if(currentDelay < playDelay)
                     currentDelay += Time.deltaTime;
@@ -190,8 +190,8 @@ public class ComputerStats
         else if(randNormalX > groundScale.x*10/2)
             randNormalX = groundScale.x*10/2;
 
-        if(randNormalZ < 0)
-            randNormalZ = 0;
+        if(randNormalZ < 6.5f)
+            randNormalZ = 6.5f;
         else if(randNormalZ > groundScale.z*10/2)
             randNormalZ = groundScale.z*10/2;
 

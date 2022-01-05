@@ -61,6 +61,16 @@ public class SummoningSicknessUI
         if(summonProtectionDelay > 0) {
             sSCanvas.enabled = false;
             summonProtectionDelay -= Time.deltaTime;
+
+            //check if there is currently an ability hovered over this unit now
+            Collider[] colliders = Physics.OverlapSphere(unit.Agent.transform.position, unit.Agent.Agent.radius);
+            foreach(Collider collider in colliders) {
+                if(!collider.transform.parent.parent.CompareTag((unit as Component).gameObject.tag) && collider.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
+                    AbilityPreview ability = collider.GetComponent<AbilityPreview>();
+                    if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, (unit as Component))) 
+                        unit.Stats.IncIndicatorNum();
+                }
+            }
         }
         else if(currSummonSicknessDelay < summonSicknessDelay) {
             unit.Agent.HitBox.enabled = true;
