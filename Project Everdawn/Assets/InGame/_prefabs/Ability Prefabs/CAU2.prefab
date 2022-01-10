@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 2943463446231286465}
   - component: {fileID: 2538035110669741038}
   m_Layer: 0
-  m_Name: TempProjectile2
+  m_Name: CAU2
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBox: {fileID: 2538035109296080467}
   unitSprite: {fileID: 2538035109743312923}
-  radius: 0.25
+  radius: 1.75
   speed: 40
   range: 30
   baseDamage: 0
@@ -324,6 +324,7 @@ MonoBehaviour:
     forwardAdjustment: 0
   aoeStats:
     areaOfEffect: 0
+    unitCentered: 0
     explosionEffect: {fileID: 0}
     explosionRadius: 0
   freezeStats:

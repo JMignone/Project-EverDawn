@@ -91,6 +91,33 @@ public static class GameFunctions
         return null;
     }
 
+    public static GameObject GetTowerTarget(List<GameObject> towers, string tag, BaseStats stats) {
+        GameObject go = null; 
+        Component targetComponent;
+        SphereCollider targetSc;
+
+        foreach (GameObject hitTarget in towers)
+        {
+            targetComponent = hitTarget.GetComponent(typeof(IDamageable));
+
+            if(targetComponent) {
+                if((targetComponent as IDamageable).Stats.Targetable && GameFunctions.CanAttack(tag, hitTarget.tag, targetComponent, stats)) {
+                    targetSc = (targetComponent as IDamageable).Stats.DetectionObject;
+                    
+                    if(towers.Count == 3 && stats.DetectionObject.transform.position.x*targetSc.transform.position.x > 0) { //if we found a closer target
+                        if(!hitTarget.CompareTag(tag)) //and its not on the same team (sanity check, shouldnt ever occur)
+                            return hitTarget;
+                    }
+                    else if(towers.Count != 3 && stats.DetectionObject.transform.position.x*targetSc.transform.position.x >= 0) {
+                        if(!hitTarget.CompareTag(tag)) //and its not on the same team (sanity check, shouldnt ever occur)
+                            return hitTarget;
+                    }
+                }
+            }
+        }
+        return go;
+    }
+
     public static GameObject SpawnUnit(GameObject prefab, Transform parent, Vector3 position, string tag = "Player") 
     {
         int playerOffset = 100;
@@ -124,7 +151,7 @@ public static class GameFunctions
         bool selfDestructs = projectile.SelfDestructStats.SelfDestructs;
         bool isMovement = prefab.GetComponent<Movement>();
         if(distance > (range - radius)) {
-            endPosition = startPosition + (direction.normalized * range);
+            endPosition = startPosition + (direction.normalized * (range - radius));
             if(isMovement)
                 endPosition -= direction.normalized * radius;
         }

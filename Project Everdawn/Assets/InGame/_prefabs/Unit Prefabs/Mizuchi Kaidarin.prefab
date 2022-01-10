@@ -454,12 +454,12 @@ MonoBehaviour:
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
-    range: 25
-    visionRange: 30
+    range: 21
+    visionRange: 25
     baseDamage: 140
     attackDelay: 1.75
     currAttackDelay: 0
-    moveSpeed: 7
+    moveSpeed: 6
     noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:

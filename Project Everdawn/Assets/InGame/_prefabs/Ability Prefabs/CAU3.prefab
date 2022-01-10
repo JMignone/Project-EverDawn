@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 2760993291048611903}
   - component: {fileID: 1224647179923901248}
   m_Layer: 0
-  m_Name: TestCal
+  m_Name: CAU3
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

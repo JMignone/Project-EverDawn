@@ -7,6 +7,7 @@ public interface IAbility
     float Range { get; set; }
     bool SetHit { get; set; }
     bool AbilityControl { get; }
+    bool HideRange { get; }
     bool HidePreview { get; }
     float DamageMultiplier { get; }
     int AreaMask();

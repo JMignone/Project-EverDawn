@@ -2197,11 +2197,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityDelays.Array.size
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityPrefabs.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityDelays.Array.data[0]
@@ -2226,11 +2226,11 @@ PrefabInstance:
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityPrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 8128849533423555255, guid: 81ca3e3c8e3685c4ebd73ddcb0fb73db, type: 3}
+      objectReference: {fileID: 4332999100709516610, guid: 461d1ec22a28d824cb4de8c059579f1b, type: 3}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityPrefabs.Array.data[1]
       value: 
-      objectReference: {fileID: 2538035110669741027, guid: 13a17977caf49464a90a86e954b0a79e, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityPrefabs.Array.data[2]
       value: 
@@ -4915,7 +4915,8 @@ MonoBehaviour:
   enemyTextScore: {fileID: 1708688850}
   timeLeft: 181
   textTimer: {fileID: 1922791558}
-  testSetup: 1
+  abilityCancel: {fileID: 63724459}
+  testSetup: 0
 --- !u!1 &234165123
 GameObject:
   m_ObjectHideFlags: 0
@@ -5461,7 +5462,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 552016016}
-  - {fileID: 604918354}
   m_Father: {fileID: 369354825}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12984,14 +12984,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children: []
-  m_Father: {fileID: 285337949}
-  m_RootOrder: 1
+  m_Father: {fileID: 2059212613}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 190, y: 1710}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -95, y: -6}
+  m_SizeDelta: {x: 909.63, y: 182.27002}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &604918355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17098,7 +17098,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 781495023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 20, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 533164494}
@@ -18113,6 +18113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 1390792290}
+  building: {fileID: 0}
   abilityPrefabs:
   - {fileID: 8128849533423555255, guid: 81ca3e3c8e3685c4ebd73ddcb0fb73db, type: 3}
   - {fileID: 2538035110669741027, guid: 13a17977caf49464a90a86e954b0a79e, type: 3}
@@ -18154,7 +18155,6 @@ MonoBehaviour:
     cooldownMask: {fileID: 729379469}
     abilityCancel: {fileID: 63724459}
   abilityPreviewCanvas: {fileID: 1404963360}
-  abilityPreviews: []
   abilityPreviewLine: {fileID: 21300000, guid: d24184dab2f7f3d418f3a20dc032fa78, type: 3}
   abilityPreviewLinear: {fileID: 21300000, guid: 3d46296629f72914da3ffeb630c82832, type: 3}
   abilityPreviewBomb: {fileID: 21300000, guid: 68c0303b57e53ce4188ea1bbcf918c1a, type: 3}
@@ -18172,6 +18172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 1390792290}
+  building: {fileID: 0}
   abilityPrefabs:
   - {fileID: 1224647179923901261, guid: 9f95a636396da294c8b3f8bf1ae79e27, type: 3}
   abilityDelays:
@@ -18211,6 +18212,7 @@ MonoBehaviour:
     abilityCancel: {fileID: 63724459}
   abilityPreviewCanvas: {fileID: 1404963360}
   abilityPreviews: []
+  hidePreview: 0
   abilityPreviewLine: {fileID: 21300000, guid: d24184dab2f7f3d418f3a20dc032fa78, type: 3}
   abilityPreviewLinear: {fileID: 21300000, guid: 3d46296629f72914da3ffeb630c82832, type: 3}
   abilityPreviewBomb: {fileID: 21300000, guid: 68c0303b57e53ce4188ea1bbcf918c1a, type: 3}
@@ -18227,7 +18229,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b328a17fda14f74aaa845052562795a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 1390792290}
+  unit: {fileID: 0}
+  building: {fileID: 0}
   abilityPrefabs:
   - {fileID: 4332999100709516610, guid: 461d1ec22a28d824cb4de8c059579f1b, type: 3}
   abilityDelays:
@@ -18265,7 +18268,6 @@ MonoBehaviour:
     cooldownMask: {fileID: 729379469}
     abilityCancel: {fileID: 63724459}
   abilityPreviewCanvas: {fileID: 1404963360}
-  abilityPreviews: []
   abilityPreviewLine: {fileID: 21300000, guid: d24184dab2f7f3d418f3a20dc032fa78, type: 3}
   abilityPreviewLinear: {fileID: 21300000, guid: 3d46296629f72914da3ffeb630c82832, type: 3}
   abilityPreviewBomb: {fileID: 21300000, guid: 68c0303b57e53ce4188ea1bbcf918c1a, type: 3}
@@ -23151,7 +23153,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1114531617}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -26.4, y: 20, z: -66.6}
+  m_LocalPosition: {x: -26.4, y: 0, z: -66.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1574630169}
@@ -25960,7 +25962,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b328a17fda14f74aaa845052562795a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 1114531618}
+  unit: {fileID: 0}
+  building: {fileID: 0}
   abilityPrefabs:
   - {fileID: 4332999100709516610, guid: f62bc1229b4929c4ea6541e3a8f2c53b, type: 3}
   abilityDelays:
@@ -25998,7 +26001,6 @@ MonoBehaviour:
     cooldownMask: {fileID: 114105813}
     abilityCancel: {fileID: 63724459}
   abilityPreviewCanvas: {fileID: 1014129661}
-  abilityPreviews: []
   abilityPreviewLine: {fileID: 21300000, guid: d24184dab2f7f3d418f3a20dc032fa78, type: 3}
   abilityPreviewLinear: {fileID: 21300000, guid: 3d46296629f72914da3ffeb630c82832, type: 3}
   abilityPreviewBomb: {fileID: 21300000, guid: 68c0303b57e53ce4188ea1bbcf918c1a, type: 3}
@@ -26016,6 +26018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 1114531618}
+  building: {fileID: 0}
   abilityPrefabs:
   - {fileID: 7239714737300649845, guid: 20e87596b55db0a4fb0d2fb3e4946cb3, type: 3}
   abilityDelays:
@@ -26055,6 +26058,7 @@ MonoBehaviour:
     abilityCancel: {fileID: 63724459}
   abilityPreviewCanvas: {fileID: 1014129661}
   abilityPreviews: []
+  hidePreview: 0
   abilityPreviewLine: {fileID: 21300000, guid: d24184dab2f7f3d418f3a20dc032fa78, type: 3}
   abilityPreviewLinear: {fileID: 21300000, guid: 3d46296629f72914da3ffeb630c82832, type: 3}
   abilityPreviewBomb: {fileID: 21300000, guid: 68c0303b57e53ce4188ea1bbcf918c1a, type: 3}
@@ -30563,7 +30567,7 @@ NavMeshAgent:
   m_Height: 10
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 2
 --- !u!135 &1574630166
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -30634,7 +30638,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1574630164}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 20, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1114531619}
@@ -39421,6 +39425,7 @@ RectTransform:
   - {fileID: 1880567920}
   - {fileID: 63724458}
   - {fileID: 1663849894}
+  - {fileID: 604918354}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

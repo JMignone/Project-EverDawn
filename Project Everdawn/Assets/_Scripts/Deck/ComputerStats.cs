@@ -40,7 +40,7 @@ public class ComputerStats
     }
 
     public void UpdateComputerStats() {
-        if(isComputer && GameManager.Instance.TimeLeft > 0) {
+        if(isComputer && GameManager.Instance.Complete) {
             if(isPlaying) {
                 if(currentDelay < playDelay)
                     currentDelay += Time.deltaTime;

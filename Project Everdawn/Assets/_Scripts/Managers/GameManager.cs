@@ -28,12 +28,26 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Text textTimer;
     [SerializeField]
+    private Image abilityCancel;
+    [SerializeField]
     private bool testSetup;
+
+    private bool complete;
 
     public static GameManager Instance
     {
         get { return instance; }
     }
+
+    /* should be deleted later at some point */
+
+    public bool Complete
+    {
+        get { return complete; }
+        set { complete = value; }
+    }
+
+    /* ------------------------------------- */
 
     public List<GameObject> Objects
     {
@@ -64,6 +78,11 @@ public class GameManager : MonoBehaviour
     public float TimeLeft
     {
         get { return timeLeft; }
+    }
+
+    public Image AbilityCancel
+    {
+        get { return abilityCancel; }
     }
 
     public int ResourceMultiplier
@@ -273,8 +292,13 @@ public class GameManager : MonoBehaviour
         }
         Instance.TowerObjects.Clear();
 
+        Instance.abilityCancel.enabled = false;
+
         //Instance.GameplayHUD.SetActive(false);
         //Instance.EndGameScreen.SetActive(true);
         //SceneManager.LoadSceneAsync("MainMenuScene");
+
+        //used for testing to disable the bot when the game ends, should be deleted later at soome point
+        Instance.Complete = true;
     }
 }

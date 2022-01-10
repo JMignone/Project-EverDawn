@@ -14,9 +14,14 @@ using UnityEngine.EventSystems;
 */
 public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
+    [Header("Gameobject")]
     [SerializeField]
     private Unit unit;
 
+    [SerializeField]
+    private Building building;
+
+    [Header("Ability Order and Timings")]
     [SerializeField]
     private List<GameObject> abilityPrefabs;
 
@@ -43,6 +48,10 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
 
     [SerializeField]
     private List<GameObject> abilityPreviews;
+
+    [Header("Ability default previews and settings")]
+    [SerializeField]
+    private bool hidePreview;
 
     [SerializeField]
     private Sprite abilityPreviewLine;
@@ -454,31 +463,33 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
 
 
         /* ----- Add the range circle ----- */
-        GameObject goRange = new GameObject();
-        goRange.name = "TargetRange";
+        if(!hidePreview) {
+            GameObject goRange = new GameObject();
+            goRange.name = "TargetRange";
 
-        /* -- Creates the Image GameObject and component -- */
-        GameObject previewRangeImageGo = new GameObject();
-        previewRangeImageGo.name = "Sprite";
-        Image previewRangeImage = previewRangeImageGo.AddComponent<Image>(); //Add the Image Component script
-        previewRangeImage.color = new Color32(255, 255, 255, 100);
-        previewRangeImage.sprite = abilityPreviewRange; //Set the Sprite of the Image Component on the new GameObject
-        previewRangeImage.enabled = false;
+            /* -- Creates the Image GameObject and component -- */
+            GameObject previewRangeImageGo = new GameObject();
+            previewRangeImageGo.name = "Sprite";
+            Image previewRangeImage = previewRangeImageGo.AddComponent<Image>(); //Add the Image Component script
+            previewRangeImage.color = new Color32(255, 255, 255, 100);
+            previewRangeImage.sprite = abilityPreviewRange; //Set the Sprite of the Image Component on the new GameObject
+            previewRangeImage.enabled = false;
 
-        RectTransform imageRangeTransform = previewRangeImageGo.GetComponent<RectTransform>();
-        imageRangeTransform.anchorMin = new Vector2(.5f, 0);
-        imageRangeTransform.anchorMax = new Vector2(.5f, 0);
-        imageRangeTransform.pivot = new Vector2(.5f, .5f);
-        imageRangeTransform.SetParent(goRange.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-        imageRangeTransform.localPosition = Vector3.zero;
-        imageRangeTransform.localRotation = Quaternion.Euler(270, 0, 0);
-        imageRangeTransform.sizeDelta = new Vector2(maxRange * 2, maxRange * 2);
+            RectTransform imageRangeTransform = previewRangeImageGo.GetComponent<RectTransform>();
+            imageRangeTransform.anchorMin = new Vector2(.5f, 0);
+            imageRangeTransform.anchorMax = new Vector2(.5f, 0);
+            imageRangeTransform.pivot = new Vector2(.5f, .5f);
+            imageRangeTransform.SetParent(goRange.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+            imageRangeTransform.localPosition = Vector3.zero;
+            imageRangeTransform.localRotation = Quaternion.Euler(270, 0, 0);
+            imageRangeTransform.sizeDelta = new Vector2(maxRange * 2, maxRange * 2);
 
-        goRange.transform.SetParent(abilityPreviewCanvas.transform);
-        goRange.transform.localPosition = Vector3.zero;
-        goRange.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        goRange.SetActive(true);
-        abilityPreviews.Add(goRange);
+            goRange.transform.SetParent(abilityPreviewCanvas.transform);
+            goRange.transform.localPosition = Vector3.zero;
+            goRange.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            goRange.SetActive(true);
+            abilityPreviews.Add(goRange);
+        }
 
         foreach(GameObject goAbility in abilityPrefabs) {
             if(!uniqueProjectiles.Contains(goAbility)) {

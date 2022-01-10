@@ -495,7 +495,7 @@ MonoBehaviour:
     maxArmor: 0
     healthDecay: 0
     range: 15
-    visionRange: 25
+    visionRange: 20
     baseDamage: 0
     attackDelay: 1.8
     currAttackDelay: 0

@@ -57,22 +57,22 @@ public class GrabbedStats
         if(isGrabbed) {
 
             Vector3 unitAgentPos = new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z);
-            Vector3 enemyAgentPos = new Vector3(enemyUnit.Agent.transform.position.x, 0, enemyUnit.Agent.transform.position.z);
+            Vector3 enemyAgentPos = Vector3.zero;
 
             NavMeshHit hit;
 
             bool enemyCanAct = false;
             if(enemyUnit.Agent != null && enemyUnit.Stats.CanAct) {
-                
+                enemyCanAct = true;
+                enemyAgentPos = new Vector3(enemyUnit.Agent.transform.position.x, 0, enemyUnit.Agent.transform.position.z);
                 obstacleDetected = false;
+
                 if(obstaclesBlockGrab && unit.Stats.MovementType != GameConstants.MOVEMENT_TYPE.FLYING) {
                     if(NavMesh.Raycast(unit.Agent.transform.position, enemyAgentPos, out hit, 1)) { //if an obstacle is detected
                         obstacleDetected = true;
                         enemyAgentPos = hit.position;
                     }
                 }
-
-                enemyCanAct = true;
             }
 
             Debug.DrawLine(unitAgentPos, enemyAgentPos, Color.green);
@@ -112,7 +112,7 @@ public class GrabbedStats
     }
 
     public void Grab(float grabSpeed, float grabDuration, float stunDuration, bool obstaclesBlockGrab, IDamageable enemy) {
-        if(!cantBeGrabbed && !outSideResistance && unit.Agent != null && unit.Stats.CanAct) {
+        if(!cantBeGrabbed && !outSideResistance && enemy.Agent != null && enemy.Stats.CanAct) {
             isGrabbed = true;
             grabDelay = grabDuration;
             currentStunDelay = stunDuration;

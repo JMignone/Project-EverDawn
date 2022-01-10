@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour, IAbility
 {
+    [Header("Gameobjects")]
     [SerializeField]
     private SphereCollider hitBox;
 
     [SerializeField]
     private ProjActor2D unitSprite;
 
+    [Header("Base Stats")]
     [SerializeField] [Min(0)]
     private float radius;
 
@@ -38,6 +40,7 @@ public class Projectile : MonoBehaviour, IAbility
     [SerializeField]
     private bool canPierce;
 
+    [Header("Higher Level Controls")]
     [Tooltip("If checked, a targeted ability will be able to hit a unit that is not its target given the unit blocked its path")]
     [SerializeField]
     private bool blockable; //simply means that a projectile can hit somthing that it didnt nessesarly target. Automatically set to true if there is no specific target
@@ -70,10 +73,15 @@ public class Projectile : MonoBehaviour, IAbility
     [SerializeField]
     private bool onlyDamageIfTargeted;
 
-    [Tooltip("If checked, the preview will not display")]
+    [Tooltip("If checked, the range preview will not display")]
+    [SerializeField]
+    private bool hideRange;
+
+    [Tooltip("If checked, the previews will not display")]
     [SerializeField]
     private bool hidePreview;
     
+    [Header("Higher Level Stats")]
     [SerializeField]
     private CustomPathStats customPathStats;
 
@@ -208,6 +216,11 @@ public class Projectile : MonoBehaviour, IAbility
     {
         get { return hit; }
         set { hit = value; }
+    }
+
+    public bool HideRange
+    {
+        get { return hideRange; }
     }
 
     public bool HidePreview
