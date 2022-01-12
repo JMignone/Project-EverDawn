@@ -1143,7 +1143,7 @@ MonoBehaviour:
       sSCanvas: {fileID: 8687623084901217421}
       sSSprite: {fileID: 8687623084184292486}
       sSMask: {fileID: 8687623085000876865}
-    canvasAbility: {fileID: 0}
+    canvasAbility: {fileID: 8885129445788087283}
     healthBar: {fileID: 2136763131839317715}
     armorBar: {fileID: 2136763130847907184}
     abilityIndicator: {fileID: 2426943811170700397}

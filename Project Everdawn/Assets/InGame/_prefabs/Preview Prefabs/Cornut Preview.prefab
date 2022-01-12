@@ -112,8 +112,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5402896072790440613}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4.5, y: 5, z: 5}
   m_Children:
   - {fileID: 5402896072790075009}
   - {fileID: 5402896072790075021}
@@ -658,6 +658,7 @@ MonoBehaviour:
   followTarget: {fileID: 7317817158579484834}
   anim: {fileID: 7317817159374537070}
   agent: {fileID: 7317817158579484833}
+  ability: {fileID: 0}
   isPreview: 1
 --- !u!95 &7317817159374537070
 Animator:

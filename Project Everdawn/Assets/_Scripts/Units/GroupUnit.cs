@@ -101,7 +101,7 @@ public class GroupUnit : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        if(gameObject.transform.childCount == 0) {
+        if(gameObject.transform.childCount == 1) {
             print(gameObject.name + " has died!");
             Destroy(gameObject);
         }

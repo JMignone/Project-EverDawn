@@ -225,7 +225,7 @@ public static class GameFunctions
             //endPosition = GameFunctions.adjustForTowers(endPosition, prefab.GetComponent<CreateAtLocation>().Radius);
 
             NavMeshHit hit;
-            if(NavMesh.SamplePosition(mousePosition, out hit, 6.1f, 9))
+            if(NavMesh.SamplePosition(mousePosition, out hit, 12f, cal.SummonStats.AreaMask()))
                 endPosition = hit.position;
         }
         GameObject go = GameObject.Instantiate(prefab, endPosition, targetRotation, GameManager.GetUnitsFolder());

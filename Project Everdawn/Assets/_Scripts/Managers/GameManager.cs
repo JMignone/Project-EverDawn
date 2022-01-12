@@ -137,16 +137,14 @@ public class GameManager : MonoBehaviour
         foreach (GameObject go in Instance.Objects) { //  The trigger exit doesnt get trigger if the object suddenly dies, so we need this do do it manually 
             Component component = go.GetComponent(typeof(IDamageable));
             if(component) {
-                if((component as IDamageable).HitTargets.Contains(objectToRemove)) { //if an object has this now dead unit as a hit target ...
+                if((component as IDamageable).HitTargets.Contains(objectToRemove))   //if an object has this now dead unit as a hit target ...
                     (component as IDamageable).HitTargets.Remove(objectToRemove);    //remove it from their possible targets
-                    if((component as IDamageable).Target == objectToRemove)          //if an object has this now dead unit as a target ...
-                        (component as IDamageable).Target = null;                    //make target null
-                    if((component as IDamageable).InRangeTargets.Contains(objectToRemove))
-                        (component as IDamageable).InRangeTargets.Remove(objectToRemove); 
-
-                    if((component as IDamageable).InRangeTargets.Count == 0)
-                        (component as IDamageable).Stats.IncRange = false;
-                }
+                if((component as IDamageable).Target == objectToRemove)              //if an object has this now dead unit as a target ...
+                    (component as IDamageable).Target = null;                        //make target null
+                if((component as IDamageable).InRangeTargets.Contains(objectToRemove))
+                    (component as IDamageable).InRangeTargets.Remove(objectToRemove); 
+                if((component as IDamageable).InRangeTargets.Count == 0)
+                    (component as IDamageable).Stats.IncRange = false;
             }
         }
         if((objectToRemoveComponent as IDamageable).Stats.IsHoveringAbility) {

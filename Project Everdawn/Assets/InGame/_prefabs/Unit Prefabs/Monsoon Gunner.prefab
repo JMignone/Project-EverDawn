@@ -582,7 +582,7 @@ MonoBehaviour:
     maxArmor: 0
     healthDecay: 0
     range: 15
-    visionRange: 19
+    visionRange: 16.5
     baseDamage: 90
     attackDelay: 1
     currAttackDelay: 0
@@ -615,7 +615,7 @@ MonoBehaviour:
       - {fileID: 1145796126000115316}
       - {fileID: 2667973773233923504}
     unitType: 0
-    unitGrouping: 2
+    unitGrouping: 0
     attackPriority: 0
     unitRange: 0
     effectStats:

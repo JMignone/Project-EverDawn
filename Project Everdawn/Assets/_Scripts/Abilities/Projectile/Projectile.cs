@@ -238,6 +238,11 @@ public class Projectile : MonoBehaviour, IAbility
         get { return customPathStats; }
     }
 
+    public LocationStats LocationStats
+    {
+        get { return locationStats; }
+    }
+
     public AOEStats AOEStats
     {
         get { return aoeStats; }
@@ -404,6 +409,9 @@ public class Projectile : MonoBehaviour, IAbility
                 caster.ExitOverride = stopOnMiss && !hit;
                 if(skipLastOnMiss && !hit)
                     caster.SkipOverride = skipNumber;
+
+                if(locationStats.OverridesLocation && locationStats.OverridesAtEnd)
+                    locationStats.LocationOveride();
             }
         }
     }
@@ -411,8 +419,6 @@ public class Projectile : MonoBehaviour, IAbility
     private void OnDestroy()
     {
         StopStats();
-        if(unit != null && !unit.Equals(null) && locationStats.OverridesLocation && locationStats.OverridesAtEnd)
-            locationStats.LocationOveride();
     }
 
     private void Update() {

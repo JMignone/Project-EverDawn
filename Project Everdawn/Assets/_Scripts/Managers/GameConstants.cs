@@ -36,8 +36,7 @@ public static class GameConstants
 
     public enum UNIT_GROUPING {
         SOLO,
-        GROUP,
-        GROUPCHILD
+        GROUP
     }
 
     public enum BUILDING_TYPE {

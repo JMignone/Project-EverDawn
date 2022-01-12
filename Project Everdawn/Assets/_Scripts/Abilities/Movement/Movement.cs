@@ -72,6 +72,7 @@ public class Movement : Projectile
             if(!landInsideTarget)
                 TargetLocation -= direction.normalized * (Unit.Agent.Agent.radius + ChosenTarget.Agent.radius);
         }
+        LocationStats.UpdateStats();
         if(LingeringStats.CurrentlyLingering) //if currently lingering
             LingeringStats.UpdateLingeringStats(gameObject);
         float SpeedReduction = 1; //a multiply used by boomerang projectiles to slow down near the end of flight
