@@ -421,7 +421,7 @@ public class Projectile : MonoBehaviour, IAbility
         StopStats();
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         hitBox.transform.position = new Vector3(hitBox.transform.position.x, 0, hitBox.transform.position.z);
         if(unit != null && !unit.Equals(null)) { //This is currently only used for boomerang
             lastKnownLocation = unit.Agent.transform.position;
@@ -443,7 +443,8 @@ public class Projectile : MonoBehaviour, IAbility
         if(boomerangStats.IsBoomerang)
             speedReduction = boomerangStats.SpeedReduction(gameObject, targetLocation, lastKnownLocation);
         if(!lingeringStats.CurrentlyLingering || (lingeringStats.LingerDuringFlight && lingeringStats.IsInFlight)) { //if the projectile doesnt linger or lingers during flight
-            if(Vector3.Distance(transform.position, targetLocation) <= radius || ( (Vector3.Distance(transform.position, lastKnownLocation) <= radius) && boomerangStats.IsBoomerang && boomerangStats.GoingBack ) ){ //if the projectile is at the end of its flight
+            if(Vector3.Distance(transform.position, targetLocation) <= radius || 
+            ( (Vector3.Distance(transform.position, lastKnownLocation) <= radius) && boomerangStats.IsBoomerang && boomerangStats.GoingBack ) ){ //if the projectile is at the end of its flight
                 if(grenadeStats.IsGrenade)
                     grenadeStats.Explode(gameObject);
                 else if(selfDestructStats.SelfDestructs)
@@ -475,8 +476,10 @@ public class Projectile : MonoBehaviour, IAbility
             }
             else if(customPathStats.HasCustomPath)
                 customPathStats.UpdateStats(targetLocation);
-            else
-                transform.position += transform.forward * speed * speedReduction * Time.deltaTime;
+            else {
+                //transform.position += transform.forward * speed * speedReduction * Time.deltaTime;
+                transform.position += (targetLocation - transform.position).normalized * speed * speedReduction * Time.deltaTime;
+            }
         }
     }
 

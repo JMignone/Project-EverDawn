@@ -60,7 +60,7 @@ public class TeleportStats
                             (damageable as IDamageable).Agent.Agent.Warp(new Vector3(position.x, (damageable as IDamageable).Agent.transform.position.y, position.z));
                         else {
                             UnityEngine.AI.NavMeshHit hit;
-                            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, 9))
+                            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, 9))
                                 position = hit.position;
                             (damageable as IDamageable).Agent.Agent.Warp(new Vector3(position.x, (damageable as IDamageable).Agent.transform.position.y, position.z));
                         }

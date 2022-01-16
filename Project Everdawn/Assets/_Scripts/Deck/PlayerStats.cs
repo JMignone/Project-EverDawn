@@ -190,7 +190,7 @@ public class PlayerStats : MonoBehaviour
             computerStats.Start(this);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(GetCurrResource < GameConstants.RESOURCE_MAX + 1) {
             if(!computerStats.IsComputer) resources[GetCurrResource].fillAmount = currResource - GetCurrResource;

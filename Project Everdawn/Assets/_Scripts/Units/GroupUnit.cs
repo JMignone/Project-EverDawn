@@ -99,7 +99,7 @@ public class GroupUnit : MonoBehaviour, IDamageable
         isHoveringAbility = false;
     }*/
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(gameObject.transform.childCount == 1) {
             print(gameObject.name + " has died!");

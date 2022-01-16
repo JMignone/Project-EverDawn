@@ -85,6 +85,8 @@ public class BaseStats
     private bool soonToKillOverride; //a flag set if the target is about to be killed and is granted access to finish an attack on a soonToBeKilled target
     private bool wasSoonToBeKilled;  //a flag set if the unit was ever soon to be killed. This is set such that this unit will never be able to flag another unit
 
+    private float towerPosOffset;     //Used to direct untis moore concretly to the correct side of the arena given there is only 1 tower left
+
     public float PercentHealth {
         get { return currHealth/maxHealth; }
     }
@@ -317,6 +319,12 @@ public class BaseStats
         set { wasSoonToBeKilled = value; }
     }
 
+    public float TowerPosOffset
+    {
+        get { return towerPosOffset; }
+        set { towerPosOffset = value; }
+    }
+
     public bool Targetable {
         get { return !isShadow; }
     }
@@ -488,11 +496,11 @@ public class BaseStats
                 IDamageable enemyUnit = (target.GetComponent(typeof(IDamageable)) as IDamageable);
                 enemyUnit.Stats.SoonToBeKilled = false;
 
-                foreach(GameObject go in enemyUnit.EnemyHitTargets) { //go through every unit targeting our target and see if any of them will kill this unit first
+                foreach(GameObject go in enemyUnit.EnemyHitTargets) { //go through every unit targeting our target
                     if(go != unit) {
                         IDamageable friendlyUnit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
                         friendlyUnit.Stats.SoonToKillOverride = false;
-                        soonToKill = false;
+                        //soonToKill = false;
                     }
                 }
 

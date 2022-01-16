@@ -40,7 +40,7 @@ public class ComputerStats
     }
 
     public void UpdateComputerStats() {
-        if(isComputer && GameManager.Instance.Complete) {
+        if(isComputer && !GameManager.Instance.Complete) {
             if(isPlaying) {
                 if(currentDelay < playDelay)
                     currentDelay += Time.deltaTime;
@@ -234,7 +234,7 @@ public class ComputerStats
         position = GameFunctions.adjustForBoundary(position);
 
         if(cardInfo.UnitIndex != -1) {
-            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, navMask))
+            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, navMask))
                 position = hit.position;
         }
         position.y = 1;

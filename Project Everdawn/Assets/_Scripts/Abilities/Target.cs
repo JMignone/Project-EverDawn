@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 
     When creating a target ability, all projectiles should have the same range. It will still work, but the previews are not desirable
 
-    When using a movement ability, 'passObstacles' should be set to true
+    When using a movement ability, 'passObstacles' should be set to pass
 */
 public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
@@ -187,7 +187,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
         At the moment, a boomerang that selfdestructs and lingers at the end does not have the preview that id like (the linger circle around the unit wont be there,
         as the selfdestruct location takes precidence). But this kind of projectile is probably unlikely to happen anyway
     */
-    private void Update() {
+    private void FixedUpdate() {
         abilityUI.UpdateStats();
         if(isDragging) {
             Vector3 position = GameFunctions.getPosition(false);
@@ -399,7 +399,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
         /*
                 UnityEngine.AI.NavMeshHit hit;
                 if(cal.TeleportStats.IsWarp && unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND) {
-                    if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, 9))
+                    if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, 9))
                         position = hit.position;
                 }*/
 

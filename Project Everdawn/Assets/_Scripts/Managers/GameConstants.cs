@@ -11,6 +11,7 @@ public static class GameConstants
     public static string PLAYER_TAG = "Player";
 
     public static int FLY_ZONE_HEIGHT = 20; //The distance of the fly zone above the ground
+    public static float SAMPLE_POSITION_RADIUS = 30f; //The radius used for the Unity function SamplePostion
 
     public enum MOVEMENT_TYPE {
         GROUND,
@@ -76,6 +77,12 @@ public static class GameConstants
         ON_ABILITY,
         HALFWAY,
         ON_UNIT
+    }
+
+    public enum PASS_OBSTACLES {
+        NONE,
+        HALF,
+        PASS
     }
 
     //What a unit should do in the event its target dies while mid firing a volley of projectiles

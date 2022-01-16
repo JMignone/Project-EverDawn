@@ -319,7 +319,7 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         }
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         if(selfDestructStats.SelfDestructs && !hasExploded)
             selfDestructStats.Explode(gameObject);
         if(linearStats.IsLinear && !hasExploded)

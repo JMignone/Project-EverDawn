@@ -305,6 +305,7 @@ MonoBehaviour:
   skipNumber: 0
   overridesTarget: 0
   onlyDamageIfTargeted: 0
+  hideRange: 0
   hidePreview: 1
   customPathStats:
     hasCustomPath: 0
@@ -428,7 +429,7 @@ MonoBehaviour:
     rbDuration: 0
     resistStun: 0
     rstunDuration: 0
-  passObstacles: 1
+  passObstacles: 2
   landInsideTarget: 0
   highlightEnemies: 0
   retreatStats:

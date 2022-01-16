@@ -187,7 +187,7 @@ MonoBehaviour:
     maxArmor: 0
     healthDecay: 0
     range: 5
-    visionRange: 20
+    visionRange: 22
     baseDamage: 240
     attackDelay: 1.6
     currAttackDelay: 0
@@ -318,8 +318,8 @@ MonoBehaviour:
     dashes: 1
     isDashing: 0
     dashDamage: 480
-    dashSpeed: 20
-    dashRange: 16
+    dashSpeed: 25
+    dashRange: 20
     dashDelay: 1.5
     currentDelay: 0
   shadowStats:

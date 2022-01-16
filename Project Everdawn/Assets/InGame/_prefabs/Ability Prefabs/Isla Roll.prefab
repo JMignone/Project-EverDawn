@@ -59,9 +59,31 @@ MonoBehaviour:
   abilityControl: 0
   pauseAbility: 1
   stopOnMiss: 0
+  skipLastOnMiss: 0
+  skipNumber: 0
+  overridesTarget: 0
+  onlyDamageIfTargeted: 0
+  hideRange: 0
   hidePreview: 1
+  customPathStats:
+    hasCustomPath: 0
+    lerpPoints: []
+    speedToLastPoint: 0
+    arcMultiplierToLastPoint: 0
+    customCollider: {fileID: 0}
+    customImage: {fileID: 0}
+    pivot: {x: 0, y: 0}
+    sizeDelta: {x: 0, y: 0}
+  locationStats:
+    overridesLocation: 0
+    overridesAtEnd: 0
+    overridesDuringFlight: 0
+    overrideDelay: 0
+    newLocation: 0
+    forwardAdjustment: 0
   aoeStats:
     areaOfEffect: 0
+    unitCentered: 0
     explosionEffect: {fileID: 0}
     explosionRadius: 0
   freezeStats:
@@ -89,7 +111,9 @@ MonoBehaviour:
     speed: 0
   grabStats:
     canGrab: 0
+    obstaclesBlockGrab: 0
     pullDuration: 0
+    speed: 0
     stunDuration: 0
   strengthStats:
     canStrength: 0
@@ -98,6 +122,9 @@ MonoBehaviour:
   blindStats:
     canBlind: 0
     blindDuration: 0
+  stunStats:
+    canStun: 0
+    stunDuration: 0
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 5
@@ -134,6 +161,7 @@ MonoBehaviour:
     resistGrab: 0
     resistPull: 0
     resistBlind: 0
+    resistStun: 0
   applyResistanceStats:
     applyToSelf: 0
     applyToOthers: 0
@@ -157,7 +185,10 @@ MonoBehaviour:
     rpullDuration: 0
     resistBlind: 0
     rbDuration: 0
-  passObstacles: 0
+    resistStun: 0
+    rstunDuration: 0
+  passObstacles: 1
+  landInsideTarget: 0
   highlightEnemies: 0
   retreatStats:
     retreats: 1

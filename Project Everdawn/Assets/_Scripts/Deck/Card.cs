@@ -166,7 +166,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         currentProjectileIndex = 0; //we start at 1 because the 0th index is reserved for units
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(!isFiring) {
             icon.sprite = cardInfo.Icon;
@@ -274,7 +274,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 position = GameFunctions.adjustForTowers(position, radius);
             
             if(cardInfo.UnitIndex != -1) {
-                if(NavMesh.SamplePosition(position, out hit, 12f, navMask))
+                if(NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, navMask))
                     position = hit.position;
                 unitPreviewAgent.Warp(position);
                 position = unitPreviewAgent.transform.position;
@@ -307,7 +307,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 position = GameFunctions.adjustForTowers(position, radius);
 
             if(cardInfo.UnitIndex != -1) {
-                if(NavMesh.SamplePosition(position, out hit, 12f, navMask))
+                if(NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, navMask))
                     position = hit.position;
                 unitPreviewAgent.Warp(position);
                 position = unitPreviewAgent.transform.position;

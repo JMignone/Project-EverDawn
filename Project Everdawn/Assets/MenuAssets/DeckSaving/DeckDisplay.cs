@@ -79,7 +79,7 @@ public class DeckDisplay : MonoBehaviour
     {
         if (cardIDList.Exists(cardIDList => cardIDList == card.cardID))
         {
-            cardIDIndex = cardIDList.FindIndex(0, cardIDList.Count - 1, card.cardID.Equals);
+            cardIDIndex = cardIDList.FindIndex(0, cardIDList.Count, card.cardID.Equals);
         }
         cardIDList[cardIDIndex] = selectedCard.cardID;
         SaveDeckData();

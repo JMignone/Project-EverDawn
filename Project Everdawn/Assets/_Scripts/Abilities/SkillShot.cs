@@ -55,7 +55,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     private bool isDragging;
 
     private bool abilityControl; //sets it so the skillshot doesnt unset unit casting, but rather the projectile will unset it. Usful for movements like dashes or maybe pulls
-    private bool shootRaycast;
+    private GameConstants.PASS_OBSTACLES passesObstacles;
     private float maxRange;
     private int areaMask;
 
@@ -149,7 +149,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             if((component as IAbility).AreaMask() > areaMask)
                 areaMask = (component as IAbility).AreaMask();
             if(ability.GetComponent<Movement>())
-                shootRaycast = !ability.GetComponent<Movement>().PassObstacles;
+                passesObstacles = ability.GetComponent<Movement>().PassObstacles;
         }
     }
 
@@ -189,7 +189,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         At the moment, a boomerang that selfdestructs and lingers at the end does not have the preview that id like (the linger circle around the unit wont be there,
         as the selfdestruct location takes precidence). But this kind of projectile is probably unlikely to happen anyway
     */
-    private void Update() {
+    private void FixedUpdate() {
         abilityUI.UpdateStats();
         if (isDragging) {
             Vector3 position = GameFunctions.getPosition(false);
@@ -288,12 +288,12 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
 
                 if(areaMask != 1) {
                     UnityEngine.AI.NavMeshHit hit;
-                    if(UnityEngine.AI.NavMesh.SamplePosition(closestTargetPosition, out hit, 12f, areaMask))
+                    if(UnityEngine.AI.NavMesh.SamplePosition(closestTargetPosition, out hit, GameConstants.SAMPLE_POSITION_RADIUS, areaMask))
                         fireMousePosition = hit.position;
                     else
                         fireMousePosition = closestTargetPosition;
                 }
-                else if(shootRaycast) {
+                else if(passesObstacles == GameConstants.PASS_OBSTACLES.NONE) {
                     UnityEngine.AI.NavMeshHit hit;
                     UnityEngine.AI.NavMesh.Raycast(Unit.Agent.Agent.transform.position, closestTargetPosition, out hit, 1);
                     fireMousePosition = hit.position;
@@ -342,6 +342,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             if(fireStartPosition != abilityPreviewCanvas.transform.position) { //if the Unit has moved since starting its ability ei: movement abilities, increase/decrease the range of the abilities accordingly
                 rangeIncrease = Vector3.Distance(abilityPreviewCanvas.transform.position, fireMousePosition) - Vector3.Distance(fireStartPosition, fireMousePosition);
                 startPos = abilityPreviewCanvas.transform.position;
+                fireDirection = fireMousePosition - (abilityPreviewCanvas.transform.position+3*abilityPreviewCanvas.transform.forward);
             }
 
             if(targetOverride != null) {
@@ -403,15 +404,21 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             UnityEngine.AI.NavMeshHit hit;
             if(Unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING) //if the Unit is flying, disregard all obstacles
                 position = GameFunctions.adjustForBoundary(position);
-            else if(move.PassObstacles) { //if the movment is able to pass through obstacles
+            else if(move.PassObstacles == GameConstants.PASS_OBSTACLES.PASS) { //if the movment is able to pass through obstacles
                 position = GameFunctions.adjustForBoundary(position);
-                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, 9))
+                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, 9))
                     position = hit.position;
 
                 Vector3 newDirection = abilityPreviewCanvas.transform.position - position;
                 newDirection.y = 0;
                 Quaternion rotation = Quaternion.LookRotation(newDirection);
                 abilityPreviewCanvas.transform.rotation = Quaternion.Lerp(rotation, abilityPreviewCanvas.transform.rotation, 0f);
+            }
+            else if(move.PassObstacles == GameConstants.PASS_OBSTACLES.HALF) {
+                if(!UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 1f, 9)) {
+                    UnityEngine.AI.NavMesh.Raycast(Unit.Agent.Agent.transform.position, position, out hit, 1);
+                    position = hit.position;
+                }
             }
             else {
                 UnityEngine.AI.NavMesh.Raycast(Unit.Agent.Agent.transform.position, position, out hit, 1);
@@ -444,10 +451,16 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             position.y = .1f;
 
             UnityEngine.AI.NavMeshHit hit;
-            if(move.PassObstacles) { //if the movment is able to pass through obstacles
+            if(move.PassObstacles == GameConstants.PASS_OBSTACLES.PASS) { //if the movment is able to pass through obstacles
                 position = GameFunctions.adjustForBoundary(position);
-                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, 9))
+                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, 9))
                     position = hit.position;
+            }
+            else if(move.PassObstacles == GameConstants.PASS_OBSTACLES.HALF) {
+                if(!UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 1f, 9)) {
+                    UnityEngine.AI.NavMesh.Raycast(Unit.Agent.Agent.transform.position, position, out hit, 1);
+                    position = hit.position;
+                }
             }
             else {
                 UnityEngine.AI.NavMesh.Raycast(Unit.Agent.Agent.transform.position, position, out hit, 1);
@@ -479,7 +492,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             int areaMask = cal.SummonStats.AreaMask();
 
             UnityEngine.AI.NavMeshHit hit;
-            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, areaMask))
+            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, areaMask))
                 position = hit.position;
             if(preview.transform.childCount > 1)
                 preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(position); //this moves the summon part of the preview
@@ -489,7 +502,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         else {
             UnityEngine.AI.NavMeshHit hit;
             if(cal.TeleportStats.IsWarp && Unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND) {
-                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, 9))
+                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, 9))
                     position = hit.position;
             }
 

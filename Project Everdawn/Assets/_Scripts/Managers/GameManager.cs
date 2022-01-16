@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
     }
 
     //updates the timer
-    private void Update() {
+    private void FixedUpdate() {
         if(timeLeft > 0) {
             timeLeft -= Time.deltaTime;
             string text = ((int) timeLeft/60).ToString();

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Movement : Projectile
 {
     [SerializeField]
-    private bool passObstacles;
+    private GameConstants.PASS_OBSTACLES passObstacles;
 
     [Tooltip("If checked and the ability has a target, the movement will land inside the target, rather than giving some wiggle room")]
     [SerializeField]
@@ -18,7 +18,7 @@ public class Movement : Projectile
     [SerializeField]
     private RetreatStats retreatStats;
 
-    public bool PassObstacles
+    public GameConstants.PASS_OBSTACLES PassObstacles
     {
         get { return passObstacles; }
     }
@@ -31,7 +31,7 @@ public class Movement : Projectile
     private void Start() {
         HitBox.radius = Radius;
         StartStats();
-        TargetLocation = retreatStats.GetTargetLocation(Unit.Agent.transform.position, TargetLocation);
+        TargetLocation = retreatStats.GetTargetLocation(Unit.Agent.transform.position, TargetLocation, passObstacles);
 
         LastKnownLocation = new Vector3(Unit.Agent.transform.position.x, 0, Unit.Agent.transform.position.z); //remembers the start location of a unit for boomerang effects
         //we cant have a grenade and a boomerang
@@ -53,7 +53,7 @@ public class Movement : Projectile
     }
     
     private bool targetReached;
-    private void Update() {
+    private void FixedUpdate() {
         if(Unit.Equals(null) || !Unit.Stats.CanAct) {
             Destroy(gameObject);
             return;
@@ -83,10 +83,17 @@ public class Movement : Projectile
                 targetReached = true;
                 NavMeshHit hit;
                 if(!NavMesh.SamplePosition(Unit.Agent.Agent.transform.position, out hit, 1f, 9)) { //if the dashing unit ended up in an obstacle
-                    MonoBehaviour.print("TESTS");
-                    transform.position += transform.forward * Speed * SpeedReduction * Time.deltaTime;
-                    if(ChosenTarget != null)
-                        ChosenTarget.Agent.transform.position += transform.forward * Speed * SpeedReduction * Time.deltaTime;
+                    //MonoBehaviour.print("TESTS");
+                    if(retreatStats.Retreats) {
+                        transform.position -= transform.forward * Speed * SpeedReduction * Time.deltaTime;
+                        if(ChosenTarget != null)
+                            ChosenTarget.Agent.transform.position -= transform.forward * Speed * SpeedReduction * Time.deltaTime;
+                    }
+                    else {
+                        transform.position += transform.forward * Speed * SpeedReduction * Time.deltaTime;
+                        if(ChosenTarget != null)
+                            ChosenTarget.Agent.transform.position += transform.forward * Speed * SpeedReduction * Time.deltaTime;
+                    }
                 }
                 else {
                     if(GrenadeStats.IsGrenade)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Keep : Tower
 {
-    protected override void Update()
+    protected override void FixedUpdate()
     {
         if(GameManager.isTowerActive(gameObject.tag, stats.PercentHealth)) {
             if(stats.CurrHealth > 0) {
