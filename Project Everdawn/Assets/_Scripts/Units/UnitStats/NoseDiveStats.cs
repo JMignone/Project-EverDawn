@@ -37,6 +37,7 @@ public class NoseDiveStats
     public void StartDive(IDamageable target) {
         isDiving = true;
         targetPosition = target.Agent.transform.position;
+        targetPosition.y = 0;
 
         unit.SetTarget(null);
 

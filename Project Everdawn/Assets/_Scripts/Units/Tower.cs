@@ -110,6 +110,8 @@ public class Tower : MonoBehaviour, IDamageable
         stats.HealthBar.transform.GetChild(0).gameObject.SetActive(false);
 
         IDamageable unit = (gameObject.GetComponent(typeof(IDamageable)) as IDamageable);
+
+        stats.SummoningSicknessUI.StartStats(unit);
         stats.EffectStats.StartStats(unit);
 
         stats.IsHoveringAbility = false;

@@ -53,7 +53,7 @@ public class ShadowStats
                     currentDelay += Time.deltaTime * unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
                 else {
                     currentDelay = 0;
-                    unit.Stats.Vanish(gameObj, unit.EnemyHitTargets.ToArray());
+                    unit.Stats.Vanish(gameObj, unit.Agent); //unit.EnemyHitTargets.ToArray());
                     unit.Stats.UnitMaterials.MakeTransparent();
                 }
             }

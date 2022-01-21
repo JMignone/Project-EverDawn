@@ -39,7 +39,7 @@ public class DeathStats
     public void StartStats(GameObject go) {
         unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
         unit.SetTarget(null);
-        unit.Stats.Vanish((unit as Component).gameObject, unit.EnemyHitTargets.ToArray());
+        unit.Stats.Vanish((unit as Component).gameObject, unit.Agent); //unit.EnemyHitTargets.ToArray());
         unit.Stats.EffectStats.ResistStats.ResistDamage(999);
         isDying = true;
         unit.Agent.Agent.enabled = false;

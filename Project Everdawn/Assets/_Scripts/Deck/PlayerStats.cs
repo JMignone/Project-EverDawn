@@ -38,6 +38,9 @@ public class PlayerStats : MonoBehaviour
     [SerializeField]
     private GameObject rightArea;
     private bool onDragging;
+
+    private int selectedCardId;
+
     private GameConstants.SPAWN_ZONE_RESTRICTION spawnZone;
     private bool topZone;
     private bool leftZone;
@@ -143,6 +146,17 @@ public class PlayerStats : MonoBehaviour
         set { onDragging = value; }
     }
 
+    public ComputerStats ComputerStats
+    {
+        get { return computerStats; }
+    }
+
+    public int SelectedCardId
+    {
+        get { return selectedCardId; }
+        set { selectedCardId = value; }
+    }
+
     public GameConstants.SPAWN_ZONE_RESTRICTION SpawnZone
     {
         get { return spawnZone; }
@@ -181,11 +195,16 @@ public class PlayerStats : MonoBehaviour
             }
             playersDeck.Cards = cards;
         }
+        else {
+            foreach(CardStats card in playersDeck.Cards)
+                card.HiddenCard = true;
+        }
 
 
         playersDeck.Start();
         //SetSpawnZone();
         spawnZone = GameConstants.SPAWN_ZONE_RESTRICTION.NONE;
+        selectedCardId = -1;
         if(computerStats.IsComputer)
             computerStats.Start(this);
     }
@@ -198,21 +217,21 @@ public class PlayerStats : MonoBehaviour
         }
         //Could add somthing here to make sure that we dont overflow over 10 by somthing like 0.001, but is it worth the extra computation?
         if(!computerStats.IsComputer) {
-        if(spawnZone == GameConstants.SPAWN_ZONE_RESTRICTION.FULL) {
-            topArea.SetActive(!topZone);
-            leftArea.SetActive(!leftZone);
-            rightArea.SetActive(!rightZone);
-        }
-        else if(spawnZone == GameConstants.SPAWN_ZONE_RESTRICTION.HALF) {
-            topArea.SetActive(!topZone);
-            leftArea.SetActive(false);
-            rightArea.SetActive(false);
-        }
-        else {
-            topArea.SetActive(false);
-            leftArea.SetActive(false);
-            rightArea.SetActive(false);
-        }
+            if(spawnZone == GameConstants.SPAWN_ZONE_RESTRICTION.FULL) {
+                topArea.SetActive(!topZone);
+                leftArea.SetActive(!leftZone);
+                rightArea.SetActive(!rightZone);
+            }
+            else if(spawnZone == GameConstants.SPAWN_ZONE_RESTRICTION.HALF) {
+                topArea.SetActive(!topZone);
+                leftArea.SetActive(false);
+                rightArea.SetActive(false);
+            }
+            else {
+                topArea.SetActive(false);
+                leftArea.SetActive(false);
+                rightArea.SetActive(false);
+            }
         }
 
         computerStats.UpdateComputerStats();
@@ -258,6 +277,20 @@ public class PlayerStats : MonoBehaviour
             }
         }
         }
+    }
+
+    public void SelectNewCard(int id) {
+        if(selectedCardId != -1 && selectedCardId != id) {
+            foreach(CardStats cs in playersDeck.Hand) {
+                if(cs.CardId == selectedCardId) {
+                    Card card = handParent.GetChild(cs.LayoutIndex).GetComponent<Card>();
+                    if(cs.UnitIndex != -1 && !card.IsBuffering)
+                        Destroy(card.UnitPreview);
+                    break;
+                }
+            }
+        }
+        selectedCardId = id;
     }
 
     /**

@@ -555,9 +555,26 @@ public class BaseStats
         }
     }
 
-    public void Vanish(GameObject unit, GameObject[] enemyHitTargets) {
+    public void Vanish(GameObject unit, Actor3D unitAgent) {//GameObject[] enemyHitTargets) {
         if(!isShadow) {
             isShadow = true;
+            Vector3 position = unitAgent.transform.position;
+            position.y = 0;
+            Collider[] colliders = Physics.OverlapSphere(unitAgent.transform.position, unitAgent.Agent.radius);
+            foreach(Collider collider in colliders) {
+                Component enemy = collider.transform.parent.parent.GetComponent(typeof(IDamageable));
+                if(enemy) {
+                    if(!enemy.CompareTag(unit.tag) && collider.CompareTag("Vision")) { //Are we in their vision detection object?
+                        if((enemy as IDamageable).Target == unit) 
+                            (enemy as IDamageable).SetTarget(null);
+                        if((enemy as IDamageable).HitTargets.Contains(unit))
+                            (enemy as IDamageable).HitTargets.Remove(unit);
+                        if((enemy as IDamageable).InRangeTargets.Contains(unit))
+                            (enemy as IDamageable).InRangeTargets.Remove(unit);
+                    }
+                }
+            }
+            /*
             foreach(GameObject go in enemyHitTargets) {
                 Component targetComponent = go.GetComponent(typeof(IDamageable));
                 if(targetComponent) {
@@ -571,6 +588,7 @@ public class BaseStats
                         (targetComponent as IDamageable).Stats.IncRange = false;
                 }
             }
+            */
             //make unit transparent
         }
     }
@@ -578,7 +596,9 @@ public class BaseStats
     public void Appear(GameObject unit, ShadowStats stats, Actor3D unitAgent) {
         if(isShadow) {
             isShadow = false;
-            Collider[] colliders = Physics.OverlapSphere(unitAgent.transform.position, unitAgent.Agent.radius);
+            Vector3 position = unitAgent.transform.position;
+            position.y = 0;
+            Collider[] colliders = Physics.OverlapSphere(position, unitAgent.Agent.radius);
             foreach(Collider collider in colliders) {
                 Component enemy = collider.transform.parent.parent.GetComponent(typeof(IDamageable));
                 if(enemy) {
@@ -588,7 +608,7 @@ public class BaseStats
                     }
                 }
             }
-            colliders = Physics.OverlapSphere(unitAgent.transform.position, unitAgent.Agent.radius);
+            colliders = Physics.OverlapSphere(position, unitAgent.Agent.radius);
             foreach(Collider collider in colliders) {
                 Component enemy = collider.transform.parent.parent.GetComponent(typeof(IDamageable));
                 if(enemy) {

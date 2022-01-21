@@ -237,7 +237,7 @@ MonoBehaviour:
   selfDestructStats:
     selfDestructs: 1
     explosionEffect: {fileID: 8690222435761223237, guid: 6da804001015963439247141d19a1ee2, type: 3}
-    explosionDamage: 120
+    explosionDamage: 50
     towerDamage: 0
     explosionRadius: 5
   linearStats:

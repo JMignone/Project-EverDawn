@@ -245,23 +245,35 @@ public class Unit : MonoBehaviour, IDamageable
     }
 
     public void ReTarget() {
-        if(hitTargets.Count > 0) {
-            GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
-            if(go != null) {
-                SetTarget(go);
+        if(stats.CurrAttackDelay < stats.AttackDelay*GameConstants.ATTACK_READY_PERCENTAGE) {
+            if(hitTargets.Count > 0) {
+                GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
+                if(go != null) {
+                    if(go != target && inRangeTargets.Count == 0) {
+                        if(stats.CurrAttackDelay > stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER)
+                            stats.CurrAttackDelay = stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER;
+                    }
+                    SetTarget(go);
+                }
+                else {
+                    List<GameObject> towers = GameManager.Instance.TowerObjects;
+                    towers = GameManager.GetAllEnemies(towers, gameObject.tag); //sending in only towers
+                    SetTarget(GameFunctions.GetTowerTarget(towers, gameObject.tag, stats));
+
+                    if(stats.CurrAttackDelay > stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER)
+                        stats.CurrAttackDelay = stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER;
+                }
             }
             else {
                 List<GameObject> towers = GameManager.Instance.TowerObjects;
                 towers = GameManager.GetAllEnemies(towers, gameObject.tag); //sending in only towers
                 SetTarget(GameFunctions.GetTowerTarget(towers, gameObject.tag, stats));
+
+                if(stats.CurrAttackDelay > stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER)
+                    stats.CurrAttackDelay = stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER;
             }
+            stats.IncRange = false;
         }
-        else {
-            List<GameObject> towers = GameManager.Instance.TowerObjects;
-            towers = GameManager.GetAllEnemies(towers, gameObject.tag); //sending in only towers
-            SetTarget(GameFunctions.GetTowerTarget(towers, gameObject.tag, stats));
-        }
-        stats.IncRange = false;
     }
 
     public void OnTriggerEnter(Collider other) {
@@ -343,7 +355,7 @@ public class Unit : MonoBehaviour, IDamageable
                             if((unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Remove(gameObject);
                             if((unit as IDamageable).Target == gameObject)
-                                (unit as IDamageable).SetTarget(null);
+                                (unit as IDamageable).ReTarget();
 
                             if((unit as IDamageable).InRangeTargets.Count == 0)
                                 (unit as IDamageable).Stats.IncRange = false;

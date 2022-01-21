@@ -26,6 +26,7 @@ public class CardStats
     private int unitIndex;
     //[SerializeField] uncomment for debug purposes
     private int layoutIndex;
+    private bool hiddenCard;
 
     public int CardId
     {
@@ -85,5 +86,11 @@ public class CardStats
     {
         get { return layoutIndex; }
         set { layoutIndex = value; }
+    }
+
+    public bool HiddenCard
+    {
+        get { return hiddenCard; }
+        set { hiddenCard = value; }
     }
 }
