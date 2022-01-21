@@ -7,6 +7,9 @@ public class DeckDisplay : MonoBehaviour
     [SerializeField] private SO_CardDatabase cardDatabase;
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private DeckSaver deckSaver;
+    [SerializeField] private bool saveDeckOnUnload;
+
+    [Space]
     
     [SerializeField] private List<int> cardIDList = new List<int>();
     public List<GameObject> cardsBeingDisplayed = new List<GameObject>();
@@ -53,7 +56,11 @@ public class DeckDisplay : MonoBehaviour
 
     private void UnloadDeck()
     {
+        if(saveDeckOnUnload == true)
+        {
         SaveDeckData();
+        }
+
         if(cardsBeingDisplayed != null && transform.childCount != 0) // Check that there are objects that have been instantiated and are in the list
         {
             for (int i = cardsBeingDisplayed.Count - 1; i >= 0; i--) // Reverse loop over objects in list and destroy them
@@ -79,7 +86,7 @@ public class DeckDisplay : MonoBehaviour
     {
         if (cardIDList.Exists(cardIDList => cardIDList == card.cardID))
         {
-            cardIDIndex = cardIDList.FindIndex(0, cardIDList.Count - 1, card.cardID.Equals);
+            cardIDIndex = cardIDList.FindIndex(0, cardIDList.Count, card.cardID.Equals);
         }
         cardIDList[cardIDIndex] = selectedCard.cardID;
         SaveDeckData();

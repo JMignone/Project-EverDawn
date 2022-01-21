@@ -22,7 +22,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_2020_3_17;UNITY_2020_3;UNITY_2020;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_INCLUDE_TESTS;USE_SEARCH_ENGINE_API;SCENE_TEMPLATE_MODULE;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;PLATFORM_ANDROID;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;PLATFORM_EXTENDS_VULKAN_DEVICE;PLATFORM_HAS_MULTIPLE_SWAPCHAINS;UNITY_ANDROID_SUPPORTS_SHADOWFILES;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_2020_3_17;UNITY_2020_3;UNITY_2020;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_INCLUDE_TESTS;USE_SEARCH_ENGINE_API;SCENE_TEMPLATE_MODULE;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;PLATFORM_ANDROID;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;PLATFORM_EXTENDS_VULKAN_DEVICE;PLATFORM_HAS_MULTIPLE_SWAPCHAINS;UNITY_ANDROID_SUPPORTS_SHADOWFILES;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER;DEVELOPMENT_BUILD</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -36,6 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\_Scripts\Abilities\DamageZone.cs" />
      <Compile Include="Assets\_Scripts\Units\UnitEffects\UAOEStats.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
      <Compile Include="Assets\LeanTween\Framework\LeanTween.cs" />
@@ -44,7 +45,7 @@
      <Compile Include="Assets\LeanTween\Framework\LTDescr.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
      <Compile Include="Assets\MenuAssets\ScriptableObjects\CharactersAndCards\SO_Definitions\SO_CardDatabase.cs" />
-     <Compile Include="Assets\_Scripts\Units\BuildingEffects\SpawnStats.cs" />
+     <Compile Include="Assets\_Scripts\Units\UnitStats\SpawnStats.cs" />
      <Compile Include="Assets\MenuAssets\DeckSaving\DeckSaver.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
      <Compile Include="Assets\_Scripts\Units\UnitEffects\SlowedStats.cs" />
@@ -54,7 +55,8 @@
      <Compile Include="Assets\_Scripts\Units\GroupUnit.cs" />
      <Compile Include="Assets\_Scripts\Managers\GameConstants.cs" />
      <Compile Include="Assets\_Scripts\UI\AimAtCamera.cs" />
-     <Compile Include="Assets\_Scripts\Units\Actor3D.cs" />
+     <Compile Include="Assets\_Scripts\Units\UnitStats\BuildUpStats.cs" />
+     <Compile Include="Assets\_Scripts\Units\Misc\Actor3D.cs" />
      <Compile Include="Assets\_Scripts\Deck\PlayerStats.cs" />
      <Compile Include="Assets\_Scripts\Abilities\CreateAtLocation\CALEffects\LinearStats.cs" />
      <Compile Include="Assets\MenuAssets\GameEvents\Listeners\IntListener.cs" />
@@ -62,6 +64,7 @@
      <Compile Include="Assets\_Scripts\Interface\IAbility.cs" />
      <Compile Include="Assets\_Scripts\Units\Keep.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
+     <Compile Include="Assets\_Scripts\Units\UnitEffects\BlindedStats.cs" />
      <Compile Include="Assets\_Scripts\Deck\Deck.cs" />
      <Compile Include="Assets\MenuAssets\ScriptableObjects\Managers\SO_Definitions\SO_SceneLoading.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\UnusedOrLegacy\CursorTracker.cs" />
@@ -71,13 +74,16 @@
      <Compile Include="Assets\LeanTween\Framework\LTSeq.cs" />
      <Compile Include="Assets\_Scripts\Abilities\SkillShot.cs" />
      <Compile Include="Assets\_Scripts\Units\UnitEffects\PoisonedStats.cs" />
+     <Compile Include="Assets\_Scripts\Units\UnitEffects\StunnedStats.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\CardDisplay.cs" />
      <Compile Include="Assets\_Scripts\Managers\GameFunctions.cs" />
+     <Compile Include="Assets\_Scripts\Units\UnitEffects\StrengthenedStats.cs" />
      <Compile Include="Assets\MenuAssets\ScriptableObjects\CharactersAndCards\SO_Definitions\SO_CharacterDatabase.cs" />
      <Compile Include="Assets\MenuAssets\DeckSaving\PlayerDeck.cs" />
      <Compile Include="Assets\_Scripts\Deck\CardStats.cs" />
      <Compile Include="Assets\MenuAssets\GameEvents\Listeners\GameEventListener.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\OnCardClick.cs" />
+     <Compile Include="Assets\_Scripts\Abilities\Effects\StrengthStats.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralUISpace.cs" />
      <Compile Include="Assets\_Scripts\Abilities\CreateAtLocation\CALEffects\SummonStats.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\OrbitAnimation.cs" />
@@ -89,19 +95,22 @@
      <Compile Include="Assets\_Scripts\Units\UnitEffects\PulledStats.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
+     <Compile Include="Assets\_Scripts\Abilities\Effects\ResistEffects.cs" />
      <Compile Include="Assets\MenuAssets\DeckSaving\DeckDisplay.cs" />
+     <Compile Include="Assets\_Scripts\Abilities\Projectile\ProjEffects\CustomPathStats.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralSimpleUI.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Effects\RootStats.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
-     <Compile Include="Assets\_Scripts\Units\PreviewUnit\PreviewActor3D.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\UITabGroup.cs" />
+     <Compile Include="Assets\_Scripts\Units\UnitStats\ShadowStats.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\PathSplineEndless.cs" />
      <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Events\CardEvent.cs" />
+     <Compile Include="Assets\_Scripts\Deck\ComputerStats.cs" />
      <Compile Include="Assets\_Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Projectile\ProjEffects\GrenadeStats.cs" />
      <Compile Include="Assets\_Scripts\Units\UnitEffects\KnockbackedStats.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\UIAnimTest1.cs" />
-     <Compile Include="Assets\_Scripts\Units\AttackStats.cs" />
+     <Compile Include="Assets\_Scripts\Units\UnitStats\AttackStats.cs" />
      <Compile Include="Assets\_Scripts\Units\UnitEffects\GrabbedStats.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\PathBezier.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\PathSpline.cs" />
@@ -109,27 +118,30 @@
      <Compile Include="Assets\_Scripts\Abilities\Effects\KnockbackStats.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
      <Compile Include="Assets\_Scripts\Units\Building.cs" />
-     <Compile Include="Assets\_Scripts\Units\PreviewUnit\PreviewActor2D.cs" />
      <Compile Include="Assets\MenuAssets\ScriptableObjects\Managers\SO_Definitions\SO_MainMenuState.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\CharacterBackgroundDisplay.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
      <Compile Include="Assets\MenuAssets\ScriptableObjects\CharactersAndCards\SO_Definitions\SO_Character.cs" />
-     <Compile Include="Assets\_Scripts\Units\BaseStats.cs" />
+     <Compile Include="Assets\_Scripts\Units\UnitStats\BaseStats.cs" />
+     <Compile Include="Assets\_Scripts\Units\UnitStats\DeathStats.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
      <Compile Include="Assets\_Scripts\Units\Misc\SummoningSicknessUI.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Effects\SelfDestructStats.cs" />
+     <Compile Include="Assets\_Scripts\Units\UnitStats\NoseDiveStats.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Effects\SlowStats.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralAdvancedTechniques.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Projectile\ProjEffects\AOEStats.cs" />
+     <Compile Include="Assets\_Scripts\Abilities\Effects\BlindStats.cs" />
      <Compile Include="Assets\LeanTween\Framework\LeanSmooth.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralBasics2d.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Target.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\PathSplines.cs" />
      <Compile Include="Assets\MenuAssets\ScriptableObjects\CharactersAndCards\SO_Definitions\SO_Card.cs" />
+     <Compile Include="Assets\_Scripts\Abilities\Effects\StunStats.cs" />
      <Compile Include="Assets\_Scripts\Units\UnitEffects\EffectStats.cs" />
-     <Compile Include="Assets\_Scripts\Deck\Spell.cs" />
      <Compile Include="Assets\_Scripts\Abilities\AbilityUI.cs" />
+     <Compile Include="Assets\_Scripts\Interface\ICaster.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralEventsListeners.cs" />
      <Compile Include="Assets\_Scripts\Units\UnitEffects\UKnockbackStats.cs" />
      <Compile Include="Assets\MenuAssets\ScriptableObjects\Managers\SO_Definitions\SO_PlayerPrefsInterface.cs" />
@@ -141,7 +153,6 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\UnusedOrLegacy\DataStorage.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
-     <Compile Include="Assets\_Scripts\Deck\Card.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\InputAnimator.cs" />
      <Compile Include="Assets\_Scripts\Abilities\CreateAtLocation\CreateAtLocation.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
@@ -152,6 +163,7 @@
      <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Events\VoidEvent.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
      <Compile Include="Assets\MenuAssets\GameEvents\Definitions\UnityEvents\UnityCardEvent.cs" />
+     <Compile Include="Assets\_Scripts\Units\UnitEffects\ResistStats.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\PathSpline2d.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
      <Compile Include="Assets\MenuAssets\GameEvents\Definitions\UnityEvents\UnityIntEvent.cs" />
@@ -159,16 +171,22 @@
      <Compile Include="Assets\MenuAssets\DeckSaving\Decks\SO_Deck.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\TestingZLegacyExt.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\PathSplinePerformance.cs" />
-     <Compile Include="Assets\_Scripts\Units\Actor2D.cs" />
+     <Compile Include="Assets\_Scripts\Units\Misc\Actor2D.cs" />
      <Compile Include="Assets\MenuAssets\GameEvents\Definitions\UnityEvents\UnityVoidEvent.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
+     <Compile Include="Assets\_Scripts\Units\UnitStats\ChargeStats.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Projectile\ProjEffects\BoomerangStats.cs" />
      <Compile Include="Assets\_Scripts\Units\Unit.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\PathBezier2d.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\MoonBackgroundTempAnimator.cs" />
+     <Compile Include="Assets\_Scripts\Abilities\CreateAtLocation\CALEffects\TeleportStats.cs" />
      <Compile Include="Assets\MenuAssets\ScriptableObjects\CharactersAndCards\SO_Definitions\SO_Faction.cs" />
+     <Compile Include="Assets\_Scripts\Abilities\Effects\ApplyResistanceStats.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\CharacterManager.cs" />
+     <Compile Include="Assets\_Scripts\Abilities\Projectile\ProjEffects\LocationStats.cs" />
+     <Compile Include="Assets\_Scripts\Units\Misc\UnitMaterials.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
+     <Compile Include="Assets\_Scripts\Deck\Card.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
      <Compile Include="Assets\_Scripts\Interface\IDamageable.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
@@ -181,8 +199,10 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Effects\GrabStats.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Projectile\ProjActor2D.cs" />
+     <Compile Include="Assets\_Scripts\Units\UnitStats\DashStats.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
+     <Compile Include="Assets\_Scripts\Abilities\Movement\MoveEffects\RetreatStats.cs" />
      <Compile Include="Assets\LeanTween\Framework\LTDescrOptional.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralEasingTypes.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralSequencer.cs" />
