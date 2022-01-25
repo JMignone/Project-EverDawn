@@ -258,8 +258,8 @@ MonoBehaviour:
   buildingType: 1
   buildingSize: 1
   stats:
-    currHealth: 100
-    maxHealth: 100
+    currHealth: 600
+    maxHealth: 600
     currArmor: 0
     maxArmor: 0
     healthDecay: 0.025

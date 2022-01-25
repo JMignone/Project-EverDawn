@@ -105,7 +105,7 @@ public class Tower : MonoBehaviour, IDamageable
     }
 
     protected void Start()
-    {
+    {        
         stats.HealthBar.enabled = false;
         stats.HealthBar.transform.GetChild(0).gameObject.SetActive(false);
 

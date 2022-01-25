@@ -24,8 +24,6 @@ public class CardStats
     [Tooltip("The index of the unit in the lists, must match or be -1, meaning there is no unit")]
     [SerializeField]
     private int unitIndex;
-    //[SerializeField] uncomment for debug purposes
-    private int layoutIndex;
     private bool hiddenCard;
 
     public int CardId
@@ -80,12 +78,6 @@ public class CardStats
     {
         get { return unitIndex; }
         set { unitIndex = value; }
-    }
-
-    public int LayoutIndex
-    {
-        get { return layoutIndex; }
-        set { layoutIndex = value; }
     }
 
     public bool HiddenCard

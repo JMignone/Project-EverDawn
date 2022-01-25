@@ -366,7 +366,7 @@ MonoBehaviour:
     baseDamage: 133
     attackDelay: 1
     currAttackDelay: 0
-    moveSpeed: 10
+    moveSpeed: 12
     noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:

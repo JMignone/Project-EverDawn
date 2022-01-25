@@ -10,6 +10,8 @@ public class ComputerStats
     private bool isComputer;
 
     private PlayerStats playerInfo;
+    private List<CardStats> handSnapshot;
+
     [SerializeField]
     private int currResource;
     private List<List<int>> potentialCardCombos;
@@ -47,6 +49,7 @@ public class ComputerStats
                 else {
                     Vector3 dropLocation = adjustLocation();
                     cardOrder[playIndex].QueCard(dropLocation);
+                    cardOrder[playIndex].GetNewCard();
 
                     currentDelay = 0;
 
@@ -87,7 +90,7 @@ public class ComputerStats
 
         float random = Random.Range(0.0f, 1.0f);
         float totalEnemyHP = 0;
-        foreach (GameObject go in GameManager.Instance.Objects) { //  The trigger exit doesnt get trigger if the object suddenly dies, so we need this do do it manually
+        foreach (GameObject go in GameManager.Instance.Objects) {
             if(!go.CompareTag(playerInfo.transform.tag) && !GameManager.Instance.TowerObjects.Contains(go)) { //if the unit is an enemy and not a tower
                 IDamageable unit = go.GetComponent(typeof(IDamageable)) as IDamageable;
                 if(unit.Agent.transform.position.z > 0)
@@ -120,7 +123,12 @@ public class ComputerStats
         for(int x=0; x<potentialCardCombos[random].Count; x++) {
             cost += potentialCardCombos[random][x];
             for(int index=0; index<cardIndex.Length; index++) {
-                if(cardIndex[index] != -1 && playerInfo.PlayersDeck.Hand[index].Cost == potentialCardCombos[random][x]) {
+                /*if(cardIndex[index] != -1 && playerInfo.PlayersDeck.Hand[index].Cost == potentialCardCombos[random][x]) {
+                    potentialCardCombos[random][x] = index;
+                    cardIndex[index] = -1;
+                    break;
+                }*/
+                if(cardIndex[index] != -1 && playerInfo.HandParent.GetChild(index).GetComponent<Card>().CardInfo.Cost == potentialCardCombos[random][x]) {
                     potentialCardCombos[random][x] = index;
                     cardIndex[index] = -1;
                     break;

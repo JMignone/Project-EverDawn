@@ -256,7 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBox: {fileID: 1169943033832335869}
   radius: 3
-  range: 25
+  range: 29
   heightAttackable: 0
   typeAttackable: 0
   abilityControl: 0

@@ -26,8 +26,6 @@ public class PlayerStats : MonoBehaviour
     [SerializeField]
     private Transform handParent;
     [SerializeField]
-    private Card nextCard;
-    [SerializeField]
     private Canvas playerCanvas;
     [SerializeField]
     private Transform quedSpells;
@@ -200,8 +198,12 @@ public class PlayerStats : MonoBehaviour
                 card.HiddenCard = true;
         }
 
-
         playersDeck.Start();
+        foreach(Transform go in handParent.transform) {
+            Card card = go.gameObject.GetComponent<Card>();
+            card.GetNewCard();
+        }
+
         //SetSpawnZone();
         spawnZone = GameConstants.SPAWN_ZONE_RESTRICTION.NONE;
         selectedCardId = -1;
@@ -237,7 +239,7 @@ public class PlayerStats : MonoBehaviour
         computerStats.UpdateComputerStats();
 
         UpdateText();
-        UpdateDeck();
+        //UpdateDeck();
     }
 
     private void UpdateText()
@@ -248,7 +250,7 @@ public class PlayerStats : MonoBehaviour
         }
         textScore.text = score.ToString();
     }
-
+/*
     private void UpdateDeck()
     {
         if(playersDeck.Hand.Count < GameConstants.MAX_HAND_SIZE) {
@@ -261,10 +263,10 @@ public class PlayerStats : MonoBehaviour
         }
 
         if(!computerStats.IsComputer) {
-        nextCard.CardInfo = playersDeck.NextCard;
-        nextCard.PlayerInfo = this;
+        //nextCard.CardInfo = playersDeck.NextCard;
+        //nextCard.PlayerInfo = this;
         }
-    }
+    }*/
 
     public void RemoveResource(int cost)
     {
@@ -280,20 +282,24 @@ public class PlayerStats : MonoBehaviour
     }
 
     public void SelectNewCard(int id) {
-        if(selectedCardId != -1 && selectedCardId != id) {
-            foreach(CardStats cs in playersDeck.Hand) {
-                if(cs.CardId == selectedCardId) {
-                    Card card = handParent.GetChild(cs.LayoutIndex).GetComponent<Card>();
-                    if(cs.UnitIndex != -1 && !card.IsBuffering)
-                        Destroy(card.UnitPreview);
-                    break;
+        Debug.Log(id);
+        if(selectedCardId != id) {
+            foreach(Transform go in handParent.transform) {
+                Card card = go.gameObject.GetComponent<Card>();
+                if(card.CardInfo.CardId == selectedCardId)
+                    go.transform.localScale = new Vector3(1,1,1);
+                else if(card.CardInfo.CardId == id) {
+                    go.transform.localScale = new Vector3(1.1f,1.1f,1.1f);
+                    spawnZone = card.CardInfo.SpawnZoneRestrictions;
                 }
             }
+            if(id == -1)
+                spawnZone = GameConstants.SPAWN_ZONE_RESTRICTION.NONE;
+            selectedCardId = id;
         }
-        selectedCardId = id;
     }
 
-    /**
+    /*
     public void SetSpawnZone() {
         print(GameManager.Instance.Ground.transform.localScale);
         RectTransform topTransform = topArea.GetComponent<RectTransform>();

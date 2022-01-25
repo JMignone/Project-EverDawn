@@ -384,6 +384,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Drone
       objectReference: {fileID: 0}
+    - target: {fileID: 3579881040858346678, guid: e822c9823d3350546895ef0d94e6c009, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3579881040858346678, guid: e822c9823d3350546895ef0d94e6c009, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3579881040858346678, guid: e822c9823d3350546895ef0d94e6c009, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e822c9823d3350546895ef0d94e6c009, type: 3}
 --- !u!4 &7518074383301799527 stripped

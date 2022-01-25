@@ -229,7 +229,7 @@ MonoBehaviour:
   summonStats:
     isSummon: 1
     summonEffect: {fileID: 0}
-    summonUnit: {fileID: 4489671066153867563, guid: 7c4e20b9b5d8b9244869e823b032ceba, type: 3}
+    summonUnit: {fileID: 4489671066153867563, guid: 3879c3dd76ec0e2478c336a460441018, type: 3}
     size: 0
     summonPreview: {fileID: 7215423215100224405, guid: d14ed15cbdd88a24484e8515f90f602e, type: 3}
     timeToSummon: 0

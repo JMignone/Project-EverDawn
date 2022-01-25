@@ -135,16 +135,16 @@ public class GameManager : MonoBehaviour
         float objectToRemoveAgentRadius = objectToRemoveAgent.HitBox.radius;
 
         foreach (GameObject go in Instance.Objects) { //  The trigger exit doesnt get trigger if the object suddenly dies, so we need this do do it manually 
-            Component component = go.GetComponent(typeof(IDamageable));
-            if(component) {
-                if((component as IDamageable).HitTargets.Contains(objectToRemove))   //if an object has this now dead unit as a hit target ...
-                    (component as IDamageable).HitTargets.Remove(objectToRemove);    //remove it from their possible targets
-                if((component as IDamageable).Target == objectToRemove)              //if an object has this now dead unit as a target ...
-                    (component as IDamageable).Target = null;                        //make target null
-                if((component as IDamageable).InRangeTargets.Contains(objectToRemove))
-                    (component as IDamageable).InRangeTargets.Remove(objectToRemove); 
-                if((component as IDamageable).InRangeTargets.Count == 0)
-                    (component as IDamageable).Stats.IncRange = false;
+            IDamageable component = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+            if(go.GetComponent(typeof(IDamageable))) {
+                if(component.HitTargets.Contains(objectToRemove))  //if an object has this now dead unit as a hit target ...
+                    component.HitTargets.Remove(objectToRemove);    //remove it from their possible targets
+                if(component.Target == objectToRemove)              //if an object has this now dead unit as a target ...
+                    component.Target = null;                        //make target null
+                if(component.InRangeTargets.Contains(objectToRemove))
+                    component.InRangeTargets.Remove(objectToRemove); 
+                if(component.InRangeTargets.Count == 0)
+                    component.Stats.IncRange = false;
             }
         }
         if((objectToRemoveComponent as IDamageable).Stats.IsHoveringAbility) {
@@ -169,17 +169,17 @@ public class GameManager : MonoBehaviour
         float objectToRemoveAgentRadius = objectToRemoveAgent.HitBox.radius;
 
         foreach (GameObject go in Instance.Objects) { //  The trigger exit doesnt get trigger if the object suddenly dies, so we need this do do it manually 
-            Component component = go.GetComponent(typeof(IDamageable));
-            if(component) {
-                if((component as IDamageable).HitTargets.Contains(objectToRemove)) { //if an object has this now dead unit as a hit target ...
-                    (component as IDamageable).HitTargets.Remove(objectToRemove);    //remove it from their possible targets
-                    if((component as IDamageable).Target == objectToRemove)          //if an object has this now dead unit as a target ...
-                        (component as IDamageable).Target = null;                    //make target null
-                    if((component as IDamageable).InRangeTargets.Contains(objectToRemove))
-                        (component as IDamageable).InRangeTargets.Remove(objectToRemove); 
+            IDamageable component = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+            if(go.GetComponent(typeof(IDamageable))) {
+                if(component.HitTargets.Contains(objectToRemove)) { //if an object has this now dead unit as a hit target ...
+                    component.HitTargets.Remove(objectToRemove);    //remove it from their possible targets
+                    if(component.Target == objectToRemove)          //if an object has this now dead unit as a target ...
+                        component.Target = null;                    //make target null
+                    if(component.InRangeTargets.Contains(objectToRemove))
+                        component.InRangeTargets.Remove(objectToRemove); 
 
-                    if((component as IDamageable).InRangeTargets.Count == 0)
-                        (component as IDamageable).Stats.IncRange = false;
+                    if(component.InRangeTargets.Count == 0)
+                        component.Stats.IncRange = false;
                 }
             }
         }

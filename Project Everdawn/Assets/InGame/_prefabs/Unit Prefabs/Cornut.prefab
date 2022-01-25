@@ -181,8 +181,8 @@ MonoBehaviour:
   unitSprite: {fileID: 4300487081921077863}
   target: {fileID: 0}
   stats:
-    currHealth: 4500
-    maxHealth: 4500
+    currHealth: 4850
+    maxHealth: 4850
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
@@ -1479,7 +1479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_AnchoredPosition.y

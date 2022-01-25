@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBox: {fileID: 8128849535359254279}
   unitSprite: {fileID: 8128849534643583311}
-  radius: 9
+  radius: 10
   speed: 75
   range: 100
   baseDamage: 750
@@ -63,6 +63,7 @@ MonoBehaviour:
   skipNumber: 0
   overridesTarget: 0
   onlyDamageIfTargeted: 0
+  hideRange: 0
   hidePreview: 0
   customPathStats:
     hasCustomPath: 0
@@ -149,7 +150,7 @@ MonoBehaviour:
     isAirStrike: 1
     startLocation: 1
     explosionEffect: {fileID: 8690222435761223237, guid: 6da804001015963439247141d19a1ee2, type: 3}
-    explosionRadius: 8
+    explosionRadius: 10
     grenadeArcMultiplier: 0.8
   resistEffects:
     resistFreeze: 0

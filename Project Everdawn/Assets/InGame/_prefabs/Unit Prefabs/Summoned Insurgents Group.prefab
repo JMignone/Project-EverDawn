@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 4489671066153867476}
   - component: {fileID: 6931314265539079310}
   m_Layer: 0
-  m_Name: Bao Zu Group
+  m_Name: Summoned Insurgents Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,7 +133,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1429671960267128442}
-  - {fileID: 4010457143539847537}
   - {fileID: 2499013489488960642}
   - {fileID: 2329925491842716704}
   m_Father: {fileID: 0}
@@ -262,76 +261,6 @@ MonoBehaviour:
         resistedPull: 0
         resistedBlind: 0
         resistedStun: 0
---- !u!1001 &5979431320217870577
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 4489671066153867476}
-    m_Modifications:
-    - target: {fileID: 456612465561256944, guid: 9c58afa1af3aeaa4e9ab7132c77219b5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 456612465561256944, guid: 9c58afa1af3aeaa4e9ab7132c77219b5, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7301237269475668352, guid: 9c58afa1af3aeaa4e9ab7132c77219b5, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7301237269475668352, guid: 9c58afa1af3aeaa4e9ab7132c77219b5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7301237269475668352, guid: 9c58afa1af3aeaa4e9ab7132c77219b5, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7301237269475668352, guid: 9c58afa1af3aeaa4e9ab7132c77219b5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7301237269475668352, guid: 9c58afa1af3aeaa4e9ab7132c77219b5, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7301237269475668352, guid: 9c58afa1af3aeaa4e9ab7132c77219b5, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7301237269475668352, guid: 9c58afa1af3aeaa4e9ab7132c77219b5, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7301237269475668352, guid: 9c58afa1af3aeaa4e9ab7132c77219b5, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7301237269475668352, guid: 9c58afa1af3aeaa4e9ab7132c77219b5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7301237269475668352, guid: 9c58afa1af3aeaa4e9ab7132c77219b5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7301237269475668352, guid: 9c58afa1af3aeaa4e9ab7132c77219b5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7301237269475668355, guid: 9c58afa1af3aeaa4e9ab7132c77219b5, type: 3}
-      propertyPath: m_Name
-      value: Bao Zu
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9c58afa1af3aeaa4e9ab7132c77219b5, type: 3}
---- !u!4 &4010457143539847537 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7301237269475668352, guid: 9c58afa1af3aeaa4e9ab7132c77219b5, type: 3}
-  m_PrefabInstance: {fileID: 5979431320217870577}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7322820701743966343
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -349,7 +278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5028950967710317735, guid: 1a0e638582ba83046a3d5de083be4dc4, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5028950967710317735, guid: 1a0e638582ba83046a3d5de083be4dc4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -361,7 +290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5028950967710317735, guid: 1a0e638582ba83046a3d5de083be4dc4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5028950967710317735, guid: 1a0e638582ba83046a3d5de083be4dc4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -415,7 +344,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5028950967710317735, guid: 1a0e638582ba83046a3d5de083be4dc4, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5028950967710317735, guid: 1a0e638582ba83046a3d5de083be4dc4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -427,7 +356,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5028950967710317735, guid: 1a0e638582ba83046a3d5de083be4dc4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5028950967710317735, guid: 1a0e638582ba83046a3d5de083be4dc4, type: 3}
       propertyPath: m_LocalRotation.w

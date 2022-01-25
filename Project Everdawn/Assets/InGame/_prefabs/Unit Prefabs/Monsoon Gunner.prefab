@@ -329,7 +329,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 25
+  m_Radius: 16.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3925836231929867144
 GameObject:
@@ -524,7 +524,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 17
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3925836232371597723
 GameObject:
@@ -581,12 +581,12 @@ MonoBehaviour:
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
-    range: 15
-    visionRange: 16.5
+    range: 17
+    visionRange: 19.5
     baseDamage: 90
-    attackDelay: 1
+    attackDelay: 0.8
     currAttackDelay: 0
-    moveSpeed: 10
+    moveSpeed: 12
     noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
@@ -701,7 +701,7 @@ MonoBehaviour:
     abilityPrefabs:
     - {fileID: 1549152128178500471, guid: b698ebc0a840b774f8af7dadf0b2af5e, type: 3}
     abilityDelays:
-    - 0.25
+    - 0.2
     - 0
     currentDelay: 0
   buildUpStats:
