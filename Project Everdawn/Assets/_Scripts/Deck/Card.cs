@@ -165,7 +165,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         set { bufferingPosition = value; }
     }
 
-    private void Start()
+    private void Awake()
     {
         for(int i=0; i < transform.parent.childCount; ++i) {
             if(transform.GetInstanceID() == transform.parent.GetChild(i).GetInstanceID()) {
@@ -174,12 +174,10 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             }
         }
 
-        if(!cardInfo.HiddenCard) {
-            abilityPreviewCanvas = playerInfo.PlayerCanvas;
+        abilityPreviewCanvas = playerInfo.PlayerCanvas;
 
-            cardCanvasDim = GameFunctions.GetCanvas().GetChild(0).GetComponent<RectTransform>();
-            cardCanvasScale = GameFunctions.GetCanvas().GetComponent<RectTransform>().localScale.x; //this is used to compensate for differing resolutions
-        }
+        cardCanvasDim = GameFunctions.GetCanvas().GetChild(0).GetComponent<RectTransform>();
+        cardCanvasScale = GameFunctions.GetCanvas().GetComponent<RectTransform>().localScale.x; //this is used to compensate for differing resolutions
     }
 
     public void GetNewCard() {

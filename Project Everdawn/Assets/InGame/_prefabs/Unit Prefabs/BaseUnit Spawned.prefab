@@ -270,7 +270,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &865779381804448098
 GameObject:
@@ -935,7 +935,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 30
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5548348861413746965
 GameObject:
@@ -1128,8 +1128,8 @@ MonoBehaviour:
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
-    range: 10
-    visionRange: 20
+    range: 4
+    visionRange: 15
     baseDamage: 85
     attackDelay: 1.1
     currAttackDelay: 0
@@ -1150,7 +1150,7 @@ MonoBehaviour:
     detectionObject: {fileID: 8304181129418167361}
     visionObject: {fileID: 4698014183429173447}
     movementType: 0
-    heightAttackable: 0
+    heightAttackable: 1
     unitMaterials:
       renderers:
       - {fileID: 8995187665529853619}
