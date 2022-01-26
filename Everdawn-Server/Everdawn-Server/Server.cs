@@ -13,7 +13,9 @@ namespace Everdawn_Server
     {
         public static int MaxPlayers { get; private set; }
         public static int Port { get; private set; }
-        public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
+        public static Dictionary<int, Client> clients = new();
+        public static Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> databases = new();
+        public static string[] alphanumKey = { "C","D","E","F","H","J","K","M","N","P","R","T","V","W","X","Y","2","3","4","5","6","8","9" };
         private static TcpListener tcpListener;
         public static void Start(int _maxPlayers, int _port)
         {
@@ -22,6 +24,7 @@ namespace Everdawn_Server
 
             Console.WriteLine($"Starting server...");
             InitializeServerData();
+            PGSQL.startup();
 
             tcpListener = new TcpListener(IPAddress.Any, Port);
             tcpListener.Start();
@@ -53,6 +56,37 @@ namespace Everdawn_Server
             {
                 clients.Add(i, new Client(i));
             }
+            databases.Add("main", new Dictionary<string, Dictionary<string, List<string>>>
+            {
+                ["playerProfile"] =
+                {
+                    ["key"] =           new List<string> { "SERIAL",        "PRIMARY KEY" },
+                    ["UUID"] =          new List<string> { "UUID",          "UNIQUE NOT NULL" },
+                    ["userName"] =      new List<string> { "VARCHAR(16)",   "UNIQUE NOT NULL" },
+                    ["displayName"] =   new List<string> { "VARCHAR(32)",   "" },
+                    ["uniqueTag"] =     new List<string> { "CHAR(8)",       "UNIQUE NOT NULL" },
+                    ["clanID"] =        new List<string> { "CHAR(4)",       "" },
+                    ["friendsList"] =   new List<string> { "JSON",          "" },
+                    ["key"] =           new List<string> { "type",          "OPTIONS" },
+                    ["key"] =           new List<string> { "type",          "OPTIONS" }
+                },
+                ["playerData"] =
+                {
+                    ["key"] =           new List<string> { "SERIAL",        "PRIMARY KEY" },
+                    ["UUID"] =          new List<string> { "UUID",          "UNIQUE NOT NULL" },
+                    ["key"] =           new List<string> { "type",          "OPTIONS" },
+                    ["key"] =           new List<string> { "type",          "OPTIONS" },
+                    ["key"] =           new List<string> { "type",          "OPTIONS" },
+                    ["key"] =           new List<string> { "type",          "OPTIONS" },
+                    ["key"] =           new List<string> { "type",          "OPTIONS" }
+                }
+            });
+
+            // Player
+            // Ranked ELO
+            // Casual ELO
+            // Moderators
+            // Admins
         }
     }
 }

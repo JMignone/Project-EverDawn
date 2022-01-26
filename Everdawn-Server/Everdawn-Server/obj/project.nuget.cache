@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "TmabCSz52f6Mb9vqk/xrS6PnmjFnhCZtpTvRYAGO+gtatHjvqQG8hS9trCNB4HPle57pDJ7rVjGGSityzj+ejg==",
+  "dgSpecHash": "PEBcp7ZC1YuYhjbJu0871SvQzAYH71NGL15CPLk7OoTrOlH6nqpVVbbO7XR9Nq9cHqQjPzYc0yJ9lyd5wwJzFA==",
   "success": true,
-  "projectFilePath": "D:\\balan\\Dropbox\\Documents\\GitHub\\Project-Luna\\Everdawn-Server\\Everdawn-Server\\Everdawn-Server.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\GitHub\\Project-Luna\\Everdawn-Server\\Everdawn-Server\\Everdawn-Server.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\balan\\.nuget\\packages\\npgsql\\6.0.2\\npgsql.6.0.2.nupkg.sha512",
+    "C:\\Users\\balan\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

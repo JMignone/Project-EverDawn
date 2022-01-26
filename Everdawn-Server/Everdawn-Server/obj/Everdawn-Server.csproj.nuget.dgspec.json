@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\balan\\Dropbox\\Documents\\GitHub\\Project-Luna\\Everdawn-Server\\Everdawn-Server\\Everdawn-Server.csproj": {}
+    "D:\\GitHub\\Project-Luna\\Everdawn-Server\\Everdawn-Server\\Everdawn-Server.csproj": {}
   },
   "projects": {
-    "D:\\balan\\Dropbox\\Documents\\GitHub\\Project-Luna\\Everdawn-Server\\Everdawn-Server\\Everdawn-Server.csproj": {
+    "D:\\GitHub\\Project-Luna\\Everdawn-Server\\Everdawn-Server\\Everdawn-Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\balan\\Dropbox\\Documents\\GitHub\\Project-Luna\\Everdawn-Server\\Everdawn-Server\\Everdawn-Server.csproj",
+        "projectUniqueName": "D:\\GitHub\\Project-Luna\\Everdawn-Server\\Everdawn-Server\\Everdawn-Server.csproj",
         "projectName": "Everdawn-Server",
-        "projectPath": "D:\\balan\\Dropbox\\Documents\\GitHub\\Project-Luna\\Everdawn-Server\\Everdawn-Server\\Everdawn-Server.csproj",
+        "projectPath": "D:\\GitHub\\Project-Luna\\Everdawn-Server\\Everdawn-Server\\Everdawn-Server.csproj",
         "packagesPath": "C:\\Users\\balan\\.nuget\\packages\\",
-        "outputPath": "D:\\balan\\Dropbox\\Documents\\GitHub\\Project-Luna\\Everdawn-Server\\Everdawn-Server\\obj\\",
+        "outputPath": "D:\\GitHub\\Project-Luna\\Everdawn-Server\\Everdawn-Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\balan\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -21,7 +21,8 @@
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {}
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
@@ -38,6 +39,12 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "Npgsql": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -53,7 +60,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }
