@@ -113,6 +113,7 @@ public class Tower : MonoBehaviour, IDamageable
 
         stats.SummoningSicknessUI.StartStats(unit);
         stats.EffectStats.StartStats(unit);
+        attackStats.StartAttackStats(unit);
 
         stats.IsHoveringAbility = false;
         stats.AbilityIndicator.enabled = false;

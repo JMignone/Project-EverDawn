@@ -445,7 +445,7 @@ public class BaseStats
 
             if(!wasSoonToBeKilled) {
                 foreach(GameObject go in enemyUnit.EnemyHitTargets) { //go through every unit targeting our target and see if any of them will kill this unit first
-                    if(go != unit) {
+                    if(go != unit && go != null) {
                         IDamageable friendlyUnit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
                         float timeToKill = ( (Mathf.Ceil(enemyUnit.Stats.CurrHealth/(friendlyUnit.Stats.BaseDamage*friendlyUnit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity))) * friendlyUnit.Stats.AttackDelay) - friendlyUnit.Stats.CurrAttackDelay;
                         //MonoBehaviour.print(timeToKill);
@@ -460,7 +460,7 @@ public class BaseStats
                 enemyUnit.Stats.SoonToBeKilled = true;
                 enemyUnit.Stats.WasSoonToBeKilled = true;
                 foreach(GameObject go in enemyUnit.EnemyHitTargets.ToArray()) { //go through every unit targeting our target and see if any of them will kill this unit first
-                    if(go != unit) {
+                    if(go != unit && go != null) {
                         IDamageable friendlyUnit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
                         if(friendlyUnit.Stats.CurrAttackDelay > friendlyUnit.Stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER)
                             friendlyUnit.Stats.SoonToKillOverride = true;
@@ -593,7 +593,7 @@ public class BaseStats
         }
     }
 
-    public void Appear(GameObject unit, ShadowStats stats, Actor3D unitAgent) {
+    public void Appear(GameObject unit, ShadowStats shadowStats, Actor3D unitAgent) {
         if(isShadow) {
             isShadow = false;
             Vector3 position = unitAgent.transform.position;
@@ -630,8 +630,8 @@ public class BaseStats
             //make unit appear
             unitMaterials.MakeOpaque();
         }
-        else
-            stats.CurrentDelay = 0;
+        else if(shadowStats != null)
+            shadowStats.CurrentDelay = 0;
     }
 
     public void IncIndicatorNum() {

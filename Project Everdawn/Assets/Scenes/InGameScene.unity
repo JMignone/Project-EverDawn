@@ -7808,7 +7808,7 @@ MonoBehaviour:
     range: 45
     visionRange: 45
     baseDamage: 130
-    attackDelay: 0.85
+    attackDelay: 0.75
     currAttackDelay: 0
     moveSpeed: 0
     noRotation: 0
@@ -7913,11 +7913,14 @@ MonoBehaviour:
         resistedBlind: 0
         resistedStun: 0
   attackStats:
-    firesProjectiles: 0
+    firesProjectiles: 1
     attackType: 0
     continueType: 0
-    abilityPrefabs: []
-    abilityDelays: []
+    abilityPrefabs:
+    - {fileID: 1549152128178500471, guid: 077cf75857fbfd149a3c20892f7a337e, type: 3}
+    abilityDelays:
+    - 0.1
+    - 0
     currentDelay: 0
   hitTargets: []
   inRangeTargets: []
@@ -8031,7 +8034,7 @@ MonoBehaviour:
     range: 45
     visionRange: 45
     baseDamage: 130
-    attackDelay: 0.85
+    attackDelay: 0.75
     currAttackDelay: 0
     moveSpeed: 0
     noRotation: 0
@@ -8134,11 +8137,14 @@ MonoBehaviour:
         resistedBlind: 0
         resistedStun: 0
   attackStats:
-    firesProjectiles: 0
+    firesProjectiles: 1
     attackType: 0
     continueType: 0
-    abilityPrefabs: []
-    abilityDelays: []
+    abilityPrefabs:
+    - {fileID: 1549152128178500471, guid: 077cf75857fbfd149a3c20892f7a337e, type: 3}
+    abilityDelays:
+    - 0.1
+    - 0
     currentDelay: 0
   hitTargets: []
   inRangeTargets: []
@@ -19281,7 +19287,7 @@ MonoBehaviour:
     range: 45
     visionRange: 45
     baseDamage: 130
-    attackDelay: 0.85
+    attackDelay: 0.75
     currAttackDelay: 0
     moveSpeed: 0
     noRotation: 0
@@ -19384,11 +19390,14 @@ MonoBehaviour:
         resistedBlind: 0
         resistedStun: 0
   attackStats:
-    firesProjectiles: 0
+    firesProjectiles: 1
     attackType: 0
     continueType: 0
-    abilityPrefabs: []
-    abilityDelays: []
+    abilityPrefabs:
+    - {fileID: 1549152128178500471, guid: 077cf75857fbfd149a3c20892f7a337e, type: 3}
+    abilityDelays:
+    - 0.1
+    - 0
     currentDelay: 0
   hitTargets: []
   inRangeTargets: []
@@ -25335,7 +25344,7 @@ MonoBehaviour:
     range: 36
     visionRange: 36
     baseDamage: 120
-    attackDelay: 1
+    attackDelay: 0.9
     currAttackDelay: 0
     moveSpeed: 0
     noRotation: 0
@@ -25438,11 +25447,14 @@ MonoBehaviour:
         resistedBlind: 0
         resistedStun: 0
   attackStats:
-    firesProjectiles: 0
+    firesProjectiles: 1
     attackType: 0
     continueType: 0
-    abilityPrefabs: []
-    abilityDelays: []
+    abilityPrefabs:
+    - {fileID: 1549152128178500471, guid: e3fc4b174d566964790d9385de94e7fc, type: 3}
+    abilityDelays:
+    - 0.1
+    - 0
     currentDelay: 0
   hitTargets: []
   inRangeTargets: []
@@ -39918,7 +39930,7 @@ MonoBehaviour:
     range: 36
     visionRange: 36
     baseDamage: 120
-    attackDelay: 1
+    attackDelay: 0.9
     currAttackDelay: 0
     moveSpeed: 0
     noRotation: 0
@@ -40023,11 +40035,14 @@ MonoBehaviour:
         resistedBlind: 0
         resistedStun: 0
   attackStats:
-    firesProjectiles: 0
+    firesProjectiles: 1
     attackType: 0
     continueType: 0
-    abilityPrefabs: []
-    abilityDelays: []
+    abilityPrefabs:
+    - {fileID: 1549152128178500471, guid: e3fc4b174d566964790d9385de94e7fc, type: 3}
+    abilityDelays:
+    - 0.1
+    - 0
     currentDelay: 0
   hitTargets: []
   inRangeTargets: []
@@ -40539,7 +40554,7 @@ MonoBehaviour:
     range: 45
     visionRange: 45
     baseDamage: 130
-    attackDelay: 0.85
+    attackDelay: 0.75
     currAttackDelay: 0
     moveSpeed: 0
     noRotation: 0
@@ -40644,11 +40659,14 @@ MonoBehaviour:
         resistedBlind: 0
         resistedStun: 0
   attackStats:
-    firesProjectiles: 0
+    firesProjectiles: 1
     attackType: 0
     continueType: 0
-    abilityPrefabs: []
-    abilityDelays: []
+    abilityPrefabs:
+    - {fileID: 1549152128178500471, guid: 077cf75857fbfd149a3c20892f7a337e, type: 3}
+    abilityDelays:
+    - 0.1
+    - 0
     currentDelay: 0
   hitTargets: []
   inRangeTargets: []

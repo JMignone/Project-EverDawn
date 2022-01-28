@@ -41,18 +41,17 @@ public class NoseDiveStats
 
         unit.SetTarget(null);
 
+        unit.Stats.EffectStats.ResistStats.ResistDamage(100);
+        unit.Stats.EffectStats.ResistStats.ResistTarget(100);
+
         unit.Agent.Agent.enabled = false;
+        unit.Agent.HitBox.enabled = false;
         unit.Agent.transform.rotation = Quaternion.LookRotation((targetPosition - unit.Agent.transform.position).normalized);
 
         unit.Stats.HealthBar.transform.parent.GetComponent<Canvas>().enabled = false;
-
-        unit.Stats.EffectStats.ResistStats.ResistDamage(100);
-        unit.Stats.EffectStats.ResistStats.ResistTarget(100);
     }
 
     public void UpdateStats() {
-        unit.Agent.transform.position += (targetPosition - unit.Agent.transform.position).normalized * speed * Time.deltaTime;
-
         if(Vector3.Distance(unit.Agent.transform.position, targetPosition) < 1) {
             GameFunctions.FireCAL(createAtLocation, targetPosition, targetPosition, Vector3.zero, null, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
             GameManager.RemoveObjectsFromList((unit as Component).gameObject);
@@ -60,5 +59,7 @@ public class NoseDiveStats
                 (unit.Target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove((unit as Component).gameObject);
             MonoBehaviour.Destroy((unit as Component).gameObject);
         }
+        else
+            unit.Agent.transform.position += (targetPosition - unit.Agent.transform.position).normalized * speed * Time.deltaTime;
     }
 }

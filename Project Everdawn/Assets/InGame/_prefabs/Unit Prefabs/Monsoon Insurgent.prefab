@@ -195,7 +195,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.25
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &5028950966964901270
 NavMeshAgent:
@@ -361,8 +361,8 @@ MonoBehaviour:
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
-    range: 4.75
-    visionRange: 16.5
+    range: 4.5
+    visionRange: 15
     baseDamage: 133
     attackDelay: 1
     currAttackDelay: 0
@@ -736,7 +736,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 16.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5028950968597663481
 GameObject:
@@ -831,7 +831,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 4.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &868079876971250717
 PrefabInstance:

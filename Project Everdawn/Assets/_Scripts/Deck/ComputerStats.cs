@@ -210,7 +210,7 @@ public class ComputerStats
     }
 
     private Vector3 adjustLocation() {
-        CardStats cardInfo = playerInfo.PlayersDeck.Hand[order[playIndex]];
+        CardStats cardInfo = playerInfo.HandParent.GetChild(order[playIndex]).GetComponent<Card>().CardInfo;
         Vector3 position = location;
         int navMask = 0;
 
@@ -219,7 +219,6 @@ public class ComputerStats
             if(unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
                 position.y = GameConstants.FLY_ZONE_HEIGHT;
 
-            navMask = 9;
             int agentTypeID = cardInfo.PreviewPrefab.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().agentTypeID;
             if(unit.Stats.UnitType == GameConstants.UNIT_TYPE.STRUCTURE) {
                 if(agentTypeID == 287145453) //the agent type id for big building
@@ -227,6 +226,10 @@ public class ComputerStats
                 else
                     navMask = 16;
             }
+            else if(unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
+                navMask = 8;
+            else
+                navMask = 1;
         }
         Vector3 groundScale = GameManager.Instance.Ground.transform.localScale;
 

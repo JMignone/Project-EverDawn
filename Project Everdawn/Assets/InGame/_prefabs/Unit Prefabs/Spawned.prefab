@@ -270,7 +270,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &865779381804448098
 GameObject:
@@ -1085,7 +1085,7 @@ GameObject:
   - component: {fileID: 1650009125952325119}
   - component: {fileID: 6825281274548537870}
   m_Layer: 0
-  m_Name: BaseUnit Spawned
+  m_Name: Spawned
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1128,7 +1128,7 @@ MonoBehaviour:
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
-    range: 4
+    range: 3
     visionRange: 15
     baseDamage: 85
     attackDelay: 1.1
