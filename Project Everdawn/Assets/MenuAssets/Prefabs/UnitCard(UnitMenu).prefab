@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 1885102119395067309, guid: 5294893c2b971c049b80ef7280df4eff, type: 3}
       propertyPath: cardEvent
       value: 
-      objectReference: {fileID: 11400000, guid: bab8bef876fc4ed448cd0e595ceb8cc4, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3543102478144334001, guid: 5294893c2b971c049b80ef7280df4eff, type: 3}
       propertyPath: m_Name
       value: UnitCard(UnitMenu)
@@ -99,5 +99,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7822271048517627210, guid: 5294893c2b971c049b80ef7280df4eff, type: 3}
+      propertyPath: cardDisplayEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: bab8bef876fc4ed448cd0e595ceb8cc4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5294893c2b971c049b80ef7280df4eff, type: 3}

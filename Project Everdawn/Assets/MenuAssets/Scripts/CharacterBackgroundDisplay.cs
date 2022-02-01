@@ -26,16 +26,16 @@ public class CharacterBackgroundDisplay : MonoBehaviour
     }
 
     // Used to set data via data injection from other source (like the GameEvent system)
-    public void BindCardData(SO_Card card)
+    public void BindCardData(CardDisplay cd)
     {
-        if(card.cardID <= cardDatabase.cardList.Count)
+        if(cd.cardID <= cardDatabase.cardList.Count)
         {
-            cardID = card.cardID;
+            cardID = cd.cardID;
             ChangeCharacterBackgroundImage(cardID);
         }
         else
         {
-            Debug.Log("Card ID " + cardID.ToString() + " was not found in the database.");
+            Debug.Log("Card ID " + cd.cardID.ToString() + " was not found in the database.");
         }
     }
 

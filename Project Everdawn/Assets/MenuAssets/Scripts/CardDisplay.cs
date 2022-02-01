@@ -15,13 +15,18 @@ public class CardDisplay : MonoBehaviour
 
     void Awake()
     {
-        if(card != null) // Check that there is a card to bind the data to
+        BindCardData(card);
+    }
+
+    public void BindCardData(SO_Card cd)
+    {
+        if(cd != null) // Check that there is a card to bind the data to
         {
             // Bind the data from the scriptable object
-            cardID = card.cardID;
-            cardName.text = card.cardName;
-            cardImage.sprite = card.cardImage;
-            resourceCost.text = card.resourceCost.ToString();
+            cardID = cd.cardID;
+            cardName.text = cd.cardName;
+            cardImage.sprite = cd.cardImage;
+            resourceCost.text = cd.resourceCost.ToString();
         }
         else
         {
