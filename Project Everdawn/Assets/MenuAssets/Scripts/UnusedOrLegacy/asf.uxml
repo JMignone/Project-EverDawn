@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:Button text="Button" display-tooltip-when-elided="true" name="asdf" style="height: 130px; width: 117px; background-color: rgba(147, 70, 70, 255);" />
+    <ui:Button text="Button" display-tooltip-when-elided="true" name="afsd" style="height: 49px; width: 44px; position: relative; left: auto;" />
+</ui:UXML>

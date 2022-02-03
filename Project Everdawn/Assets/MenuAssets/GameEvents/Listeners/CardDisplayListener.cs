@@ -1,0 +1,1 @@
+public class CardDisplayListener : GameEventListener<CardDisplay, CardDisplayEvent, UnityCardDisplayEvent> {}

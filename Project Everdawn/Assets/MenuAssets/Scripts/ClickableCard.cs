@@ -5,10 +5,10 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CardDisplay))]
-public class OnCardClick : MonoBehaviour, IPointerClickHandler
+public class ClickableCard : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private CardDisplay cardDisplay;
-    [SerializeField] private CardEvent cardEvent;
+    [SerializeField] private CardDisplayEvent cardDisplayEvent;
     private SO_Card card;
 
     private void OnEnable()
@@ -19,7 +19,6 @@ public class OnCardClick : MonoBehaviour, IPointerClickHandler
     [ContextMenu("Run Click Function")]
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log(card.cardName.ToString());
-        cardEvent.Raise(card);
+        cardDisplayEvent.Raise(cardDisplay);
     }
 }
