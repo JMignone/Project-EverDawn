@@ -68,6 +68,7 @@
      <Compile Include="Assets\_Scripts\Deck\Deck.cs" />
      <Compile Include="Assets\MenuAssets\ScriptableObjects\Managers\SO_Definitions\SO_SceneLoading.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\UnusedOrLegacy\CursorTracker.cs" />
+     <Compile Include="Assets\_Scripts\Deck\CardPlayer.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\TestingUnitTests.cs" />
      <Compile Include="Assets\LeanTween\Examples\Archived\TestingPunch.cs" />
      <Compile Include="Assets\_Scripts\Abilities\AbilityPreview.cs" />
