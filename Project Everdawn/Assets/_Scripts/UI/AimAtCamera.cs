@@ -15,7 +15,7 @@ public class AimAtCamera : MonoBehaviour
         my_camera = Camera.main;
     }
 
-    void Update() {
+    void FixedUpdate() {
         transform.LookAt(transform.position + my_camera.transform.rotation * Vector3.forward,
                         my_camera.transform.rotation * Vector3.up);
     }

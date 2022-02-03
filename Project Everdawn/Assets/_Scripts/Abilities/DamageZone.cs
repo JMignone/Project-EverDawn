@@ -6,7 +6,7 @@ public class DamageZone : MonoBehaviour
 {
     private float timer = .5f;
 
-    void Update()
+    void FixedUpdate()
     {
         if(timer > 0) {
             timer -= Time.deltaTime;

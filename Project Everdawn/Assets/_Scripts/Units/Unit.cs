@@ -139,7 +139,7 @@ public class Unit : MonoBehaviour, IDamageable
         // + 1 is better for the knob UI, if we get our own UI image, we may want to remove it
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(noseDiveStats.IsDiving)
             noseDiveStats.UpdateStats();
@@ -159,7 +159,7 @@ public class Unit : MonoBehaviour, IDamageable
             else if(target != null && !attackStats.IsFiring) {
                 Vector3 direction = target.transform.GetChild(0).position - agent.transform.position;
                 direction.y = 0;
-                agent.Agent.SetDestination(new Vector3(target.transform.GetChild(0).position.x, 0, target.transform.GetChild(0).position.z) - (direction.normalized * .25f));
+                agent.Agent.SetDestination(new Vector3(target.transform.GetChild(0).position.x + stats.TowerPosOffset, 0, target.transform.GetChild(0).position.z) - (direction.normalized * .25f));
                 if(hitTargets.Contains(target)) {
                     if(inRangeTargets.Count > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) { //is in range, OR is 90% thru attack cycle -
                         lookAtTarget();
@@ -183,27 +183,7 @@ public class Unit : MonoBehaviour, IDamageable
             GameManager.RemoveObjectsFromList(gameObject);
             if(target != null)
                 (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
-
-            //if the unit was a group unit, check if it was the last one alive
-            if(stats.UnitGrouping == GameConstants.UNIT_GROUPING.GROUPCHILD) {
-                /* This doesnt work because the other dead unit may not have gotten as far in this function and didnt not perform the
-                    important gamemanager functions
-                bool delete = true;
-                for(int x=1; x<transform.parent.childCount; x++) {
-                    if((transform.parent.GetChild(x).GetComponent(typeof(IDamageable)) as IDamageable).Stats.CurrHealth > 0) {
-                        delete = false;
-                        break;
-                    }
-                }
-                if(delete)
-                */
-                if(transform.parent.childCount == 2)
-                    Destroy(transform.parent.gameObject);
-                else
-                    Destroy(gameObject);
-            }
-            else
-                Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 
@@ -259,30 +239,45 @@ public class Unit : MonoBehaviour, IDamageable
                 (newTarget.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Add(gameObject);
             target = newTarget;
             buildUpStats.ResetStats(true);
+
+            stats.TowerPosOffset = 0;
         }
     }
 
     public void ReTarget() {
-        if(hitTargets.Count > 0) {
-            GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
-            if(go != null)
-                SetTarget(go);
+        if(stats.CurrAttackDelay < stats.AttackDelay*GameConstants.ATTACK_READY_PERCENTAGE) {
+            if(hitTargets.Count > 0) {
+                GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
+                if(go != null) {
+                    if(go != target && inRangeTargets.Count == 0) {
+                        if(stats.CurrAttackDelay > stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER)
+                            stats.CurrAttackDelay = stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER;
+                    }
+                    SetTarget(go);
+                }
+                else {
+                    List<GameObject> towers = GameManager.Instance.TowerObjects;
+                    towers = GameManager.GetAllEnemies(towers, gameObject.tag); //sending in only towers
+                    SetTarget(GameFunctions.GetTowerTarget(towers, gameObject.tag, stats));
+
+                    if(stats.CurrAttackDelay > stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER)
+                        stats.CurrAttackDelay = stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER;
+                }
+            }
             else {
                 List<GameObject> towers = GameManager.Instance.TowerObjects;
                 towers = GameManager.GetAllEnemies(towers, gameObject.tag); //sending in only towers
-                SetTarget(GameFunctions.GetNearestTarget(towers, gameObject.tag, stats));
+                SetTarget(GameFunctions.GetTowerTarget(towers, gameObject.tag, stats));
+
+                if(stats.CurrAttackDelay > stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER)
+                    stats.CurrAttackDelay = stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER;
             }
+            stats.IncRange = false;
         }
-        else {
-            List<GameObject> towers = GameManager.Instance.TowerObjects;
-            towers = GameManager.GetAllEnemies(towers, gameObject.tag); //sending in only towers
-            SetTarget(GameFunctions.GetNearestTarget(towers, gameObject.tag, stats));
-        }
-        stats.IncRange = false;
     }
 
     public void OnTriggerEnter(Collider other) {
-        if(!other.transform.parent.parent.CompareTag(gameObject.tag)) { //checks to make sure the target isnt on the same team
+        if(!other.transform.parent.parent.CompareTag(gameObject.tag) && stats.CurrHealth != 0) { //checks to make sure the target isnt on the same team
             if(other.CompareTag("Projectile")) { //Did we get hit by a skill shot?
                 Projectile projectile = other.transform.parent.parent.GetComponent<Projectile>();
                 Component unit = this.GetComponent(typeof(IDamageable));
@@ -307,7 +302,6 @@ public class Unit : MonoBehaviour, IDamageable
             else { //is it another units vision/range?
                 Component unit = other.transform.parent.parent.GetComponent(typeof(IDamageable));
                 if(unit) {
-                    //Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                     if(other.CompareTag("Range")) {//Are we in their range detection object?
                         if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) { //only if the unit can actually target this one should we adjust this value
                             if(!(unit as IDamageable).InRangeTargets.Contains(gameObject))
@@ -361,7 +355,7 @@ public class Unit : MonoBehaviour, IDamageable
                             if((unit as IDamageable).InRangeTargets.Contains(gameObject))
                                 (unit as IDamageable).InRangeTargets.Remove(gameObject);
                             if((unit as IDamageable).Target == gameObject)
-                                (unit as IDamageable).SetTarget(null);
+                                (unit as IDamageable).ReTarget();
 
                             if((unit as IDamageable).InRangeTargets.Count == 0)
                                 (unit as IDamageable).Stats.IncRange = false;

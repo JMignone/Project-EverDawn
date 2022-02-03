@@ -50,7 +50,7 @@ MonoBehaviour:
   radius: 2
   speed: 60
   range: 30
-  baseDamage: 350
+  baseDamage: 0
   towerDamage: 0
   heightAttackable: 0
   typeAttackable: 0
@@ -63,6 +63,7 @@ MonoBehaviour:
   skipNumber: 0
   overridesTarget: 0
   onlyDamageIfTargeted: 0
+  hideRange: 0
   hidePreview: 0
   customPathStats:
     hasCustomPath: 0
@@ -81,7 +82,7 @@ MonoBehaviour:
     newLocation: 0
     forwardAdjustment: 0
   aoeStats:
-    areaOfEffect: 1
+    areaOfEffect: 0
     unitCentered: 1
     explosionEffect: {fileID: 8690222435761223237, guid: 6da804001015963439247141d19a1ee2, type: 3}
     explosionRadius: 5
@@ -139,9 +140,10 @@ MonoBehaviour:
     lingeringTick: 0.1
     currentLingeringTime: 0
   selfDestructStats:
-    selfDestructs: 0
-    explosionEffect: {fileID: 0}
-    explosionDamage: 50
+    selfDestructs: 1
+    onTarget: 1
+    explosionEffect: {fileID: 8690222435761223237, guid: 6da804001015963439247141d19a1ee2, type: 3}
+    explosionDamage: 350
     towerDamage: 0
     explosionRadius: 5
   grenadeStats:

@@ -19,7 +19,7 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: 3705379fccc4e694d861698406ce8912, type: 3}
   cardLore: Man of Stick
   affiliation: []
-  resourceCost: 3
+  resourceCost: 4
   spawnZoneRestrictions: 0
   prefab:
   - {fileID: 3925836232371597723, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}

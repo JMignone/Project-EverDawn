@@ -49,7 +49,7 @@ MonoBehaviour:
   unitSprite: {fileID: 4332999101628587706}
   radius: 1.5
   speed: 50
-  range: 50
+  range: 12
   baseDamage: 0
   towerDamage: 0
   heightAttackable: 0
@@ -71,6 +71,8 @@ MonoBehaviour:
     arcMultiplierToLastPoint: 0
     customCollider: {fileID: 0}
     customImage: {fileID: 0}
+    pivot: {x: 0, y: 0}
+    sizeDelta: {x: 0, y: 0}
   locationStats:
     overridesLocation: 0
     overridesAtEnd: 0
@@ -80,6 +82,7 @@ MonoBehaviour:
     forwardAdjustment: 0
   aoeStats:
     areaOfEffect: 0
+    unitCentered: 0
     explosionEffect: {fileID: 0}
     explosionRadius: 0
   freezeStats:

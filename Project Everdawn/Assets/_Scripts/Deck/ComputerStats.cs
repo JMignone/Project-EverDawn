@@ -10,6 +10,8 @@ public class ComputerStats
     private bool isComputer;
 
     private PlayerStats playerInfo;
+    private List<CardStats> handSnapshot;
+
     [SerializeField]
     private int currResource;
     private List<List<int>> potentialCardCombos;
@@ -40,13 +42,14 @@ public class ComputerStats
     }
 
     public void UpdateComputerStats() {
-        if(isComputer && GameManager.Instance.TimeLeft > 0) {
+        if(isComputer && !GameManager.Instance.Complete) {
             if(isPlaying) {
                 if(currentDelay < playDelay)
                     currentDelay += Time.deltaTime;
                 else {
                     Vector3 dropLocation = adjustLocation();
                     cardOrder[playIndex].QueCard(dropLocation);
+                    cardOrder[playIndex].GetNewCard();
 
                     currentDelay = 0;
 
@@ -87,7 +90,7 @@ public class ComputerStats
 
         float random = Random.Range(0.0f, 1.0f);
         float totalEnemyHP = 0;
-        foreach (GameObject go in GameManager.Instance.Objects) { //  The trigger exit doesnt get trigger if the object suddenly dies, so we need this do do it manually
+        foreach (GameObject go in GameManager.Instance.Objects) {
             if(!go.CompareTag(playerInfo.transform.tag) && !GameManager.Instance.TowerObjects.Contains(go)) { //if the unit is an enemy and not a tower
                 IDamageable unit = go.GetComponent(typeof(IDamageable)) as IDamageable;
                 if(unit.Agent.transform.position.z > 0)
@@ -120,7 +123,12 @@ public class ComputerStats
         for(int x=0; x<potentialCardCombos[random].Count; x++) {
             cost += potentialCardCombos[random][x];
             for(int index=0; index<cardIndex.Length; index++) {
-                if(cardIndex[index] != -1 && playerInfo.PlayersDeck.Hand[index].Cost == potentialCardCombos[random][x]) {
+                /*if(cardIndex[index] != -1 && playerInfo.PlayersDeck.Hand[index].Cost == potentialCardCombos[random][x]) {
+                    potentialCardCombos[random][x] = index;
+                    cardIndex[index] = -1;
+                    break;
+                }*/
+                if(cardIndex[index] != -1 && playerInfo.HandParent.GetChild(index).GetComponent<Card>().CardInfo.Cost == potentialCardCombos[random][x]) {
                     potentialCardCombos[random][x] = index;
                     cardIndex[index] = -1;
                     break;
@@ -202,7 +210,7 @@ public class ComputerStats
     }
 
     private Vector3 adjustLocation() {
-        CardStats cardInfo = playerInfo.PlayersDeck.Hand[order[playIndex]];
+        CardStats cardInfo = playerInfo.HandParent.GetChild(order[playIndex]).GetComponent<Card>().CardInfo;
         Vector3 position = location;
         int navMask = 0;
 
@@ -211,7 +219,6 @@ public class ComputerStats
             if(unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
                 position.y = GameConstants.FLY_ZONE_HEIGHT;
 
-            navMask = 9;
             int agentTypeID = cardInfo.PreviewPrefab.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().agentTypeID;
             if(unit.Stats.UnitType == GameConstants.UNIT_TYPE.STRUCTURE) {
                 if(agentTypeID == 287145453) //the agent type id for big building
@@ -219,6 +226,10 @@ public class ComputerStats
                 else
                     navMask = 16;
             }
+            else if(unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
+                navMask = 8;
+            else
+                navMask = 1;
         }
         Vector3 groundScale = GameManager.Instance.Ground.transform.localScale;
 
@@ -234,7 +245,7 @@ public class ComputerStats
         position = GameFunctions.adjustForBoundary(position);
 
         if(cardInfo.UnitIndex != -1) {
-            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, navMask))
+            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, navMask))
                 position = hit.position;
         }
         position.y = 1;

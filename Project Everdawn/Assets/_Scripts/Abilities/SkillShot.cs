@@ -7,9 +7,14 @@ using UnityEngine.EventSystems;
 
 public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
+    [Header("Gameobject")]
     [SerializeField]
     private Unit unit;
 
+    [SerializeField]
+    private Building building;
+
+    [Header("Ability Order and Timings")]
     [SerializeField]
     private List<GameObject> abilityPrefabs;
 
@@ -32,9 +37,9 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     [SerializeField]
     private Canvas abilityPreviewCanvas;
 
-    [SerializeField]
     private List<GameObject> abilityPreviews;
 
+    [Header("Ability default previews and settings")]
     [SerializeField]
     private Sprite abilityPreviewLine;
 
@@ -50,7 +55,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     private bool isDragging;
 
     private bool abilityControl; //sets it so the skillshot doesnt unset unit casting, but rather the projectile will unset it. Usful for movements like dashes or maybe pulls
-    private bool shootRaycast;
+    private GameConstants.PASS_OBSTACLES passesObstacles;
     private float maxRange;
     private int areaMask;
 
@@ -63,9 +68,9 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     //gives abilities the power to enable targets for the future abilities of the skill shot
     private Actor3D targetOverride;
 
-    public Unit Unit
+    public IDamageable Unit
     {
-        get { return unit; }
+        get { return unit != null ? unit as IDamageable : building as IDamageable; }
     }
 
     public List<GameObject> AbilityPrefabs
@@ -144,8 +149,11 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             if((component as IAbility).AreaMask() > areaMask)
                 areaMask = (component as IAbility).AreaMask();
             if(ability.GetComponent<Movement>())
-                shootRaycast = !ability.GetComponent<Movement>().PassObstacles;
+                passesObstacles = ability.GetComponent<Movement>().PassObstacles;
         }
+
+        if(!Unit.Stats.SummoningSicknessUI.IsReady)
+            GameFunctions.DisableAbilities((unit as Component).gameObject);
     }
 
     private void LateUpdate()
@@ -154,10 +162,10 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
-        if(!isDragging && unit.Stats.IsReady && abilityUI.CanDrag) {
+        if(!isDragging && ((Unit.Stats.IsReady && abilityUI.CanDrag) || !Unit.Stats.SummoningSicknessUI.IsReady) ) {
             isDragging = true;
 
-            unit.Stats.IsHoveringAbility = true;
+            Unit.Stats.IsHoveringAbility = true;
 
             abilityUI.AbilitySprite.enabled = false;
             abilityUI.AbilityCancel.enabled = true;
@@ -184,7 +192,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         At the moment, a boomerang that selfdestructs and lingers at the end does not have the preview that id like (the linger circle around the unit wont be there,
         as the selfdestruct location takes precidence). But this kind of projectile is probably unlikely to happen anyway
     */
-    private void Update() {
+    private void FixedUpdate() {
         abilityUI.UpdateStats();
         if (isDragging) {
             Vector3 position = GameFunctions.getPosition(false);
@@ -216,7 +224,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     public void OnEndDrag(PointerEventData eventData) {
         if(isDragging) {
             isDragging = false;
-            unit.Stats.IsHoveringAbility = false;
+            Unit.Stats.IsHoveringAbility = false;
 
             abilityUI.AbilitySprite.enabled = true;
             abilityUI.AbilityCancel.enabled = false;
@@ -236,7 +244,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
 
             GameManager.removeAbililtyIndicators();
 
-            if(abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y && unit.Stats.CanAct) {
+            if(abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y && Unit.Stats.CanAct) {
                 fireStartPosition = abilityPreviewCanvas.transform.position;
                 if(fireMousePosition == new Vector3(-1, -1, -1)) { //if the ability was not a summon or a movement, get the position
                     fireMousePosition = GameFunctions.getPosition(false);
@@ -246,17 +254,17 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 fireDirection = fireMousePosition - fireStartPosition;
 
                 isFiring = true;
-                unit.Stats.IsCastingAbility = true;
-                unit.SetTarget(null);
+                Unit.Stats.IsCastingAbility = true;
+                Unit.SetTarget(null);
                 abilityUI.resetAbility();
-                applyResistanceStats.ApplyResistance(unit);
+                applyResistanceStats.ApplyResistance(Unit);
             }
         }
     }
 
     public void OnPointerClick(PointerEventData pointerEventData) {
-        if(!isDragging && abilityUI.CanDrag && unit.Stats.IsReady) { //if the abililty can be dragged
-            Collider[] colliders = Physics.OverlapSphere(unit.Agent.Agent.transform.position, maxRange);
+        if(!isDragging && abilityUI.CanDrag && Unit.Stats.IsReady) { //if the abililty can be dragged
+            Collider[] colliders = Physics.OverlapSphere(Unit.Agent.Agent.transform.position, maxRange);
             Component testComponent = abilityPrefabs[0].GetComponent(typeof(IAbility));
 
             Vector3 closestTargetPosition = new Vector3(-1, -1, -1);
@@ -264,33 +272,34 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 float closestDistance = 9999;
                 float distance;
                 foreach(Collider collider in colliders) {
-                    if(!collider.CompareTag(abilityPrefabs[0].tag) && collider.name == "Agent") {
+                    if(!collider.CompareTag(Unit.Agent.transform.tag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
                         if(GameFunctions.WillHit((testComponent as IAbility).HeightAttackable, (testComponent as IAbility).TypeAttackable, damageable)) {
-                            distance = Vector3.Distance(unit.Agent.Agent.transform.position, collider.transform.position);
+                            distance = Vector3.Distance(Unit.Agent.Agent.transform.position, collider.transform.position);
                             if(distance < closestDistance) {
                                 closestDistance = distance;
                                 closestTargetPosition = collider.transform.position;
+                                closestTargetPosition.y = 0;
                             }
                         }
                     }
                 }
             }
 
-            if(closestTargetPosition != new Vector3(-1, -1, -1) && unit.Stats.CanAct) { //if there is a valid target within the max range
+            if(closestTargetPosition != new Vector3(-1, -1, -1) && Unit.Stats.CanAct) { //if there is a valid target within the max range
                 fireStartPosition = abilityPreviewCanvas.transform.position;
                 fireStartPosition.y = 0;
 
                 if(areaMask != 1) {
                     UnityEngine.AI.NavMeshHit hit;
-                    if(UnityEngine.AI.NavMesh.SamplePosition(closestTargetPosition, out hit, 12f, areaMask))
+                    if(UnityEngine.AI.NavMesh.SamplePosition(closestTargetPosition, out hit, GameConstants.SAMPLE_POSITION_RADIUS, areaMask))
                         fireMousePosition = hit.position;
                     else
                         fireMousePosition = closestTargetPosition;
                 }
-                else if(shootRaycast) {
+                else if(passesObstacles == GameConstants.PASS_OBSTACLES.NONE) {
                     UnityEngine.AI.NavMeshHit hit;
-                    UnityEngine.AI.NavMesh.Raycast(unit.Agent.Agent.transform.position, closestTargetPosition, out hit, 1);
+                    UnityEngine.AI.NavMesh.Raycast(Unit.Agent.Agent.transform.position, closestTargetPosition, out hit, 1);
                     fireMousePosition = hit.position;
                 }
                 else
@@ -299,16 +308,16 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 fireDirection = fireMousePosition - fireStartPosition;
 
                 isFiring = true;
-                unit.Stats.IsCastingAbility = true;
-                unit.SetTarget(null);
+                Unit.Stats.IsCastingAbility = true;
+                Unit.SetTarget(null);
                 abilityUI.resetAbility();
-                applyResistanceStats.ApplyResistance(unit);
+                applyResistanceStats.ApplyResistance(Unit);
             }
         }
     }
 
     private void Fire() {
-        if(!unit.Stats.CanAct || exitOverride) {
+        if(!Unit.Stats.CanAct || exitOverride) {
             isFiring = false;
             exitOverride = false;
             pauseFiring = false;
@@ -316,10 +325,10 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             skipOverride = 0;
             currentProjectileIndex = 0;
             currentDelay = 0;
-            unit.Stats.IsCastingAbility = false;
+            Unit.Stats.IsCastingAbility = false;
         }
         else if(currentDelay < abilityDelays[currentProjectileIndex] || pauseFiring) //if we havnt reached the delay yet
-            currentDelay += Time.deltaTime * unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
+            currentDelay += Time.deltaTime * Unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
         else if(currentProjectileIndex == abilityPrefabs.Count - skipOverride) { //if we completed the last delay
             isFiring = false;
             exitOverride = false;
@@ -329,27 +338,28 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             currentProjectileIndex = 0;
             currentDelay = 0;
             if(!abilityControl)
-                unit.Stats.IsCastingAbility = false;
+                Unit.Stats.IsCastingAbility = false;
         }
         else { //if we completed a delay
             float rangeIncrease = 0;
             Vector3 startPos = fireStartPosition;
-            if(fireStartPosition != abilityPreviewCanvas.transform.position) { //if the unit has moved since starting its ability ei: movement abilities, increase/decrease the range of the abilities accordingly
+            if(fireStartPosition != abilityPreviewCanvas.transform.position) { //if the Unit has moved since starting its ability ei: movement abilities, increase/decrease the range of the abilities accordingly
                 rangeIncrease = Vector3.Distance(abilityPreviewCanvas.transform.position, fireMousePosition) - Vector3.Distance(fireStartPosition, fireMousePosition);
                 startPos = abilityPreviewCanvas.transform.position;
+                fireDirection = fireMousePosition - (abilityPreviewCanvas.transform.position+3*abilityPreviewCanvas.transform.forward);
             }
 
             if(targetOverride != null) {
                 if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
-                    GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPos, targetOverride, fireDirection, unit, transform.parent.tag, 1, this);
+                    GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPos, targetOverride, fireDirection, Unit, transform.parent.tag, 1, this);
                 else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                    GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], startPos, targetOverride, fireDirection, unit, transform.parent.tag, 1, this);
+                    GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], startPos, targetOverride, fireDirection, Unit, transform.parent.tag, 1, this);
             }
             else {
                 if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
-                    GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPos, fireMousePosition, fireDirection, unit, transform.parent.tag, 1, rangeIncrease, this);
+                    GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPos, fireMousePosition, fireDirection, Unit, transform.parent.tag, 1, rangeIncrease, this);
                 else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                    GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], startPos, fireMousePosition, fireDirection, unit, transform.parent.tag, 1, rangeIncrease, this);
+                    GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], startPos, fireMousePosition, fireDirection, Unit, transform.parent.tag, 1, rangeIncrease, this);
             }
             currentDelay = 0;
             currentProjectileIndex++;
@@ -396,11 +406,11 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             }
 
             UnityEngine.AI.NavMeshHit hit;
-            if(unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING) //if the unit is flying, disregard all obstacles
+            if(Unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING) //if the Unit is flying, disregard all obstacles
                 position = GameFunctions.adjustForBoundary(position);
-            else if(move.PassObstacles) { //if the movment is able to pass through obstacles
+            else if(move.PassObstacles == GameConstants.PASS_OBSTACLES.PASS) { //if the movment is able to pass through obstacles
                 position = GameFunctions.adjustForBoundary(position);
-                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, 9))
+                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, 9))
                     position = hit.position;
 
                 Vector3 newDirection = abilityPreviewCanvas.transform.position - position;
@@ -408,8 +418,14 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 Quaternion rotation = Quaternion.LookRotation(newDirection);
                 abilityPreviewCanvas.transform.rotation = Quaternion.Lerp(rotation, abilityPreviewCanvas.transform.rotation, 0f);
             }
+            else if(move.PassObstacles == GameConstants.PASS_OBSTACLES.HALF) {
+                if(!UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 1f, 9)) {
+                    UnityEngine.AI.NavMesh.Raycast(Unit.Agent.Agent.transform.position, position, out hit, 1);
+                    position = hit.position;
+                }
+            }
             else {
-                UnityEngine.AI.NavMesh.Raycast(unit.Agent.Agent.transform.position, position, out hit, 1);
+                UnityEngine.AI.NavMesh.Raycast(Unit.Agent.Agent.transform.position, position, out hit, 1);
                 //position = GameFunctions.adjustForTowers(hit.position, radius);
                 position = hit.position;
             }
@@ -439,13 +455,19 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             position.y = .1f;
 
             UnityEngine.AI.NavMeshHit hit;
-            if(move.PassObstacles) { //if the movment is able to pass through obstacles
+            if(move.PassObstacles == GameConstants.PASS_OBSTACLES.PASS) { //if the movment is able to pass through obstacles
                 position = GameFunctions.adjustForBoundary(position);
-                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, 9))
+                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, 9))
                     position = hit.position;
             }
+            else if(move.PassObstacles == GameConstants.PASS_OBSTACLES.HALF) {
+                if(!UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 1f, 9)) {
+                    UnityEngine.AI.NavMesh.Raycast(Unit.Agent.Agent.transform.position, position, out hit, 1);
+                    position = hit.position;
+                }
+            }
             else {
-                UnityEngine.AI.NavMesh.Raycast(unit.Agent.Agent.transform.position, position, out hit, 1);
+                UnityEngine.AI.NavMesh.Raycast(Unit.Agent.Agent.transform.position, position, out hit, 1);
                 //position = GameFunctions.adjustForTowers(hit.position, radius);
                 position = hit.position;
             }
@@ -474,7 +496,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             int areaMask = cal.SummonStats.AreaMask();
 
             UnityEngine.AI.NavMeshHit hit;
-            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, areaMask))
+            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, areaMask))
                 position = hit.position;
             if(preview.transform.childCount > 1)
                 preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(position); //this moves the summon part of the preview
@@ -483,8 +505,8 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         }
         else {
             UnityEngine.AI.NavMeshHit hit;
-            if(cal.TeleportStats.IsWarp && unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND) {
-                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, 9))
+            if(cal.TeleportStats.IsWarp && Unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND) {
+                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, 9))
                     position = hit.position;
             }
 
@@ -647,31 +669,33 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             abilityPreviews.Add(goBoom);
 
             /* ----- Add the range circle ----- */
-            GameObject goBoomRange = new GameObject();
-            goBoomRange.name = goProj.name;
+            if(!projectile.HideRange) {
+                GameObject goBoomRange = new GameObject();
+                goBoomRange.name = goProj.name;
 
-            /* -- Creates the Image GameObject and component -- */
-            GameObject previewRangeImageGo = new GameObject();
-            previewRangeImageGo.name = "Sprite";
-            Image previewRangeImage = previewRangeImageGo.AddComponent<Image>(); //Add the Image Component script
-            previewRangeImage.color = new Color32(255, 255, 255, 100);
-            previewRangeImage.sprite = abilityPreviewRange; //Set the Sprite of the Image Component on the new GameObject
-            previewRangeImage.enabled = false;
+                /* -- Creates the Image GameObject and component -- */
+                GameObject previewRangeImageGo = new GameObject();
+                previewRangeImageGo.name = "Sprite";
+                Image previewRangeImage = previewRangeImageGo.AddComponent<Image>(); //Add the Image Component script
+                previewRangeImage.color = new Color32(255, 255, 255, 100);
+                previewRangeImage.sprite = abilityPreviewRange; //Set the Sprite of the Image Component on the new GameObject
+                previewRangeImage.enabled = false;
 
-            RectTransform imageRangeTransform = previewRangeImageGo.GetComponent<RectTransform>();
-            imageRangeTransform.anchorMin = new Vector2(.5f, 0);
-            imageRangeTransform.anchorMax = new Vector2(.5f, 0);
-            imageRangeTransform.pivot = new Vector2(.5f, .5f);
-            imageRangeTransform.SetParent(goBoomRange.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-            imageRangeTransform.localPosition = Vector3.zero;
-            imageRangeTransform.localRotation = Quaternion.Euler(270, 0, 0);
-            imageRangeTransform.sizeDelta = new Vector2(projectile.Range * 2, projectile.Range * 2);
+                RectTransform imageRangeTransform = previewRangeImageGo.GetComponent<RectTransform>();
+                imageRangeTransform.anchorMin = new Vector2(.5f, 0);
+                imageRangeTransform.anchorMax = new Vector2(.5f, 0);
+                imageRangeTransform.pivot = new Vector2(.5f, .5f);
+                imageRangeTransform.SetParent(goBoomRange.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+                imageRangeTransform.localPosition = Vector3.zero;
+                imageRangeTransform.localRotation = Quaternion.Euler(270, 0, 0);
+                imageRangeTransform.sizeDelta = new Vector2(projectile.Range * 2, projectile.Range * 2);
 
-            goBoomRange.transform.SetParent(abilityPreviewCanvas.transform);
-            goBoomRange.transform.localPosition = Vector3.zero;
-            goBoomRange.transform.localRotation = Quaternion.Euler(Vector3.zero);
-            goBoomRange.SetActive(true);
-            abilityPreviews.Add(goBoomRange);
+                goBoomRange.transform.SetParent(abilityPreviewCanvas.transform);
+                goBoomRange.transform.localPosition = Vector3.zero;
+                goBoomRange.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                goBoomRange.SetActive(true);
+                abilityPreviews.Add(goBoomRange);
+            }
         }
     }
 
@@ -843,7 +867,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         }
 
         if(cal.TeleportStats.IsWarp) {
-            float radius = unit.Agent.Agent.radius;
+            float radius = Unit.Agent.Agent.radius;
 
             /* -- Create the base GameObject -- */
             GameObject goBoom = new GameObject();
@@ -931,31 +955,33 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         }
 
         /* ----- Add the range circle ----- */
-        GameObject goBoomRange = new GameObject();
-        goBoomRange.name = goCAL.name;
+        if(!cal.HideRange) {
+            GameObject goBoomRange = new GameObject();
+            goBoomRange.name = goCAL.name;
 
-        /* -- Creates the Image GameObject and component -- */
-        GameObject previewRangeImageGo = new GameObject();
-        previewRangeImageGo.name = "Sprite";
-        Image previewRangeImage = previewRangeImageGo.AddComponent<Image>(); //Add the Image Component script
-        previewRangeImage.color = new Color32(255, 255, 255, 100);
-        previewRangeImage.sprite = abilityPreviewRange; //Set the Sprite of the Image Component on the new GameObject
-        previewRangeImage.enabled = false;
+            /* -- Creates the Image GameObject and component -- */
+            GameObject previewRangeImageGo = new GameObject();
+            previewRangeImageGo.name = "Sprite";
+            Image previewRangeImage = previewRangeImageGo.AddComponent<Image>(); //Add the Image Component script
+            previewRangeImage.color = new Color32(255, 255, 255, 100);
+            previewRangeImage.sprite = abilityPreviewRange; //Set the Sprite of the Image Component on the new GameObject
+            previewRangeImage.enabled = false;
 
-        RectTransform imageRangeTransform = previewRangeImageGo.GetComponent<RectTransform>();
-        imageRangeTransform.anchorMin = new Vector2(.5f, 0);
-        imageRangeTransform.anchorMax = new Vector2(.5f, 0);
-        imageRangeTransform.pivot = new Vector2(.5f, .5f);
-        imageRangeTransform.SetParent(goBoomRange.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-        imageRangeTransform.localPosition = Vector3.zero;
-        imageRangeTransform.localRotation = Quaternion.Euler(270, 0, 0);
-        imageRangeTransform.sizeDelta = new Vector2(cal.Range * 2, cal.Range * 2);
+            RectTransform imageRangeTransform = previewRangeImageGo.GetComponent<RectTransform>();
+            imageRangeTransform.anchorMin = new Vector2(.5f, 0);
+            imageRangeTransform.anchorMax = new Vector2(.5f, 0);
+            imageRangeTransform.pivot = new Vector2(.5f, .5f);
+            imageRangeTransform.SetParent(goBoomRange.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+            imageRangeTransform.localPosition = Vector3.zero;
+            imageRangeTransform.localRotation = Quaternion.Euler(270, 0, 0);
+            imageRangeTransform.sizeDelta = new Vector2(cal.Range * 2, cal.Range * 2);
 
-        goBoomRange.transform.SetParent(abilityPreviewCanvas.transform);
-        goBoomRange.transform.localPosition = Vector3.zero;
-        goBoomRange.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        goBoomRange.SetActive(true);
-        abilityPreviews.Add(goBoomRange);
+            goBoomRange.transform.SetParent(abilityPreviewCanvas.transform);
+            goBoomRange.transform.localPosition = Vector3.zero;
+            goBoomRange.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            goBoomRange.SetActive(true);
+            abilityPreviews.Add(goBoomRange);
+        }
     }
 
     public void SetNewLocation(Vector3 newLocation, Vector3 newDirection) {

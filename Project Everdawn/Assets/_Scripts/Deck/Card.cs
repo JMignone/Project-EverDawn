@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
-public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     [SerializeField]
     private PlayerStats playerInfo;
@@ -26,6 +26,10 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     private Text cost;
     [SerializeField]
     private bool canDrag;
+    [SerializeField]
+    private GameObject cardPlayer;
+
+    private int layoutIndex;
     private bool isDragging;
     private GameObject unitPreview;
     private NavMeshAgent unitPreviewAgent;
@@ -37,6 +41,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     private float cardCanvasScale;
     private bool isBuffering;
     private Vector3 bufferingPosition;
+    private bool played; //a flag determining if we have played our card and need a new one
 
     //ability stats below
     private Canvas abilityPreviewCanvas;
@@ -53,10 +58,12 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     [SerializeField]
     private Sprite abilityPreviewRange;
 
-    private float currentDelay;
-    private bool isFiring;
-    private int currentProjectileIndex;
-    private Vector3 targetLocation;
+    //private float currentDelay;
+    //private bool isFiring;
+    //private int currentProjectileIndex;
+    //private Vector3 targetLocation;
+
+    private bool selected;
 
     public PlayerStats PlayerInfo
     {
@@ -112,6 +119,16 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         set { canDrag = value; }
     }
 
+    public int LayoutIndex
+    {
+        get { return layoutIndex; }
+    }
+
+    public GameObject UnitPreview
+    {
+        get { return unitPreview; }
+    }
+
     public bool IsFlying
     {
         get { return isFlying; }
@@ -148,27 +165,24 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         set { bufferingPosition = value; }
     }
 
-    private void Start() 
+    private void Awake()
     {
+        for(int i=0; i < transform.parent.childCount; ++i) {
+            if(transform.GetInstanceID() == transform.parent.GetChild(i).GetInstanceID()) {
+                layoutIndex = i;
+                break;
+            }
+        }
+
         abilityPreviewCanvas = playerInfo.PlayerCanvas;
-        abilityPreviews = new List<GameObject>();
-        createAbilityPreviews();
-        foreach(GameObject preview in abilityPreviews)
-            preview.SetActive(false);
 
         cardCanvasDim = GameFunctions.GetCanvas().GetChild(0).GetComponent<RectTransform>();
         cardCanvasScale = GameFunctions.GetCanvas().GetComponent<RectTransform>().localScale.x; //this is used to compensate for differing resolutions
-
-        isBuffering = false;
-        isDragging = false;
-        isFiring = false;
-        currentDelay = 0;
-        currentProjectileIndex = 0; //we start at 1 because the 0th index is reserved for units
     }
 
-    private void Update()
-    {
-        if(!isFiring) {
+    public void GetNewCard() {
+        cardInfo = playerInfo.PlayersDeck.DrawCard();
+        if(!cardInfo.HiddenCard) {
             icon.sprite = cardInfo.Icon;
             cardName.text = cardInfo.Name;
             cost.text = cardInfo.Cost.ToString();
@@ -177,66 +191,106 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             transparentCardName.text = cardInfo.Name;
             transparentCost.text = cardInfo.Cost.ToString();
 
-            if(isBuffering && playerInfo.GetCurrResource >= cardInfo.Cost) { //if the player was buffering a card and now has enough resource
-                QueCard(bufferingPosition);
-                isBuffering = false;
-                playerInfo.DueResource -= cardInfo.Cost;
+            abilityPreviews = new List<GameObject>();
+            createAbilityPreviews();
+            foreach(GameObject preview in abilityPreviews)
+                preview.SetActive(false);
+
+            //work on unit prefab
+            if(cardInfo.UnitIndex != -1) {
+                unitPreview = Instantiate(cardInfo.PreviewPrefab);
+                unitPreview.SetActive(false);
+                unitPreviewAgent = unitPreview.transform.GetChild(0).GetComponent<NavMeshAgent>();
+                radius = unitPreviewAgent.radius;
+                                        
+                Component unit = cardInfo.Prefab[cardInfo.UnitIndex].GetComponent(typeof(IDamageable));
+                if((unit as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
+                    IsFlying = true;
+                else
+                    IsFlying = false;
+
+                if((unit as IDamageable).Stats.UnitType == GameConstants.UNIT_TYPE.STRUCTURE) {
+                    if(unitPreviewAgent.agentTypeID == 287145453) //the agent type id for big building
+                        navMask = 32;
+                    else
+                        navMask = 16;
+                }
+                else if((unit as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
+                    navMask = 8;
+                else
+                    navMask = 1;
+            }
+
+            //work on spell prefabs
+            foreach(GameObject preview in abilityPreviews) {
+                preview.SetActive(false);
+                if(preview.transform.childCount > 0 ) { //this is a summon preview, as its more complicated
+                    preview.transform.GetChild(1).GetChild(0).GetComponent<Image>().enabled = true;
+                    preview.transform.GetChild(1).GetChild(0).GetComponent<Collider>().enabled = true;
+                }
+                else {
+                    preview.GetComponent<Image>().enabled = true;
+                    if(preview.GetComponent<Collider>())
+                        preview.GetComponent<Collider>().enabled = true;
+                }
             }
         }
-        else
-            Fire();
+    }
+
+    private void FixedUpdate()
+    {
+        if(played) {
+            played = false;
+            GetNewCard();
+        }
+
+        if(!canDrag) {
+            icon.sprite = cardInfo.Icon;
+            cardName.text = cardInfo.Name;
+            cost.text = cardInfo.Cost.ToString();
+
+            transparentIcon.sprite = cardInfo.Icon;
+            transparentCardName.text = cardInfo.Name;
+            transparentCost.text = cardInfo.Cost.ToString();
+        }
+
+        if(isBuffering && playerInfo.GetCurrResource >= cardInfo.Cost) { //if the player was buffering a card and now has enough resource
+            QueCard(bufferingPosition);
+            isBuffering = false;
+            playerInfo.DueResource -= cardInfo.Cost;
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         if(!playerInfo.OnDragging && !isDragging) {
             if(canDrag) {
+                isDragging = true;
+                //SelectCard();
+                playerInfo.SelectNewCard(cardInfo.CardId);
+
+                //if the card is buffering, cancel the cast
                 if(isBuffering) {
                     isBuffering = false;
                     playerInfo.DueResource -= cardInfo.Cost;
+                    foreach(GameObject preview in abilityPreviews)
+                        preview.SetActive(false);
                     if(cardInfo.UnitIndex != -1)
-                        Destroy(unitPreview);
-                }
+                        unitPreview.SetActive(false);
 
-                //work on unit prefab
-                if(cardInfo.UnitIndex != -1) {
-                    unitPreview = Instantiate(cardInfo.PreviewPrefab);
-                    unitPreview.SetActive(false);
-                    unitPreviewAgent = unitPreview.transform.GetChild(0).GetComponent<NavMeshAgent>();
-                    radius = unitPreviewAgent.radius;
-                            
-                    Component unit = cardInfo.Prefab[cardInfo.UnitIndex].GetComponent(typeof(IDamageable));
-                    if((unit as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
-                        IsFlying = true;
-                    else
-                        IsFlying = false;
-
-                    navMask = 9;
-                    if((unit as IDamageable).Stats.UnitType == GameConstants.UNIT_TYPE.STRUCTURE) {
-                        if(unitPreviewAgent.agentTypeID == 287145453) //the agent type id for big building
-                            navMask = 32;
-                        else
-                            navMask = 16;
+                    //re-add the colliders to the spell
+                    foreach(GameObject preview in abilityPreviews) {
+                        if(preview.transform.childCount > 0)
+                            preview.transform.GetChild(1).GetChild(0).GetComponent<Collider>().enabled = true;
+                        else {
+                            if(preview.GetComponent<Collider>())
+                                preview.GetComponent<Collider>().enabled = true;
+                        }
                     }
                 }
-
-                //work on spell prefabs
-                foreach(GameObject preview in abilityPreviews) {
-                    preview.SetActive(false);
-                    if(preview.transform.childCount > 0 ) { //this is a summon preview, as its more complicated
-                        preview.transform.GetChild(1).GetChild(0).GetComponent<Image>().enabled = true;
-                        preview.transform.GetChild(1).GetChild(0).GetComponent<Collider>().enabled = true;
-                    }
-                    else {
-                        preview.GetComponent<Image>().enabled = true;
-                        if(preview.GetComponent<Collider>())
-                            preview.GetComponent<Collider>().enabled = true;
-                    }
-                }
-
-                isDragging = true;
+                
                 playerInfo.OnDragging = true;
-                playerInfo.SpawnZone = cardInfo.SpawnZoneRestrictions;
+                transform.GetChild(3).position = Input.mousePosition;
             }
         }
     }
@@ -264,7 +318,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                     preview.SetActive(false);
                 if(cardInfo.UnitIndex != -1)
                     unitPreview.SetActive(false);
-                GameManager.removeAbililtyIndicators();
+                if(cardInfo.Prefab.Count != 1 || cardInfo.UnitIndex != 0)
+                    GameManager.removeAbililtyIndicators();
             }
 
             NavMeshHit hit;
@@ -274,7 +329,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 position = GameFunctions.adjustForTowers(position, radius);
             
             if(cardInfo.UnitIndex != -1) {
-                if(NavMesh.SamplePosition(position, out hit, 12f, navMask))
+                if(NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, navMask))
                     position = hit.position;
                 unitPreviewAgent.Warp(position);
                 position = unitPreviewAgent.transform.position;
@@ -307,75 +362,116 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 position = GameFunctions.adjustForTowers(position, radius);
 
             if(cardInfo.UnitIndex != -1) {
-                if(NavMesh.SamplePosition(position, out hit, 12f, navMask))
+                if(NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, navMask))
                     position = hit.position;
                 unitPreviewAgent.Warp(position);
                 position = unitPreviewAgent.transform.position;
             }
             position.y = .1f;
 
-            foreach(GameObject preview in abilityPreviews)
-                preview.SetActive(false);
+            //remove the colliders from the spell
+            foreach(GameObject preview in abilityPreviews) {
+                if(preview.transform.childCount > 0)
+                    preview.transform.GetChild(1).GetChild(0).GetComponent<Collider>().enabled = false;
+                else {
+                    if(preview.GetComponent<Collider>())
+                        preview.GetComponent<Collider>().enabled = false;
+                }
+            }
 
-            if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= (cardInfo.Cost + playerInfo.DueResource)) //if the player isnt hovering the cancel zone and has enough resource
+            if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= (cardInfo.Cost + playerInfo.DueResource)) { //if the player isnt hovering the cancel zone and has enough resource
                 QueCard(position);
+                playerInfo.SelectNewCard(-1);
+            }
             else if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= ( (cardInfo.Cost + playerInfo.DueResource) - 1) ) { //if the player isnt hovering the cancel zone and has 1 under enough resource
                 isBuffering = true;
                 bufferingPosition = position;
                 playerInfo.DueResource += cardInfo.Cost;
+                playerInfo.SelectNewCard(-1);
             }
             else {
                 transform.GetChild(3).localPosition = new Vector3(0,0,0);
                 transform.GetChild(3).localScale = new Vector3(1,1,1);
-                foreach(GameObject preview in abilityPreviews)
+                foreach(GameObject preview in abilityPreviews) {
                     preview.SetActive(false);
+                    if(preview.transform.childCount > 0)
+                        preview.transform.GetChild(1).GetChild(0).GetComponent<Collider>().enabled = true;
+                    else {
+                        if(preview.GetComponent<Collider>())
+                            preview.GetComponent<Collider>().enabled = true;
+                    }
+                }
+
                 if(cardInfo.UnitIndex != -1)
-                    Destroy(unitPreview);
+                    unitPreview.SetActive(false);
             }
             isDragging = false;
             playerInfo.OnDragging = false;
-            playerInfo.SpawnZone = GameConstants.SPAWN_ZONE_RESTRICTION.NONE;
+            //playerInfo.SpawnZone = GameConstants.SPAWN_ZONE_RESTRICTION.NONE;
 
             if(cardInfo.Prefab.Count != 1 || cardInfo.UnitIndex != 0)
                 GameManager.removeAbililtyIndicators();
         }
     }
 
-    public void QueCard(Vector3 position) {
-        if(playerInfo.GetCurrResource >= cardInfo.Cost) //do I need this if the call to this function requires this anyway? Just a santiy check maybe?
-        {
-            playerInfo.PlayersDeck.RemoveHand(cardInfo.CardId);
-            playerInfo.RemoveResource(cardInfo.Cost);
+    public void OnPointerClick(PointerEventData pointerEventData) {
+        if(!playerInfo.OnDragging && !isDragging && canDrag) {
+            transform.GetChild(3).localPosition = new Vector3(0,0,0);
+            transform.GetChild(3).localScale = new Vector3(1,1,1);
 
-            gameObject.transform.SetParent(playerInfo.QuedSpells);
+            if(playerInfo.SelectedCardId != cardInfo.CardId) //if we selected a new card
+                playerInfo.SelectNewCard(cardInfo.CardId);
+            else //else we are deselecting a card and need to check if its buffering
+                playerInfo.SelectNewCard(-1);     
+            
+            if(isBuffering) {
+                isBuffering = false;
+                playerInfo.DueResource -= cardInfo.Cost;
+                foreach(GameObject preview in abilityPreviews)
+                    preview.SetActive(false);
+                if(cardInfo.UnitIndex != -1)
+                    unitPreview.SetActive(false);
+                //re-add the colliders to the spell
+                foreach(GameObject preview in abilityPreviews) {
+                    if(preview.transform.childCount > 0)
+                        preview.transform.GetChild(1).GetChild(0).GetComponent<Collider>().enabled = true;
+                    else {
+                        if(preview.GetComponent<Collider>())
+                            preview.GetComponent<Collider>().enabled = true;
+                    }
+                }
+            }
+        }
+    }
+
+    public void QueCard(Vector3 position) {
+        //playerInfo.SpawnZone = GameConstants.SPAWN_ZONE_RESTRICTION.NONE;
+        //playerInfo.SelectNewCard(-1);
+
+        playerInfo.PlayersDeck.RemoveHand(cardInfo.CardId);
+        playerInfo.RemoveResource(cardInfo.Cost);
+
+        GameObject go = Instantiate(cardPlayer);
+        CardPlayer cardPlayerStats = go.GetComponent<CardPlayer>();
+        cardPlayerStats.Prefab = cardInfo.Prefab;
+        cardPlayerStats.PreviewDelays = cardInfo.PreviewDelays;
+        cardPlayerStats.TargetLocation = position;
+        cardPlayerStats.UnitIndex = cardInfo.UnitIndex;
+        cardPlayerStats.PlayerTag = playerInfo.gameObject.tag;
+
+        played = true;
+
+        if(!cardInfo.HiddenCard) {
+            transform.GetChild(3).localPosition = new Vector3(0,0,0);
+            transform.GetChild(3).localScale = new Vector3(1,1,1);
 
             foreach(GameObject preview in abilityPreviews)
                 Destroy(preview);
             if(cardInfo.UnitIndex != -1)
                 Destroy(unitPreview);
-            targetLocation = position;
-            isFiring = true;
-        }
-    }
 
-    private void Fire() {
-        if(currentDelay < cardInfo.PreviewDelays[currentProjectileIndex]) //if we havnt reached the delay yet
-            currentDelay += Time.deltaTime;
-        else { //if we completed a delay
-            Vector3 direction = new Vector3(0,0,1);
-            if(playerInfo.gameObject.tag == "Enemy")
-                direction.z = -1;
-
-            if(currentProjectileIndex == cardInfo.UnitIndex)
-                GameFunctions.SpawnUnit(cardInfo.Prefab[currentProjectileIndex], GameManager.GetUnitsFolder(), targetLocation, playerInfo.gameObject.tag);
-            else if(cardInfo.Prefab[currentProjectileIndex].GetComponent<Projectile>())
-                GameFunctions.FireProjectile(cardInfo.Prefab[currentProjectileIndex], targetLocation, targetLocation, direction, null, playerInfo.gameObject.tag, 1);
-            else if(cardInfo.Prefab[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                GameFunctions.FireCAL(cardInfo.Prefab[currentProjectileIndex], targetLocation, targetLocation, direction, null, playerInfo.gameObject.tag, 1);
-            currentDelay = 0;
-            currentProjectileIndex++;
-            if(currentProjectileIndex == cardInfo.PreviewDelays.Count)//if we completed the last delay
-                Destroy(gameObject);
+            if(cardInfo.UnitIndex != -1)
+                unitPreview.SetActive(false);
         }
     }
 

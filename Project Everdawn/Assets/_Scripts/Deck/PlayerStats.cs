@@ -26,8 +26,6 @@ public class PlayerStats : MonoBehaviour
     [SerializeField]
     private Transform handParent;
     [SerializeField]
-    private Card nextCard;
-    [SerializeField]
     private Canvas playerCanvas;
     [SerializeField]
     private Transform quedSpells;
@@ -38,6 +36,9 @@ public class PlayerStats : MonoBehaviour
     [SerializeField]
     private GameObject rightArea;
     private bool onDragging;
+
+    private int selectedCardId;
+
     private GameConstants.SPAWN_ZONE_RESTRICTION spawnZone;
     private bool topZone;
     private bool leftZone;
@@ -143,6 +144,17 @@ public class PlayerStats : MonoBehaviour
         set { onDragging = value; }
     }
 
+    public ComputerStats ComputerStats
+    {
+        get { return computerStats; }
+    }
+
+    public int SelectedCardId
+    {
+        get { return selectedCardId; }
+        set { selectedCardId = value; }
+    }
+
     public GameConstants.SPAWN_ZONE_RESTRICTION SpawnZone
     {
         get { return spawnZone; }
@@ -181,16 +193,25 @@ public class PlayerStats : MonoBehaviour
             }
             playersDeck.Cards = cards;
         }
-
+        else {
+            foreach(CardStats card in playersDeck.Cards)
+                card.HiddenCard = true;
+        }
 
         playersDeck.Start();
+        foreach(Transform go in handParent.transform) {
+            Card card = go.gameObject.GetComponent<Card>();
+            card.GetNewCard();
+        }
+
         //SetSpawnZone();
         spawnZone = GameConstants.SPAWN_ZONE_RESTRICTION.NONE;
+        selectedCardId = -1;
         if(computerStats.IsComputer)
             computerStats.Start(this);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(GetCurrResource < GameConstants.RESOURCE_MAX + 1) {
             if(!computerStats.IsComputer) resources[GetCurrResource].fillAmount = currResource - GetCurrResource;
@@ -198,27 +219,27 @@ public class PlayerStats : MonoBehaviour
         }
         //Could add somthing here to make sure that we dont overflow over 10 by somthing like 0.001, but is it worth the extra computation?
         if(!computerStats.IsComputer) {
-        if(spawnZone == GameConstants.SPAWN_ZONE_RESTRICTION.FULL) {
-            topArea.SetActive(!topZone);
-            leftArea.SetActive(!leftZone);
-            rightArea.SetActive(!rightZone);
-        }
-        else if(spawnZone == GameConstants.SPAWN_ZONE_RESTRICTION.HALF) {
-            topArea.SetActive(!topZone);
-            leftArea.SetActive(false);
-            rightArea.SetActive(false);
-        }
-        else {
-            topArea.SetActive(false);
-            leftArea.SetActive(false);
-            rightArea.SetActive(false);
-        }
+            if(spawnZone == GameConstants.SPAWN_ZONE_RESTRICTION.FULL) {
+                topArea.SetActive(!topZone);
+                leftArea.SetActive(!leftZone);
+                rightArea.SetActive(!rightZone);
+            }
+            else if(spawnZone == GameConstants.SPAWN_ZONE_RESTRICTION.HALF) {
+                topArea.SetActive(!topZone);
+                leftArea.SetActive(false);
+                rightArea.SetActive(false);
+            }
+            else {
+                topArea.SetActive(false);
+                leftArea.SetActive(false);
+                rightArea.SetActive(false);
+            }
         }
 
         computerStats.UpdateComputerStats();
 
         UpdateText();
-        UpdateDeck();
+        //UpdateDeck();
     }
 
     private void UpdateText()
@@ -229,7 +250,7 @@ public class PlayerStats : MonoBehaviour
         }
         textScore.text = score.ToString();
     }
-
+/*
     private void UpdateDeck()
     {
         if(playersDeck.Hand.Count < GameConstants.MAX_HAND_SIZE) {
@@ -242,10 +263,10 @@ public class PlayerStats : MonoBehaviour
         }
 
         if(!computerStats.IsComputer) {
-        nextCard.CardInfo = playersDeck.NextCard;
-        nextCard.PlayerInfo = this;
+        //nextCard.CardInfo = playersDeck.NextCard;
+        //nextCard.PlayerInfo = this;
         }
-    }
+    }*/
 
     public void RemoveResource(int cost)
     {
@@ -260,7 +281,25 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    /**
+    public void SelectNewCard(int id) {
+        Debug.Log(id);
+        if(selectedCardId != id) {
+            foreach(Transform go in handParent.transform) {
+                Card card = go.gameObject.GetComponent<Card>();
+                if(card.CardInfo.CardId == selectedCardId)
+                    go.transform.localScale = new Vector3(1,1,1);
+                else if(card.CardInfo.CardId == id) {
+                    go.transform.localScale = new Vector3(1.1f,1.1f,1.1f);
+                    spawnZone = card.CardInfo.SpawnZoneRestrictions;
+                }
+            }
+            if(id == -1)
+                spawnZone = GameConstants.SPAWN_ZONE_RESTRICTION.NONE;
+            selectedCardId = id;
+        }
+    }
+
+    /*
     public void SetSpawnZone() {
         print(GameManager.Instance.Ground.transform.localScale);
         RectTransform topTransform = topArea.GetComponent<RectTransform>();

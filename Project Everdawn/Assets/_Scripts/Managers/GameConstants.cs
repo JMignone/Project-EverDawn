@@ -10,7 +10,8 @@ public static class GameConstants
     public static string HUD_CANVAS = "HUD - Canvas";       //The name of the gameObject that holds the UI
     public static string PLAYER_TAG = "Player";
 
-    public static int FLY_ZONE_HEIGHT = 20; //The distance of the fly zone above the ground
+    public static float FLY_ZONE_HEIGHT = 20; //The distance of the fly zone above the ground
+    public static float SAMPLE_POSITION_RADIUS = 30f; //The radius used for the Unity function SamplePostion
 
     public enum MOVEMENT_TYPE {
         GROUND,
@@ -36,8 +37,7 @@ public static class GameConstants
 
     public enum UNIT_GROUPING {
         SOLO,
-        GROUP,
-        GROUPCHILD
+        GROUP
     }
 
     public enum BUILDING_TYPE {
@@ -77,6 +77,12 @@ public static class GameConstants
         ON_ABILITY,
         HALFWAY,
         ON_UNIT
+    }
+
+    public enum PASS_OBSTACLES {
+        NONE,
+        HALF,
+        PASS
     }
 
     //What a unit should do in the event its target dies while mid firing a volley of projectiles

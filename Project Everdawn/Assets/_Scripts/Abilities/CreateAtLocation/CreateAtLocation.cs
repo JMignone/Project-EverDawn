@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class CreateAtLocation : MonoBehaviour, IAbility
 {
+    [Header("Gameobjects")]
     [SerializeField]
     private SphereCollider hitBox;
 
     private float damageMultiplier; //used for units that may have had its damage increased/decreased and fires projectiles as a ranged attack
 
+    [Header("Base Stats")]
     [SerializeField]
     private float radius;
 
@@ -21,6 +23,7 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     [SerializeField]
     private GameConstants.TYPE_ATTACKABLE typeAttackable;
 
+    [Header("Higher Level Controls")]
     //[SerializeField]
     //private bool blockable; //currently not sure if we will need this for CAL's. Description of this var is in Projectile
 
@@ -44,10 +47,15 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     [SerializeField] [Min(0)]
     private int skipNumber;
 
+    [Tooltip("If checked, the range preview will not display")]
+    [SerializeField]
+    private bool hideRange;
+
     [Tooltip("If checked, the preview will not display")]
     [SerializeField]
     private bool hidePreview;
 
+    [Header("Higher Level Stats")]
     [SerializeField]
     private FreezeStats freezeStats;
 
@@ -146,6 +154,11 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     {
         get { return hit; }
         set { hit = value; }
+    }
+
+    public bool HideRange
+    {
+        get { return hideRange; }
     }
 
     public bool HidePreview
@@ -306,7 +319,7 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         }
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         if(selfDestructStats.SelfDestructs && !hasExploded)
             selfDestructStats.Explode(gameObject);
         if(linearStats.IsLinear && !hasExploded)

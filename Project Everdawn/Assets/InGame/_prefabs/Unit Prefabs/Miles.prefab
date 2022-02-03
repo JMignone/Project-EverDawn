@@ -801,7 +801,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4952238894198127122}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
   m_Controller: {fileID: 0}
   m_CullingMode: 1
@@ -1128,7 +1128,7 @@ MonoBehaviour:
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
-    range: 5.5
+    range: 7.5
     visionRange: 20
     baseDamage: 245
     attackDelay: 1.1
@@ -1143,7 +1143,7 @@ MonoBehaviour:
       sSCanvas: {fileID: 8687623084901217421}
       sSSprite: {fileID: 8687623084184292486}
       sSMask: {fileID: 8687623085000876865}
-    canvasAbility: {fileID: 0}
+    canvasAbility: {fileID: 8885129445788087283}
     healthBar: {fileID: 2136763131839317715}
     armorBar: {fileID: 2136763130847907184}
     abilityIndicator: {fileID: 2426943811170700397}
@@ -1796,7 +1796,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &9030593623510286143
 NavMeshAgent:
@@ -2298,7 +2298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_AnchoredPosition.y

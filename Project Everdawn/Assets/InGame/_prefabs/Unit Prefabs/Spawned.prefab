@@ -270,7 +270,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &865779381804448098
 GameObject:
@@ -935,7 +935,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 30
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5548348861413746965
 GameObject:
@@ -1085,7 +1085,7 @@ GameObject:
   - component: {fileID: 1650009125952325119}
   - component: {fileID: 6825281274548537870}
   m_Layer: 0
-  m_Name: BaseUnit Spawned
+  m_Name: Spawned
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1123,17 +1123,18 @@ MonoBehaviour:
   unitSprite: {fileID: 7406664479107845347}
   target: {fileID: 0}
   stats:
-    currHealth: 100
-    maxHealth: 100
+    currHealth: 80
+    maxHealth: 80
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
-    range: 10
-    visionRange: 20
-    baseDamage: 10
-    attackDelay: 1
+    range: 3
+    visionRange: 15
+    baseDamage: 85
+    attackDelay: 1.1
     currAttackDelay: 0
     moveSpeed: 7
+    noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 0.25
@@ -1149,12 +1150,11 @@ MonoBehaviour:
     detectionObject: {fileID: 8304181129418167361}
     visionObject: {fileID: 4698014183429173447}
     movementType: 0
-    heightAttackable: 0
+    heightAttackable: 1
     unitMaterials:
       renderers:
       - {fileID: 8995187665529853619}
       - {fileID: 2511810544442558010}
-      defaultMat: {fileID: 0}
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
@@ -1170,7 +1170,6 @@ MonoBehaviour:
         outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
-        currentFrozenDelay: 0
       slowStats:
         canSlow: 0
         slowDuration: 0
@@ -1184,8 +1183,6 @@ MonoBehaviour:
       rootedStats:
         cantBeRooted: 0
         isRooted: 0
-        rootDelay: 0
-        currentRootDelay: 0
       poisonedStats:
         cantBePoisoned: 0
         isPoisoned: 0
@@ -1211,8 +1208,7 @@ MonoBehaviour:
         cantBeGrabbed: 0
         isGrabbed: 0
         direction: {x: 0, y: 0, z: 0}
-        pullDelay: 0
-        currentPullDelay: 0
+        grabDelay: 0
         currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
@@ -1220,6 +1216,13 @@ MonoBehaviour:
         strengthDelay: 0
         currentDelay: 0
         currentStrengthIntensity: 0
+      blindedStats:
+        cantBeBlinded: 0
+      stunnedStats:
+        cantBeStunned: 0
+        outSideResistance: 0
+        isStunned: 0
+        stunDelay: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -1230,6 +1233,8 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+        resistedBlind: 0
+        resistedStun: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -1269,6 +1274,10 @@ MonoBehaviour:
     deathSkill: 0
     abilityPrefabs: []
     abilityDelays: []
+  noseDiveStats:
+    noseDives: 0
+    createAtLocation: {fileID: 0}
+    speed: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -2352,6 +2361,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8326997223694864424}
     m_Modifications:
+    - target: {fileID: 2683724732500358893, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2683724732576097059, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2683724732824738253, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2382,7 +2399,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2683724732824738253, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 248.65
+      value: 95.52
       objectReference: {fileID: 0}
     - target: {fileID: 2683724732824738253, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2398,7 +2415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2683724732824738253, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.5
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 2683724732824738253, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2422,7 +2439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2683724732824738253, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 12
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2683724732824738253, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2453,7 +2470,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 4078519445697324528}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 

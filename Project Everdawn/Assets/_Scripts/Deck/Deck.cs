@@ -11,6 +11,8 @@ public class Deck
     private List<CardStats> hand;
     [SerializeField]
     private CardStats nextCard;
+    [SerializeField]
+    private Card nextCardGo;
 
     public List<CardStats> Cards
     {
@@ -44,6 +46,19 @@ public class Deck
 
     public CardStats DrawCard() {
         CardStats cs = nextCard;
+        
+        hand.Add(nextCard);
+        cards.Remove(nextCard);
+        nextCard = cards[0];
+        if(nextCardGo != null)
+            nextCardGo.CardInfo = nextCard;
+
+        return cs;
+    }
+
+    /*
+    public CardStats DrawCard() {
+        CardStats cs = nextCard;
         if(hand.Count < GameConstants.MAX_HAND_SIZE-1) {    //this is for the game setup, gives each card in hand an assosiated index for where it is in hand
             hand.Add(nextCard);
             nextCard.LayoutIndex = hand.Count;
@@ -60,7 +75,7 @@ public class Deck
             }
             if(isLast) {
                 hand.Add(nextCard);
-                nextCard.LayoutIndex = hand.Count;
+                nextCard.LayoutIndex = hand.Count - 1;
             }
         }
         //The purpose of the entire above if block is to make it so the card that gets replaced is placed in the same spot, and not every card is moved
@@ -68,7 +83,7 @@ public class Deck
         nextCard = cards[0];
 
         return cs;
-    }
+    }*/
 
     public void RemoveHand(int cardId) {
         foreach(CardStats cs in hand) {

@@ -105,12 +105,15 @@ public class Tower : MonoBehaviour, IDamageable
     }
 
     protected void Start()
-    {
+    {        
         stats.HealthBar.enabled = false;
         stats.HealthBar.transform.GetChild(0).gameObject.SetActive(false);
 
         IDamageable unit = (gameObject.GetComponent(typeof(IDamageable)) as IDamageable);
+
+        stats.SummoningSicknessUI.StartStats(unit);
         stats.EffectStats.StartStats(unit);
+        attackStats.StartAttackStats(unit);
 
         stats.IsHoveringAbility = false;
         stats.AbilityIndicator.enabled = false;
@@ -118,7 +121,7 @@ public class Tower : MonoBehaviour, IDamageable
         // + 1 is better for the knob UI, if we get our own UI image, we may want to remove it
     }
 
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
         if(stats.CurrHealth > 0) {
             stats.IncRange = false; //towers should never have its range incremented
@@ -201,7 +204,7 @@ public class Tower : MonoBehaviour, IDamageable
 
     /* I dont think structres need a vision radius, keep it for now */
     public void OnTriggerEnter(Collider other) {
-        if(!other.transform.parent.parent.CompareTag(gameObject.tag)) { //checks to make sure the target isnt on the same team
+        if(!other.transform.parent.parent.CompareTag(gameObject.tag) && stats.CurrHealth != 0) { //checks to make sure the target isnt on the same team
             if(other.CompareTag("Projectile")) { //Did we get hit by a skill shot?
                 Projectile projectile = other.transform.parent.parent.GetComponent<Projectile>();
                 Component unit = this.GetComponent(typeof(IDamageable));

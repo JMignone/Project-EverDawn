@@ -66,9 +66,43 @@ public static class GameFunctions
             Component targetComponent;
             SphereCollider targetSc;
 
+            stats.TowerPosOffset = 0;
             float dist = 10000; //Arbitrary large number
 
             foreach (GameObject hitTarget in hitTargets)
+            {
+                targetComponent = hitTarget.GetComponent(typeof(IDamageable));
+                if(targetComponent) {
+                    if((targetComponent as IDamageable).Stats.Targetable && GameFunctions.CanAttack(tag, hitTarget.tag, targetComponent, stats)) {
+                        targetSc = (targetComponent as IDamageable).Stats.DetectionObject;
+                        float newDist = Vector3.Distance(stats.DetectionObject.transform.position, targetSc.transform.position);
+
+                        if(dist > newDist) { //if we found a closer target
+                            if(!hitTarget.CompareTag(tag)){ //and its not on the same team (sanity check, shouldnt ever occur)
+                                dist = newDist;
+                                go = hitTarget;
+                            }
+                        }
+                    }
+                }
+            }
+            return go;
+        }
+        return null;
+    }
+
+    public static GameObject GetTowerTarget(List<GameObject> towers, string tag, BaseStats stats) {
+        GameObject go = null; 
+        Component targetComponent;
+        SphereCollider targetSc;
+
+        if( (tag == GameConstants.PLAYER_TAG && stats.DetectionObject.transform.position.z > 0) || 
+        (tag != GameConstants.PLAYER_TAG && stats.DetectionObject.transform.position.z < 0)) {
+
+            stats.TowerPosOffset = 0;
+            float dist = 10000; //Arbitrary large number
+
+            foreach (GameObject hitTarget in towers)
             {
                 targetComponent = hitTarget.GetComponent(typeof(IDamageable));
 
@@ -88,7 +122,33 @@ public static class GameFunctions
             }
             return go;
         }
-        return null;
+        else {
+            foreach (GameObject hitTarget in towers)
+            {
+                targetComponent = hitTarget.GetComponent(typeof(IDamageable));
+
+                if(targetComponent) {
+                    if((targetComponent as IDamageable).Stats.Targetable && GameFunctions.CanAttack(tag, hitTarget.tag, targetComponent, stats)) {
+                        targetSc = (targetComponent as IDamageable).Stats.DetectionObject;
+                        
+                        //if the x position times the other x position is positive, then we are on the correct side
+                        if(towers.Count == 3 && targetSc.transform.position.x != 0 && stats.DetectionObject.transform.position.x*targetSc.transform.position.x >= 0) { //if we found a closer target
+                            stats.TowerPosOffset = 0;
+                            if(!hitTarget.CompareTag(tag)) //and its not on the same team (sanity check, shouldnt ever occur)
+                                return hitTarget;
+                        }
+                        else if(towers.Count != 3 && stats.DetectionObject.transform.position.x*targetSc.transform.position.x >= 0) {
+                            if(!hitTarget.CompareTag(tag)) { //and its not on the same team (sanity check, shouldnt ever occur)
+                                if(towers.Count == 1)
+                                    stats.TowerPosOffset = 22 * Mathf.Sign(stats.DetectionObject.transform.position.x);
+                                return hitTarget;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return go;
     }
 
     public static GameObject SpawnUnit(GameObject prefab, Transform parent, Vector3 position, string tag = "Player") 
@@ -124,7 +184,7 @@ public static class GameFunctions
         bool selfDestructs = projectile.SelfDestructStats.SelfDestructs;
         bool isMovement = prefab.GetComponent<Movement>();
         if(distance > (range - radius)) {
-            endPosition = startPosition + (direction.normalized * range);
+            endPosition = startPosition + (direction.normalized * (range - radius));
             if(isMovement)
                 endPosition -= direction.normalized * radius;
         }
@@ -137,7 +197,7 @@ public static class GameFunctions
             endPosition += direction.normalized * radius;
             NavMeshHit hit;
             endPosition = GameFunctions.adjustForBoundary(endPosition);
-            if(NavMesh.SamplePosition(endPosition, out hit, 12f, 9))
+            if(NavMesh.SamplePosition(endPosition, out hit, GameConstants.SAMPLE_POSITION_RADIUS, 9))
                 endPosition = hit.position;
         }
         
@@ -198,7 +258,7 @@ public static class GameFunctions
             //endPosition = GameFunctions.adjustForTowers(endPosition, prefab.GetComponent<CreateAtLocation>().Radius);
 
             NavMeshHit hit;
-            if(NavMesh.SamplePosition(mousePosition, out hit, 6.1f, 9))
+            if(NavMesh.SamplePosition(mousePosition, out hit, GameConstants.SAMPLE_POSITION_RADIUS, cal.SummonStats.AreaMask()))
                 endPosition = hit.position;
         }
         GameObject go = GameObject.Instantiate(prefab, endPosition, targetRotation, GameManager.GetUnitsFolder());
@@ -304,7 +364,7 @@ public static class GameFunctions
             position.z = bottom;
         else if(position.z > top)
             position.z = top;
-        
+
         return position;
     }
 

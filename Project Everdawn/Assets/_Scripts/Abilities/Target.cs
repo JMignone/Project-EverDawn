@@ -10,13 +10,18 @@ using UnityEngine.EventSystems;
 
     When creating a target ability, all projectiles should have the same range. It will still work, but the previews are not desirable
 
-    When using a movement ability, 'passObstacles' should be set to true
+    When using a movement ability, 'passObstacles' should be set to pass
 */
 public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
+    [Header("Gameobject")]
     [SerializeField]
     private Unit unit;
 
+    [SerializeField]
+    private Building building;
+
+    [Header("Ability Order and Timings")]
     [SerializeField]
     private List<GameObject> abilityPrefabs;
 
@@ -43,6 +48,10 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
 
     [SerializeField]
     private List<GameObject> abilityPreviews;
+
+    [Header("Ability default previews and settings")]
+    [SerializeField]
+    private bool hidePreview;
 
     [SerializeField]
     private Sprite abilityPreviewLine;
@@ -178,7 +187,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
         At the moment, a boomerang that selfdestructs and lingers at the end does not have the preview that id like (the linger circle around the unit wont be there,
         as the selfdestruct location takes precidence). But this kind of projectile is probably unlikely to happen anyway
     */
-    private void Update() {
+    private void FixedUpdate() {
         abilityUI.UpdateStats();
         if(isDragging) {
             Vector3 position = GameFunctions.getPosition(false);
@@ -261,7 +270,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
                 float closestDistance = 9999;
                 float distance;
                 foreach(Collider collider in colliders) {
-                    if(!collider.CompareTag(abilityPrefabs[0].tag) && collider.name == "Agent") {
+                    if(!collider.CompareTag(Unit.Agent.transform.tag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
                         if(GameFunctions.WillHit((testComponent as IAbility).HeightAttackable, (testComponent as IAbility).TypeAttackable, damageable)) {
                             distance = Vector3.Distance(unit.Agent.Agent.transform.position, collider.transform.position);
@@ -390,7 +399,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
         /*
                 UnityEngine.AI.NavMeshHit hit;
                 if(cal.TeleportStats.IsWarp && unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND) {
-                    if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 12f, 9))
+                    if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, 9))
                         position = hit.position;
                 }*/
 
@@ -454,31 +463,33 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
 
 
         /* ----- Add the range circle ----- */
-        GameObject goRange = new GameObject();
-        goRange.name = "TargetRange";
+        if(!hidePreview) {
+            GameObject goRange = new GameObject();
+            goRange.name = "TargetRange";
 
-        /* -- Creates the Image GameObject and component -- */
-        GameObject previewRangeImageGo = new GameObject();
-        previewRangeImageGo.name = "Sprite";
-        Image previewRangeImage = previewRangeImageGo.AddComponent<Image>(); //Add the Image Component script
-        previewRangeImage.color = new Color32(255, 255, 255, 100);
-        previewRangeImage.sprite = abilityPreviewRange; //Set the Sprite of the Image Component on the new GameObject
-        previewRangeImage.enabled = false;
+            /* -- Creates the Image GameObject and component -- */
+            GameObject previewRangeImageGo = new GameObject();
+            previewRangeImageGo.name = "Sprite";
+            Image previewRangeImage = previewRangeImageGo.AddComponent<Image>(); //Add the Image Component script
+            previewRangeImage.color = new Color32(255, 255, 255, 100);
+            previewRangeImage.sprite = abilityPreviewRange; //Set the Sprite of the Image Component on the new GameObject
+            previewRangeImage.enabled = false;
 
-        RectTransform imageRangeTransform = previewRangeImageGo.GetComponent<RectTransform>();
-        imageRangeTransform.anchorMin = new Vector2(.5f, 0);
-        imageRangeTransform.anchorMax = new Vector2(.5f, 0);
-        imageRangeTransform.pivot = new Vector2(.5f, .5f);
-        imageRangeTransform.SetParent(goRange.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
-        imageRangeTransform.localPosition = Vector3.zero;
-        imageRangeTransform.localRotation = Quaternion.Euler(270, 0, 0);
-        imageRangeTransform.sizeDelta = new Vector2(maxRange * 2, maxRange * 2);
+            RectTransform imageRangeTransform = previewRangeImageGo.GetComponent<RectTransform>();
+            imageRangeTransform.anchorMin = new Vector2(.5f, 0);
+            imageRangeTransform.anchorMax = new Vector2(.5f, 0);
+            imageRangeTransform.pivot = new Vector2(.5f, .5f);
+            imageRangeTransform.SetParent(goRange.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+            imageRangeTransform.localPosition = Vector3.zero;
+            imageRangeTransform.localRotation = Quaternion.Euler(270, 0, 0);
+            imageRangeTransform.sizeDelta = new Vector2(maxRange * 2, maxRange * 2);
 
-        goRange.transform.SetParent(abilityPreviewCanvas.transform);
-        goRange.transform.localPosition = Vector3.zero;
-        goRange.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        goRange.SetActive(true);
-        abilityPreviews.Add(goRange);
+            goRange.transform.SetParent(abilityPreviewCanvas.transform);
+            goRange.transform.localPosition = Vector3.zero;
+            goRange.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            goRange.SetActive(true);
+            abilityPreviews.Add(goRange);
+        }
 
         foreach(GameObject goAbility in abilityPrefabs) {
             if(!uniqueProjectiles.Contains(goAbility)) {

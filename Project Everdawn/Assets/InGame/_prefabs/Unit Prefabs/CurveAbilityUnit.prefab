@@ -252,13 +252,13 @@ MonoBehaviour:
   unitSprite: {fileID: 8440331531258748353}
   target: {fileID: 0}
   stats:
-    currHealth: 400
-    maxHealth: 400
-    currArmor: 100
-    maxArmor: 100
+    currHealth: 800
+    maxHealth: 800
+    currArmor: 500
+    maxArmor: 500
     healthDecay: 0
     range: 5.25
-    visionRange: 30
+    visionRange: 20
     baseDamage: 150
     attackDelay: 1
     currAttackDelay: 0
@@ -1013,7 +1013,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1086,7 +1086,7 @@ PrefabInstance:
       objectReference: {fileID: 8440331531930430725}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityUI.cooldownDelay
-      value: 1
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityDelays.Array.size
@@ -1114,7 +1114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityUI.currCooldownDelay
-      value: 1
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityPrefabs.Array.data[0]

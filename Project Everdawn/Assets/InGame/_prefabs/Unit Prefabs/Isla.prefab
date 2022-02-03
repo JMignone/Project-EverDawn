@@ -683,7 +683,7 @@ MonoBehaviour:
     maxArmor: 0
     healthDecay: 0
     range: 25
-    visionRange: 33
+    visionRange: 27
     baseDamage: 0
     attackDelay: 1
     currAttackDelay: 0
@@ -797,12 +797,12 @@ MonoBehaviour:
   attackStats:
     firesProjectiles: 1
     attackType: 0
-    continueType: 0
+    continueType: 2
     abilityPrefabs:
     - {fileID: 1549152128178500471, guid: 6b5f4e48b11555f4bb807166832276d7, type: 3}
     - {fileID: 1549152128178500471, guid: 6b5f4e48b11555f4bb807166832276d7, type: 3}
     abilityDelays:
-    - 0.25
+    - 0
     - 0.25
     - 0
     currentDelay: 0
@@ -1304,7 +1304,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_AnchoredPosition.y

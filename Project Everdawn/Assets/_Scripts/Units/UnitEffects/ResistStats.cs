@@ -198,7 +198,7 @@ public class ResistStats
         if(!resistedTarget) {
             resistedTarget = true;
             rtDuration = duration;
-            unit.Stats.Vanish((unit as Component).gameObject, unit.EnemyHitTargets.ToArray());
+            unit.Stats.Vanish((unit as Component).gameObject, unit.Agent); //unit.EnemyHitTargets.ToArray());
         }
     }
 

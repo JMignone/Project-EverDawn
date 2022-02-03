@@ -181,13 +181,13 @@ MonoBehaviour:
   unitSprite: {fileID: 4300487081921077863}
   target: {fileID: 0}
   stats:
-    currHealth: 4500
-    maxHealth: 4500
+    currHealth: 4850
+    maxHealth: 4850
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
-    range: 6.5
-    visionRange: 20
+    range: 5.5
+    visionRange: 25
     baseDamage: 300
     attackDelay: 1.3
     currAttackDelay: 0
@@ -201,7 +201,7 @@ MonoBehaviour:
       sSCanvas: {fileID: 609765237157225364}
       sSSprite: {fileID: 609765236675681183}
       sSMask: {fileID: 609765237487547480}
-    canvasAbility: {fileID: 0}
+    canvasAbility: {fileID: 4286050856114231759}
     healthBar: {fileID: 7370929207328458319}
     armorBar: {fileID: 7370929208453041644}
     abilityIndicator: {fileID: 8301396470865325335}
@@ -228,7 +228,6 @@ MonoBehaviour:
         outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
-        currentFrozenDelay: 0
       slowStats:
         canSlow: 0
         slowDuration: 0
@@ -261,14 +260,13 @@ MonoBehaviour:
         currentSpeed: 0
         direction: {x: 0, y: 0, z: 0}
       pulledStats:
-        pullResistance: 0
+        pullResistance: 0.5
         pullComponents: []
       grabbedStats:
         cantBeGrabbed: 0
         isGrabbed: 0
         direction: {x: 0, y: 0, z: 0}
-        pullDelay: 0
-        currentPullDelay: 0
+        grabDelay: 0
         currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
@@ -278,6 +276,11 @@ MonoBehaviour:
         currentStrengthIntensity: 0
       blindedStats:
         cantBeBlinded: 0
+      stunnedStats:
+        cantBeStunned: 0
+        outSideResistance: 0
+        isStunned: 0
+        stunDelay: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -289,6 +292,7 @@ MonoBehaviour:
         resistedGrab: 0
         resistedPull: 0
         resistedBlind: 0
+        resistedStun: 0
   attackStats:
     firesProjectiles: 0
     attackType: 0
@@ -328,6 +332,10 @@ MonoBehaviour:
     deathSkill: 0
     abilityPrefabs: []
     abilityDelays: []
+  noseDiveStats:
+    noseDives: 0
+    createAtLocation: {fileID: 0}
+    speed: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -442,7 +450,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &4300487081545407401
 NavMeshAgent:
@@ -453,10 +461,10 @@ NavMeshAgent:
   m_GameObject: {fileID: 4300487081545407402}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 3.5
+  m_Radius: 2.25
   m_Speed: 3
   m_Acceleration: 100
-  avoidancePriority: 50
+  avoidancePriority: 40
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
@@ -571,7 +579,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 20
+  m_Radius: 25
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4300487081921077912
 GameObject:
@@ -766,8 +774,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7130030977810432960}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.5}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4.5, y: 5, z: 5}
   m_Children:
   - {fileID: 7130030977810407396}
   - {fileID: 7130030977810407400}
@@ -1471,7 +1479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
       propertyPath: m_AnchoredPosition.y

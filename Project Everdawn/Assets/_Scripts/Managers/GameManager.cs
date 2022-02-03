@@ -28,12 +28,26 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Text textTimer;
     [SerializeField]
+    private Image abilityCancel;
+    [SerializeField]
     private bool testSetup;
+
+    private bool complete;
 
     public static GameManager Instance
     {
         get { return instance; }
     }
+
+    /* should be deleted later at some point */
+
+    public bool Complete
+    {
+        get { return complete; }
+        set { complete = value; }
+    }
+
+    /* ------------------------------------- */
 
     public List<GameObject> Objects
     {
@@ -66,6 +80,11 @@ public class GameManager : MonoBehaviour
         get { return timeLeft; }
     }
 
+    public Image AbilityCancel
+    {
+        get { return abilityCancel; }
+    }
+
     public int ResourceMultiplier
     {
         get { return timeLeft <= timeLimit/3.0f ? 2 : 1; }
@@ -94,7 +113,7 @@ public class GameManager : MonoBehaviour
     }
 
     //updates the timer
-    private void Update() {
+    private void FixedUpdate() {
         if(timeLeft > 0) {
             timeLeft -= Time.deltaTime;
             string text = ((int) timeLeft/60).ToString();
@@ -116,18 +135,16 @@ public class GameManager : MonoBehaviour
         float objectToRemoveAgentRadius = objectToRemoveAgent.HitBox.radius;
 
         foreach (GameObject go in Instance.Objects) { //  The trigger exit doesnt get trigger if the object suddenly dies, so we need this do do it manually 
-            Component component = go.GetComponent(typeof(IDamageable));
-            if(component) {
-                if((component as IDamageable).HitTargets.Contains(objectToRemove)) { //if an object has this now dead unit as a hit target ...
-                    (component as IDamageable).HitTargets.Remove(objectToRemove);    //remove it from their possible targets
-                    if((component as IDamageable).Target == objectToRemove)          //if an object has this now dead unit as a target ...
-                        (component as IDamageable).Target = null;                    //make target null
-                    if((component as IDamageable).InRangeTargets.Contains(objectToRemove))
-                        (component as IDamageable).InRangeTargets.Remove(objectToRemove); 
-
-                    if((component as IDamageable).InRangeTargets.Count == 0)
-                        (component as IDamageable).Stats.IncRange = false;
-                }
+            IDamageable component = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+            if(go.GetComponent(typeof(IDamageable))) {
+                if(component.HitTargets.Contains(objectToRemove))  //if an object has this now dead unit as a hit target ...
+                    component.HitTargets.Remove(objectToRemove);    //remove it from their possible targets
+                if(component.Target == objectToRemove)              //if an object has this now dead unit as a target ...
+                    component.Target = null;                        //make target null
+                if(component.InRangeTargets.Contains(objectToRemove))
+                    component.InRangeTargets.Remove(objectToRemove); 
+                if(component.InRangeTargets.Count == 0)
+                    component.Stats.IncRange = false;
             }
         }
         if((objectToRemoveComponent as IDamageable).Stats.IsHoveringAbility) {
@@ -152,17 +169,17 @@ public class GameManager : MonoBehaviour
         float objectToRemoveAgentRadius = objectToRemoveAgent.HitBox.radius;
 
         foreach (GameObject go in Instance.Objects) { //  The trigger exit doesnt get trigger if the object suddenly dies, so we need this do do it manually 
-            Component component = go.GetComponent(typeof(IDamageable));
-            if(component) {
-                if((component as IDamageable).HitTargets.Contains(objectToRemove)) { //if an object has this now dead unit as a hit target ...
-                    (component as IDamageable).HitTargets.Remove(objectToRemove);    //remove it from their possible targets
-                    if((component as IDamageable).Target == objectToRemove)          //if an object has this now dead unit as a target ...
-                        (component as IDamageable).Target = null;                    //make target null
-                    if((component as IDamageable).InRangeTargets.Contains(objectToRemove))
-                        (component as IDamageable).InRangeTargets.Remove(objectToRemove); 
+            IDamageable component = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+            if(go.GetComponent(typeof(IDamageable))) {
+                if(component.HitTargets.Contains(objectToRemove)) { //if an object has this now dead unit as a hit target ...
+                    component.HitTargets.Remove(objectToRemove);    //remove it from their possible targets
+                    if(component.Target == objectToRemove)          //if an object has this now dead unit as a target ...
+                        component.Target = null;                    //make target null
+                    if(component.InRangeTargets.Contains(objectToRemove))
+                        component.InRangeTargets.Remove(objectToRemove); 
 
-                    if((component as IDamageable).InRangeTargets.Count == 0)
-                        (component as IDamageable).Stats.IncRange = false;
+                    if(component.InRangeTargets.Count == 0)
+                        component.Stats.IncRange = false;
                 }
             }
         }
@@ -273,8 +290,13 @@ public class GameManager : MonoBehaviour
         }
         Instance.TowerObjects.Clear();
 
+        Instance.abilityCancel.enabled = false;
+
         //Instance.GameplayHUD.SetActive(false);
         //Instance.EndGameScreen.SetActive(true);
         //SceneManager.LoadSceneAsync("MainMenuScene");
+
+        //used for testing to disable the bot when the game ends, should be deleted later at soome point
+        Instance.Complete = true;
     }
 }

@@ -18,7 +18,6 @@ public class NoseDiveStats
 
     private IDamageable unit;
     private Vector3 targetPosition;
-    private Vector3 direction;
 
     public bool NoseDives
     {
@@ -38,22 +37,21 @@ public class NoseDiveStats
     public void StartDive(IDamageable target) {
         isDiving = true;
         targetPosition = target.Agent.transform.position;
-        direction = (targetPosition - unit.Agent.transform.position).normalized;
+        targetPosition.y = 0;
 
         unit.SetTarget(null);
 
-        unit.Agent.Agent.enabled = false;
-        unit.Agent.transform.rotation = Quaternion.LookRotation(direction);
-
-        unit.Stats.HealthBar.transform.parent.GetComponent<Canvas>().enabled = false;
-
         unit.Stats.EffectStats.ResistStats.ResistDamage(100);
         unit.Stats.EffectStats.ResistStats.ResistTarget(100);
+
+        unit.Agent.Agent.enabled = false;
+        unit.Agent.HitBox.enabled = false;
+        unit.Agent.transform.rotation = Quaternion.LookRotation((targetPosition - unit.Agent.transform.position).normalized);
+
+        unit.Stats.HealthBar.transform.parent.GetComponent<Canvas>().enabled = false;
     }
 
     public void UpdateStats() {
-        unit.Agent.transform.position += direction * speed * Time.deltaTime;
-
         if(Vector3.Distance(unit.Agent.transform.position, targetPosition) < 1) {
             GameFunctions.FireCAL(createAtLocation, targetPosition, targetPosition, Vector3.zero, null, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
             GameManager.RemoveObjectsFromList((unit as Component).gameObject);
@@ -61,5 +59,7 @@ public class NoseDiveStats
                 (unit.Target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove((unit as Component).gameObject);
             MonoBehaviour.Destroy((unit as Component).gameObject);
         }
+        else
+            unit.Agent.transform.position += (targetPosition - unit.Agent.transform.position).normalized * speed * Time.deltaTime;
     }
 }

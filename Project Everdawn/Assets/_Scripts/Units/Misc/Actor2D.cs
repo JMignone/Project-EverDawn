@@ -37,7 +37,7 @@ public class Actor2D : MonoBehaviour
             agent = followTarget.GetComponent<NavMeshAgent>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!isPreview && agent != null)
         { //temporary so tower doesnt scream errors for lack of animation

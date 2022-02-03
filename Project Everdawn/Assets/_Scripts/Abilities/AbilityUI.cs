@@ -71,7 +71,8 @@ public class AbilityUI
 
     public void StartStats() {
         cardCanvasDim = GameFunctions.GetCanvas().GetChild(0).GetComponent<RectTransform>();
-        abilityCancel = GameFunctions.GetCanvas().GetChild(3).GetComponent<Image>();
+        //abilityCancel = GameFunctions.GetCanvas().GetChild(3).GetComponent<Image>();
+        abilityCancel = GameManager.Instance.AbilityCancel;
     }
 
     public void UpdateStats() {

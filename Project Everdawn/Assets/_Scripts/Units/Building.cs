@@ -157,7 +157,7 @@ public class Building : MonoBehaviour, IDamageable
         // + 1 is better for the knob UI, if we get our own UI image, we may want to remove it
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(stats.CurrHealth > 0) {
             if(buildingType == GameConstants.BUILDING_TYPE.SPAWN) {
@@ -267,13 +267,13 @@ public class Building : MonoBehaviour, IDamageable
             else {
                 List<GameObject> towers = GameManager.Instance.TowerObjects;
                 towers = GameManager.GetAllEnemies(towers, gameObject.tag); //sending in only towers
-                SetTarget(GameFunctions.GetNearestTarget(towers, gameObject.tag, stats));
+                SetTarget(GameFunctions.GetTowerTarget(towers, gameObject.tag, stats));
             }
         }
         else {
             List<GameObject> towers = GameManager.Instance.TowerObjects;
             towers = GameManager.GetAllEnemies(towers, gameObject.tag); //sending in only towers
-            SetTarget(GameFunctions.GetNearestTarget(towers, gameObject.tag, stats));
+            SetTarget(GameFunctions.GetTowerTarget(towers, gameObject.tag, stats));
         }
         stats.IncRange = false;
     }
@@ -289,7 +289,7 @@ public class Building : MonoBehaviour, IDamageable
     }
 
     public void OnTriggerEnter(Collider other) {
-        if(!other.transform.parent.parent.CompareTag(gameObject.tag)) { //checks to make sure the target isnt on the same team
+        if(!other.transform.parent.parent.CompareTag(gameObject.tag) && stats.CurrHealth != 0) { //checks to make sure the target isnt on the same team
             if(other.CompareTag("Projectile")) { //Did we get hit by a skill shot?
                 Projectile projectile = other.transform.parent.parent.GetComponent<Projectile>();
                 Component unit = this.GetComponent(typeof(IDamageable));
