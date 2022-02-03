@@ -1131,7 +1131,7 @@ MonoBehaviour:
     range: 20
     visionRange: 22
     baseDamage: 115
-    attackDelay: 1
+    attackDelay: 1.2
     currAttackDelay: 0
     moveSpeed: 6
     noRotation: 0
@@ -1238,11 +1238,15 @@ MonoBehaviour:
   attackStats:
     firesProjectiles: 1
     attackType: 0
-    continueType: 0
+    continueType: 2
     abilityPrefabs:
     - {fileID: 1549152128178500471, guid: e7f0bc6dce383d34d93c50d56e39f270, type: 3}
+    - {fileID: 1549152128178500471, guid: e7f0bc6dce383d34d93c50d56e39f270, type: 3}
+    - {fileID: 1549152128178500471, guid: e7f0bc6dce383d34d93c50d56e39f270, type: 3}
     abilityDelays:
-    - 0.1
+    - 0
+    - 0.125
+    - 0.125
     - 0
     currentDelay: 0
   buildUpStats:

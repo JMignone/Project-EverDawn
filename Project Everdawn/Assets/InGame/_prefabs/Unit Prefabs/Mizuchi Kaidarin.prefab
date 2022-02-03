@@ -576,7 +576,7 @@ MonoBehaviour:
     abilityPrefabs:
     - {fileID: 1549152128178500471, guid: ca598be3b58a71641b6dccfd77e27451, type: 3}
     abilityDelays:
-    - 0.1
+    - 0
     - 0
     currentDelay: 0
   buildUpStats:

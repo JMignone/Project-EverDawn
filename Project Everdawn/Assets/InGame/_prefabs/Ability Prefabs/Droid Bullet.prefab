@@ -48,9 +48,9 @@ MonoBehaviour:
   hitBox: {fileID: 1549152129485037255}
   unitSprite: {fileID: 1549152128836475023}
   radius: 2
-  speed: 75
+  speed: 130
   range: 30
-  baseDamage: 115
+  baseDamage: 40
   towerDamage: 0
   heightAttackable: 0
   typeAttackable: 0
@@ -141,6 +141,7 @@ MonoBehaviour:
     currentLingeringTime: 0
   selfDestructStats:
     selfDestructs: 0
+    onTarget: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 0
     towerDamage: 0

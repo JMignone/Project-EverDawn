@@ -132,7 +132,7 @@ public static class GameFunctions
                         targetSc = (targetComponent as IDamageable).Stats.DetectionObject;
                         
                         //if the x position times the other x position is positive, then we are on the correct side
-                        if(towers.Count == 3 && stats.DetectionObject.transform.position.x*targetSc.transform.position.x > 0) { //if we found a closer target
+                        if(towers.Count == 3 && targetSc.transform.position.x != 0 && stats.DetectionObject.transform.position.x*targetSc.transform.position.x >= 0) { //if we found a closer target
                             stats.TowerPosOffset = 0;
                             if(!hitTarget.CompareTag(tag)) //and its not on the same team (sanity check, shouldnt ever occur)
                                 return hitTarget;
