@@ -13,6 +13,7 @@ public interface IAbility
     float DamageMultiplier { get; }
     int AreaMask();
     PullStats PullStats { get; }
+    CritStats CritStats { get; }
     GameConstants.HEIGHT_ATTACKABLE HeightAttackable { get; }
     GameConstants.TYPE_ATTACKABLE TypeAttackable { get; }
     void ApplyAffects(Component damageable);

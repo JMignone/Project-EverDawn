@@ -7,6 +7,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class BaseStats
 {
+    [Header("Health and Armor")]
     [SerializeField] [Min(0)]
     private float currHealth;
     [SerializeField] [Min(0)]
@@ -18,17 +19,28 @@ public class BaseStats
     [Tooltip("A number from (0-1) that will determine what percentage of health will be removed each tick. A number below .1 is highly recomended")]
     [SerializeField] [Range(0,1)]
     private float healthDecay;
+    [SerializeField]
+    private bool leavesArena;
+    [Tooltip("A timer for when the unit leaves regardless of hp. Setting this to 0 will disable it")]
+    [SerializeField] [Min(0)]
+    private float leaveTimer;
+
+    [Header("Range and Vision")]
     [SerializeField] [Min(0)]
     private float range;
     private bool incRange; //Used to increment the units range by 1 when it has units within its range to prevent chase, stop, chase
     [SerializeField] [Min(0)]
     private float visionRange;
+
+    [Header("Damage and Attack Speed")]
     [SerializeField] [Min(0)]
     private float baseDamage;
     [SerializeField] [Min(0)]
     private float attackDelay;
     [SerializeField] [Min(0)]
     private float currAttackDelay;
+
+    [Header("Movement")]
     [SerializeField] [Min(0)]
     private float moveSpeed;
     [Tooltip("Determines if a unit must rotate towards it target to fire")]
@@ -36,8 +48,11 @@ public class BaseStats
     private bool noRotation;
     [SerializeField] [Min(0)]
     private float rotationSpeed;
+
     [SerializeField]
     private SummoningSicknessUI summoningSicknessUI;
+
+    [Header("Unit GameObjects")]
     [SerializeField]
     private GameObject canvasAbility;
     [SerializeField]
@@ -52,14 +67,16 @@ public class BaseStats
     private SphereCollider detectionObject;
     [SerializeField]
     private SphereCollider visionObject;
+    [SerializeField]
+    private UnitMaterials unitMaterials;
+
+    [Header("Unit Enums")]
     [Tooltip("Lets other units know whether this unit is a ground or flying unit")]
     [SerializeField]
     private GameConstants.MOVEMENT_TYPE movementType;
     [Tooltip("Determines whether this unit can attack units if they are on the ground, flying or either one.")]
     [SerializeField]
     private GameConstants.HEIGHT_ATTACKABLE heightAttackable;
-    [SerializeField]
-    private UnitMaterials unitMaterials;
     [Tooltip("Lets other units know whether this unit is a structure or not")]
     [SerializeField]
     private GameConstants.UNIT_TYPE unitType;
@@ -367,6 +384,20 @@ public class BaseStats
         if(IsReady) {
             if(healthDecay > 0)
                 currHealth -= healthDecay*maxHealth * Time.deltaTime ; // lowers hp by 5% of maxHp every second ?? should this line be at the top ??
+            
+            if(leavesArena) {
+                if(leaveTimer > 0)
+                    leaveTimer -= Time.deltaTime;
+                else {
+                    ResetKillFlags(unit, target);
+                    GameManager.RemoveObjectsFromList(unit);
+                    if(target != null)
+                        (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(unit);
+                        (unit.GetComponent(typeof(IDamageable)) as IDamageable).SetTarget(null);
+                    MonoBehaviour.Destroy(unit);
+                }
+            }
+
 
             bool inVision = false;
             if(target != null)
@@ -574,22 +605,6 @@ public class BaseStats
                     }
                 }
             }
-            /*
-            foreach(GameObject go in enemyHitTargets) {
-                Component targetComponent = go.GetComponent(typeof(IDamageable));
-                if(targetComponent) {
-                    (targetComponent as IDamageable).SetTarget(null);
-                    if((targetComponent as IDamageable).InRangeTargets.Contains(unit))
-                        (targetComponent as IDamageable).InRangeTargets.Remove(unit);
-                    if((targetComponent as IDamageable).HitTargets.Contains(unit))
-                        (targetComponent as IDamageable).HitTargets.Remove(unit);
-
-                    if((targetComponent as IDamageable).InRangeTargets.Count == 0)
-                        (targetComponent as IDamageable).Stats.IncRange = false;
-                }
-            }
-            */
-            //make unit transparent
         }
     }
 

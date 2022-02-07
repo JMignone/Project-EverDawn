@@ -26,6 +26,7 @@ public class GrabbedStats
     private float totalDistance;
     private IDamageable unit;
     private IDamageable enemyUnit;
+    private bool enemyController;
 
     private Vector3 destination;
     private bool obstaclesBlockGrab;
@@ -75,8 +76,14 @@ public class GrabbedStats
                 }
             }
 
-            Debug.DrawLine(unitAgentPos, enemyAgentPos, Color.green);
-            Debug.DrawRay(enemyAgentPos, Vector3.up*10, Color.red);
+            /*
+
+                Need to add a check to see if the grabbed unit can still be grabbed. Maybe it got knocked up, canceling the grab
+
+            */
+
+            //Debug.DrawLine(unitAgentPos, enemyAgentPos, Color.green);
+            //Debug.DrawRay(enemyAgentPos, Vector3.up*10, Color.red);
 
             float obstacleAdjustment = 0;
             if(obstacleDetected)
@@ -102,6 +109,12 @@ public class GrabbedStats
                 */
             }
             else if(currentStunDelay > 0) {
+                if(!stunned && enemyCanAct) {
+                    if(enemyController)
+                        enemyUnit.Stats.IsCastingAbility = false;
+                    enemyUnit.Stats.CurrAttackDelay = enemyUnit.Stats.AttackDelay * GameConstants.ATTACK_CHARGE_LIMITER;
+                    Debug.Log("ADHASDHAHHJ");
+                }
                 stunned = true;
                 unit.Agent.Agent.enabled = true;
                 currentStunDelay -= Time.deltaTime;
@@ -111,12 +124,18 @@ public class GrabbedStats
         }
     }
 
-    public void Grab(float grabSpeed, float grabDuration, float stunDuration, bool obstaclesBlockGrab, IDamageable enemy) {
+    public void Grab(float grabSpeed, float grabDuration, float stunDuration, bool obstaclesBlockGrab, bool enemyController, IDamageable enemy) {
         if(!cantBeGrabbed && !outSideResistance && enemy.Agent != null && enemy.Stats.CanAct) {
+            unGrab(); //set to false as we need to be able to grab an already grabbed unit
             isGrabbed = true;
             grabDelay = grabDuration;
-            currentStunDelay = stunDuration;
+            //if we are grabbed by a friendly unit, don't get stunned
+            if((enemy as Component).gameObject.tag != (unit as Component).gameObject.tag)
+                currentStunDelay = stunDuration;
+            else
+                currentStunDelay = 0;
             enemyUnit = enemy;
+            this.enemyController = enemyController;
             this.obstaclesBlockGrab = obstaclesBlockGrab;
 
             Vector3 unitAgentPos = new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z);
@@ -131,6 +150,7 @@ public class GrabbedStats
             unit.Agent.Agent.enabled = false;
             unit.SetTarget(null);
             unit.Stats.CurrAttackDelay = 0;
+            unit.Stats.IsCastingAbility = false; //normally this is done automatically, but some abilitys use the 'abilityOverride', so we will need to set it
             GameFunctions.DisableAbilities((unit as Component).gameObject);
         }
     }
@@ -139,6 +159,11 @@ public class GrabbedStats
         isGrabbed = false;
         stunned = false;
         obstacleDetected = false;
+        unit.Agent.Agent.enabled = true;
         GameFunctions.EnableAbilities((unit as Component).gameObject);
+
+        if(enemyController && enemyUnit != null)
+            enemyUnit.Stats.IsCastingAbility = false;
+        enemyController = false;
     }
 }

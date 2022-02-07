@@ -141,6 +141,13 @@ MonoBehaviour:
   freezeStats:
     canFreeze: 1
     freezeDuration: 4
+  critStats:
+    critOnFrozen: 1
+    critOnSlow: 1
+    critOnRoot: 1
+    critOnPoison: 1
+    critOnBlind: 1
+    critOnStun: 1
   slowStats:
     canSlow: 0
     slowDuration: 0
@@ -163,6 +170,7 @@ MonoBehaviour:
     speed: 0
   grabStats:
     canGrab: 0
+    abilityControlOverride: 0
     obstaclesBlockGrab: 0
     pullDuration: 0
     speed: 0
@@ -190,6 +198,7 @@ MonoBehaviour:
     currentLingeringTime: 0
   selfDestructStats:
     selfDestructs: 1
+    onTarget: 0
     explosionEffect: {fileID: 8690222435761223237, guid: 6da804001015963439247141d19a1ee2, type: 3}
     explosionDamage: 150
     towerDamage: 0

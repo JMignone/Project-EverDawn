@@ -33,6 +33,8 @@ public class EffectStats
     private StunnedStats stunnedStats;
     [SerializeField]
     private ResistStats resistStats;
+    [SerializeField]
+    private CritStats critStats;
 
     public UAOEStats AOEStats
     {
@@ -102,6 +104,11 @@ public class EffectStats
     public ResistStats ResistStats
     {
         get { return resistStats; }
+    }
+
+    public CritStats CritStats
+    {
+        get { return critStats; }
     }
 
     public void StartStats(IDamageable go) {

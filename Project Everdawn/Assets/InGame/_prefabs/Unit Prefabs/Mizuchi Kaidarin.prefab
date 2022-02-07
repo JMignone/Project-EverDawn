@@ -464,7 +464,6 @@ MonoBehaviour:
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 1
-      currSummonSicknessDelay: 0
       summonProtectionDelay: 0
       sSCanvas: {fileID: 6967967869394463330}
       sSSprite: {fileID: 6967967868643922537}
@@ -475,8 +474,6 @@ MonoBehaviour:
     abilityIndicator: {fileID: 8751797541508323367}
     detectionObject: {fileID: 1701868425020950975}
     visionObject: {fileID: 1701868425526003444}
-    movementType: 0
-    heightAttackable: 0
     unitMaterials:
       renderers:
       - {fileID: 4561129665815699525}
@@ -489,6 +486,8 @@ MonoBehaviour:
       - {fileID: 4561129665815699531}
       - {fileID: 4561129665815699541}
       - {fileID: 811957982906756864}
+    movementType: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
@@ -569,6 +568,13 @@ MonoBehaviour:
         resistedPull: 0
         resistedBlind: 0
         resistedStun: 0
+      critStats:
+        critOnFrozen: 1
+        critOnSlow: 1
+        critOnRoot: 1
+        critOnPoison: 1
+        critOnBlind: 1
+        critOnStun: 1
   attackStats:
     firesProjectiles: 1
     attackType: 0
@@ -1337,6 +1343,10 @@ PrefabInstance:
       propertyPath: unit
       value: 
       objectReference: {fileID: 1701868425468477454}
+    - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
+      propertyPath: autoTarget
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityPreviewCanvas
       value: 

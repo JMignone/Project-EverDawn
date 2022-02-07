@@ -293,15 +293,48 @@ MonoBehaviour:
   speed: 120
   range: 20
   baseDamage: 0
+  towerDamage: 0
   heightAttackable: 0
   typeAttackable: 0
   canPierce: 1
   blockable: 0
   abilityControl: 1
+  pauseAbility: 0
+  stopOnMiss: 0
+  skipLastOnMiss: 0
+  skipNumber: 0
+  overridesTarget: 0
+  onlyDamageIfTargeted: 0
+  hideRange: 0
+  hidePreview: 0
+  customPathStats:
+    hasCustomPath: 0
+    lerpPoints: []
+    speedToLastPoint: 0
+    arcMultiplierToLastPoint: 0
+    customCollider: {fileID: 0}
+    customImage: {fileID: 0}
+    pivot: {x: 0, y: 0}
+    sizeDelta: {x: 0, y: 0}
+  locationStats:
+    overridesLocation: 0
+    overridesAtEnd: 0
+    overridesDuringFlight: 0
+    overrideDelay: 0
+    newLocation: 0
+    forwardAdjustment: 0
   aoeStats:
     areaOfEffect: 0
+    unitCentered: 0
     explosionEffect: {fileID: 0}
     explosionRadius: 0
+  critStats:
+    critOnFrozen: 1
+    critOnSlow: 1
+    critOnRoot: 1
+    critOnPoison: 1
+    critOnBlind: 1
+    critOnStun: 1
   freezeStats:
     canFreeze: 0
     freezeDuration: 2.5
@@ -327,12 +360,21 @@ MonoBehaviour:
     speed: 0
   grabStats:
     canGrab: 0
+    abilityControlOverride: 0
+    obstaclesBlockGrab: 0
     pullDuration: 0
+    speed: 0
     stunDuration: 0
   strengthStats:
     canStrength: 0
     strengthDuration: 0
     strengthIntensity: 0
+  blindStats:
+    canBlind: 0
+    blindDuration: 0
+  stunStats:
+    canStun: 0
+    stunDuration: 0
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 5
@@ -342,21 +384,23 @@ MonoBehaviour:
     lingerDuringFlight: 0
     lingeringEffect: {fileID: 0}
     lingeringDamage: 0
+    towerDamage: 0
     lingeringRadius: 0
     lingeringDuration: 0
     lingeringTick: 0
     currentLingeringTime: 0
   selfDestructStats:
     selfDestructs: 0
+    onTarget: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 0
+    towerDamage: 0
     explosionRadius: 2.5
   grenadeStats:
     isGrenade: 0
     isAirStrike: 0
     startLocation: 0
     explosionEffect: {fileID: 0}
-    explosionDamage: 0
     explosionRadius: 1.5
     grenadeArcMultiplier: 0
   resistEffects:
@@ -367,8 +411,11 @@ MonoBehaviour:
     resistKnockback: 1
     resistGrab: 1
     resistPull: 1
+    resistBlind: 0
+    resistStun: 0
   applyResistanceStats:
     applyToSelf: 0
+    applyToOthers: 0
     resistDamage: 0
     rdDuration: 0
     untargetable: 0
@@ -387,8 +434,12 @@ MonoBehaviour:
     rgDuration: 0
     resistPull: 0
     rpullDuration: 0
-  chosenTarget: {fileID: 0}
+    resistBlind: 0
+    rbDuration: 0
+    resistStun: 0
+    rstunDuration: 0
   passObstacles: 1
+  landInsideTarget: 0
   highlightEnemies: 0
   retreatStats:
     retreats: 0

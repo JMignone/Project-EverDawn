@@ -228,7 +228,7 @@ public class Building : MonoBehaviour, IDamageable
                             if(stats.EffectStats.AOEStats.AreaOfEffect)
                                 stats.EffectStats.AOEStats.Explode(gameObject, target, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                             else {
-                                GameFunctions.Attack(damageable, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                                GameFunctions.Attack(damageable, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity, stats.EffectStats.CritStats);
                                 stats.ApplyAffects(damageable);
                             }
                             buildUpStats.BuildUp();

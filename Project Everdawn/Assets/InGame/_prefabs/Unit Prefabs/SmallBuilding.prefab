@@ -338,10 +338,10 @@ MonoBehaviour:
     attackDelay: 1.5
     currAttackDelay: 0
     moveSpeed: 0
+    noRotation: 0
     rotationSpeed: 0
     summoningSicknessUI:
       summonSicknessDelay: 0
-      currSummonSicknessDelay: 0
       summonProtectionDelay: 0
       sSCanvas: {fileID: 1082880492446488363}
       sSSprite: {fileID: 1082880492794408736}
@@ -352,13 +352,12 @@ MonoBehaviour:
     abilityIndicator: {fileID: 6233150845706674207}
     detectionObject: {fileID: 6233150844581326293}
     visionObject: {fileID: 6233150846021740420}
-    movementType: 0
-    heightAttackable: 0
     unitMaterials:
       renderers:
       - {fileID: 6233150845000768249}
       - {fileID: 6233150845000768251}
-      defaultMat: {fileID: 0}
+    movementType: 0
+    heightAttackable: 0
     unitType: 1
     unitGrouping: 0
     attackPriority: 0
@@ -374,7 +373,6 @@ MonoBehaviour:
         outSideResistance: 0
         isFrozen: 0
         frozenDelay: 0
-        currentFrozenDelay: 0
       slowStats:
         canSlow: 0
         slowDuration: 0
@@ -388,8 +386,6 @@ MonoBehaviour:
       rootedStats:
         cantBeRooted: 0
         isRooted: 0
-        rootDelay: 0
-        currentRootDelay: 0
       poisonedStats:
         cantBePoisoned: 0
         isPoisoned: 0
@@ -415,8 +411,7 @@ MonoBehaviour:
         cantBeGrabbed: 1
         isGrabbed: 0
         direction: {x: 0, y: 0, z: 0}
-        pullDelay: 0
-        currentPullDelay: 0
+        grabDelay: 0
         currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
@@ -424,6 +419,13 @@ MonoBehaviour:
         strengthDelay: 0
         currentDelay: 0
         currentStrengthIntensity: 0
+      blindedStats:
+        cantBeBlinded: 0
+      stunnedStats:
+        cantBeStunned: 0
+        outSideResistance: 0
+        isStunned: 0
+        stunDelay: 0
       resistStats:
         resistedDamage: 0
         resistedTarget: 0
@@ -434,6 +436,15 @@ MonoBehaviour:
         resistedKnockback: 0
         resistedGrab: 0
         resistedPull: 0
+        resistedBlind: 0
+        resistedStun: 0
+      critStats:
+        critOnFrozen: 1
+        critOnSlow: 1
+        critOnRoot: 1
+        critOnPoison: 1
+        critOnBlind: 1
+        critOnStun: 1
   spawnStats:
     unitToSpawn: {fileID: 0}
   attackStats:

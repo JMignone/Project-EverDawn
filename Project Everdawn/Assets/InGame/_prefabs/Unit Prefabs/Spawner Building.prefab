@@ -273,7 +273,6 @@ MonoBehaviour:
     rotationSpeed: 0
     summoningSicknessUI:
       summonSicknessDelay: 2
-      currSummonSicknessDelay: 0
       summonProtectionDelay: 0
       sSCanvas: {fileID: 2338420224008550417}
       sSSprite: {fileID: 2338420223659638810}
@@ -284,12 +283,12 @@ MonoBehaviour:
     abilityIndicator: {fileID: 3887690282115851699}
     detectionObject: {fileID: 3887690281707931460}
     visionObject: {fileID: 3887690282776612415}
-    movementType: 0
-    heightAttackable: 0
     unitMaterials:
       renderers:
       - {fileID: 3887690282615450031}
       - {fileID: 3887690282615450029}
+    movementType: 0
+    heightAttackable: 0
     unitType: 1
     unitGrouping: 0
     attackPriority: 0
@@ -370,6 +369,13 @@ MonoBehaviour:
         resistedPull: 0
         resistedBlind: 0
         resistedStun: 0
+      critStats:
+        critOnFrozen: 1
+        critOnSlow: 1
+        critOnRoot: 1
+        critOnPoison: 1
+        critOnBlind: 1
+        critOnStun: 1
   spawnStats:
     unitToSpawn: {fileID: 5726148247449163227, guid: 304a4c69c2fd919499f930a64e2fda40, type: 3}
   attackStats:

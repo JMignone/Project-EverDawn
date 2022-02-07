@@ -50,6 +50,15 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
     private List<GameObject> abilityPreviews;
 
     [Header("Ability default previews and settings")]
+    [Tooltip("Sets what the ability is able to hit")]
+    [SerializeField]
+    private GameConstants.PLAYERS_ATTACKABLE playersAttackable;
+
+    [Tooltip("Sets what the ability is allowed to auto-target to")]
+    [SerializeField]
+    private GameConstants.AUTO_TARGET autoTarget;
+    private string autoTag;
+
     [SerializeField]
     private bool hidePreview;
 
@@ -77,11 +86,11 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
     //an amount of abilities to skip starting from the last ability
     private int skipOverride;
 
-    public Unit Unit
+    public IDamageable Unit
     {
-        get { return unit; }
+        get { return unit != null ? unit as IDamageable : building as IDamageable; }
     }
-
+    
     public List<GameObject> AbilityPrefabs
     {
         get { return abilityPrefabs; }
@@ -148,14 +157,40 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
 
         abilityPreviews = new List<GameObject>();
         createAbilityPreviews();
-        currentDelay = 0;
-
-        isFiring = false;
-        isDragging = false;
 
         AbilityUI.StartStats();
+        if(!Unit.Stats.SummoningSicknessUI.IsReady)
+            GameFunctions.DisableAbilities((unit as Component).gameObject);
 
         target = null;
+
+        //This will set what the ability will auto target if allowed
+        if(autoTarget == GameConstants.AUTO_TARGET.ENEMY) {
+            if(transform.parent.tag == "Player")
+                autoTag = "Player";
+            else
+                autoTag = "Enemy";
+        }
+        else if(autoTarget == GameConstants.AUTO_TARGET.PLAYER) {
+            if(transform.parent.tag == "Enemy")
+                autoTag = "Player";
+            else
+                autoTag = "Enemy";
+        }
+        else if(autoTarget == GameConstants.AUTO_TARGET.BOTH)
+            autoTag = "Both";
+        else
+            autoTag = "None";
+
+        //This will set what the ability's will highlight and hit
+        if(playersAttackable == GameConstants.PLAYERS_ATTACKABLE.PLAYER) {
+            if(transform.parent.tag == "Player")
+                transform.parent.tag = "Enemy";
+            else
+                transform.parent.tag = "Player";
+        }
+        else if(playersAttackable == GameConstants.PLAYERS_ATTACKABLE.BOTH)
+            transform.parent.tag = "Untagged";
     }
 
     private void LateUpdate()
@@ -164,7 +199,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
-        if(!isDragging && unit.Stats.IsReady && abilityUI.CanDrag) {
+        if(!isDragging && ((Unit.Stats.IsReady && abilityUI.CanDrag) || !Unit.Stats.SummoningSicknessUI.IsReady) ) {
             isDragging = true;
             unit.Stats.IsHoveringAbility = true;
 
@@ -261,7 +296,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
     }
 
     public void OnPointerClick(PointerEventData pointerEventData) {
-        if(!isDragging && abilityUI.CanDrag && unit.Stats.IsReady) { //if the abililty can be dragged
+        if(!isDragging && abilityUI.CanDrag && unit.Stats.IsReady && autoTag != "None") { //if the abililty can be clicked
             Collider[] colliders = Physics.OverlapSphere(unit.Agent.Agent.transform.position, maxRange);
             Component testComponent = abilityPrefabs[0].GetComponent(typeof(IAbility));
 
@@ -270,8 +305,18 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
                 float closestDistance = 9999;
                 float distance;
                 foreach(Collider collider in colliders) {
-                    if(!collider.CompareTag(Unit.Agent.transform.tag) && collider.name == "Agent") {
+                    if(!collider.CompareTag(autoTag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
+                        //make sure we are not targeting ourselves
+                        if(unit != null) {
+                            if((unit as Component).gameObject == damageable.gameObject)
+                                continue;
+                        }
+                        else {
+                            if((building as Component).gameObject == damageable.gameObject)
+                                continue;
+                        }
+
                         if(GameFunctions.WillHit((testComponent as IAbility).HeightAttackable, (testComponent as IAbility).TypeAttackable, damageable)) {
                             distance = Vector3.Distance(unit.Agent.Agent.transform.position, collider.transform.position);
                             if(distance < closestDistance) {
@@ -307,8 +352,18 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
             float closestDistance = 9999;
             float distance;
             foreach(Collider collider in colliders) {
-                if(!collider.CompareTag(abilityPrefabs[0].tag) && collider.name == "Agent") {
+                if(!collider.CompareTag(transform.parent.tag) && collider.name == "Agent") {
                     Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
+                    //make sure we are not targeting ourselves
+                    if(unit != null) {
+                        if((unit as Component).gameObject == damageable.gameObject)
+                            continue;
+                    }
+                    else {
+                        if((building as Component).gameObject == damageable.gameObject)
+                            continue;
+                    }
+
                     if((damageable as IDamageable).Stats.Targetable && GameFunctions.WillHit((testComponent as IAbility).HeightAttackable, (testComponent as IAbility).TypeAttackable, damageable)) {
                         distance = Vector3.Distance(unit.Agent.Agent.transform.position, collider.transform.position);
                         if(distance < closestDistance) {

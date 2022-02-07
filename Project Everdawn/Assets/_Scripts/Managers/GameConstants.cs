@@ -30,6 +30,22 @@ public static class GameConstants
         STRUCTURE
     }
 
+    //Determines what the ability a unit casts will hit, either enemy units, friendly units or both
+    public enum PLAYERS_ATTACKABLE {
+        ENEMY,
+        PLAYER,
+        BOTH
+    }
+
+    //Determines what the ability's auto-target will target 
+    public enum AUTO_TARGET {
+        ENEMY,
+        PLAYER,
+        BOTH,
+        NONE
+    }
+
+
     public enum UNIT_TYPE {
         UNIT,
         STRUCTURE

@@ -78,7 +78,7 @@ public class ChargeStats
             if(unit.Stats.EffectStats.AOEStats.AreaOfEffect)
                 unit.Stats.EffectStats.AOEStats.Explode((unit as Component).gameObject, unit.Target, chargeDamage * unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
             else {
-                GameFunctions.Attack(damageable, chargeDamage * unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                GameFunctions.Attack(damageable, chargeDamage * unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity, unit.Stats.EffectStats.CritStats);
                 unit.Stats.ApplyAffects(damageable);
             }
             unit.Stats.Appear((unit as Component).gameObject, unit.ShadowStats, unit.Agent);

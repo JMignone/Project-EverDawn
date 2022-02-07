@@ -116,7 +116,7 @@ public class DashStats
         if(unit.Stats.EffectStats.AOEStats.AreaOfEffect)
             unit.Stats.EffectStats.AOEStats.Explode((unit as Component).gameObject, (chosenTarget as Component).gameObject, dashDamage * unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
         else {
-            GameFunctions.Attack((chosenTarget as Component), dashDamage * unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+            GameFunctions.Attack((chosenTarget as Component), dashDamage * unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity, unit.Stats.EffectStats.CritStats);
             unit.Stats.ApplyAffects((chosenTarget as Component));
         }
         unit.Stats.Appear((unit as Component).gameObject, unit.ShadowStats, unit.Agent);

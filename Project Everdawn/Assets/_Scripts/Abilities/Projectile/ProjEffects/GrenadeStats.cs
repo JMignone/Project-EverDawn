@@ -121,7 +121,7 @@ public class GrenadeStats
                     if(damageable.GetComponent<Tower>())
                         damage = projectile.TowerDamage*projectile.DamageMultiplier;
 
-                    GameFunctions.Attack(damageable, damage);
+                    GameFunctions.Attack(damageable, damage, projectile.CritStats);
                     projectile.ApplyAffects(damageable);
                 }
             }

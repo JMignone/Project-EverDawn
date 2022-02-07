@@ -692,7 +692,6 @@ MonoBehaviour:
     rotationSpeed: 120
     summoningSicknessUI:
       summonSicknessDelay: 1
-      currSummonSicknessDelay: 0
       summonProtectionDelay: 0
       sSCanvas: {fileID: 6160463879896391651}
       sSSprite: {fileID: 6160463880244275176}
@@ -703,8 +702,6 @@ MonoBehaviour:
     abilityIndicator: {fileID: 3925836232589105576}
     detectionObject: {fileID: 3925836231993521891}
     visionObject: {fileID: 3925836231725190131}
-    movementType: 0
-    heightAttackable: 0
     unitMaterials:
       renderers:
       - {fileID: 4004059729609695203}
@@ -714,6 +711,8 @@ MonoBehaviour:
       - {fileID: 4004660008947858341}
       - {fileID: 4007112792387567037}
       - {fileID: 3904358617878147213}
+    movementType: 0
+    heightAttackable: 0
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
@@ -794,6 +793,13 @@ MonoBehaviour:
         resistedPull: 0
         resistedBlind: 0
         resistedStun: 0
+      critStats:
+        critOnFrozen: 1
+        critOnSlow: 1
+        critOnRoot: 1
+        critOnPoison: 1
+        critOnBlind: 1
+        critOnStun: 1
   attackStats:
     firesProjectiles: 1
     attackType: 0
@@ -1110,6 +1116,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3925836231506596150}
     m_Modifications:
+    - target: {fileID: 2683724732576097059, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2683724732824738243, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
@@ -1215,7 +1225,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 3925836231040451564}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 

@@ -99,11 +99,15 @@ public class GroupUnit : MonoBehaviour, IDamageable
         isHoveringAbility = false;
     }*/
 
+    private float currentDelay;
     private void FixedUpdate()
     {
-        if(gameObject.transform.childCount == 1) {
-            print(gameObject.name + " has died!");
-            Destroy(gameObject);
+        if(currentDelay < 10)
+            currentDelay += Time.deltaTime;
+        else {
+            currentDelay = 0;
+            if(gameObject.transform.childCount == 1)
+                Destroy(gameObject);
         }
     }
 

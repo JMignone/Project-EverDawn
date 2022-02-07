@@ -136,10 +136,18 @@ MonoBehaviour:
   stopOnMiss: 0
   skipLastOnMiss: 0
   skipNumber: 0
+  hideRange: 0
   hidePreview: 0
   freezeStats:
     canFreeze: 0
     freezeDuration: 0
+  critStats:
+    critOnFrozen: 1
+    critOnSlow: 1
+    critOnRoot: 1
+    critOnPoison: 1
+    critOnBlind: 1
+    critOnStun: 1
   slowStats:
     canSlow: 0
     slowDuration: 0
@@ -162,6 +170,7 @@ MonoBehaviour:
     speed: 0
   grabStats:
     canGrab: 0
+    abilityControlOverride: 0
     obstaclesBlockGrab: 0
     pullDuration: 0
     speed: 0
@@ -189,6 +198,7 @@ MonoBehaviour:
     currentLingeringTime: 0
   selfDestructStats:
     selfDestructs: 0
+    onTarget: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 0
     towerDamage: 0

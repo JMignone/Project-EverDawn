@@ -40,6 +40,15 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     private List<GameObject> abilityPreviews;
 
     [Header("Ability default previews and settings")]
+    [Tooltip("Sets what the ability is able to hit")]
+    [SerializeField]
+    private GameConstants.PLAYERS_ATTACKABLE playersAttackable;
+
+    [Tooltip("Sets what the ability is allowed to auto-target to")]
+    [SerializeField]
+    private GameConstants.AUTO_TARGET autoTarget;
+    private string autoTag;
+
     [SerializeField]
     private Sprite abilityPreviewLine;
 
@@ -129,13 +138,12 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     void Start() {
         abilityPreviews = new List<GameObject>();
         createAbilityPreviews();
-        currentDelay = 0;
 
-        isFiring = false;
-        isDragging = false;
         fireMousePosition = new Vector3(-1, -1, -1);
 
         AbilityUI.StartStats();
+        if(!Unit.Stats.SummoningSicknessUI.IsReady)
+            GameFunctions.DisableAbilities((unit as Component).gameObject);
 
         //Below sets up what will be needed for clicking the ability, such that we only need to calculate maxRange and areaMask once.
         maxRange = 0;
@@ -152,8 +160,33 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 passesObstacles = ability.GetComponent<Movement>().PassObstacles;
         }
 
-        if(!Unit.Stats.SummoningSicknessUI.IsReady)
-            GameFunctions.DisableAbilities((unit as Component).gameObject);
+        //This will set what the ability will auto target if allowed
+        if(autoTarget == GameConstants.AUTO_TARGET.ENEMY) {
+            if(transform.parent.tag == "Player")
+                autoTag = "Player";
+            else
+                autoTag = "Enemy";
+        }
+        else if(autoTarget == GameConstants.AUTO_TARGET.PLAYER) {
+            if(transform.parent.tag == "Enemy")
+                autoTag = "Player";
+            else
+                autoTag = "Enemy";
+        }
+        else if(autoTarget == GameConstants.AUTO_TARGET.BOTH)
+            autoTag = "Both";
+        else
+            autoTag = "None";
+
+        //This will set what the ability's will highlight and hit
+        if(playersAttackable == GameConstants.PLAYERS_ATTACKABLE.PLAYER) {
+            if(transform.parent.tag == "Player")
+                transform.parent.tag = "Enemy";
+            else
+                transform.parent.tag = "Player";
+        }
+        else if(playersAttackable == GameConstants.PLAYERS_ATTACKABLE.BOTH)
+            transform.parent.tag = "Untagged";
     }
 
     private void LateUpdate()
@@ -263,7 +296,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     }
 
     public void OnPointerClick(PointerEventData pointerEventData) {
-        if(!isDragging && abilityUI.CanDrag && Unit.Stats.IsReady) { //if the abililty can be dragged
+        if(!isDragging && abilityUI.CanDrag && Unit.Stats.IsReady && autoTag != "None") { //if the abililty can be clicked
             Collider[] colliders = Physics.OverlapSphere(Unit.Agent.Agent.transform.position, maxRange);
             Component testComponent = abilityPrefabs[0].GetComponent(typeof(IAbility));
 
@@ -272,8 +305,18 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 float closestDistance = 9999;
                 float distance;
                 foreach(Collider collider in colliders) {
-                    if(!collider.CompareTag(Unit.Agent.transform.tag) && collider.name == "Agent") {
+                    if(!collider.CompareTag(autoTag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
+                        //make sure we are not targeting ourselves
+                        if(unit != null) {
+                            if((unit as Component).gameObject == damageable.gameObject)
+                                continue;
+                        }
+                        else {
+                            if((building as Component).gameObject == damageable.gameObject)
+                                continue;
+                        }
+                        
                         if(GameFunctions.WillHit((testComponent as IAbility).HeightAttackable, (testComponent as IAbility).TypeAttackable, damageable)) {
                             distance = Vector3.Distance(Unit.Agent.Agent.transform.position, collider.transform.position);
                             if(distance < closestDistance) {

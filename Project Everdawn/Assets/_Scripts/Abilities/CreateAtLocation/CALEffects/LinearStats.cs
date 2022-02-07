@@ -67,21 +67,21 @@ public class LinearStats
     public void Explode(GameObject go) {
         //Instantiate(explosionEffect, go.transform.position, go.transform.rotation);
         if(explosionDamage > 0) { //have this here incase we want to have a selfdestruct effect but just for show, perhaps for a lingering damage projectile
-            Component ability = go.GetComponent(typeof(IAbility));
+            IAbility ability = (go.GetComponent(typeof(IAbility)) as IAbility);
             if(isVertical) {
                 Collider[] collidersVert = Physics.OverlapBox(go.transform.position, new Vector3(explosionWidth/2, .5f, GameManager.Instance.Ground.transform.localScale.z * 10));
                 foreach(Collider collider in collidersVert) {
                     if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-                        if(GameFunctions.WillHit((ability as IAbility).HeightAttackable, (ability as IAbility).TypeAttackable, damageable)) {
-                            (ability as IAbility).SetHit = true;
+                        if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, damageable)) {
+                            ability.SetHit = true;
 
-                            float damage = explosionDamage*(ability as IAbility).DamageMultiplier;
+                            float damage = explosionDamage*ability.DamageMultiplier;
                             if(towerDamage > 0 && damageable.GetComponent<Tower>())
-                                damage = towerDamage*(ability as IAbility).DamageMultiplier;
+                                damage = towerDamage*ability.DamageMultiplier;
 
-                            GameFunctions.Attack(damageable, explosionDamage*damageMultiplier);
-                            (ability as IAbility).ApplyAffects(damageable);
+                            GameFunctions.Attack(damageable, explosionDamage*damageMultiplier, ability.CritStats);
+                            ability.ApplyAffects(damageable);
                         }
                     }
                 }
@@ -91,15 +91,15 @@ public class LinearStats
                 foreach(Collider collider in collidersHorz) {
                     if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-                        if(GameFunctions.WillHit((ability as IAbility).HeightAttackable, (ability as IAbility).TypeAttackable, damageable)) {
-                            (ability as IAbility).SetHit = true;
+                        if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, damageable)) {
+                            ability.SetHit = true;
 
-                            float damage = explosionDamage*(ability as IAbility).DamageMultiplier;
+                            float damage = explosionDamage*ability.DamageMultiplier;
                             if(towerDamage > 0 && damageable.GetComponent<Tower>())
-                                damage = towerDamage*(ability as IAbility).DamageMultiplier;
+                                damage = towerDamage*ability.DamageMultiplier;
 
-                            GameFunctions.Attack(damageable, explosionDamage*damageMultiplier);
-                            (ability as IAbility).ApplyAffects(damageable);
+                            GameFunctions.Attack(damageable, explosionDamage*damageMultiplier, ability.CritStats);
+                            ability.ApplyAffects(damageable);
                         }
                     }
                 }

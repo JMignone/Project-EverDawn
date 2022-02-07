@@ -88,6 +88,24 @@ public class AttackStats
 
     public void StartAttackStats(IDamageable go) {
         unit = go;
+
+        if(firesProjectiles) {
+            float totalDamage = 0;
+            foreach(GameObject ability in abilityPrefabs) {
+                if(ability.GetComponent<Projectile>()){
+                    Projectile proj = ability.GetComponent<Projectile>();
+                    totalDamage += proj.BaseDamage;
+                    totalDamage += proj.SelfDestructStats.ExplosionDamage;
+                }
+                else if(ability.GetComponent<CreateAtLocation>()) {
+                    CreateAtLocation cal = ability.GetComponent<CreateAtLocation>();
+                    totalDamage += cal.SelfDestructStats.ExplosionDamage;
+                    totalDamage += cal.LinearStats.ExplosionDamage;
+                }
+            }
+            unit.Stats.BaseDamage = totalDamage;
+        }
+            
     }
 
     public void BeginFiring() {

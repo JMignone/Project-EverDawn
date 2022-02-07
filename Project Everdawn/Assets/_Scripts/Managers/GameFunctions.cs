@@ -53,10 +53,26 @@ public static class GameFunctions
         return false;
     }
 
-    public static void Attack(Component damageable, float baseDamage) {
+    public static void Attack(Component damageable, float baseDamage, CritStats critStats = null) {
         if(damageable) {
-            if((damageable as IDamageable).Stats.Damageable)
+            if((damageable as IDamageable).Stats.Damageable) {
+                if(critStats != null) {
+                    if((damageable as IDamageable).Stats.EffectStats.FrozenStats.IsFrozen)
+                        baseDamage *= critStats.CritOnFrozen;
+                    if((damageable as IDamageable).Stats.EffectStats.SlowedStats.IsSlowed)
+                        baseDamage *= critStats.CritOnSlow;
+                    if((damageable as IDamageable).Stats.EffectStats.PoisonedStats.IsPoisoned)
+                        baseDamage *= critStats.CritOnPoison;
+                    if((damageable as IDamageable).Stats.EffectStats.BlindedStats.IsBlinded)
+                        baseDamage *= critStats.CritOnBlind;
+                    if((damageable as IDamageable).Stats.EffectStats.StunnedStats.IsStunned)
+                        baseDamage *= critStats.CritOnStun;
+                }
+                else
+                    Debug.Log("No CritStats? This better be a poison!");
+
                 (damageable as IDamageable).TakeDamage(baseDamage);
+            }
         }
     }
 
@@ -158,11 +174,10 @@ public static class GameFunctions
             playerOffset = -100;
 
         var targetPosition = position;
-        targetPosition.z = playerOffset; //What about the enemy player? Does this need to be -100?
+        targetPosition.z = playerOffset;
         Vector3 direction = targetPosition - position;
         
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        //This makes sure the unit is rotated the corect way
 
         GameObject go = GameObject.Instantiate(prefab, position, targetRotation, parent);
         giveUnitTeam(go, tag);
@@ -380,6 +395,8 @@ public static class GameFunctions
             go.tag = tag;
             unit.Agent.transform.tag = tag;
             unit.UnitSprite.Ability.transform.tag = tag;
+            if(tag == "Enemy")
+                unit.Stats.HealthBar.color = new Color32(219,37,37,255);
         }
     }
 

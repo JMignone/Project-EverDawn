@@ -72,7 +72,7 @@ public class SelfDestructStats
                         if(towerDamage > 0 && damageable.GetComponent<Tower>())
                             damage = towerDamage*ability.DamageMultiplier;
 
-                        GameFunctions.Attack(damageable, damage);
+                        GameFunctions.Attack(damageable, damage, ability.CritStats);
                         ability.ApplyAffects(damageable);
                     }
                 }

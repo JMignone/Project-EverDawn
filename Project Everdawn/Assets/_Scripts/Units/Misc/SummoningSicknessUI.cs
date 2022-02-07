@@ -11,8 +11,6 @@ public class SummoningSicknessUI
     [Tooltip("Determines how long a unit will be able to act after its summonProtectionDelay is up")]
     [SerializeField]
     private float summonSicknessDelay;
-
-    [SerializeField]
     private float currSummonSicknessDelay;
 
     [Tooltip("Determines how long a unit will be undamageable and untargetable when summoned")]

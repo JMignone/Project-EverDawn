@@ -8,6 +8,10 @@ public class GrabStats
     [SerializeField]
     private bool canGrab;
 
+    [Tooltip("If this is set, then the grab wont give the unit control until the grabbed unit has reached the grabber.")]
+    [SerializeField]
+    private bool abilityControlOverride;
+
     [SerializeField]
     private bool obstaclesBlockGrab;
 
@@ -24,6 +28,11 @@ public class GrabStats
     public bool CanGrab
     {
         get { return canGrab; }
+    }
+
+    public bool AbilityControlOverride
+    {
+        get { return abilityControlOverride; }
     }
 
     public bool ObstaclesBlockGrab

@@ -63,6 +63,7 @@ MonoBehaviour:
   skipNumber: 0
   overridesTarget: 0
   onlyDamageIfTargeted: 0
+  hideRange: 0
   hidePreview: 0
   customPathStats:
     hasCustomPath: 0
@@ -71,6 +72,8 @@ MonoBehaviour:
     arcMultiplierToLastPoint: 0.66818
     customCollider: {fileID: 532591105809680800, guid: 3371c5ec0730356438b172c793a1bb3f, type: 3}
     customImage: {fileID: 21300000, guid: ac27ebfb92bbb1344be71a51aa516b14, type: 3}
+    pivot: {x: 0, y: 0}
+    sizeDelta: {x: 0, y: 0}
   locationStats:
     overridesLocation: 0
     overridesAtEnd: 0
@@ -80,8 +83,16 @@ MonoBehaviour:
     forwardAdjustment: 0
   aoeStats:
     areaOfEffect: 0
+    unitCentered: 0
     explosionEffect: {fileID: 0}
     explosionRadius: 0
+  critStats:
+    critOnFrozen: 1
+    critOnSlow: 1
+    critOnRoot: 1
+    critOnPoison: 1
+    critOnBlind: 1
+    critOnStun: 1
   freezeStats:
     canFreeze: 0
     freezeDuration: 0
@@ -107,6 +118,7 @@ MonoBehaviour:
     speed: 0
   grabStats:
     canGrab: 1
+    abilityControlOverride: 0
     obstaclesBlockGrab: 0
     pullDuration: 0.5
     speed: 0
@@ -137,6 +149,7 @@ MonoBehaviour:
     currentLingeringTime: 0
   selfDestructStats:
     selfDestructs: 0
+    onTarget: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 0
     towerDamage: 0

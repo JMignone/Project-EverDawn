@@ -39,7 +39,7 @@ public class LingeringStats
     [SerializeField] [Min(0)]
     private float currentLingeringTime;
 
-    private Component abilityComponent;
+    private IAbility ability;
 
     public bool Lingering
     {
@@ -98,7 +98,7 @@ public class LingeringStats
     public void StartLingeringStats(GameObject go) {
         isInFlight = true;
         currentLingeringTime = 0;
-        abilityComponent = go.GetComponent(typeof(IAbility));
+        ability = (go.GetComponent(typeof(IAbility)) as IAbility);
         if(lingerDuringFlight)
             currentlyLingering = true;
         else
@@ -106,7 +106,7 @@ public class LingeringStats
 
         if(!lingerDuringFlight && !lingerAtEnd) //if lingering is on but it doesnt linger both in flight and at end, default to end
             lingerAtEnd = true;
-        damageMultiplier = (abilityComponent as IAbility).DamageMultiplier;
+        damageMultiplier = ability.DamageMultiplier;
     }
 
     public void UpdateLingeringStats(GameObject go) {
@@ -137,15 +137,15 @@ public class LingeringStats
         foreach(Collider collider in colliders) {
             if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
                 Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-                if(GameFunctions.WillHit((abilityComponent as IAbility).HeightAttackable, (abilityComponent as IAbility).TypeAttackable, damageable)) {
-                    (abilityComponent as IAbility).SetHit = true;
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, damageable)) {
+                    ability.SetHit = true;
                     
-                    float damage = lingeringDamage*(abilityComponent as IAbility).DamageMultiplier;
+                    float damage = lingeringDamage*ability.DamageMultiplier;
                     if(towerDamage > 0 && damageable.GetComponent<Tower>())
-                        damage = towerDamage*(abilityComponent as IAbility).DamageMultiplier;
+                        damage = towerDamage*ability.DamageMultiplier;
 
-                    GameFunctions.Attack(damageable, lingeringDamage*damageMultiplier);
-                    (abilityComponent as IAbility).ApplyAffects(damageable);
+                    GameFunctions.Attack(damageable, lingeringDamage*damageMultiplier, ability.CritStats);
+                    ability.ApplyAffects(damageable);
                 }
             }
         }

@@ -60,6 +60,9 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     private FreezeStats freezeStats;
 
     [SerializeField]
+    private CritStats critStats;
+
+    [SerializeField]
     private SlowStats slowStats;
 
     [SerializeField]
@@ -164,6 +167,11 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     public bool HidePreview
     {
         get { return hidePreview; }
+    }
+
+    public CritStats CritStats
+    {
+        get { return critStats; }
     }
 
     public FreezeStats FreezeStats
@@ -307,7 +315,7 @@ public class CreateAtLocation : MonoBehaviour, IAbility
 
     private void OnDestroy()
     {
-        if(unit != null && !unit.Equals(null) && abilityControl) {
+        if(unit != null && !unit.Equals(null) && abilityControl && !grabStats.AbilityControlOverride) {
             unit.Stats.IsCastingAbility = false;
 
             if(caster != null) {
@@ -352,7 +360,7 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         if(knockbackStats.CanKnockback)
             (damageable as IDamageable).Stats.EffectStats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position);
         if(grabStats.CanGrab)
-            (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.Speed, grabStats.PullDuration, grabStats.StunDuration, grabStats.ObstaclesBlockGrab, unit);
+            (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.Speed, grabStats.PullDuration, grabStats.StunDuration, grabStats.ObstaclesBlockGrab, grabStats.AbilityControlOverride, unit);
         if(strengthStats.CanStrength)
             (damageable as IDamageable).Stats.EffectStats.StrengthenedStats.Strengthen(strengthStats.StrengthDuration, StrengthStats.StrengthIntensity);
         if(blindStats.CanBlind)

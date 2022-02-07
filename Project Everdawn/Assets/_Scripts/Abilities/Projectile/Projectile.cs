@@ -92,6 +92,9 @@ public class Projectile : MonoBehaviour, IAbility
     private AOEStats aoeStats;
 
     [SerializeField]
+    private CritStats critStats;
+
+    [SerializeField]
     private FreezeStats freezeStats;
 
     [SerializeField]
@@ -248,6 +251,11 @@ public class Projectile : MonoBehaviour, IAbility
         get { return aoeStats; }
     }
 
+    public CritStats CritStats
+    {
+        get { return critStats; }
+    }
+
     public FreezeStats FreezeStats
     {
         get { return freezeStats; }
@@ -401,7 +409,7 @@ public class Projectile : MonoBehaviour, IAbility
         if(unit != null && !unit.Equals(null)) {
             resistEffects.StopResistance(unit);
 
-            if(abilityControl)
+            if(abilityControl && !grabStats.AbilityControlOverride)
                 unit.Stats.IsCastingAbility = false;
 
             if(caster != null) {
@@ -499,7 +507,7 @@ public class Projectile : MonoBehaviour, IAbility
                     if(damageable.GetComponent<Tower>())
                         damage = towerDamage*damageMultiplier;
 
-                    GameFunctions.Attack(damageable, damage);
+                    GameFunctions.Attack(damageable, damage, critStats);
                     ApplyAffects(damageable);
                 }
                 if(!canPierce) {
@@ -530,7 +538,7 @@ public class Projectile : MonoBehaviour, IAbility
         if(knockbackStats.CanKnockback)
             (damageable as IDamageable).Stats.EffectStats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position);
         if(grabStats.CanGrab)
-            (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.Speed, grabStats.PullDuration, grabStats.StunDuration, grabStats.ObstaclesBlockGrab, unit);
+            (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.Speed, grabStats.PullDuration, grabStats.StunDuration, grabStats.ObstaclesBlockGrab, grabStats.AbilityControlOverride, unit);
         if(strengthStats.CanStrength)
             (damageable as IDamageable).Stats.EffectStats.StrengthenedStats.Strengthen(strengthStats.StrengthDuration, StrengthStats.StrengthIntensity);
         if(blindStats.CanBlind)

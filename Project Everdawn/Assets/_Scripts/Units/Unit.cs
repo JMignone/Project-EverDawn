@@ -178,13 +178,18 @@ public class Unit : MonoBehaviour, IDamageable
             deathStats.FireDeathSkill();
         }
         else {
-            print(gameObject.name + " has died!");
+            //print(gameObject.name + " has died!");
             stats.ResetKillFlags(gameObject, target);
             GameManager.RemoveObjectsFromList(gameObject);
             if(target != null)
                 (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(gameObject);
             Destroy(gameObject);
         }
+    }
+
+    private void OnDestroy() {
+        if(stats.EffectStats.GrabbedStats.IsGrabbed)
+            stats.EffectStats.GrabbedStats.unGrab();
     }
 
     void Attack() {
@@ -211,7 +216,7 @@ public class Unit : MonoBehaviour, IDamageable
                             if(stats.EffectStats.AOEStats.AreaOfEffect)
                                 stats.EffectStats.AOEStats.Explode(gameObject, target, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                             else {
-                                GameFunctions.Attack(damageable, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                                GameFunctions.Attack(damageable, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity, stats.EffectStats.CritStats);
                                 stats.ApplyAffects(damageable);
                             }
                             buildUpStats.BuildUp();
