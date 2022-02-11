@@ -109,8 +109,9 @@ public class Tower : MonoBehaviour, IDamageable
         stats.HealthBar.enabled = false;
         stats.HealthBar.transform.GetChild(0).gameObject.SetActive(false);
 
-        IDamageable unit = (gameObject.GetComponent(typeof(IDamageable)) as IDamageable);
+        agent.Agent.angularSpeed = stats.RotationSpeed;
 
+        IDamageable unit = (gameObject.GetComponent(typeof(IDamageable)) as IDamageable);
         stats.SummoningSicknessUI.StartStats(unit);
         stats.EffectStats.StartStats(unit);
         attackStats.StartAttackStats(unit);
@@ -119,6 +120,13 @@ public class Tower : MonoBehaviour, IDamageable
         stats.AbilityIndicator.enabled = false;
         stats.AbilityIndicator.rectTransform.sizeDelta = new Vector2(2*agent.HitBox.radius + 1, 2*agent.HitBox.radius + 1); 
         // + 1 is better for the knob UI, if we get our own UI image, we may want to remove it
+
+        if(stats.AttackChargeLimiter == 0)
+            stats.AttackChargeLimiter = GameConstants.ATTACK_CHARGE_LIMITER;
+        if(stats.AttackReadyPercentage == 0)
+            stats.AttackReadyPercentage = GameConstants.ATTACK_READY_PERCENTAGE;
+        if(stats.MaximumAttackAngle == 0)
+            stats.MaximumAttackAngle = GameConstants.MAXIMUM_ATTACK_ANGLE;    
     }
 
     protected virtual void FixedUpdate()
@@ -132,7 +140,7 @@ public class Tower : MonoBehaviour, IDamageable
             Attack();
 
             if(stats.CanAct) { //if its stunned, we want to keep the tower looking in the same direction
-                if((inRangeTargets.Count > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) && target != null) //is in range, OR is 90% thru attack cycle -
+                if((inRangeTargets.Count > 0 || stats.CurrAttackDelay/stats.AttackDelay >= stats.AttackReadyPercentage) && target != null) //is in range, OR is 90% thru attack cycle -
                     lookAtTarget();
                 else 
                     resetToCenter();

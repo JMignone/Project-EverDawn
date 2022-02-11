@@ -65,7 +65,7 @@ public static class GameFunctions
                         baseDamage *= critStats.CritOnPoison;
                     if((damageable as IDamageable).Stats.EffectStats.BlindedStats.IsBlinded)
                         baseDamage *= critStats.CritOnBlind;
-                    if((damageable as IDamageable).Stats.EffectStats.StunnedStats.IsStunned)
+                    if((damageable as IDamageable).Stats.EffectStats.StunnedStats.IsStunned || (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Stunned)
                         baseDamage *= critStats.CritOnStun;
                 }
                 else
@@ -198,6 +198,12 @@ public static class GameFunctions
         bool isGrenade = projectile.GrenadeStats.IsGrenade;
         bool selfDestructs = projectile.SelfDestructStats.SelfDestructs;
         bool isMovement = prefab.GetComponent<Movement>();
+        int areaMask = 1;
+        if(unit != null) {
+            if(unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
+                areaMask = 8;
+        }
+
         if(distance > (range - radius)) {
             endPosition = startPosition + (direction.normalized * (range - radius));
             if(isMovement)
@@ -212,7 +218,8 @@ public static class GameFunctions
             endPosition += direction.normalized * radius;
             NavMeshHit hit;
             endPosition = GameFunctions.adjustForBoundary(endPosition);
-            if(NavMesh.SamplePosition(endPosition, out hit, GameConstants.SAMPLE_POSITION_RADIUS, 9))
+            
+            if(NavMesh.SamplePosition(endPosition, out hit, GameConstants.SAMPLE_POSITION_RADIUS, areaMask))
                 endPosition = hit.position;
         }
         
@@ -276,6 +283,10 @@ public static class GameFunctions
             if(NavMesh.SamplePosition(mousePosition, out hit, GameConstants.SAMPLE_POSITION_RADIUS, cal.SummonStats.AreaMask()))
                 endPosition = hit.position;
         }
+
+        if(unit != null && cal.PlayOnUnit)
+            endPosition = unit.Agent.transform.position;
+
         GameObject go = GameObject.Instantiate(prefab, endPosition, targetRotation, GameManager.GetUnitsFolder());
         go.tag = tag;
 
@@ -299,6 +310,9 @@ public static class GameFunctions
         if(distance > (range - radius))
             endPosition = startPosition + (direction.normalized * (range - radius));
         */
+
+        if(unit != null && cal.PlayOnUnit)
+            endPosition = unit.Agent.transform.position;
 
         GameObject go = GameObject.Instantiate(prefab, endPosition, targetRotation, GameManager.GetUnitsFolder());
         go.tag = tag;

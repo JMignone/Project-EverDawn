@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b3502398de43fb45a495109caba68e7, type: 3}
+  m_Name: SO_Card26
+  m_EditorClassIdentifier: 
+  cardID: 26
+  character: {fileID: 0}
+  cardName: Dropper
+  menuBackgroundImage: {fileID: 21300000, guid: 2eb01c0aa0b42b9449970a78351626c4, type: 3}
+  cardImage: {fileID: 21300000, guid: 2eb01c0aa0b42b9449970a78351626c4, type: 3}
+  cardLore: 
+  affiliation: []
+  resourceCost: 4
+  spawnZoneRestrictions: 0
+  prefab:
+  - {fileID: 5028950967710317734, guid: 666c04b1dc4fa4b428babb6bedb81295, type: 3}
+  - {fileID: 1224647179923901261, guid: 866a804fed7a4124fa107b4cb8e56a6a, type: 3}
+  previewPrefab: {fileID: 2167454000776647745, guid: f7f9265ddd54f0644a429801a8ffe851, type: 3}
+  previewDelays:
+  - 0
+  - 0.5
+  unitIndex: 0
+  obtained: 1
+  selectedSkin: 0

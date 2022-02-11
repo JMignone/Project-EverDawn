@@ -128,6 +128,9 @@ public class Projectile : MonoBehaviour, IAbility
     private BoomerangStats boomerangStats;
 
     [SerializeField]
+    private ChainStats chainStats;
+
+    [SerializeField]
     private LingeringStats lingeringStats;
 
     [SerializeField]
@@ -309,6 +312,11 @@ public class Projectile : MonoBehaviour, IAbility
     public BoomerangStats BoomerangStats
     {
         get { return boomerangStats; }
+    }
+
+    public ChainStats ChainStats
+    {
+        get { return chainStats; }
     }
 
     public LingeringStats LingeringStats
@@ -510,7 +518,14 @@ public class Projectile : MonoBehaviour, IAbility
                     GameFunctions.Attack(damageable, damage, critStats);
                     ApplyAffects(damageable);
                 }
-                if(!canPierce) {
+
+                Actor3D newTarget = chainStats.FindTarget(gameObject, damageable.gameObject, this, unit);
+                if(newTarget != null) {
+                    chosenTarget = newTarget;
+                    hitBox.enabled = false;
+                    hitBox.enabled = true;
+                }
+                else if(!canPierce) {
                     if(selfDestructStats.SelfDestructs && !aoeStats.AreaOfEffect) //if the projectile does not do AOE, but rather self destructs
                         selfDestructStats.Explode(gameObject);
                     if(lingeringStats.Lingering && lingeringStats.LingerAtEnd) {

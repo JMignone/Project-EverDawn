@@ -62,7 +62,7 @@ MonoBehaviour:
   skipLastOnMiss: 0
   skipNumber: 0
   overridesTarget: 0
-  onlyDamageIfTargeted: 0
+  onlyDamageIfTargeted: 1
   hideRange: 0
   hidePreview: 0
   customPathStats:

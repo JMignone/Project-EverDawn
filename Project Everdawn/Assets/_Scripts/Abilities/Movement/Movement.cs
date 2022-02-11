@@ -15,6 +15,10 @@ public class Movement : Projectile
     [SerializeField]
     private bool highlightEnemies;
 
+    [Tooltip("If checked the unit will go invisible while dashing")]
+    [SerializeField]
+    private bool hideUnit;
+
     [SerializeField]
     private RetreatStats retreatStats;
 
@@ -42,12 +46,17 @@ public class Movement : Projectile
             Blockable = true;
 
         Unit.Agent.Agent.enabled = false;
+
+        if(hideUnit)
+            Unit.Stats.UnitMaterials.MakeInvisible();
     }
 
     private void OnDestroy()
     {
         if(!Unit.Equals(null)) {
             Unit.Agent.Agent.enabled = true;
+            if(hideUnit)
+                Unit.Stats.UnitMaterials.MakeOpaque();
             StopStats();
         }
     }

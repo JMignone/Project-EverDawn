@@ -121,9 +121,9 @@ public class Unit : MonoBehaviour, IDamageable
     {
         agent.Agent.stoppingDistance = 0; //Set to be zero, incase someone forgets or accidently changes this value to be a big number
         agent.Agent.speed = stats.MoveSpeed;
+        agent.Agent.angularSpeed = stats.RotationSpeed;
 
         IDamageable unit = (gameObject.GetComponent(typeof(IDamageable)) as IDamageable);
-
         stats.SummoningSicknessUI.StartStats(unit);
         stats.EffectStats.StartStats(unit);
         attackStats.StartAttackStats(unit);
@@ -137,6 +137,13 @@ public class Unit : MonoBehaviour, IDamageable
         stats.AbilityIndicator.enabled = false;
         stats.AbilityIndicator.rectTransform.sizeDelta = new Vector2(2*agent.HitBox.radius + 1, 2*agent.HitBox.radius + 1); 
         // + 1 is better for the knob UI, if we get our own UI image, we may want to remove it
+
+        if(stats.AttackChargeLimiter == 0)
+            stats.AttackChargeLimiter = GameConstants.ATTACK_CHARGE_LIMITER;
+        if(stats.AttackReadyPercentage == 0)
+            stats.AttackReadyPercentage = GameConstants.ATTACK_READY_PERCENTAGE;
+        if(stats.MaximumAttackAngle == 0)
+            stats.MaximumAttackAngle = GameConstants.MAXIMUM_ATTACK_ANGLE;
     }
 
     private void FixedUpdate()
@@ -161,7 +168,7 @@ public class Unit : MonoBehaviour, IDamageable
                 direction.y = 0;
                 agent.Agent.SetDestination(new Vector3(target.transform.GetChild(0).position.x + stats.TowerPosOffset, 0, target.transform.GetChild(0).position.z) - (direction.normalized * .25f));
                 if(hitTargets.Contains(target)) {
-                    if(inRangeTargets.Count > 0 || stats.CurrAttackDelay/stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE) { //is in range, OR is 90% thru attack cycle -
+                    if(inRangeTargets.Count > 0 || stats.CurrAttackDelay/stats.AttackDelay >= stats.AttackReadyPercentage) { //is in range, OR is 90% thru attack cycle -
                         lookAtTarget();
                         agent.Agent.ResetPath();
                     }
@@ -250,13 +257,13 @@ public class Unit : MonoBehaviour, IDamageable
     }
 
     public void ReTarget() {
-        if(stats.CurrAttackDelay < stats.AttackDelay*GameConstants.ATTACK_READY_PERCENTAGE) {
+        if(stats.CurrAttackDelay < stats.AttackDelay*stats.AttackReadyPercentage) {
             if(hitTargets.Count > 0) {
                 GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
                 if(go != null) {
                     if(go != target && inRangeTargets.Count == 0) {
-                        if(stats.CurrAttackDelay > stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER)
-                            stats.CurrAttackDelay = stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER;
+                        if(stats.CurrAttackDelay > stats.AttackDelay*stats.AttackChargeLimiter)
+                            stats.CurrAttackDelay = stats.AttackDelay*stats.AttackChargeLimiter;
                     }
                     SetTarget(go);
                 }
@@ -265,8 +272,8 @@ public class Unit : MonoBehaviour, IDamageable
                     towers = GameManager.GetAllEnemies(towers, gameObject.tag); //sending in only towers
                     SetTarget(GameFunctions.GetTowerTarget(towers, gameObject.tag, stats));
 
-                    if(stats.CurrAttackDelay > stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER)
-                        stats.CurrAttackDelay = stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER;
+                    if(stats.CurrAttackDelay > stats.AttackDelay*stats.AttackChargeLimiter)
+                        stats.CurrAttackDelay = stats.AttackDelay*stats.AttackChargeLimiter;
                 }
             }
             else {
@@ -274,8 +281,8 @@ public class Unit : MonoBehaviour, IDamageable
                 towers = GameManager.GetAllEnemies(towers, gameObject.tag); //sending in only towers
                 SetTarget(GameFunctions.GetTowerTarget(towers, gameObject.tag, stats));
 
-                if(stats.CurrAttackDelay > stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER)
-                    stats.CurrAttackDelay = stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER;
+                if(stats.CurrAttackDelay > stats.AttackDelay*stats.AttackChargeLimiter)
+                    stats.CurrAttackDelay = stats.AttackDelay*stats.AttackChargeLimiter;
             }
             stats.IncRange = false;
         }

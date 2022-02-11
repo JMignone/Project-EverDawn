@@ -31,6 +31,19 @@ public class UnitMaterials
         emissionColor = new Color(1f,1f,1f,1f);
     }
 
+    public void MakeInvisible() {
+        foreach(Renderer renderer in renderers) {
+            Material mat = renderer.material;
+            mat.SetColor("_Color", new Color(1f,1f,1f,0));
+            mat.SetFloat("_Mode", 3);
+            mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            mat.EnableKeyword("_ALPHABLEND_ON");
+            mat.renderQueue = 3000;
+        }
+        //transparent = true;
+    }
+
     public void MakeTransparent() {
         foreach(Renderer renderer in renderers) {
             Material mat = renderer.material;

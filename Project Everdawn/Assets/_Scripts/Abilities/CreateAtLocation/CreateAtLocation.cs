@@ -24,8 +24,9 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     private GameConstants.TYPE_ATTACKABLE typeAttackable;
 
     [Header("Higher Level Controls")]
-    //[SerializeField]
-    //private bool blockable; //currently not sure if we will need this for CAL's. Description of this var is in Projectile
+    [Tooltip("If checked, the ability will play on the unit instead of the targeted location")]
+    [SerializeField]
+    private bool playOnUnit;
 
     [Tooltip("If checked, the skillshot script will not tell BaseStats that the unit is done casting. This job will be left to the ability")]
     [SerializeField]
@@ -96,6 +97,9 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     private SelfDestructStats selfDestructStats;
 
     [SerializeField]
+    private ChainStats chainStats;
+
+    [SerializeField]
     private LinearStats linearStats;
 
     [SerializeField]
@@ -146,6 +150,11 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     public GameConstants.TYPE_ATTACKABLE TypeAttackable
     {
         get { return typeAttackable; }
+    }
+
+    public bool PlayOnUnit
+    {
+        get { return playOnUnit; }
     }
 
     public bool AbilityControl
@@ -222,6 +231,11 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     public Vector3 Position()
     {
         return transform.position;
+    }
+
+    public ChainStats ChainStats
+    {
+        get { return chainStats; }
     }
 
     public LingeringStats LingeringStats
@@ -335,6 +349,7 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         if(teleportStats.IsWarp && !hasExploded)
             teleportStats.Warp(gameObject);
         hasExploded = true;
+        
         if(lingeringStats.Lingering)
             lingeringStats.UpdateLingeringStats(gameObject);
         if(SummonStats.IsSummon) {

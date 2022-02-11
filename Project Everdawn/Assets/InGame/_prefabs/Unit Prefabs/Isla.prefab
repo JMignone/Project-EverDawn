@@ -682,6 +682,8 @@ MonoBehaviour:
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
+    leavesArena: 0
+    leaveTimer: 0
     range: 25
     visionRange: 27
     baseDamage: 0
@@ -765,9 +767,6 @@ MonoBehaviour:
       grabbedStats:
         cantBeGrabbed: 0
         isGrabbed: 0
-        direction: {x: 0, y: 0, z: 0}
-        grabDelay: 0
-        currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
         isStrengthened: 0
@@ -1116,10 +1115,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3925836231506596150}
     m_Modifications:
-    - target: {fileID: 2683724732576097059, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2683724732824738243, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
@@ -1225,7 +1220,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 3925836231040451564}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 

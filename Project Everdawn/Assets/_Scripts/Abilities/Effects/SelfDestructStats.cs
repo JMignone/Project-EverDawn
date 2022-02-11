@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class SelfDestructStats
 {
+    [Tooltip("If checked, the ability explode when getting destroyed")]
     [SerializeField]
     private bool selfDestructs;
 

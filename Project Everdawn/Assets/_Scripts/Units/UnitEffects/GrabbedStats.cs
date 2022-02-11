@@ -14,13 +14,10 @@ public class GrabbedStats
     [SerializeField]
     private bool isGrabbed;
 
-    [SerializeField]
     private Vector3 direction;
 
-    [SerializeField] [Min(0)]
     private float grabDelay;
     private bool stunned;
-    [SerializeField] [Min(0)]
     private float currentStunDelay;
 
     private float totalDistance;
@@ -48,6 +45,11 @@ public class GrabbedStats
     {
         get { return isGrabbed; }
         set { isGrabbed = value; }
+    }
+
+    public bool Stunned
+    {
+        get { return stunned; }
     }
 
     public void StartGrabbedStats(IDamageable go) {
@@ -112,8 +114,7 @@ public class GrabbedStats
                 if(!stunned && enemyCanAct) {
                     if(enemyController)
                         enemyUnit.Stats.IsCastingAbility = false;
-                    enemyUnit.Stats.CurrAttackDelay = enemyUnit.Stats.AttackDelay * GameConstants.ATTACK_CHARGE_LIMITER;
-                    Debug.Log("ADHASDHAHHJ");
+                    enemyUnit.Stats.CurrAttackDelay = enemyUnit.Stats.AttackDelay * enemyUnit.Stats.AttackChargeLimiter;
                 }
                 stunned = true;
                 unit.Agent.Agent.enabled = true;

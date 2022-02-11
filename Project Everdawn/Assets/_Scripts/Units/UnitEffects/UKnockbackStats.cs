@@ -33,7 +33,7 @@ public class UKnockbackStats
 
     public Vector3 UnitPosition
     {
-        get { return agent.transform.position; }
+        get { return new Vector3(agent.transform.position.x, 0, agent.transform.position.z); }
     }
 
     public void StartKnockbackStats(IDamageable go) {

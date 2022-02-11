@@ -682,6 +682,8 @@ MonoBehaviour:
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
+    leavesArena: 0
+    leaveTimer: 0
     range: 5.5
     visionRange: 20
     baseDamage: 200
@@ -765,9 +767,6 @@ MonoBehaviour:
       grabbedStats:
         cantBeGrabbed: 0
         isGrabbed: 0
-        direction: {x: 0, y: 0, z: 0}
-        grabDelay: 0
-        currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
         isStrengthened: 0
@@ -1095,7 +1094,7 @@ PrefabInstance:
     - target: {fileID: 665771126181773525, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 04d58490ded8c4c4aa64bca7867d7969, type: 3}
+      objectReference: {fileID: 21300000, guid: 7f882429056c706469331bd077366681, type: 3}
     m_RemovedComponents:
     - {fileID: 665771124876367448, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}

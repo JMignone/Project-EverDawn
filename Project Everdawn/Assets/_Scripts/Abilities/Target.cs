@@ -33,6 +33,10 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
 
     [SerializeField]
     private ApplyResistanceStats applyResistanceStats; //A list of effects than can be set to be resisted while casting
+    
+    [Tooltip("Determines how far along the unit will be ready to attack")]
+    [SerializeField] [Range(0,1)]
+    private float attackReadyPercentage;
 
     private bool isFiring;
     private int currentProjectileIndex;
@@ -210,6 +214,40 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
                 preview.transform.GetChild(0).GetComponent<Image>().enabled = true;
                 if(preview.GetComponent<Collider>())
                     preview.GetComponent<Collider>().enabled = true;
+            }
+
+
+            Vector3 position = GameFunctions.getPosition(false);
+
+            fireStartPosition = abilityPreviewCanvas.transform.position;
+            fireStartPosition.y = 0;
+
+            Vector3 direction = position - fireStartPosition;
+            direction.y = 0;
+
+            float distance = Vector3.Distance(fireStartPosition, position);
+            if(distance > (maxRange - 3))
+                position = fireStartPosition + (direction.normalized * (maxRange - 3));
+            Actor3D potentialTarget = FindTarget(position);
+            target = potentialTarget;
+
+            if(potentialTarget != null)
+                position = potentialTarget.transform.position;
+            position.y = .1f;
+
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            abilityPreviewCanvas.transform.rotation = Quaternion.Lerp(rotation, abilityPreviewCanvas.transform.rotation, 0f);
+
+            foreach(GameObject preview in abilityPreviews) {
+                if(preview.GetComponent<SphereCollider>() || preview.GetComponent<BoxCollider>()) {
+                    GameObject go = abilityPrefabs.Find(go => go.name == preview.name);
+                    if(go.GetComponent<Projectile>() && !preview.GetComponent<BoxCollider>()) //if the preview corresponds to a projectile and doesnt have a box collider. Reason being, all projectiles with a box collider doesnt move away from the unit
+                        AdjustProjectilePreview(preview, go.GetComponent<Projectile>(), position, direction);
+                    else if(go.GetComponent<CreateAtLocation>())
+                        AdjustCALPreview(preview, go.GetComponent<CreateAtLocation>(), position, direction);
+                }
+                else if(preview.name == "Targeter")
+                    preview.transform.GetChild(0).GetComponent<RectTransform>().position = position;
             }
         }
     }
@@ -389,6 +427,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
             currentProjectileIndex = 0;
             currentDelay = 0;
             unit.Stats.IsCastingAbility = false;
+            Unit.Stats.CurrAttackDelay = Unit.Stats.AttackDelay * attackReadyPercentage;
         }
         else if(currentDelay < abilityDelays[currentProjectileIndex] || pauseFiring) //if we havnt reached the delay yet
             currentDelay += Time.deltaTime * unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
@@ -399,9 +438,10 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
             skipOverride = 0;
             currentProjectileIndex = 0;
             currentDelay = 0;
+            target = null;
             if(!abilityControl)
                 unit.Stats.IsCastingAbility = false;
-            target = null;
+            Unit.Stats.CurrAttackDelay = Unit.Stats.AttackDelay * attackReadyPercentage;
         }
         else { //if we completed a delay
             fireStartPosition = abilityPreviewCanvas.transform.position;

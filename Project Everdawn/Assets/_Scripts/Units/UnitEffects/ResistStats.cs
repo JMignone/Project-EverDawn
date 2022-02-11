@@ -5,47 +5,37 @@ using UnityEngine;
 [System.Serializable]
 public class ResistStats
 {
-    [SerializeField]
     private bool resistedDamage;
     private float rdDuration;
+    private bool cantDamage;
 
-    [SerializeField]
     private bool resistedTarget;
     private float rtDuration;
-
-    [SerializeField]
+    
     private bool resistedFreeze;
     private float rfDuration;
 
-    [SerializeField]
     private bool resistedSlow;
     private float rsDuration;
 
-    [SerializeField]
     private bool resistedRoot;
     private float rrDuration;
-
-    [SerializeField]
+  
     private bool resistedPoison;
     private float rpDuration;
-
-    [SerializeField]
+  
     private bool resistedKnockback;
     private float rkDuration;
-
-    [SerializeField]
+    
     private bool resistedGrab;
     private float rgDuration;
-
-    [SerializeField]
+    
     private bool resistedPull;
     private float rpullDuration;
-
-    [SerializeField]
+  
     private bool resistedBlind;
     private float rbDuration;
 
-    [SerializeField]
     private bool resistedStun;
     private float rstunDuration;
 
@@ -61,6 +51,12 @@ public class ResistStats
     {
         get { return rdDuration; }
         set { rdDuration = value; }
+    }
+
+    public bool CantDamage
+    {
+        get { return cantDamage; }
+        set { cantDamage = value; }
     }
 
     public bool ResistedTarget
@@ -191,6 +187,29 @@ public class ResistStats
         if(!resistedDamage) {
             resistedDamage = true;
             rdDuration = duration;
+
+            unit.Stats.IndicatorNum = 0;
+            unit.Stats.UnitMaterials.RemoveAbilityHover();
+        }
+    }
+
+    //another type of damage resistance
+    public void CantBeDamaged() {
+        cantDamage = true;
+        unit.Stats.IndicatorNum = 0;
+        unit.Stats.UnitMaterials.RemoveAbilityHover();
+    }
+
+    public void CanBeDamaged() {
+        cantDamage = false;
+        //check if there is currently an ability hovered over this unit now
+        Collider[] colliders = Physics.OverlapSphere(unit.Agent.transform.position, unit.Agent.Agent.radius);
+        foreach(Collider collider in colliders) {
+            if(!collider.transform.parent.parent.CompareTag((unit as Component).gameObject.tag) && collider.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
+                AbilityPreview ability = collider.GetComponent<AbilityPreview>();
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, (unit as Component))) 
+                    unit.Stats.IncIndicatorNum();
+            }
         }
     }
 

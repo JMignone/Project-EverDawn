@@ -7,14 +7,16 @@ public class Actor2D : MonoBehaviour
 {
     [SerializeField]
     GameObject followTarget;
-    [SerializeField]
+    //[SerializeField]
     Animator anim;
-    [SerializeField]
+    //[SerializeField]
     NavMeshAgent agent;
     [SerializeField]
     GameObject ability;
     [SerializeField]
     bool isPreview;
+
+    float offset;
 
     public Animator Animator
     {
@@ -28,18 +30,19 @@ public class Actor2D : MonoBehaviour
 
     private void Awake()
     {
-        if (anim != null)
-        {
+        if(GetComponent<Animator>()) {
             anim = GetComponent<Animator>();
             anim.SetBool("IsPreview", isPreview);
         }
-        if (agent != null) //temporary so tower doesnt scream errors for lack of animation
+        if(followTarget.GetComponent<NavMeshAgent>()) {
             agent = followTarget.GetComponent<NavMeshAgent>();
+            offset = -agent.baseOffset;
+        }
     }
 
     private void FixedUpdate()
     {
-        if (!isPreview && agent != null)
+        if (!isPreview && anim != null)
         { //temporary so tower doesnt scream errors for lack of animation
             anim.SetBool("IsWalking", agent.velocity == Vector3.zero ? false : true);
 
@@ -49,7 +52,7 @@ public class Actor2D : MonoBehaviour
             anim.SetBool("IsCasting", (unit as IDamageable).Stats.IsCastingAbility);
             anim.SetBool("IsAttacking", (((unit as IDamageable).InRangeTargets.Count > 0
                                         || (unit as IDamageable).Stats.IsAttacking
-                                        || ((unit as IDamageable).Stats.CurrAttackDelay / (unit as IDamageable).Stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && (unit as IDamageable).HitTargets.Contains((unit as IDamageable).Target)))
+                                        || ((unit as IDamageable).Stats.CurrAttackDelay / (unit as IDamageable).Stats.AttackDelay >= (unit as IDamageable).Stats.AttackReadyPercentage && (unit as IDamageable).HitTargets.Contains((unit as IDamageable).Target)))
                 && (unit as IDamageable).Stats.CanAct) ? true : false); //is in range, OR (is nearly done with attack and within vision)?
 
             //anim.SetBool("IsReady", ((unit as IDamageable).Stats.CurrAttackDelay/(unit as IDamageable).Stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && (unit as IDamageable).HitTargets.Contains((unit as IDamageable).Target)) ? true : false); //is nearly done with attack and within vision?
@@ -66,7 +69,7 @@ public class Actor2D : MonoBehaviour
         {
             transform.localPosition = new Vector3(
                 followTarget.transform.localPosition.x,
-                followTarget.transform.localPosition.y,
+                offset,
                 followTarget.transform.localPosition.z
             );
             transform.rotation = followTarget.transform.rotation;

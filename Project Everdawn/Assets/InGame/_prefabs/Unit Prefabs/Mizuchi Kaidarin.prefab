@@ -454,6 +454,8 @@ MonoBehaviour:
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
+    leavesArena: 0
+    leaveTimer: 0
     range: 22.5
     visionRange: 25
     baseDamage: 140
@@ -468,7 +470,7 @@ MonoBehaviour:
       sSCanvas: {fileID: 6967967869394463330}
       sSSprite: {fileID: 6967967868643922537}
       sSMask: {fileID: 6967967868904766894}
-    canvasAbility: {fileID: 0}
+    canvasAbility: {fileID: 7870179655350065263}
     healthBar: {fileID: 2277778249258511125}
     armorBar: {fileID: 2277778248267096246}
     abilityIndicator: {fileID: 8751797541508323367}
@@ -540,9 +542,6 @@ MonoBehaviour:
       grabbedStats:
         cantBeGrabbed: 0
         isGrabbed: 0
-        direction: {x: 0, y: 0, z: 0}
-        grabDelay: 0
-        currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
         isStrengthened: 0

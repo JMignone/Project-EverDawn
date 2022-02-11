@@ -32,6 +32,12 @@ public class ResistEffects //this type of resistance persists as long as the pro
     [SerializeField]
     private bool resistStun;
 
+    [SerializeField]
+    private bool resistDamage;
+
+    [SerializeField]
+    private bool resistTarget;
+
     public void StartResistance(IDamageable unit) {
         if(unit.Stats.EffectStats.FrozenStats.CantBeFrozen)
             resistFreeze = false;
@@ -77,6 +83,12 @@ public class ResistEffects //this type of resistance persists as long as the pro
             resistStun = false;
         else if(resistStun)
             unit.Stats.EffectStats.StunnedStats.CantBeStunned = true;
+
+        if(resistDamage)
+            unit.Stats.EffectStats.ResistStats.CantBeDamaged();
+
+        if(resistTarget)
+            unit.Stats.Vanish((unit as Component).gameObject, unit.Agent);
     }
 
     public void StopResistance(IDamageable unit) {
@@ -103,5 +115,11 @@ public class ResistEffects //this type of resistance persists as long as the pro
 
         if(resistBlind)
             unit.Stats.EffectStats.BlindedStats.CantBeBlinded = false;
+
+        if(resistDamage)
+            unit.Stats.EffectStats.ResistStats.CanBeDamaged();
+
+        if(resistTarget)
+            unit.Stats.Appear((unit as Component).gameObject, null, unit.Agent);
     }
 }

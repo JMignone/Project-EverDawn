@@ -25,6 +25,10 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     [SerializeField]
     private ApplyResistanceStats applyResistanceStats; //A list of effects than can be set to be resisted while casting
 
+    [Tooltip("Determines how far along the unit will be ready to attack")]
+    [SerializeField] [Range(0,1)]
+    private float attackReadyPercentage;
+
     private bool isFiring;
     private int currentProjectileIndex;
     private Vector3 fireStartPosition;
@@ -48,6 +52,10 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     [SerializeField]
     private GameConstants.AUTO_TARGET autoTarget;
     private string autoTag;
+
+    [Tooltip("If checked, the preview will only be a circle and its range, not anything else")]
+    [SerializeField]
+    private bool onlyCircle;
 
     [SerializeField]
     private Sprite abilityPreviewLine;
@@ -148,6 +156,8 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         //Below sets up what will be needed for clicking the ability, such that we only need to calculate maxRange and areaMask once.
         maxRange = 0;
         areaMask = 1;
+        if(Unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING)
+            areaMask = 8;
         foreach (GameObject ability in abilityPrefabs) { //this finds the largest range of all the abilitys shot by this skillshot
             Component component = ability.GetComponent(typeof(IAbility));
             if((component as IAbility).AbilityControl)
@@ -214,6 +224,29 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                         preview.GetComponent<Collider>().enabled = true;
                 }
             }
+
+
+            Vector3 position = GameFunctions.getPosition(false);
+            Vector3 direction = (abilityPreviewCanvas.transform.position - position);
+            direction.y = 0;
+            position.y = .1f;
+
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            abilityPreviewCanvas.transform.rotation = Quaternion.Lerp(rotation, abilityPreviewCanvas.transform.rotation, 0f);
+
+            foreach(GameObject preview in abilityPreviews) {
+                if(preview.GetComponent<SphereCollider>() || preview.GetComponent<BoxCollider>()) {
+                    GameObject go = abilityPrefabs.Find(go => go.name == preview.name);
+                    if(go.GetComponent<Movement>())
+                        AdjustMovementPreview(preview, go.GetComponent<Movement>(), position, direction);
+                    else if(go.GetComponent<Projectile>() && !preview.GetComponent<BoxCollider>() && !preview.GetComponent<MeshCollider>()) //if the preview corresponds to a projectile and doesnt have a box collider. Reason being, all projectiles with a box collider doesnt move away from the unit and only rotates. Projectiles will have other collider if it linngers of selfdestructs at the end
+                        AdjustProjectilePreview(preview, go.GetComponent<Projectile>(), position, direction);
+                    else if(go.GetComponent<CreateAtLocation>())
+                        AdjustCALPreview(preview, go.GetComponent<CreateAtLocation>(), position, direction);
+                }
+                else if(preview.name == "Targeter")
+                    preview.transform.GetChild(0).GetComponent<RectTransform>().position = position;
+            }
         }
     }
 
@@ -231,7 +264,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             Vector3 position = GameFunctions.getPosition(false);
             Vector3 direction = (abilityPreviewCanvas.transform.position - position);
             direction.y = 0;
-            position.y = 0;
+            position.y = .1f;
 
             Quaternion rotation = Quaternion.LookRotation(direction);
             abilityPreviewCanvas.transform.rotation = Quaternion.Lerp(rotation, abilityPreviewCanvas.transform.rotation, 0f);
@@ -246,6 +279,8 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                     else if(go.GetComponent<CreateAtLocation>())
                         AdjustCALPreview(preview, go.GetComponent<CreateAtLocation>(), position, direction);
                 }
+                else if(preview.name == "Targeter")
+                    preview.transform.GetChild(0).GetComponent<RectTransform>().position = position;
             }
         }
         else if(isFiring)
@@ -369,6 +404,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             currentProjectileIndex = 0;
             currentDelay = 0;
             Unit.Stats.IsCastingAbility = false;
+            Unit.Stats.CurrAttackDelay = Unit.Stats.AttackDelay * attackReadyPercentage;
         }
         else if(currentDelay < abilityDelays[currentProjectileIndex] || pauseFiring) //if we havnt reached the delay yet
             currentDelay += Time.deltaTime * Unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
@@ -382,6 +418,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             currentDelay = 0;
             if(!abilityControl)
                 Unit.Stats.IsCastingAbility = false;
+            Unit.Stats.CurrAttackDelay = Unit.Stats.AttackDelay * attackReadyPercentage;
         }
         else { //if we completed a delay
             float rangeIncrease = 0;
@@ -453,16 +490,15 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 position = GameFunctions.adjustForBoundary(position);
             else if(move.PassObstacles == GameConstants.PASS_OBSTACLES.PASS) { //if the movment is able to pass through obstacles
                 position = GameFunctions.adjustForBoundary(position);
-                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, 9))
+                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, areaMask))
                     position = hit.position;
-
                 Vector3 newDirection = abilityPreviewCanvas.transform.position - position;
                 newDirection.y = 0;
                 Quaternion rotation = Quaternion.LookRotation(newDirection);
                 abilityPreviewCanvas.transform.rotation = Quaternion.Lerp(rotation, abilityPreviewCanvas.transform.rotation, 0f);
             }
             else if(move.PassObstacles == GameConstants.PASS_OBSTACLES.HALF) {
-                if(!UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 1f, 9)) {
+                if(!UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 1f, areaMask)) {
                     UnityEngine.AI.NavMesh.Raycast(Unit.Agent.Agent.transform.position, position, out hit, 1);
                     position = hit.position;
                 }
@@ -500,11 +536,11 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             UnityEngine.AI.NavMeshHit hit;
             if(move.PassObstacles == GameConstants.PASS_OBSTACLES.PASS) { //if the movment is able to pass through obstacles
                 position = GameFunctions.adjustForBoundary(position);
-                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, 9))
+                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, areaMask))
                     position = hit.position;
             }
             else if(move.PassObstacles == GameConstants.PASS_OBSTACLES.HALF) {
-                if(!UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 1f, 9)) {
+                if(!UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 1f, areaMask)) {
                     UnityEngine.AI.NavMesh.Raycast(Unit.Agent.Agent.transform.position, position, out hit, 1);
                     position = hit.position;
                 }
@@ -549,7 +585,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         else {
             UnityEngine.AI.NavMeshHit hit;
             if(cal.TeleportStats.IsWarp && Unit.Stats.MovementType == GameConstants.MOVEMENT_TYPE.GROUND) {
-                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, 9))
+                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, areaMask))
                     position = hit.position;
             }
 
@@ -572,20 +608,51 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         fireMousePosition = position;
     }
 
-    public void createAbilityPreviews()
-    {
-
+    public void createAbilityPreviews() {
         List<GameObject> uniqueProjectiles = new List<GameObject>();
 
-        foreach (GameObject goAbility in abilityPrefabs)
-        {
-            if (!uniqueProjectiles.Contains(goAbility) && !(goAbility.GetComponent(typeof(IAbility)) as IAbility).HidePreview)
+        if(onlyCircle) {
+            float radius = 3;
+
+            /* ----- Add the Targeter circle ----- */
+            GameObject goTarget = new GameObject(); //Create the GameObject
+            goTarget.name = "Targeter";
+
+            /* -- Creates the Image GameObject and component -- */
+            GameObject previewImageGo = new GameObject();
+            previewImageGo.name = "Sprite";
+            Image previewImage = previewImageGo.AddComponent<Image>(); //Add the Image Component script
+            previewImage.color = new Color32(255, 255, 255, 100);
+            previewImage.sprite = abilityPreviewBomb; //Set the Sprite of the Image Component on the new GameObject
+            previewImage.enabled = false;
+
+            RectTransform imageTransform = previewImageGo.GetComponent<RectTransform>();
+            imageTransform.anchorMin = new Vector2(.5f, 0);
+            imageTransform.anchorMax = new Vector2(.5f, 0);
+            imageTransform.pivot = new Vector2(.5f, .5f);
+            imageTransform.SetParent(goTarget.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+            imageTransform.localPosition = Vector3.zero;
+            imageTransform.localRotation = Quaternion.Euler(270, 0, 0);
+            imageTransform.sizeDelta = new Vector2(radius * 2, radius * 2);
+
+            /* -- Adjust the GameObjects transform, directly affecting the collider -- */
+            goTarget.transform.SetParent(abilityPreviewCanvas.transform); 
+            goTarget.transform.localPosition = Vector3.zero;
+            goTarget.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            goTarget.SetActive(true);
+            abilityPreviews.Add(goTarget);
+        }
+        else {
+            foreach (GameObject goAbility in abilityPrefabs)
             {
-                uniqueProjectiles.Add(goAbility);
-                if (goAbility.GetComponent<Projectile>())
-                    createProjectilePreview(goAbility);
-                else if (goAbility.GetComponent<CreateAtLocation>())
-                    createCALPreview(goAbility);
+                if (!uniqueProjectiles.Contains(goAbility) && !(goAbility.GetComponent(typeof(IAbility)) as IAbility).HidePreview)
+                {
+                    uniqueProjectiles.Add(goAbility);
+                    if (goAbility.GetComponent<Projectile>())
+                        createProjectilePreview(goAbility);
+                    else if (goAbility.GetComponent<CreateAtLocation>())
+                        createCALPreview(goAbility);
+                }
             }
         }
     }

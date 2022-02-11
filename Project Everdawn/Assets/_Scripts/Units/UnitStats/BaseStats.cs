@@ -39,6 +39,15 @@ public class BaseStats
     private float attackDelay;
     [SerializeField] [Min(0)]
     private float currAttackDelay;
+    [Tooltip("An attack will charge to this point even if the target is not within range but within vision. MUST BE LESS THAN attackChargeLimiter")]
+    [SerializeField] [Range(0,1)]
+    private float attackChargeLimiter;
+    [Tooltip("Once the attack reaches this point, it will happen even if the target is not within range, but within vision and in front of unit")]
+    [SerializeField] [Range(0,1)]
+    private float attackReadyPercentage;
+    [Tooltip("The maximum angle a unit can have while still charging its attack")]
+    [SerializeField] [Range(0,360)]
+    private float maximumAttackAngle;
 
     [Header("Movement")]
     [SerializeField] [Min(0)]
@@ -180,6 +189,24 @@ public class BaseStats
     {
         get { return currAttackDelay; }
         set { currAttackDelay = value; }
+    }
+
+    public float AttackChargeLimiter
+    {
+        get { return attackChargeLimiter; }
+        set { attackChargeLimiter = value; }
+    }
+
+    public float MaximumAttackAngle
+    {
+        get { return maximumAttackAngle; }
+        set { maximumAttackAngle = value; }
+    }
+
+    public float AttackReadyPercentage
+    {
+        get { return attackReadyPercentage; }
+        set { attackReadyPercentage = value; }
     }
 
     public float MoveSpeed
@@ -347,7 +374,7 @@ public class BaseStats
     }
 
     public bool Damageable {
-        get { return !summoningSicknessUI.SummonProtection && !effectStats.ResistStats.ResistedDamage; }
+        get { return !summoningSicknessUI.SummonProtection && !effectStats.ResistStats.ResistedDamage && !effectStats.ResistStats.CantDamage; }
     }
 
     public bool IsReady { get { return summoningSicknessUI.IsReady; } }
@@ -402,15 +429,15 @@ public class BaseStats
             bool inVision = false;
             if(target != null)
                 inVision = hitTargets.Contains(target);       
-            if( ( inRange > 0 || (currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && inVision) ) && CanAct && !IsCastingAbility && chargeAttack) { //if target is inRange, or the attack is nearly ready and their within vision AND not stunned
+            if( ( inRange > 0 || (currAttackDelay/attackDelay >= attackReadyPercentage && inVision) ) && CanAct && !IsCastingAbility && chargeAttack) { //if target is inRange, or the attack is nearly ready and their within vision AND not stunned
                 isAttacking = true;
                 if(target != null) {
                     Vector3 directionToTarget = target.transform.GetChild(0).position - unitAgent.transform.position;
                     directionToTarget.y = 0; // Ignore Y, usful for airborne units
                     float angle = Vector3.Angle(unitAgent.transform.forward, directionToTarget); 
 
-                    if(noRotation || Mathf.Abs(angle) < GameConstants.MAXIMUM_ATTACK_ANGLE) {
-                        if(!soonToKill && !soonToKillOverride && currAttackDelay/attackDelay >= GameConstants.ATTACK_READY_PERCENTAGE)
+                    if(noRotation || Mathf.Abs(angle) < maximumAttackAngle) {
+                        if(!soonToKill && !soonToKillOverride && currAttackDelay/attackDelay >= attackReadyPercentage)
                             SetKillFlags(unit, target);
                         else if(wasSoonToBeKilled && soonToKill)
                             ResetKillFlags(unit, target);    
@@ -422,20 +449,20 @@ public class BaseStats
                             currAttackDelay = 0;
                     }
                     else {
-                        if(currAttackDelay < attackDelay*GameConstants.ATTACK_READY_PERCENTAGE) 
+                        if(currAttackDelay < attackDelay*attackReadyPercentage) 
                             currAttackDelay += Time.deltaTime * effectStats.SlowedStats.CurrentSlowIntensity;
                         ResetKillFlags(unit, target);
                     }
                 }
                 else { //this may occur for a few frames when a units target dies, but there are still other units it can target, it just has not updated to the new target yet
-                    if(currAttackDelay < attackDelay*GameConstants.ATTACK_READY_PERCENTAGE) 
+                    if(currAttackDelay < attackDelay*attackChargeLimiter) 
                         currAttackDelay += Time.deltaTime * effectStats.SlowedStats.CurrentSlowIntensity;
                     ResetKillFlags(unit, target);
                 }
             }
             else if(inVision && !IsCastingAbility && chargeAttack) { //if the target is within vision
                 isAttacking = false;
-                if(currAttackDelay < attackDelay*GameConstants.ATTACK_CHARGE_LIMITER) 
+                if(currAttackDelay < attackDelay*attackChargeLimiter) 
                     currAttackDelay += Time.deltaTime * effectStats.SlowedStats.CurrentSlowIntensity;
                 ResetKillFlags(unit, target);
             }
@@ -493,7 +520,7 @@ public class BaseStats
                 foreach(GameObject go in enemyUnit.EnemyHitTargets.ToArray()) { //go through every unit targeting our target and see if any of them will kill this unit first
                     if(go != unit && go != null) {
                         IDamageable friendlyUnit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
-                        if(friendlyUnit.Stats.CurrAttackDelay > friendlyUnit.Stats.AttackDelay*GameConstants.ATTACK_CHARGE_LIMITER)
+                        if(friendlyUnit.Stats.CurrAttackDelay > friendlyUnit.Stats.AttackDelay*attackChargeLimiter)
                             friendlyUnit.Stats.SoonToKillOverride = true;
                         else {
                             friendlyUnit.SetTarget(null);
