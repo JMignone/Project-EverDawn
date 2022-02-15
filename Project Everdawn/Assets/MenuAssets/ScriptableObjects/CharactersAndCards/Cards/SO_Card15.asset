@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 15
   character: {fileID: 0}
-  cardName: Droids
-  menuBackgroundImage: {fileID: 21300000, guid: cd94accd73c0f464a999ea3bb8246d85, type: 3}
-  cardImage: {fileID: 21300000, guid: cd94accd73c0f464a999ea3bb8246d85, type: 3}
+  cardName: Drones
+  menuBackgroundImage: {fileID: 21300000, guid: 909d59e9a6a293243a22ef77b65a4cd1, type: 3}
+  cardImage: {fileID: 21300000, guid: 909d59e9a6a293243a22ef77b65a4cd1, type: 3}
   cardLore: 
   affiliation: []
   resourceCost: 3
   spawnZoneRestrictions: 0
   prefab:
-  - {fileID: 4489671066153867563, guid: 5830c163639deb748baa5994960476b3, type: 3}
-  previewPrefab: {fileID: 9061750350620061380, guid: 93c84a8c28e0cb64481ca1627a38f58e, type: 3}
+  - {fileID: 4489671066153867563, guid: 51d71e9ed41545c44bf6f4b871d51e74, type: 3}
+  previewPrefab: {fileID: 9061750350620061380, guid: af85ffafa8590cb4bb40598241018fcd, type: 3}
   previewDelays:
   - 0
   unitIndex: 0

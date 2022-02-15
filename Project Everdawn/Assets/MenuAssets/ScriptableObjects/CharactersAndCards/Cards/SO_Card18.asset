@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 18
   character: {fileID: 0}
-  cardName: Boar
-  menuBackgroundImage: {fileID: 21300000, guid: 281d4d9f9de212a41b9e576d764ec266, type: 3}
-  cardImage: {fileID: 21300000, guid: 281d4d9f9de212a41b9e576d764ec266, type: 3}
+  cardName: SummonerUnit
+  menuBackgroundImage: {fileID: 21300000, guid: 97f57caf16278434182dba70c594601e, type: 3}
+  cardImage: {fileID: 21300000, guid: 97f57caf16278434182dba70c594601e, type: 3}
   cardLore: 
   affiliation: []
-  resourceCost: 4
+  resourceCost: 5
   spawnZoneRestrictions: 0
   prefab:
-  - {fileID: 4300487081235283213, guid: 3a4fe832408dce74d8483b09ce39041a, type: 3}
-  previewPrefab: {fileID: 7317817158688808453, guid: 8aee399ea19f0ae4eb875b1b3daa31ff, type: 3}
+  - {fileID: 3925836232371597723, guid: c360c3b71a9b75148b14d3f2f378f4d3, type: 3}
+  previewPrefab: {fileID: 881476954545742613, guid: c981a0ad8a7b07f499f99687f02ef545, type: 3}
   previewDelays:
   - 0
   unitIndex: 0

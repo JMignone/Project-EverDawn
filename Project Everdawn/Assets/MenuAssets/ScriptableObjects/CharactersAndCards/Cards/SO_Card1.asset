@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 1
   character: {fileID: 0}
-  cardName: Bao Zu
-  menuBackgroundImage: {fileID: 21300000, guid: 616f99a5a0da8bc4696cec0e5e538437, type: 3}
-  cardImage: {fileID: 21300000, guid: 616f99a5a0da8bc4696cec0e5e538437, type: 3}
-  cardLore: Tortle
+  cardName: Isla
+  menuBackgroundImage: {fileID: 21300000, guid: 3705379fccc4e694d861698406ce8912, type: 3}
+  cardImage: {fileID: 21300000, guid: 3705379fccc4e694d861698406ce8912, type: 3}
+  cardLore: 
   affiliation: []
-  resourceCost: 5
+  resourceCost: 4
   spawnZoneRestrictions: 0
   prefab:
-  - {fileID: 4489671066153867563, guid: 97143c3ff03398a4a9833e0cbbd1d5ea, type: 3}
-  previewPrefab: {fileID: 9061750350620061380, guid: 6b106a57a97597b41b5b3ce5f3de747f, type: 3}
+  - {fileID: 3925836232371597723, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
+  previewPrefab: {fileID: 881476954545742613, guid: 5186c23a5998e7d4d90f336cba1d6aba, type: 3}
   previewDelays:
   - 0
   unitIndex: 0

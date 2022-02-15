@@ -14,18 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 0
   character: {fileID: 0}
-  cardName: Isla
-  menuBackgroundImage: {fileID: 21300000, guid: 3705379fccc4e694d861698406ce8912, type: 3}
-  cardImage: {fileID: 21300000, guid: 3705379fccc4e694d861698406ce8912, type: 3}
-  cardLore: Man of Stick
+  cardName: nullCard
+  menuBackgroundImage: {fileID: 0}
+  cardImage: {fileID: 0}
+  cardLore: 
   affiliation: []
-  resourceCost: 4
+  resourceCost: 0
   spawnZoneRestrictions: 0
-  prefab:
-  - {fileID: 3925836232371597723, guid: ea1e03fd9db247f4083e6e7533c55f86, type: 3}
-  previewPrefab: {fileID: 881476954545742613, guid: 5186c23a5998e7d4d90f336cba1d6aba, type: 3}
-  previewDelays:
-  - 0
+  prefab: []
+  previewPrefab: {fileID: 0}
+  previewDelays: []
   unitIndex: 0
   obtained: 1
   selectedSkin: 0
