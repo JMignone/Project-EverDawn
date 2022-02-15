@@ -14,18 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 12
   character: {fileID: 0}
-  cardName: Airstrike
-  menuBackgroundImage: {fileID: 21300000, guid: c96eb49d13962544790ad386bedc9570, type: 3}
-  cardImage: {fileID: 21300000, guid: c96eb49d13962544790ad386bedc9570, type: 3}
+  cardName: Spawner
+  menuBackgroundImage: {fileID: 21300000, guid: 7f882429056c706469331bd077366681, type: 3}
+  cardImage: {fileID: 21300000, guid: 7f882429056c706469331bd077366681, type: 3}
   cardLore: 
   affiliation: []
-  resourceCost: 4
-  spawnZoneRestrictions: 2
+  resourceCost: 3
+  spawnZoneRestrictions: 0
   prefab:
-  - {fileID: 8128849533423555255, guid: 13d0e361c32c3244cb7739354027e0a8, type: 3}
-  previewPrefab: {fileID: 0}
+  - {fileID: 3887690281620728188, guid: f33c3c6d021417745a6999784b7030e5, type: 3}
+  previewPrefab: {fileID: 1401404796868230813, guid: c302e0fd1b2fabc4ea2aa8c0abbc667c, type: 3}
   previewDelays:
-  - 0.5
-  unitIndex: -1
+  - 0
+  unitIndex: 0
   obtained: 1
   selectedSkin: 0

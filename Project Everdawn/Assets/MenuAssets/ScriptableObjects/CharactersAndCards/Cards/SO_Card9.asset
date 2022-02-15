@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 9
   character: {fileID: 0}
-  cardName: CurvedAbilityUnit
-  menuBackgroundImage: {fileID: 21300000, guid: ac27ebfb92bbb1344be71a51aa516b14, type: 3}
-  cardImage: {fileID: 21300000, guid: ac27ebfb92bbb1344be71a51aa516b14, type: 3}
+  cardName: Miles
+  menuBackgroundImage: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
+  cardImage: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
   cardLore: 
   affiliation: []
-  resourceCost: 4
+  resourceCost: 3
   spawnZoneRestrictions: 0
   prefab:
-  - {fileID: 8440331531916290373, guid: e686e669b3531384b96f6fbc1f3f6025, type: 3}
-  previewPrefab: {fileID: 881476954545742613, guid: e17781e56d29276479551db3425623da, type: 3}
+  - {fileID: 5726148247449163227, guid: 91b538ca62e85f64b965faa3f5df9468, type: 3}
+  previewPrefab: {fileID: 2091876083188452919, guid: 5b1ba2a96dae04546959d52e8d1e45fd, type: 3}
   previewDelays:
   - 0
   unitIndex: 0

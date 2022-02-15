@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 5
   character: {fileID: 0}
-  cardName: Monsoon Insurgents
-  menuBackgroundImage: {fileID: 21300000, guid: 116f885df4bcb584e99223536431f6c1, type: 3}
-  cardImage: {fileID: 21300000, guid: 116f885df4bcb584e99223536431f6c1, type: 3}
+  cardName: Monsoon Gunners
+  menuBackgroundImage: {fileID: 21300000, guid: 526f2e41c56666847a887ac31f5fff5b, type: 3}
+  cardImage: {fileID: 21300000, guid: 526f2e41c56666847a887ac31f5fff5b, type: 3}
   cardLore: 
   affiliation: []
   resourceCost: 2
   spawnZoneRestrictions: 0
   prefab:
-  - {fileID: 4489671066153867563, guid: 7c4e20b9b5d8b9244869e823b032ceba, type: 3}
-  previewPrefab: {fileID: 9061750350620061380, guid: bcfa36079f7216e41844bb43b02676ce, type: 3}
+  - {fileID: 4489671066153867563, guid: 8cf03c9655e5bea4fb85d248243bb54a, type: 3}
+  previewPrefab: {fileID: 9061750350620061380, guid: 169c0ab4dc9d6a740b2b39ad298d7286, type: 3}
   previewDelays:
   - 0
   unitIndex: 0
