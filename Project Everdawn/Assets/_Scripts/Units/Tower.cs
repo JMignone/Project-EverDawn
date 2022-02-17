@@ -140,7 +140,7 @@ public class Tower : MonoBehaviour, IDamageable
             Attack();
 
             if(stats.CanAct) { //if its stunned, we want to keep the tower looking in the same direction
-                if((inRangeTargets.Count > 0 || stats.CurrAttackDelay/stats.AttackDelay >= stats.AttackReadyPercentage) && target != null) //is in range, OR is 90% thru attack cycle -
+                if((inRangeTargets.Count > 0 || stats.CurrAttackDelay/stats.AttackDelay > stats.AttackReadyPercentage) && target != null) //is in range, OR is 90% thru attack cycle -
                     lookAtTarget();
                 else 
                     resetToCenter();

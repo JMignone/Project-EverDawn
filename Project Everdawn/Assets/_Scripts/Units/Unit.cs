@@ -168,7 +168,7 @@ public class Unit : MonoBehaviour, IDamageable
                 direction.y = 0;
                 agent.Agent.SetDestination(new Vector3(target.transform.GetChild(0).position.x + stats.TowerPosOffset, 0, target.transform.GetChild(0).position.z) - (direction.normalized * .25f));
                 if(hitTargets.Contains(target)) {
-                    if(inRangeTargets.Count > 0 || stats.CurrAttackDelay/stats.AttackDelay >= stats.AttackReadyPercentage) { //is in range, OR is 90% thru attack cycle -
+                    if(inRangeTargets.Count > 0 || stats.CurrAttackDelay > stats.AttackDelay*stats.AttackReadyPercentage) { //is in range, OR is 90% thru attack cycle -
                         lookAtTarget();
                         agent.Agent.ResetPath();
                     }
@@ -257,7 +257,7 @@ public class Unit : MonoBehaviour, IDamageable
     }
 
     public void ReTarget() {
-        if(stats.CurrAttackDelay < stats.AttackDelay*stats.AttackReadyPercentage) {
+        if(stats.CurrAttackDelay <= stats.AttackDelay*stats.AttackReadyPercentage) {
             if(hitTargets.Count > 0) {
                 GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
                 if(go != null) {
@@ -285,6 +285,15 @@ public class Unit : MonoBehaviour, IDamageable
                     stats.CurrAttackDelay = stats.AttackDelay*stats.AttackChargeLimiter;
             }
             stats.IncRange = false;
+        }
+        else {
+            Debug.Log(gameObject);
+            Debug.Log(stats.CurrAttackDelay);
+            Debug.Log(stats.AttackDelay*stats.AttackReadyPercentage);
+            Debug.Log(stats.CurrAttackDelay - stats.AttackDelay*stats.AttackReadyPercentage);
+            Debug.Log(Mathf.Sign(stats.CurrAttackDelay - stats.AttackDelay*stats.AttackReadyPercentage));
+            if(stats.CurrAttackDelay <= stats.AttackDelay*stats.AttackReadyPercentage)
+                Debug.Log("WHAT");
         }
     }
 

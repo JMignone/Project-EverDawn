@@ -131,15 +131,15 @@ MonoBehaviour:
     canBlind: 0
     blindDuration: 0
   stunStats:
-    canStun: 0
-    stunDuration: 0
+    canStun: 1
+    stunDuration: 0.75
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0.01
   chainStats:
     chains: 1
     chainRadius: 7
-    chainCount: 2
+    chainCount: 1
   lingeringStats:
     lingering: 0
     lingerAtEnd: 0

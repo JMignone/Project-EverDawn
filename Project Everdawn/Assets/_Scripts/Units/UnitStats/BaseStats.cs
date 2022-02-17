@@ -460,6 +460,21 @@ public class BaseStats
                     ResetKillFlags(unit, target);
                 }
             }
+            else if(!IsCastingAbility && chargeAttack) {
+                isAttacking = false;
+                if(CanAct) {
+                    if(currAttackDelay < attackDelay*attackChargeLimiter)
+                        currAttackDelay += Time.deltaTime * effectStats.SlowedStats.CurrentSlowIntensity;
+                    else
+                        currAttackDelay = attackDelay*attackChargeLimiter;
+                }
+                else {
+                    if(currAttackDelay > attackDelay*attackReadyPercentage)
+                        currAttackDelay = attackDelay*attackReadyPercentage -.001f; //-.001 nessesary for errors in float arithmatic
+                }
+                ResetKillFlags(unit, target);
+            }
+            /*
             else if(inVision && !IsCastingAbility && chargeAttack) { //if the target is within vision
                 isAttacking = false;
                 if(currAttackDelay < attackDelay*attackChargeLimiter) 
@@ -470,7 +485,7 @@ public class BaseStats
                 isAttacking = false;
                 currAttackDelay = 0;
                 ResetKillFlags(unit, target);
-            }
+            }*/
         }
     }
 
@@ -558,7 +573,6 @@ public class BaseStats
                     if(go != unit) {
                         IDamageable friendlyUnit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
                         friendlyUnit.Stats.SoonToKillOverride = false;
-                        //soonToKill = false;
                     }
                 }
 

@@ -83,7 +83,6 @@ public class SlowedStats
             currentSlowDelay = 0;
             currentSlowIntensity = intensity;
             unit.UnitSprite.Animator.speed = intensity;
-            unit.Stats.CurrAttackDelay = 0;
         }
     }
 

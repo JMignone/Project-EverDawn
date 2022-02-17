@@ -184,7 +184,7 @@ public class Building : MonoBehaviour, IDamageable
 
                 if(target != null && !attackStats.IsFiring && rotates) {
                     if(hitTargets.Contains(target)) {
-                        if(inRangeTargets.Count > 0 || stats.CurrAttackDelay/stats.AttackDelay >= stats.AttackReadyPercentage) //is in range, OR is 90% thru attack cycle -
+                        if(inRangeTargets.Count > 0 || stats.CurrAttackDelay/stats.AttackDelay > stats.AttackReadyPercentage) //is in range, OR is 90% thru attack cycle -
                             lookAtTarget();
                     }
                 }
@@ -268,7 +268,7 @@ public class Building : MonoBehaviour, IDamageable
     }
 
     public void ReTarget() {
-        if(stats.CurrAttackDelay < stats.AttackDelay*stats.AttackReadyPercentage) {
+        if(stats.CurrAttackDelay <= stats.AttackDelay*stats.AttackReadyPercentage) {
             if(hitTargets.Count > 0) {
                 GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
                 if(go != null) {

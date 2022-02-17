@@ -329,6 +329,7 @@ public static class GameFunctions
     //This code was found from https://answers.unity.com/questions/566519/camerascreentoworldpoint-in-perspective.html
     //It finds the position in the game space relative to where the cursor is on the screen.
     public static Vector3 getPosition(bool isFlying) {
+        Vector3 positionOffset= new Vector3(0, 0, 5); //offset the position so its not covered by users fingers
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane xy;
         if(isFlying)
@@ -338,7 +339,7 @@ public static class GameFunctions
         
         float distance;
         xy.Raycast(ray, out distance);
-        return ray.GetPoint(distance);
+        return ray.GetPoint(distance) + positionOffset;
     }
 
     public static Vector3 adjustForTowers(Vector3 position, float radius) {
