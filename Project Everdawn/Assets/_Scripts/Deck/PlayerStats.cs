@@ -44,8 +44,7 @@ public class PlayerStats : MonoBehaviour
     private bool leftZone;
     private bool rightZone;
 
-    [SerializeField] private SO_CardDatabase cardDatabase;
-    [SerializeField] private DeckSaver deckSaver;
+    [SerializeField] private DeckManager deckManager;
 
     public Deck PlayersDeck
     {
@@ -181,19 +180,26 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
-        if(!computerStats.IsComputer) {
-            deckSaver.Load();
-            
-            List<int> cardIDList = deckSaver.selectedCards;
+        if(!computerStats.IsComputer) {         
+            List<SO_Card> cardList = deckManager.ConvertIntListToCardList(deckManager.LoadDeck(deckManager.selectedDeckNumber).cardsInDeck);
             List<CardStats> cards = new List<CardStats>();
-
-            for (int i = 0; i < cardIDList.Count; i++)
+            
+            for (int i = 0; i < cardList.Count; i++)
             {
-                cards.Add(cardDatabase.cardList[cardIDList[i]].GetCardStats());
+                cards.Add(cardList[i].GetCardStats());
             }
             playersDeck.Cards = cards;
         }
         else {
+            List<SO_Card> cardList = deckManager.ConvertIntListToCardList(deckManager.LoadDeck(5).cardsInDeck);
+            List<CardStats> cards = new List<CardStats>();
+            
+            for (int i = 0; i < cardList.Count; i++)
+            {
+                cards.Add(cardList[i].GetCardStats());
+            }
+            playersDeck.Cards = cards;
+            
             foreach(CardStats card in playersDeck.Cards)
                 card.HiddenCard = true;
         }

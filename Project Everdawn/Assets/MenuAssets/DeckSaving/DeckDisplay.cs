@@ -41,6 +41,9 @@ public class DeckDisplay : MonoBehaviour
     public void LoadDeck(int deckNumber)
     {
         selectedDeckNumber = deckNumber;
+        if(deckNumber != 0)
+            deckManager.selectedDeckNumber = deckNumber;
+            
         deckManager.LoadDeck(deckNumber);
         selectedDeck = deckManager.selectedDeck;
         List<SO_Card> cardList = new List<SO_Card>();
