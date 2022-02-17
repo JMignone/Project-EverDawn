@@ -188,7 +188,6 @@
      <Compile Include="Assets\_Scripts\Abilities\CreateAtLocation\CALEffects\TeleportStats.cs" />
      <Compile Include="Assets\MenuAssets\ScriptableObjects\CharactersAndCards\SO_Definitions\SO_Faction.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Effects\ApplyResistanceStats.cs" />
-     <Compile Include="Assets\MenuAssets\Depreciated\CharacterManager.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Projectile\ProjEffects\LocationStats.cs" />
      <Compile Include="Assets\_Scripts\Units\Misc\UnitMaterials.cs" />
      <Compile Include="Assets\_Scripts\Deck\Card.cs" />
