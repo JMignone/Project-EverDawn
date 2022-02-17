@@ -7400,8 +7400,7 @@ MonoBehaviour:
   topArea: {fileID: 1393908569}
   leftArea: {fileID: 478460013}
   rightArea: {fileID: 320920543}
-  cardDatabase: {fileID: 11400000, guid: cc38779267dc05442b08f8fe72dbedce, type: 2}
-  deckSaver: {fileID: 11400000, guid: 313ddc1f94fd05c448ee5af3100e0d6c, type: 2}
+  deckManager: {fileID: 11400000, guid: 7c379e102ba715d4686e9e9eccf1ddb7, type: 2}
 --- !u!1 &336064879
 GameObject:
   m_ObjectHideFlags: 0
@@ -46845,8 +46844,7 @@ MonoBehaviour:
   topArea: {fileID: 0}
   leftArea: {fileID: 0}
   rightArea: {fileID: 0}
-  cardDatabase: {fileID: 0}
-  deckSaver: {fileID: 0}
+  deckManager: {fileID: 11400000, guid: 7c379e102ba715d4686e9e9eccf1ddb7, type: 2}
 --- !u!1 &2140498545
 GameObject:
   m_ObjectHideFlags: 0
