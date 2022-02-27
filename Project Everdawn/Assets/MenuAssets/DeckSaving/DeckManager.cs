@@ -3,7 +3,6 @@ using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
-[CreateAssetMenu(fileName = "DeckManager", menuName = "ScriptableObjects/Deck Manager")]
 public class DeckManager : ScriptableObject
 {
     #region Variables

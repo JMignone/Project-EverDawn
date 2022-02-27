@@ -84,7 +84,7 @@
      <Compile Include="Assets\MenuAssets\ScriptableObjects\CharactersAndCards\SO_Definitions\SO_CharacterDatabase.cs" />
      <Compile Include="Assets\MenuAssets\DeckSaving\PlayerDeck.cs" />
      <Compile Include="Assets\_Scripts\Deck\CardStats.cs" />
-     <Compile Include="Assets\MenuAssets\GameEvents\Listeners\GameEventListener.cs" />
+     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Abstractions\GameEventListener.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Effects\StrengthStats.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralUISpace.cs" />
      <Compile Include="Assets\_Scripts\Abilities\CreateAtLocation\CALEffects\SummonStats.cs" />
@@ -116,6 +116,7 @@
      <Compile Include="Assets\_Scripts\Units\UnitStats\AttackStats.cs" />
      <Compile Include="Assets\_Scripts\Units\UnitEffects\GrabbedStats.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\PathBezier.cs" />
+     <Compile Include="Assets\MenuAssets\StateMachines\Abstractions\Base\BaseState.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\PathSpline.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Effects\ChainStats.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Effects\FreezeStats.cs" />
@@ -197,8 +198,9 @@
      <Compile Include="Assets\_Scripts\Interface\IDamageable.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
-     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Events\GameEvent.cs" />
+     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Abstractions\GameEvent.cs" />
      <Compile Include="Assets\_Scripts\Abilities\Effects\PullStats.cs" />
+     <Compile Include="Assets\MenuAssets\StateMachines\Abstractions\Base\BaseStateController.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
      <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Events\IntEvent.cs" />
@@ -226,6 +228,14 @@
      <Compile Include="Assets\_Scripts\Units\UnitEffects\FrozenStats.cs" />
      <Compile Include="Assets\LeanTween\Examples\Scripts\Following.cs" />
      <Compile Include="Assets\MenuAssets\Scripts\TeamDisplay.cs" />
+     <Compile Include="Assets\MenuAssets\StateMachines\Abstractions\Menu\MenuState.cs" />
+     <Compile Include="Assets\MenuAssets\StateMachines\Abstractions\Menu\MenuStateController.cs" />
+     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Events\MenuStateEvent.cs" />
+     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\UnityEvents\UnityMenuStateEvent.cs" />
+     <Compile Include="Assets\MenuAssets\GameEvents\Listeners\MenuStateListener.cs" />
+     <Compile Include="Assets\MenuAssets\Scripts\ObjStateController.cs" />
+     <Compile Include="Assets\MenuAssets\StateMachines\Abstractions\Deck\DeckState.cs" />
+     <Compile Include="Assets\MenuAssets\StateMachines\Abstractions\Deck\DeckStateController.cs" />
      <None Include="Assets\InGame\_Units\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />

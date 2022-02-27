@@ -39,7 +39,7 @@ public class CharacterBackgroundDisplay : MonoBehaviour
         }
     }
 
-    public void ChangeCharacterBackgroundImage(int CardID)
+    private void ChangeCharacterBackgroundImage(int CardID)
     {
         SO_Card card = cardDatabase.cardList[CardID];
         characterImage.sprite = card.cardImage;
