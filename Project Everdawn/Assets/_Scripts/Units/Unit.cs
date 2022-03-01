@@ -47,16 +47,17 @@ public class Unit : MonoBehaviour, IDamageable
     [SerializeField]
     private List<GameObject> enemyHitTargets;
 
+    [SerializeField]
+    private List<GameObject> projectiles;
+
     public Actor3D Agent
     {
         get { return agent; }
-        //set { agent = value; }
     }
 
     public Actor2D UnitSprite
     {
         get { return unitSprite; }
-        //set { unitSprite = value; }
     }
 
     public GameObject Target
@@ -107,6 +108,11 @@ public class Unit : MonoBehaviour, IDamageable
         get { return enemyHitTargets; }
     }
 
+    public List<GameObject> Projectiles
+    {
+        get { return projectiles; }
+    }
+
     public bool IsMoving
     {
         get { if(agent.Agent.enabled && !agent.Agent.isStopped && agent.Agent.speed != 0) return true; else return false; }
@@ -148,9 +154,39 @@ public class Unit : MonoBehaviour, IDamageable
 
     private void FixedUpdate()
     {
+        /*
+        foreach(GameObject go in enemyHitTargets) {
+            if(go == null) {
+                Debug.Log(gameObject);
+                Debug.Break();
+            }
+        }
+
+        foreach(GameObject go in InRangeTargets) {
+            if(go == null) {
+                Debug.Log(gameObject);
+                Debug.Break();
+            }
+        }
+
+        foreach(GameObject go in HitTargets) {
+            if(go == null) {
+                Debug.Log(gameObject);
+                Debug.Break();
+            }
+        }
+
+        foreach(GameObject go in Projectiles) {
+            if(go == null) {
+                Debug.Log(gameObject);
+                Debug.Break();
+            }
+        }
+        */
+
         if(noseDiveStats.IsDiving)
             noseDiveStats.UpdateStats();
-        else if(stats.CurrHealth > 0) {
+        else if(stats.CurrHealth > 0 && (!stats.LeavesArena || stats.LeaveTimer > 0) ) {
             if((target == null || inRangeTargets.Count == 0) && stats.CanAct && !stats.IsCastingAbility) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                 ReTarget();
 
@@ -185,7 +221,7 @@ public class Unit : MonoBehaviour, IDamageable
             deathStats.FireDeathSkill();
         }
         else {
-            //print(gameObject.name + " has died!");
+            //print(gameObject.name + " has died!" + System.DateTime.Now);
             stats.ResetKillFlags(gameObject, target);
             GameManager.RemoveObjectsFromList(gameObject);
             if(target != null)
@@ -285,15 +321,6 @@ public class Unit : MonoBehaviour, IDamageable
                     stats.CurrAttackDelay = stats.AttackDelay*stats.AttackChargeLimiter;
             }
             stats.IncRange = false;
-        }
-        else {
-            Debug.Log(gameObject);
-            Debug.Log(stats.CurrAttackDelay);
-            Debug.Log(stats.AttackDelay*stats.AttackReadyPercentage);
-            Debug.Log(stats.CurrAttackDelay - stats.AttackDelay*stats.AttackReadyPercentage);
-            Debug.Log(Mathf.Sign(stats.CurrAttackDelay - stats.AttackDelay*stats.AttackReadyPercentage));
-            if(stats.CurrAttackDelay <= stats.AttackDelay*stats.AttackReadyPercentage)
-                Debug.Log("WHAT");
         }
     }
 

@@ -375,8 +375,8 @@ MonoBehaviour:
     noRotation: 0
     rotationSpeed: 140
     summoningSicknessUI:
-      summonSicknessDelay: 1
-      summonProtectionDelay: 0.5
+      summonSicknessDelay: 0.98
+      summonProtectionDelay: 0.52
       sSCanvas: {fileID: 2796575116556131537}
       sSSprite: {fileID: 2796575115973403866}
       sSMask: {fileID: 2796575116789975837}

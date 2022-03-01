@@ -139,6 +139,14 @@ public class BaseStats
         //set { healthDecay = value; }
     }
 
+    public bool LeavesArena {
+        get { return leavesArena; }
+    }
+
+    public float LeaveTimer {
+        get { return leaveTimer; }
+    }
+
     public float PercentArmor {
         get { return currArmor/maxArmor; }
     }
@@ -415,14 +423,14 @@ public class BaseStats
             if(leavesArena) {
                 if(leaveTimer > 0)
                     leaveTimer -= Time.deltaTime;
-                else {
+                /*else {
                     ResetKillFlags(unit, target);
                     GameManager.RemoveObjectsFromList(unit);
                     if(target != null)
                         (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(unit);
-                        (unit.GetComponent(typeof(IDamageable)) as IDamageable).SetTarget(null);
+                    (unit.GetComponent(typeof(IDamageable)) as IDamageable).SetTarget(null);
                     MonoBehaviour.Destroy(unit);
-                }
+                }*/
             }
 
 
@@ -570,7 +578,7 @@ public class BaseStats
                 enemyUnit.Stats.SoonToBeKilled = false;
 
                 foreach(GameObject go in enemyUnit.EnemyHitTargets) { //go through every unit targeting our target
-                    if(go != unit) {
+                    if(go != unit && go != null) {
                         IDamageable friendlyUnit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
                         friendlyUnit.Stats.SoonToKillOverride = false;
                     }

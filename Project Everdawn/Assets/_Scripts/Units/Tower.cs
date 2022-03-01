@@ -39,12 +39,14 @@ public class Tower : MonoBehaviour, IDamageable
     private List<GameObject> enemyHitTargets;
 
     [SerializeField]
+    private List<GameObject> projectiles;
+
+    [SerializeField]
     protected bool leftTower;
 
     public Actor3D Agent
     {
         get { return agent; }
-        //set { agent = value; }
     }
 
     public Actor2D UnitSprite
@@ -76,6 +78,11 @@ public class Tower : MonoBehaviour, IDamageable
     public List<GameObject> EnemyHitTargets
     {
         get { return enemyHitTargets; }
+    }
+
+    public List<GameObject> Projectiles
+    {
+        get { return projectiles; }
     }
 
     public DashStats DashStats

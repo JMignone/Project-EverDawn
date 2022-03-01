@@ -288,7 +288,7 @@ public class PlayerStats : MonoBehaviour
     }
 
     public void SelectNewCard(int id) {
-        Debug.Log(id);
+        //Debug.Log(id);
         if(selectedCardId != id) {
             foreach(Transform go in handParent.transform) {
                 Card card = go.gameObject.GetComponent<Card>();

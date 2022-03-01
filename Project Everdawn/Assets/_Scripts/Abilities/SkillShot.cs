@@ -84,6 +84,8 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     private int skipOverride;
     //gives abilities the power to enable targets for the future abilities of the skill shot
     private Actor3D targetOverride;
+    //stores the summoned unit incase we need to divert things to it.
+    private GameObject unitSummon;
 
     public IDamageable Unit
     {
@@ -141,6 +143,12 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     {
         get { return skipOverride; }
         set { skipOverride = value; }
+    }
+
+    public GameObject UnitSummon
+    {
+        get { return unitSummon; }
+        set { unitSummon = value; }
     }
 
     void Start() {

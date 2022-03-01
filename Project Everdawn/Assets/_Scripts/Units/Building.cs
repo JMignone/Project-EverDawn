@@ -53,16 +53,17 @@ public class Building : MonoBehaviour, IDamageable
     [SerializeField]
     private List<GameObject> enemyHitTargets;
 
+    [SerializeField]
+    private List<GameObject> projectiles;
+
     public Actor3D Agent
     {
         get { return agent; }
-        //set { agent = value; }
     }
 
     public Actor2D UnitSprite
     {
         get { return unitSprite; }
-        //set { unitSprite = value; }
     }
 
     public GameObject Target
@@ -131,6 +132,11 @@ public class Building : MonoBehaviour, IDamageable
         get { return enemyHitTargets; }
     }
 
+    public List<GameObject> Projectiles
+    {
+        get { return projectiles; }
+    }
+
     public bool IsMoving
     {
         get { return false; }
@@ -167,7 +173,7 @@ public class Building : MonoBehaviour, IDamageable
 
     private void FixedUpdate()
     {
-        if(stats.CurrHealth > 0) {
+        if(stats.CurrHealth > 0 && (!stats.LeavesArena || stats.LeaveTimer > 0)) {
             if(buildingType == GameConstants.BUILDING_TYPE.SPAWN) {
                 stats.UpdateBuildingStats();
                 shadowStats.UpdateShadowStats();
@@ -390,7 +396,7 @@ public class Building : MonoBehaviour, IDamageable
                         if((unit as IDamageable).HitTargets.Contains(gameObject))
                             (unit as IDamageable).HitTargets.Remove(gameObject);
                         if((unit as IDamageable).Target == gameObject) //if the units target was the one who left the vision
-                            (unit as IDamageable).Target = null; 
+                            (unit as IDamageable).SetTarget(null); 
                     }
                 }
             }

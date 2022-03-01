@@ -89,6 +89,8 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
     private bool exitOverride;
     //an amount of abilities to skip starting from the last ability
     private int skipOverride;
+    //stores the summoned unit incase we need to divert things to it.
+    private GameObject unitSummon;
 
     public IDamageable Unit
     {
@@ -146,6 +148,12 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
     {
         get { return skipOverride; }
         set { skipOverride = value; }
+    }
+
+    public GameObject UnitSummon
+    {
+        get { return unitSummon; }
+        set { unitSummon = value; }
     }
 
     void Start() {
