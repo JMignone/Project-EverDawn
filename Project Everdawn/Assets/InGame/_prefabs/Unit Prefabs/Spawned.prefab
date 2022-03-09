@@ -1275,6 +1275,7 @@ MonoBehaviour:
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
+  projectiles: []
 --- !u!54 &6825281274548537870
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2355,13 +2356,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8326997223694864424}
     m_Modifications:
+    - target: {fileID: 2683724731585702016, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2683724732500358883, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2683724732500358893, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2683724732576097059, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2683724732824738253, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
       propertyPath: m_Pivot.x
@@ -2464,7 +2473,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 4078519445697324528}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 

@@ -36,6 +36,8 @@ public class BaseStats
     [SerializeField] [Min(0)]
     private float baseDamage;
     [SerializeField] [Min(0)]
+    private float towerDamage;
+    [SerializeField] [Min(0)]
     private float attackDelay;
     [SerializeField] [Min(0)]
     private float currAttackDelay;
@@ -185,6 +187,12 @@ public class BaseStats
     {
         get { return baseDamage; }
         set { baseDamage = value; }
+    }
+
+    public float TowerDamage
+    {
+        get { return towerDamage; }
+        set { towerDamage = value; }
     }
 
     public float AttackDelay
@@ -432,12 +440,8 @@ public class BaseStats
                     MonoBehaviour.Destroy(unit);
                 }*/
             }
-
-
-            bool inVision = false;
-            if(target != null)
-                inVision = hitTargets.Contains(target);       
-            if( ( inRange > 0 || (currAttackDelay/attackDelay >= attackReadyPercentage && inVision) ) && CanAct && !IsCastingAbility && chargeAttack) { //if target is inRange, or the attack is nearly ready and their within vision AND not stunned
+  
+            if( ( inRange > 0 || (currAttackDelay/attackDelay >= attackReadyPercentage && hitTargets.Contains(target)) ) && CanAct && !IsCastingAbility && chargeAttack) { //if target is inRange, or the attack is nearly ready and their within vision AND not stunned
                 isAttacking = true;
                 if(target != null) {
                     Vector3 directionToTarget = target.transform.GetChild(0).position - unitAgent.transform.position;

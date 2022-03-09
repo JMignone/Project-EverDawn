@@ -53,6 +53,10 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     private GameConstants.AUTO_TARGET autoTarget;
     private string autoTag;
 
+    [Tooltip("If checked, the unit will have its target set to the targetOverride when done casting")]
+    [SerializeField]
+    private bool setTarget;
+
     [Tooltip("If checked, the preview will only be a circle and its range, not anything else")]
     [SerializeField]
     private bool onlyCircle;
@@ -152,15 +156,6 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     }
 
     void Start() {
-        abilityPreviews = new List<GameObject>();
-        createAbilityPreviews();
-
-        fireMousePosition = new Vector3(-1, -1, -1);
-
-        AbilityUI.StartStats();
-        if(!Unit.Stats.SummoningSicknessUI.IsReady)
-            GameFunctions.DisableAbilities((unit as Component).gameObject);
-
         //Below sets up what will be needed for clicking the ability, such that we only need to calculate maxRange and areaMask once.
         maxRange = 0;
         areaMask = 1;
@@ -177,6 +172,15 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             if(ability.GetComponent<Movement>())
                 passesObstacles = ability.GetComponent<Movement>().PassObstacles;
         }
+
+        abilityPreviews = new List<GameObject>();
+        createAbilityPreviews();
+
+        fireMousePosition = new Vector3(-1, -1, -1);
+
+        AbilityUI.StartStats();
+        if(!Unit.Stats.SummoningSicknessUI.IsReady)
+            GameFunctions.DisableAbilities((unit as Component).gameObject);
 
         //This will set what the ability will auto target if allowed
         if(autoTarget == GameConstants.AUTO_TARGET.ENEMY) {
@@ -287,8 +291,15 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                     else if(go.GetComponent<CreateAtLocation>())
                         AdjustCALPreview(preview, go.GetComponent<CreateAtLocation>(), position, direction);
                 }
-                else if(preview.name == "Targeter")
+                else if(preview.name == "Targeter") {
+                    float distance = Vector3.Distance(position, abilityPreviewCanvas.transform.position);
+                    if(distance > maxRange - 3) {
+                        Vector3 distFromRadius = position - abilityPreviewCanvas.transform.position;
+                        distFromRadius *= (maxRange - 3) / distance;
+                        position = abilityPreviewCanvas.transform.position + distFromRadius;
+                    }
                     preview.transform.GetChild(0).GetComponent<RectTransform>().position = position;
+                }
             }
         }
         else if(isFiring)
@@ -420,13 +431,15 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             isFiring = false;
             exitOverride = false;
             pauseFiring = false;
-            targetOverride = null;
             skipOverride = 0;
             currentProjectileIndex = 0;
             currentDelay = 0;
             if(!abilityControl)
                 Unit.Stats.IsCastingAbility = false;
+            if(setTarget)
+                Unit.SetTarget((targetOverride.Unit as Component).gameObject);
             Unit.Stats.CurrAttackDelay = Unit.Stats.AttackDelay * attackReadyPercentage;
+            targetOverride = null;
         }
         else { //if we completed a delay
             float rangeIncrease = 0;
@@ -649,6 +662,34 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             goTarget.transform.localRotation = Quaternion.Euler(Vector3.zero);
             goTarget.SetActive(true);
             abilityPreviews.Add(goTarget);
+
+            if(!(abilityPrefabs[0].GetComponent(typeof(IAbility)) as IAbility).HideRange) {
+                GameObject goBoomRange = new GameObject();
+                goBoomRange.name = "TargetRange";
+
+                /* -- Creates the Image GameObject and component -- */
+                GameObject previewRangeImageGo = new GameObject();
+                previewRangeImageGo.name = "Sprite";
+                Image previewRangeImage = previewRangeImageGo.AddComponent<Image>(); //Add the Image Component script
+                previewRangeImage.color = new Color32(255, 255, 255, 100);
+                previewRangeImage.sprite = abilityPreviewRange; //Set the Sprite of the Image Component on the new GameObject
+                previewRangeImage.enabled = false;
+
+                RectTransform imageRangeTransform = previewRangeImageGo.GetComponent<RectTransform>();
+                imageRangeTransform.anchorMin = new Vector2(.5f, 0);
+                imageRangeTransform.anchorMax = new Vector2(.5f, 0);
+                imageRangeTransform.pivot = new Vector2(.5f, .5f);
+                imageRangeTransform.SetParent(goBoomRange.transform); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+                imageRangeTransform.localPosition = Vector3.zero;
+                imageRangeTransform.localRotation = Quaternion.Euler(270, 0, 0);
+                imageRangeTransform.sizeDelta = new Vector2(maxRange * 2, maxRange * 2);
+
+                goBoomRange.transform.SetParent(abilityPreviewCanvas.transform);
+                goBoomRange.transform.localPosition = Vector3.zero;
+                goBoomRange.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                goBoomRange.SetActive(true);
+                abilityPreviews.Add(goBoomRange);
+            }
         }
         else {
             foreach (GameObject goAbility in abilityPrefabs)

@@ -63,6 +63,10 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
     private GameConstants.AUTO_TARGET autoTarget;
     private string autoTag;
 
+    [Tooltip("If checked, the unit will have its target set to the targetOverride when done casting")]
+    [SerializeField]
+    private bool setTarget;
+
     [SerializeField]
     private bool hidePreview;
 
@@ -446,10 +450,12 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
             skipOverride = 0;
             currentProjectileIndex = 0;
             currentDelay = 0;
-            target = null;
             if(!abilityControl)
                 unit.Stats.IsCastingAbility = false;
+            if(setTarget)
+                Unit.SetTarget((target.Unit as Component).gameObject);
             Unit.Stats.CurrAttackDelay = Unit.Stats.AttackDelay * attackReadyPercentage;
+            target = null;
         }
         else { //if we completed a delay
             fireStartPosition = abilityPreviewCanvas.transform.position;

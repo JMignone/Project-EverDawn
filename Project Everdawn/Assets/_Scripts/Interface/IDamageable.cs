@@ -17,6 +17,8 @@ public interface IDamageable
     //DeathStats DeathStats { get; }
     bool IsMoving { get; }
 
+    List<Component> ApplyEffectsComponents { get; }
+
     void TakeDamage(float amount);
     void SetTarget(GameObject newTarget);
     void ReTarget();

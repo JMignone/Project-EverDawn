@@ -114,6 +114,7 @@ public class GrabbedStats
                 if(!stunned && enemyCanAct) {
                     if(enemyController)
                         enemyUnit.Stats.IsCastingAbility = false;
+                    enemyUnit.SetTarget((unit as Component).gameObject);
                     enemyUnit.Stats.CurrAttackDelay = enemyUnit.Stats.AttackDelay * enemyUnit.Stats.AttackChargeLimiter;
                 }
                 stunned = true;

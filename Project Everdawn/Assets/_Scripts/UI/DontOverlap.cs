@@ -21,8 +21,13 @@ public class DontOverlap : MonoBehaviour
     {
         Vector3 changePosition = Vector3.zero;
         Vector3 colLocation = transform.position - col.center;
-        foreach(CapsuleCollider collider in colliders) {
-            Vector3 colliderLocation = collider.transform.position - collider.center;
+
+        for(int i=0; i<colliders.Count;i++) {
+            if(colliders[i] == null) {
+                colliders.RemoveAt(i);
+                continue;
+            }
+            Vector3 colliderLocation = colliders[i].transform.position - colliders[i].center;
             
             Vector3 direction = (colLocation - colliderLocation);
             direction = direction.normalized;
@@ -35,13 +40,13 @@ public class DontOverlap : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
-        if(other.name == "Ability")
+        if(other.transform.gameObject.name == "Ability")
             colliders.Add((other as CapsuleCollider));
     }
 
     private void OnTriggerExit(Collider other) 
     {
-        if(other.name == "Ability")
+        if(other.transform.gameObject.name == "Ability")
             colliders.Remove((other as CapsuleCollider));
     }
 }

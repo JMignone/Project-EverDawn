@@ -621,8 +621,8 @@ MonoBehaviour:
   unitSprite: {fileID: 3925836231506596151}
   target: {fileID: 0}
   stats:
-    currHealth: 2250
-    maxHealth: 2250
+    currHealth: 1800
+    maxHealth: 1800
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
@@ -630,13 +630,14 @@ MonoBehaviour:
     leaveTimer: 0
     range: 5
     visionRange: 20
-    baseDamage: 185
+    baseDamage: 250
+    towerDamage: 175
     attackDelay: 1.7
     currAttackDelay: 0
     attackChargeLimiter: 0
     attackReadyPercentage: 0
     maximumAttackAngle: 360
-    moveSpeed: 9
+    moveSpeed: 11
     noRotation: 0
     rotationSpeed: 360
     summoningSicknessUI:
@@ -781,6 +782,7 @@ MonoBehaviour:
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
+  projectiles: []
 --- !u!54 &3925836232371597726
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -884,6 +886,7 @@ GameObject:
   - component: {fileID: 3646088647865562517}
   - component: {fileID: 7452190417034226673}
   - component: {fileID: 1409732175346049227}
+  - component: {fileID: 7194459736711466395}
   m_Layer: 0
   m_Name: CanvasAbilityPreview
   m_TagString: Untagged
@@ -971,6 +974,22 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!54 &7194459736711466395
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5808047946967260669}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &646337098354321667
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1000,7 +1019,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityUI.cooldownDelay
-      value: 11
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityDelays.Array.size
@@ -1032,7 +1051,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityUI.currCooldownDelay
-      value: 11
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityPrefabs.Array.data[0]
@@ -1375,6 +1394,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
+--- !u!224 &6160463879896391647 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
+  m_PrefabInstance: {fileID: 3925836232468972412}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6160463879431882799 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7135111394994834259, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
@@ -1402,11 +1426,6 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 7135111395446791327, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
   m_PrefabInstance: {fileID: 3925836232468972412}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &6160463879896391647 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
-  m_PrefabInstance: {fileID: 3925836232468972412}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6808408230487339774
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1420,51 +1439,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Center.x
-      value: 0.18441603
+      value: 0.20101398
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Center.y
-      value: 0.19066222
+      value: 0.14695592
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Center.z
-      value: -0.005317718
+      value: 0.0030395985
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Extent.x
-      value: 0.30073926
+      value: 0.31733721
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Extent.y
-      value: 0.094108626
+      value: 0.050402325
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Extent.z
-      value: 0.17989111
+      value: 0.17296419
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Center.x
-      value: 0.13019904
+      value: 0.1362294
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Center.y
-      value: 0.031694505
+      value: 0.022992592
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Center.z
-      value: 0.1340051
+      value: 0.1332598
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Extent.x
-      value: 0.29404524
+      value: 0.3000756
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Extent.y
-      value: 0.14498985
+      value: 0.13946716
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Extent.z
-      value: 0.33851716
+      value: 0.29101714
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126723731848, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_Name
@@ -1529,11 +1548,6 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 5880290126714348102, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
---- !u!23 &2667973773233923504 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 8897669429591119694, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
-  m_PrefabInstance: {fileID: 6808408230487339774}
-  m_PrefabAsset: {fileID: 0}
 --- !u!137 &1145796126000115320 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 5880290126718459014, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
@@ -1567,6 +1581,11 @@ SkinnedMeshRenderer:
 --- !u!137 &1145796126000115316 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 5880290126718459018, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
+  m_PrefabInstance: {fileID: 6808408230487339774}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2667973773233923504 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8897669429591119694, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
   m_PrefabInstance: {fileID: 6808408230487339774}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1145796126005690198 stripped

@@ -487,8 +487,8 @@ MonoBehaviour:
   unitSprite: {fileID: 7301237268377999451}
   target: {fileID: 0}
   stats:
-    currHealth: 600
-    maxHealth: 600
+    currHealth: 620
+    maxHealth: 620
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
@@ -497,6 +497,7 @@ MonoBehaviour:
     range: 20
     visionRange: 24
     baseDamage: 0
+    towerDamage: 0
     attackDelay: 1.8
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -647,6 +648,7 @@ MonoBehaviour:
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
+  projectiles: []
 --- !u!54 &7301237269475668353
 Rigidbody:
   m_ObjectHideFlags: 0

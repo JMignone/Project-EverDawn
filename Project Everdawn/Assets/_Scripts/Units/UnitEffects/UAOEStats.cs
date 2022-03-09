@@ -68,7 +68,9 @@ public class UAOEStats
                 //if(GameFunctions.CanAttack(go.tag, damageable.tag, damageable.GetComponent(typeof(IDamageable)), unit.Stats)) {
                 if(GameFunctions.WillHit(unit.Stats.HeightAttackable, GameConstants.TYPE_ATTACKABLE.BOTH, damageable.GetComponent(typeof(IDamageable)) )) {
                     GameFunctions.Attack(damageable, damage, unit.Stats.EffectStats.CritStats);
-                    unit.Stats.ApplyAffects(damageable);
+                    //unit.Stats.ApplyAffects(damageable);
+                    //GameManager.ApplyAffects(damageable, unit.Stats.EffectStats);
+                    unit.ApplyEffectsComponents.Add(damageable);
                 }
             }
         }

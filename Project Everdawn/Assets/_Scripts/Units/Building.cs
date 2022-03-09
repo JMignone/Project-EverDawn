@@ -56,6 +56,8 @@ public class Building : MonoBehaviour, IDamageable
     [SerializeField]
     private List<GameObject> projectiles;
 
+    private List<Component> applyEffectsComponents = new List<Component>();
+
     public Actor3D Agent
     {
         get { return agent; }
@@ -137,6 +139,11 @@ public class Building : MonoBehaviour, IDamageable
         get { return projectiles; }
     }
 
+    public List<Component> ApplyEffectsComponents
+    {
+        get { return applyEffectsComponents; }
+    }
+
     public bool IsMoving
     {
         get { return false; }
@@ -169,10 +176,20 @@ public class Building : MonoBehaviour, IDamageable
             stats.AttackReadyPercentage = GameConstants.ATTACK_READY_PERCENTAGE;
         if(stats.MaximumAttackAngle == 0)
             stats.MaximumAttackAngle = GameConstants.MAXIMUM_ATTACK_ANGLE;
+        if(stats.TowerDamage == 0)
+            stats.TowerDamage = stats.BaseDamage;
     }
 
     private void FixedUpdate()
     {
+        if(applyEffectsComponents.Count > 0) {
+            foreach(Component component in applyEffectsComponents) {
+                if(component != null)
+                    stats.ApplyAffects(component);
+            }
+            applyEffectsComponents = new List<Component>();
+        }
+
         if(stats.CurrHealth > 0 && (!stats.LeavesArena || stats.LeaveTimer > 0)) {
             if(buildingType == GameConstants.BUILDING_TYPE.SPAWN) {
                 stats.UpdateBuildingStats();
@@ -238,12 +255,16 @@ public class Building : MonoBehaviour, IDamageable
                 if(stats.CurrAttackDelay >= stats.AttackDelay) {
                     Component damageable = target.GetComponent(typeof(IDamageable));
                     if(damageable) { //is the target damageable
+                        float damage = stats.BaseDamage;
+                        if(damageable.GetComponent<Tower>())
+                            damage = stats.TowerDamage;
                         if(hitTargets.Contains(target)) {  //this is needed for the rare occurance that a unit is 90% done with attack delay and the target leaves its range. It can still do its attack if its within vision given that its attack was already *90% thru
                             if(stats.EffectStats.AOEStats.AreaOfEffect)
-                                stats.EffectStats.AOEStats.Explode(gameObject, target, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                                stats.EffectStats.AOEStats.Explode(gameObject, target, damage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                             else {
-                                GameFunctions.Attack(damageable, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity, stats.EffectStats.CritStats);
-                                stats.ApplyAffects(damageable);
+                                GameFunctions.Attack(damageable, damage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity, stats.EffectStats.CritStats);
+                                //stats.ApplyAffects(damageable);
+                                applyEffectsComponents.Add(damageable);
                             }
                             buildUpStats.BuildUp();
                             stats.Appear(gameObject, shadowStats, agent);
