@@ -366,6 +366,7 @@ MonoBehaviour:
     range: 20
     visionRange: 24
     baseDamage: 150
+    towerDamage: 0
     attackDelay: 1.5
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -521,6 +522,7 @@ MonoBehaviour:
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
+  projectiles: []
 --- !u!54 &5028950967710317732
 Rigidbody:
   m_ObjectHideFlags: 0

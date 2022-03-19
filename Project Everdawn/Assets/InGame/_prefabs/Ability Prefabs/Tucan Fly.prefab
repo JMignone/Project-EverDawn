@@ -49,7 +49,7 @@ MonoBehaviour:
   unitSprite: {fileID: 4332999101628587706}
   radius: 1.5
   speed: 80
-  range: 35
+  range: 50
   baseDamage: 0
   towerDamage: 0
   heightAttackable: 0

@@ -7,6 +7,7 @@ public interface ICaster
     bool ExitOverride { get; set; }
     int SkipOverride { get; set; }
     GameObject UnitSummon { get; set; }
+    AbilityUI AbilityUI { get; }
     void SetNewLocation(Vector3 newLocation, Vector3 newDirection); //will be used by LocationStats
     void SetNewTarget(Actor3D newTarget);
 }

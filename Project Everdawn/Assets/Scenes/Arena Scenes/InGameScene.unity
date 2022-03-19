@@ -4079,7 +4079,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 184756737}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.25, y: 0, z: -42.13}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1736855562}
@@ -4914,6 +4914,7 @@ MonoBehaviour:
     range: 7
     visionRange: 25
     baseDamage: 25
+    towerDamage: 0
     attackDelay: 6
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -6717,6 +6718,7 @@ MonoBehaviour:
     range: 21
     visionRange: 25
     baseDamage: 140
+    towerDamage: 0
     attackDelay: 1.75
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -7012,6 +7014,7 @@ MonoBehaviour:
     range: 7
     visionRange: 25
     baseDamage: 10
+    towerDamage: 0
     attackDelay: 0.2
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -8321,6 +8324,7 @@ MonoBehaviour:
     range: 6.5
     visionRange: 38.48
     baseDamage: 8
+    towerDamage: 0
     attackDelay: 4
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -9258,6 +9262,7 @@ MonoBehaviour:
     range: 37.5
     visionRange: 37.5
     baseDamage: 130
+    towerDamage: 0
     attackDelay: 0.75
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -9486,6 +9491,7 @@ MonoBehaviour:
     range: 37.5
     visionRange: 37.5
     baseDamage: 130
+    towerDamage: 0
     attackDelay: 0.75
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -10991,6 +10997,7 @@ MonoBehaviour:
     range: 15
     visionRange: 25
     baseDamage: 50
+    towerDamage: 0
     attackDelay: 2
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -16751,6 +16758,7 @@ MonoBehaviour:
     range: 21
     visionRange: 25
     baseDamage: 140
+    towerDamage: 0
     attackDelay: 1.75
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -18473,6 +18481,7 @@ MonoBehaviour:
     range: 7
     visionRange: 25
     baseDamage: 25
+    towerDamage: 0
     attackDelay: 16
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -21103,6 +21112,7 @@ MonoBehaviour:
   autoTarget: 0
   setTarget: 0
   hidePreview: 0
+  trackTarget: 0
   abilityPreviewLine: {fileID: 21300000, guid: d24184dab2f7f3d418f3a20dc032fa78, type: 3}
   abilityPreviewLinear: {fileID: 21300000, guid: 3d46296629f72914da3ffeb630c82832, type: 3}
   abilityPreviewBomb: {fileID: 21300000, guid: 68c0303b57e53ce4188ea1bbcf918c1a, type: 3}
@@ -22015,6 +22025,7 @@ MonoBehaviour:
     range: 37.5
     visionRange: 37.5
     baseDamage: 130
+    towerDamage: 0
     attackDelay: 0.75
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -26383,6 +26394,7 @@ MonoBehaviour:
     range: 35
     visionRange: 50
     baseDamage: 0
+    towerDamage: 0
     attackDelay: 2.5
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -26769,6 +26781,7 @@ MonoBehaviour:
     range: 15
     visionRange: 25
     baseDamage: 25
+    towerDamage: 0
     attackDelay: 2
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -28480,6 +28493,7 @@ MonoBehaviour:
     range: 32.5
     visionRange: 32.5
     baseDamage: 120
+    towerDamage: 0
     attackDelay: 0.9
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -28922,6 +28936,7 @@ MonoBehaviour:
     range: 21
     visionRange: 25
     baseDamage: 140
+    towerDamage: 0
     attackDelay: 1.75
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -30515,6 +30530,7 @@ MonoBehaviour:
   autoTarget: 0
   setTarget: 0
   hidePreview: 0
+  trackTarget: 0
   abilityPreviewLine: {fileID: 21300000, guid: d24184dab2f7f3d418f3a20dc032fa78, type: 3}
   abilityPreviewLinear: {fileID: 21300000, guid: 3d46296629f72914da3ffeb630c82832, type: 3}
   abilityPreviewBomb: {fileID: 21300000, guid: 68c0303b57e53ce4188ea1bbcf918c1a, type: 3}
@@ -31942,6 +31958,7 @@ MonoBehaviour:
     range: 5
     visionRange: 30
     baseDamage: 10
+    towerDamage: 0
     attackDelay: 2
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -41301,6 +41318,7 @@ MonoBehaviour:
     range: 5
     visionRange: 30
     baseDamage: 10
+    towerDamage: 0
     attackDelay: 2
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -45114,6 +45132,7 @@ MonoBehaviour:
     range: 7
     visionRange: 25
     baseDamage: 25
+    towerDamage: 0
     attackDelay: 16
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -45554,6 +45573,7 @@ MonoBehaviour:
     range: 32.5
     visionRange: 32.5
     baseDamage: 120
+    towerDamage: 0
     attackDelay: 0.9
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -46256,6 +46276,7 @@ MonoBehaviour:
     range: 37.5
     visionRange: 37.5
     baseDamage: 130
+    towerDamage: 0
     attackDelay: 0.75
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -47764,7 +47785,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140046817}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.25, y: 0, z: -42.13}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 191693132}
@@ -50172,6 +50193,7 @@ MonoBehaviour:
     range: 21
     visionRange: 25
     baseDamage: 140
+    towerDamage: 0
     attackDelay: 1.75
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -50549,6 +50571,7 @@ MonoBehaviour:
     range: 21
     visionRange: 25
     baseDamage: 140
+    towerDamage: 0
     attackDelay: 1.75
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -52779,6 +52802,7 @@ MonoBehaviour:
     range: 15
     visionRange: 22.5
     baseDamage: 230
+    towerDamage: 0
     attackDelay: 1
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -54306,6 +54330,7 @@ MonoBehaviour:
     range: 20
     visionRange: 24
     baseDamage: 175
+    towerDamage: 0
     attackDelay: 0.9
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -55214,6 +55239,7 @@ MonoBehaviour:
     range: 5.25
     visionRange: 20
     baseDamage: 745
+    towerDamage: 0
     attackDelay: 1.8
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -58012,6 +58038,7 @@ MonoBehaviour:
     range: 0
     visionRange: 0
     baseDamage: 0
+    towerDamage: 0
     attackDelay: 0
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -58131,6 +58158,7 @@ MonoBehaviour:
     range: 0
     visionRange: 0
     baseDamage: 0
+    towerDamage: 0
     attackDelay: 0
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -58290,6 +58318,7 @@ MonoBehaviour:
     range: 7.5
     visionRange: 10
     baseDamage: 245
+    towerDamage: 0
     attackDelay: 1.1
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -59263,6 +59292,7 @@ MonoBehaviour:
     range: 0
     visionRange: 0
     baseDamage: 0
+    towerDamage: 0
     attackDelay: 0
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -59613,6 +59643,7 @@ MonoBehaviour:
     range: 5.25
     visionRange: 20
     baseDamage: 745
+    towerDamage: 0
     attackDelay: 1.8
     currAttackDelay: 0
     attackChargeLimiter: 0

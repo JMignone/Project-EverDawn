@@ -1131,6 +1131,7 @@ MonoBehaviour:
     range: 3
     visionRange: 20
     baseDamage: 85
+    towerDamage: 0
     attackDelay: 1.1
     currAttackDelay: 0
     attackChargeLimiter: 0

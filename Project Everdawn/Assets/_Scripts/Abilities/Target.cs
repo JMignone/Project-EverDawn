@@ -40,6 +40,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
 
     private bool isFiring;
     private int currentProjectileIndex;
+    private Vector2 pointerPosition;
     private Vector3 fireStartPosition;
     private Actor3D target;
     private Vector3 fireDirection;
@@ -54,6 +55,8 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
     private List<GameObject> abilityPreviews;
 
     [Header("Ability default previews and settings")]
+    private PlayerStats player;
+
     [Tooltip("Sets what the ability is able to hit")]
     [SerializeField]
     private GameConstants.PLAYERS_ATTACKABLE playersAttackable;
@@ -69,6 +72,9 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
 
     [SerializeField]
     private bool hidePreview;
+
+    [SerializeField]
+    private bool trackTarget;
 
     [SerializeField]
     private Sprite abilityPreviewLine;
@@ -162,7 +168,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
 
     void Start() {
         //Below sets up what will be needed for clicking the ability, such that we only need to calculate maxRange and areaMask once.
-        maxRange = 0;
+        //maxRange = 0;
         foreach(GameObject ability in abilityPrefabs) { //this finds the largest range of all the abilitys shot by this skillshot
             Component component = ability.GetComponent(typeof(IAbility));
             if((component as IAbility).AbilityControl)
@@ -175,10 +181,14 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
         createAbilityPreviews();
 
         AbilityUI.StartStats();
-        if(!Unit.Stats.SummoningSicknessUI.IsReady)
+        if(!Unit.Stats.IsReady)
             GameFunctions.DisableAbilities((unit as Component).gameObject);
+        //target = null;
 
-        target = null;
+        if(transform.parent.tag == "Player")
+            player = GameManager.Instance.Players[0];
+        else
+            player = GameManager.Instance.Players[1];
 
         //This will set what the ability will auto target if allowed
         if(autoTarget == GameConstants.AUTO_TARGET.ENEMY) {
@@ -215,12 +225,15 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
-        if(!isDragging && ((Unit.Stats.IsReady && abilityUI.CanDrag) || !Unit.Stats.SummoningSicknessUI.IsReady) ) {
+        if(!isDragging && ((Unit.Stats.IsReady && abilityUI.CanDrag) || !Unit.Stats.IsReady) ) {
             isDragging = true;
             unit.Stats.IsHoveringAbility = true;
 
             abilityUI.AbilitySprite.enabled = false;
             abilityUI.AbilityCancel.enabled = true;
+            
+            if(!player.OnDragging)
+                player.SelectNewCard(-1); //deselect a card in hand
 
             foreach(GameObject preview in abilityPreviews) {
                 preview.transform.GetChild(0).GetComponent<Image>().enabled = true;
@@ -228,8 +241,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
                     preview.GetComponent<Collider>().enabled = true;
             }
 
-
-            Vector3 position = GameFunctions.getPosition(false);
+            Vector3 position = GameFunctions.getPosition(false, eventData.position);
 
             fireStartPosition = abilityPreviewCanvas.transform.position;
             fireStartPosition.y = 0;
@@ -243,7 +255,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
             Actor3D potentialTarget = FindTarget(position);
             target = potentialTarget;
 
-            if(potentialTarget != null)
+            if(potentialTarget != null && trackTarget)
                 position = potentialTarget.transform.position;
             position.y = .1f;
 
@@ -267,6 +279,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
     public void OnDrag(PointerEventData eventData)
     {
         //Update takes this functions place
+        pointerPosition = eventData.position;
     }
     /*
         At the moment, a boomerang that selfdestructs and lingers at the end does not have the preview that id like (the linger circle around the unit wont be there,
@@ -275,7 +288,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
     private void FixedUpdate() {
         abilityUI.UpdateStats();
         if(isDragging) {
-            Vector3 position = GameFunctions.getPosition(false);
+            Vector3 position = GameFunctions.getPosition(false, pointerPosition);
 
             fireStartPosition = abilityPreviewCanvas.transform.position;
             fireStartPosition.y = 0;
@@ -289,7 +302,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
             Actor3D potentialTarget = FindTarget(position);
             target = potentialTarget;
 
-            if(potentialTarget != null)
+            if(potentialTarget != null && trackTarget)
                 position = potentialTarget.transform.position;
             position.y = .1f;
 
@@ -330,7 +343,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
 
             GameManager.removeAbililtyIndicators();
 
-            if(abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y && target != null && unit.Stats.CanAct) {
+            if(abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y && target != null && unit.Stats.CanAct && abilityUI.CanFire) {
                 fireStartPosition = abilityPreviewCanvas.transform.position;
                 fireStartPosition.y = 0;
 
@@ -346,7 +359,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
     }
 
     public void OnPointerClick(PointerEventData pointerEventData) {
-        if(!isDragging && abilityUI.CanDrag && unit.Stats.IsReady && autoTag != "None") { //if the abililty can be clicked
+        if(!isDragging && abilityUI.CanFire && unit.Stats.CanAct && autoTag != "None") { //if the abililty can be clicked
             Collider[] colliders = Physics.OverlapSphere(unit.Agent.Agent.transform.position, maxRange);
             Component testComponent = abilityPrefabs[0].GetComponent(typeof(IAbility));
 
@@ -377,7 +390,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
                     }
                 }
             }
-            if(closestTarget != null && unit.Stats.CanAct) {
+            if(closestTarget != null) {
                 fireStartPosition = abilityPreviewCanvas.transform.position;
                 fireStartPosition.y = 0;
 

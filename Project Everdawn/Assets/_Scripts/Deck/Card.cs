@@ -263,7 +263,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(!playerInfo.OnDragging && !isDragging) {
+        //if(!playerInfo.OnDragging && !isDragging) {
+        if(!isDragging) {
             if(canDrag) {
                 isDragging = true;
                 //SelectCard();
@@ -290,24 +291,28 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 }
                 
                 playerInfo.OnDragging = true;
-                transform.GetChild(3).position = Input.mousePosition;
+                transform.GetChild(3).position = eventData.position;
             }
         }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if(playerInfo.OnDragging && !isBuffering && isDragging) {
-            transform.GetChild(3).position = Input.mousePosition;
+        //if(playerInfo.OnDragging && !isBuffering && isDragging) {
+        if(!isBuffering && isDragging) {
+            //transform.GetChild(3).position = Input.mousePosition;
+            transform.GetChild(3).position = eventData.position;
 
-            float scale = (cardCanvasDim.rect.height*cardCanvasScale - Input.mousePosition.y)/(cardCanvasDim.rect.height*cardCanvasScale - transform.position.y); 
+            //float scale = (cardCanvasDim.rect.height*cardCanvasScale - Input.mousePosition.y)/(cardCanvasDim.rect.height*cardCanvasScale - transform.position.y);
+            float scale = (cardCanvasDim.rect.height*cardCanvasScale - eventData.position.y)/(cardCanvasDim.rect.height*cardCanvasScale - transform.position.y); 
             if(scale > 1)
                 scale = 1;
             else if(scale < 0)
                 scale = 0;
             transform.GetChild(3).localScale = new Vector3(scale, scale, 1);
 
-            if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale) {
+            //if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale) {
+            if(eventData.position.y > cardCanvasDim.rect.height*cardCanvasScale) {
                 foreach(GameObject preview in abilityPreviews)
                     preview.SetActive(true);
                 if(cardInfo.UnitIndex != -1)
@@ -323,7 +328,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             }
 
             NavMeshHit hit;
-            Vector3 position = adjustForSpawnZones(GameFunctions.getPosition(isFlying));
+            Vector3 position = adjustForSpawnZones(GameFunctions.getPosition(isFlying, eventData.position));
             position = GameFunctions.adjustForBoundary(position);
             if(cardInfo.UnitIndex != -1)
                 position = GameFunctions.adjustForTowers(position, radius);
@@ -354,9 +359,10 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if(playerInfo.OnDragging && !isBuffering && isDragging) {
+        //if(playerInfo.OnDragging && !isBuffering && isDragging) {
+        if(!isBuffering && isDragging) {
             NavMeshHit hit;
-            Vector3 position = adjustForSpawnZones(GameFunctions.getPosition(isFlying));
+            Vector3 position = adjustForSpawnZones(GameFunctions.getPosition(isFlying, eventData.position));
             position = GameFunctions.adjustForBoundary(position);
             if(cardInfo.UnitIndex != -1)
                 position = GameFunctions.adjustForTowers(position, radius);
@@ -379,11 +385,13 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 }
             }
 
-            if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= (cardInfo.Cost + playerInfo.DueResource)) { //if the player isnt hovering the cancel zone and has enough resource
+            //if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= (cardInfo.Cost + playerInfo.DueResource)) { //if the player isnt hovering the cancel zone and has enough resource
+            if(eventData.position.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= (cardInfo.Cost + playerInfo.DueResource)) { //if the player isnt hovering the cancel zone and has enough resource
                 QueCard(position);
                 playerInfo.SelectNewCard(-1);
             }
-            else if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= ( (cardInfo.Cost + playerInfo.DueResource) - 1) ) { //if the player isnt hovering the cancel zone and has 1 under enough resource
+            //else if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= ( (cardInfo.Cost + playerInfo.DueResource) - 1) ) { //if the player isnt hovering the cancel zone and has 1 under enough resource
+            else if(eventData.position.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= ( (cardInfo.Cost + playerInfo.DueResource) - 1) ) { //if the player isnt hovering the cancel zone and has 1 under enough resource
                 isBuffering = true;
                 bufferingPosition = position;
                 playerInfo.DueResource += cardInfo.Cost;

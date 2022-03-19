@@ -207,6 +207,15 @@ public class Unit : MonoBehaviour, IDamageable
             if((target == null || inRangeTargets.Count == 0) && stats.CanAct && !stats.IsCastingAbility) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                 ReTarget();
 
+            // Detects if a unit is within range of another, but doesnt have the target inside enemyHitTargets
+            if(target != null) {
+                if(!inRangeTargets.Contains(target) && Vector3.Distance(target.transform.GetChild(0).position, agent.transform.position) < stats.Range + (target.GetComponent(typeof(IDamageable)) as IDamageable).Agent.Agent.radius ) {
+                    Debug.Log(GetInstanceID());
+                    Debug.Break();
+                }
+            }
+
+
             stats.UpdateStats(ChargeAttack, inRangeTargets.Count, agent, hitTargets, target, gameObject);
             buildUpStats.UpdateStats();
             chargeStats.UpdateChargeStats();

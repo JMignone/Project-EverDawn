@@ -588,7 +588,7 @@ public class BaseStats
                     }
                 }
 
-                Collider[] colliders = Physics.OverlapSphere(target.transform.GetChild(0).position, target.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().radius);
+                Collider[] colliders = Physics.OverlapSphere(target.transform.GetChild(0).position, target.transform.GetChild(0).GetComponent<SphereCollider>().radius);
                 foreach(Collider collider in colliders) {
                     Component enemy = collider.transform.parent.parent.GetComponent(typeof(IDamageable));
                     if(enemy) {
@@ -644,7 +644,7 @@ public class BaseStats
             isShadow = true;
             Vector3 position = unitAgent.transform.position;
             position.y = 0;
-            Collider[] colliders = Physics.OverlapSphere(unitAgent.transform.position, unitAgent.Agent.radius);
+            Collider[] colliders = Physics.OverlapSphere(unitAgent.transform.position, unitAgent.HitBox.radius);
             foreach(Collider collider in colliders) {
                 Component enemy = collider.transform.parent.parent.GetComponent(typeof(IDamageable));
                 if(enemy) {
@@ -666,29 +666,27 @@ public class BaseStats
             isShadow = false;
             Vector3 position = unitAgent.transform.position;
             position.y = 0;
-            Collider[] colliders = Physics.OverlapSphere(position, unitAgent.Agent.radius);
+            Collider[] colliders = Physics.OverlapSphere(position, unitAgent.HitBox.radius);
             foreach(Collider collider in colliders) {
                 Component enemy = collider.transform.parent.parent.GetComponent(typeof(IDamageable));
                 if(enemy) {
-                    if(!enemy.CompareTag(unit.tag) && collider.CompareTag("Vision")) { //Are we in their vision detection object?
-                        if(!(enemy as IDamageable).HitTargets.Contains(unit))
-                            (enemy as IDamageable).HitTargets.Add(unit);
-                    }
-                }
-            }
-            colliders = Physics.OverlapSphere(position, unitAgent.Agent.radius);
-            foreach(Collider collider in colliders) {
-                Component enemy = collider.transform.parent.parent.GetComponent(typeof(IDamageable));
-                if(enemy) {
-                    if(!enemy.CompareTag(unit.tag) && collider.CompareTag("Range")) {
-                        if(GameFunctions.CanAttack(enemy.tag, unit.tag, unit.GetComponent(typeof(IDamageable)), (enemy as IDamageable).Stats)) { //only if the unit can actually target this one should we adjust this value
-                            if(!(enemy as IDamageable).InRangeTargets.Contains(unit))
-                                (enemy as IDamageable).InRangeTargets.Add(unit);
-                            if( ((enemy as IDamageable).InRangeTargets.Count == 1 || (enemy as IDamageable).Target == null) && (enemy as IDamageable).Stats.CanAct) { //we need this block here as well as stay in the case that a unit is placed inside a units range
-                                GameObject go = GameFunctions.GetNearestTarget((enemy as IDamageable).HitTargets, collider.transform.parent.parent.tag, (enemy as IDamageable).Stats);
-                                if(go != null) {
-                                    (enemy as IDamageable).SetTarget(go);
-                                    (enemy as IDamageable).Stats.IncRange = true;
+                    if(!enemy.CompareTag(unit.tag)) {
+                        if(collider.CompareTag("Vision")) {
+                            if(!(enemy as IDamageable).HitTargets.Contains(unit))
+                                (enemy as IDamageable).HitTargets.Add(unit);
+                        }
+                        else if(collider.CompareTag("Range")) {
+                            if(!(enemy as IDamageable).HitTargets.Contains(unit))
+                                (enemy as IDamageable).HitTargets.Add(unit);
+                            if(GameFunctions.CanAttack(enemy.tag, unit.tag, unit.GetComponent(typeof(IDamageable)), (enemy as IDamageable).Stats)) { //only if the unit can actually target this one should we adjust this value
+                                if(!(enemy as IDamageable).InRangeTargets.Contains(unit))
+                                    (enemy as IDamageable).InRangeTargets.Add(unit);
+                                if( ((enemy as IDamageable).InRangeTargets.Count == 1 || (enemy as IDamageable).Target == null) && (enemy as IDamageable).Stats.CanAct) { //we need this block here as well as stay in the case that a unit is placed inside a units range
+                                    GameObject go = GameFunctions.GetNearestTarget((enemy as IDamageable).HitTargets, collider.transform.parent.parent.tag, (enemy as IDamageable).Stats);
+                                    if(go != null) {
+                                        (enemy as IDamageable).SetTarget(go);
+                                        (enemy as IDamageable).Stats.IncRange = true;
+                                    }
                                 }
                             }
                         }
