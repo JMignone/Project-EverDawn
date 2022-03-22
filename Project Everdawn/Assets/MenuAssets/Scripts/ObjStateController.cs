@@ -24,14 +24,14 @@ public class ObjStateController : MonoBehaviour
                 }
                 else if(pair.state == state)
                 {
-                    ChangeMenu(pair);
+                    TogglePairs(pair);
                     break;
                 }
             }
         }
     }
 
-    private void ChangeMenu(objectStatePair pair) // Handles actually setting the objects on or off
+    private void TogglePairs(objectStatePair pair) // Handles actually setting the objects on or off
     {
         currentActivePair.gameObject.SetActive(false);
         pair.gameObject.SetActive(true);

@@ -4,14 +4,14 @@ using System.Collections.Generic;
 [Serializable]
 public class PlayerDeck
 {
-    public string deckName;
-    public List<int> cardsInDeck;
+    public string DeckName;
+    public List<int> CardsInDeck;
 
     public PlayerDeck Copy() // Returns clone of PlayerDeck
     {
         var result = new PlayerDeck();
-        result.deckName = this.deckName; // Creates a reference to the string
-        result.cardsInDeck = new List<int>(this.cardsInDeck);
+        result.DeckName = this.DeckName; // Creates a reference to the string
+        result.CardsInDeck = new List<int>(this.CardsInDeck);
         return result;
     }
 }

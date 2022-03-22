@@ -20,7 +20,7 @@ public class DeckSaver : ScriptableObject
 
         // Create a new instance of the PlayerDeta class and set its data to be that of what's currently set
         PlayerDeck deck = new PlayerDeck();
-        deck.cardsInDeck = selectedCards;
+        deck.CardsInDeck = selectedCards;
 
         // Write the data that was just set to the binary file
         bf.Serialize(file, deck);
@@ -42,7 +42,7 @@ public class DeckSaver : ScriptableObject
             file.Close();
 
             Debug.Log("Data from " + Application.persistentDataPath + deckLocation + " loaded");
-            selectedCards = deck.cardsInDeck;
+            selectedCards = deck.CardsInDeck;
         }
     }
 }

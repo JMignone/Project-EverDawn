@@ -12,15 +12,26 @@ public class DeckManager : ScriptableObject
         [SerializeField] private int deckSize;
 
     [Header("Selected Deck")]
-        [Min(1)] public int selectedDeckNumber;
-        public PlayerDeck selectedDeck;
+        [SerializeField] private int selectedDeckNumber;
+        [SerializeField] private PlayerDeck selectedDeck;
 
     [Header("Decks")]
         [SerializeField] private PlayerDeckList deckList = new PlayerDeckList();
 
     [Header("Other")]
-        [SerializeField] private SO_CardDatabase cardDatabase;
+        [SerializeField] private SO_CardList cardDatabase;
 
+    public int SelectedDeckNumber
+    {
+        get{return selectedDeckNumber;}
+    }
+
+    public PlayerDeck SelectedDeck
+    {
+        get{return selectedDeck;}
+    }
+
+    private readonly string selectedPlayerDeck = "selectedPlayerDeck";
     private readonly string deckLocation = "/playerDecks.dat";
     private readonly string oldDeckLocation = "/playerDeck.dat";
     #endregion
@@ -45,7 +56,13 @@ public class DeckManager : ScriptableObject
         DeleteOldDeck();
         LoadDeckList();
         CheckForDecks();
-    } 
+        LoadAsSelectedDeck(LoadDeckNumberFromPlayerPrefs());
+    }
+
+    private void OnDisable()
+    {
+        SaveDeckNumberToPlayerPrefs(selectedDeckNumber);
+    }
 
     #region Deck Checking and Generation Methods
     [ContextMenu("Check for Decks")]
@@ -58,25 +75,25 @@ public class DeckManager : ScriptableObject
                 // Maybe just drop, this would reset everyone's decks if we decide to up the limit later
                 if(deckList.playerDecks.Count == 0)
                 {
-                    Debug.Log("No decks found; Generating decks");
+                    //Debug.Log("No decks found; Generating decks");
                     GenerateDecks(maxNumberOfDecks, deckList.playerDecks.Count, deckList.playerDecks);
                 }
                 else if(deckList.playerDecks.Count != 0)
                 {
-                    Debug.Log("Too few decks found; Resetting to default");
+                    //Debug.Log("Too few decks found; Resetting to default");
                     ResetDecks();
                 }
             }
             else if(deckList.playerDecks.Count > maxNumberOfDecks) // Check if there's too many decks; reset to defaults if so
             {
                 //Remove Decks; reset them to default; throw error
-                Debug.Log("More decks than allowed found; Resetting to default");
+                //Debug.Log("More decks than allowed found; Resetting to default");
                 ResetDecks();
             }
             else if(deckList.playerDecks.Count == maxNumberOfDecks) // Currently just for debug purposes, if it's working as indended this shouldn't be necessary
             {
                 // Do nothing, this should be the usual case
-                Debug.Log("Number of Decks that exist is correct");
+                //Debug.Log("Number of Decks that exist is correct");
             }
         }
         catch
@@ -124,7 +141,7 @@ public class DeckManager : ScriptableObject
     {
         try
         {
-            if(pd.cardsInDeck.Count != deckSize)
+            if(pd.CardsInDeck.Count != deckSize)
             {
                 //Reset the deck; show error message; cancel any actions needed
                 ResetDeck(pd);
@@ -138,19 +155,19 @@ public class DeckManager : ScriptableObject
     #endregion
 
     #region Deck Saving and Loading Methods
-    public void SaveSelectedDeck(int deckNumber) // Saves a deck's data via the deck's number
+    public void SaveDeck(int deckNumber, PlayerDeck playerDeck) // Saves a deck's data to the given deckNumber
     {
         try
         {
             int deckIndex = deckNumber - 1;
             if(deckIndex >= 0 && deckIndex <= deckList.playerDecks.Count)
             {
-                deckList.playerDecks[deckIndex] = selectedDeck.Copy();
+                deckList.playerDecks[deckIndex] = playerDeck.Copy();
                 SaveDeckList();
             }
             else
             {
-                Debug.Log("Deck Number not found");
+                //Debug.Log("Deck Number not found");
             }
         }
         catch
@@ -159,6 +176,7 @@ public class DeckManager : ScriptableObject
         }
     }
 
+    //This should be made private once we don't need it for loading the AI deck anymore
     public PlayerDeck LoadDeck(int deckNumber) // Loads a deck's data via the deck's number
     {
         try
@@ -169,12 +187,12 @@ public class DeckManager : ScriptableObject
             if(deckIndex >= 0 && deckIndex <= deckList.playerDecks.Count)
             {
                 result = deckList.playerDecks[deckIndex];
-                selectedDeck = result.Copy();
+                //selectedDeck = result.Copy();
                 return result;
             }
             else
             {
-                Debug.Log("Deck with key " + deckIndex.ToString() + " not found");
+                //Debug.Log("Deck with key " + deckIndex.ToString() + " not found");
                 return null;
             }
         }
@@ -185,7 +203,7 @@ public class DeckManager : ScriptableObject
     }
 
     [ContextMenu("Save Deck List")]
-    public void SaveDeckList() // Create serialized copy of the deckList
+    private void SaveDeckList() // Create serialized copy of the deckList
     {
         try
         {
@@ -196,13 +214,13 @@ public class DeckManager : ScriptableObject
             if(!File.Exists(Application.persistentDataPath + deckLocation)) // Check if file exists
             {
                 GenerateDecks(maxNumberOfDecks, 0, pdl.playerDecks); // Populate deckList
-                Debug.Log("No saved decks found, generating decks to: " + Application.persistentDataPath + deckLocation);
-                Debug.Log("Serializing " + pdl.playerDecks.Count.ToString() + " decks");
+                //Debug.Log("No saved decks found, generating decks to: " + Application.persistentDataPath + deckLocation);
+                //Debug.Log("Serializing " + pdl.playerDecks.Count.ToString() + " decks");
             }
             // Create instace of PlayerDeckList and set its data to the currently set data
             pdl = deckList.Copy();
 
-            Debug.Log("Saving file data to: " + Application.persistentDataPath + deckLocation);
+            //Debug.Log("Saving file data to: " + Application.persistentDataPath + deckLocation);
             FileStream file = File.Create(Application.persistentDataPath + deckLocation);
             bf.Serialize(file, pdl); // Serialize the file
             file.Close(); // Close the file stream
@@ -230,7 +248,7 @@ public class DeckManager : ScriptableObject
             PlayerDeckList pdl = (PlayerDeckList)bf.Deserialize(file);
             file.Close();
 
-            Debug.Log("Data from " + Application.persistentDataPath + deckLocation + " loaded");
+            //Debug.Log("Data from " + Application.persistentDataPath + deckLocation + " loaded");
             deckList = pdl.Copy();
             return pdl;
         }
@@ -238,6 +256,23 @@ public class DeckManager : ScriptableObject
         {
             throw;
         }
+    }
+
+    private void LoadAsSelectedDeck(int deckNumber)
+    {
+        selectedDeck = LoadDeck(deckNumber);
+        selectedDeckNumber = deckNumber;
+    }
+
+    private void SaveSelectedDeckAs(int deckNumber)
+    {
+        SaveDeck(deckNumber, selectedDeck);
+    }
+
+    public void ChangeSelectedDeck(int deckNumber)
+    {
+        SaveSelectedDeckAs(selectedDeckNumber);
+        LoadAsSelectedDeck(deckNumber);
     }
     #endregion
 
@@ -275,10 +310,34 @@ public class DeckManager : ScriptableObject
         if(File.Exists(Application.persistentDataPath + oldDeckLocation))
         {
             File.Delete(Application.persistentDataPath + oldDeckLocation);
-            Debug.Log("Deleted file: " + Application.persistentDataPath + oldDeckLocation);
+            //Debug.Log("Deleted file: " + Application.persistentDataPath + oldDeckLocation);
         }
     }
-    
+    #endregion
+
+    #region PlayerPrefs Saving and Loading Methods
+    private void SaveDeckNumberToPlayerPrefs(int deckNumber)
+    {
+        //Debug.Log("Saving " + deckNumber.ToString() + " as selected deck before shutdown");
+        PlayerPrefs.SetInt(selectedPlayerDeck, deckNumber);
+    }
+
+    //[ContextMenu("Load from PlayPref")]
+    private int LoadDeckNumberFromPlayerPrefs()
+    {
+        int result;
+
+        if(PlayerPrefs.HasKey(selectedPlayerDeck))
+        {
+            result = PlayerPrefs.GetInt(selectedPlayerDeck);
+        }
+        else
+        {
+            result = 1;
+        }
+        //Debug.Log("Loading " + result.ToString() + " as selected deck from before shutdown");
+        return result;
+    }
     #endregion
 
     #region Debug Methods
@@ -291,13 +350,13 @@ public class DeckManager : ScriptableObject
     [ContextMenu("Save Selected Deck")]
     private void InspectorSaveDeck()
     {
-        SaveSelectedDeck(selectedDeckNumber);
+        SaveSelectedDeckAs(selectedDeckNumber);
     }
 
     [ContextMenu("Load Selected Deck")]
     private void InspectorLoadDeck()
     {
-        LoadDeck(selectedDeckNumber);
+        LoadAsSelectedDeck(selectedDeckNumber);
     }
     #endregion
 }

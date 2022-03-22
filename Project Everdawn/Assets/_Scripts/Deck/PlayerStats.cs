@@ -181,7 +181,7 @@ public class PlayerStats : MonoBehaviour
     private void Start()
     {
         if(!computerStats.IsComputer) {         
-            List<SO_Card> cardList = deckManager.ConvertIntListToCardList(deckManager.LoadDeck(deckManager.selectedDeckNumber).cardsInDeck);
+            List<SO_Card> cardList = deckManager.ConvertIntListToCardList(deckManager.LoadDeck(deckManager.SelectedDeckNumber).CardsInDeck);
             List<CardStats> cards = new List<CardStats>();
             
             for (int i = 0; i < cardList.Count; i++)
@@ -191,7 +191,7 @@ public class PlayerStats : MonoBehaviour
             playersDeck.Cards = cards;
         }
         else {
-            List<SO_Card> cardList = deckManager.ConvertIntListToCardList(deckManager.LoadDeck(5).cardsInDeck);
+            List<SO_Card> cardList = deckManager.ConvertIntListToCardList(deckManager.LoadDeck(5).CardsInDeck);
             List<CardStats> cards = new List<CardStats>();
             
             for (int i = 0; i < cardList.Count; i++)
