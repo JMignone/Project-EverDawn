@@ -232,7 +232,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
             abilityUI.AbilitySprite.enabled = false;
             abilityUI.AbilityCancel.enabled = true;
             
-            if(!player.OnDragging)
+            if(player.NumDragging == 0)
                 player.SelectNewCard(-1); //deselect a card in hand
 
             foreach(GameObject preview in abilityPreviews) {
