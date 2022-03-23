@@ -33040,7 +33040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74894da2ba0b9114d9c09cf0c889cb3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardList: {fileID: 0}
+  cardList: {fileID: 11400000, guid: cc38779267dc05442b08f8fe72dbedce, type: 2}
   cardPrefab: {fileID: 8393370998698335829, guid: 40571bef3acf07844ada762d9daf6f1f, type: 3}
   cardsBeingDisplayed: []
 --- !u!114 &1617706211
