@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 22
   character: {fileID: 0}
-  cardName: Skelies
-  menuBackgroundImage: {fileID: 21300000, guid: e64c8a91351c03b4f8878370102d70f5, type: 3}
-  cardImage: {fileID: 21300000, guid: e64c8a91351c03b4f8878370102d70f5, type: 3}
+  cardName: Cannon
+  menuBackgroundImage: {fileID: 21300000, guid: f67c96e30ca0d524a9d4222addc9f147, type: 3}
+  cardImage: {fileID: 21300000, guid: f67c96e30ca0d524a9d4222addc9f147, type: 3}
   cardLore: 
   affiliation: []
-  resourceCost: 1
+  resourceCost: 3
   spawnZoneRestrictions: 0
   prefab:
-  - {fileID: 4489671066153867563, guid: 7f1f66e74dfe9de49bd76fd711c4b085, type: 3}
-  previewPrefab: {fileID: 9061750350620061380, guid: 50cbd5ea5ef5ddb4bb055fa4181c4082, type: 3}
+  - {fileID: 6901616197783730851, guid: a83bd9f3f8a30c54f81d1cab4403eb51, type: 3}
+  previewPrefab: {fileID: 1401404796868230813, guid: 9537b6ed1c984404ea9854d35a8bb022, type: 3}
   previewDelays:
   - 0
   unitIndex: 0

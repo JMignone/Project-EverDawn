@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 6
   character: {fileID: 0}
-  cardName: Mizuchi Kaidarin
-  menuBackgroundImage: {fileID: 21300000, guid: c40d383de808e504bbe06e137eaa18ca, type: 3}
-  cardImage: {fileID: 21300000, guid: c40d383de808e504bbe06e137eaa18ca, type: 3}
+  cardName: Monsoon Insurgents
+  menuBackgroundImage: {fileID: 21300000, guid: 116f885df4bcb584e99223536431f6c1, type: 3}
+  cardImage: {fileID: 21300000, guid: 116f885df4bcb584e99223536431f6c1, type: 3}
   cardLore: 
   affiliation: []
-  resourceCost: 4
+  resourceCost: 2
   spawnZoneRestrictions: 0
   prefab:
-  - {fileID: 1701868425468477452, guid: 2bedcad420ef25749bc48f0b7524c165, type: 3}
-  previewPrefab: {fileID: 881476954545742613, guid: 8a90ecf8a6884d74e8c8514f13dea9e2, type: 3}
+  - {fileID: 4489671066153867563, guid: 7c4e20b9b5d8b9244869e823b032ceba, type: 3}
+  previewPrefab: {fileID: 9061750350620061380, guid: bcfa36079f7216e41844bb43b02676ce, type: 3}
   previewDelays:
   - 0
   unitIndex: 0

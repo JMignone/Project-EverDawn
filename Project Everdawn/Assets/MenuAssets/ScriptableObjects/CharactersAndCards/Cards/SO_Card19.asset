@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 19
   character: {fileID: 0}
-  cardName: Wolf
-  menuBackgroundImage: {fileID: 21300000, guid: b05a33ad94f341941932f33ca11605b4, type: 3}
-  cardImage: {fileID: 21300000, guid: b05a33ad94f341941932f33ca11605b4, type: 3}
+  cardName: Boar
+  menuBackgroundImage: {fileID: 21300000, guid: 281d4d9f9de212a41b9e576d764ec266, type: 3}
+  cardImage: {fileID: 21300000, guid: 281d4d9f9de212a41b9e576d764ec266, type: 3}
   cardLore: 
   affiliation: []
   resourceCost: 4
   spawnZoneRestrictions: 0
   prefab:
-  - {fileID: 4300487081235283213, guid: 5eaaad052a7e7de45be58dbf1fecbd4f, type: 3}
-  previewPrefab: {fileID: 7317817158688808453, guid: 4e08a1572f508b346b69ef0144b76553, type: 3}
+  - {fileID: 4300487081235283213, guid: 3a4fe832408dce74d8483b09ce39041a, type: 3}
+  previewPrefab: {fileID: 7317817158688808453, guid: 8aee399ea19f0ae4eb875b1b3daa31ff, type: 3}
   previewDelays:
   - 0
   unitIndex: 0

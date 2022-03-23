@@ -1294,7 +1294,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 69.65
+  m_fontSize: 65.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2763,7 +2763,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60.05
+  m_fontSize: 55.9
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7509,7 +7509,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 69.05
+  m_fontSize: 64.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -10000,8 +10000,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -750}
-  m_SizeDelta: {x: 0, y: 1500}
+  m_AnchoredPosition: {x: 0, y: -600}
+  m_SizeDelta: {x: 0, y: 1200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &508136477
 MonoBehaviour:
@@ -16040,7 +16040,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 31.15
+  m_fontSize: 28.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -17547,7 +17547,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 93.05
+  m_fontSize: 86.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -18554,11 +18554,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 975222438}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6617233ea7d44db4ca1592bd818ff878, type: 3}
+  m_Script: {fileID: 11500000, guid: c10dfec28ef71884d8b9e8ce0a20c769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberDisplay: {fileID: 0}
-  deckManager: {fileID: 11400000, guid: 7c379e102ba715d4686e9e9eccf1ddb7, type: 2}
+  numberDisplay: {fileID: 1932910923}
+  deckManager: {fileID: 11400000, guid: 205056580c870f24294f6d6ef9f05051, type: 2}
   averageResource: 0
 --- !u!1 &990204774
 GameObject:
@@ -21475,11 +21475,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1119600088}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6438070563b637448bed7bb7d6f02b73, type: 3}
+  m_Script: {fileID: 11500000, guid: 477a015336681084e8a2d1d2238ff727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deckManager: {fileID: 11400000, guid: 7c379e102ba715d4686e9e9eccf1ddb7, type: 2}
-  cardPrefab: {fileID: 3528245402760974626, guid: 44fb8ada6b995044398a3f174a64078d, type: 3}
+  deckManager: {fileID: 11400000, guid: 205056580c870f24294f6d6ef9f05051, type: 2}
+  cardPrefab: {fileID: 3528245402760974626, guid: 954d69594921f434f9b2b288cf4aab4f, type: 3}
   saveDeckOnUnload: 0
   allowDeckMultiselection: 0
   selectedDeckNumber: 0
@@ -28447,7 +28447,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 82.45
+  m_fontSize: 77.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -29699,7 +29699,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 53.9
+  m_fontSize: 50.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -33543,7 +33543,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 19.65
+  m_fontSize: 18.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -35703,13 +35703,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1849406191}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6438070563b637448bed7bb7d6f02b73, type: 3}
+  m_Script: {fileID: 11500000, guid: 477a015336681084e8a2d1d2238ff727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deckManager: {fileID: 11400000, guid: 7c379e102ba715d4686e9e9eccf1ddb7, type: 2}
+  deckManager: {fileID: 11400000, guid: 205056580c870f24294f6d6ef9f05051, type: 2}
   cardPrefab: {fileID: 2898327209297098011, guid: 8914bb8258b94ad4fbf36088c84a3a94, type: 3}
   saveDeckOnUnload: 1
-  allowDeckMultiselection: 1
+  allowDeckMultiselection: 0
   selectedDeckNumber: 1
   selectedDeck:
     deckName: 
@@ -36119,7 +36119,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 61.45
+  m_fontSize: 57.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -39765,7 +39765,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80.4
+  m_fontSize: 75.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -41486,7 +41486,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 74.85
+  m_fontSize: 69.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
