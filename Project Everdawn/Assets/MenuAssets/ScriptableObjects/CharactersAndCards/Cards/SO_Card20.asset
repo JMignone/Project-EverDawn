@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 20
   character: {fileID: 0}
-  cardName: Wolf
-  menuBackgroundImage: {fileID: 21300000, guid: b05a33ad94f341941932f33ca11605b4, type: 3}
-  cardImage: {fileID: 21300000, guid: b05a33ad94f341941932f33ca11605b4, type: 3}
+  cardName: Freezer
+  menuBackgroundImage: {fileID: 21300000, guid: cca2ace2edc2be64a8472a82dce2fd2a, type: 3}
+  cardImage: {fileID: 21300000, guid: cca2ace2edc2be64a8472a82dce2fd2a, type: 3}
   cardLore: 
   affiliation: []
-  resourceCost: 4
+  resourceCost: 3
   spawnZoneRestrictions: 0
   prefab:
-  - {fileID: 4300487081235283213, guid: 5eaaad052a7e7de45be58dbf1fecbd4f, type: 3}
-  previewPrefab: {fileID: 7317817158688808453, guid: 4e08a1572f508b346b69ef0144b76553, type: 3}
+  - {fileID: 3925836232371597723, guid: 480d61b5e2ca9734a91a0b2bfe825cbb, type: 3}
+  previewPrefab: {fileID: 881476954545742613, guid: c11775f373cc5ad49aa0da47a9c625b1, type: 3}
   previewDelays:
   - 0
   unitIndex: 0

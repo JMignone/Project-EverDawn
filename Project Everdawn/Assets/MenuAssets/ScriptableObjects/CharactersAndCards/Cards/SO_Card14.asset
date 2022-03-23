@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 14
   character: {fileID: 0}
-  cardName: Hwacha
-  menuBackgroundImage: {fileID: 21300000, guid: c7a810a8b26635748a1cf5f3aac42ea0, type: 3}
-  cardImage: {fileID: 21300000, guid: c7a810a8b26635748a1cf5f3aac42ea0, type: 3}
+  cardName: Drones
+  menuBackgroundImage: {fileID: 21300000, guid: 909d59e9a6a293243a22ef77b65a4cd1, type: 3}
+  cardImage: {fileID: 21300000, guid: 909d59e9a6a293243a22ef77b65a4cd1, type: 3}
   cardLore: 
   affiliation: []
   resourceCost: 3
   spawnZoneRestrictions: 0
   prefab:
-  - {fileID: 4714127562419118005, guid: 982797ff01e863149ace0765dbec3d8b, type: 3}
-  previewPrefab: {fileID: 1401404796868230813, guid: a14ef44f75d7cc94c8fb40ccd82a06d7, type: 3}
+  - {fileID: 4489671066153867563, guid: 51d71e9ed41545c44bf6f4b871d51e74, type: 3}
+  previewPrefab: {fileID: 9061750350620061380, guid: af85ffafa8590cb4bb40598241018fcd, type: 3}
   previewDelays:
   - 0
   unitIndex: 0

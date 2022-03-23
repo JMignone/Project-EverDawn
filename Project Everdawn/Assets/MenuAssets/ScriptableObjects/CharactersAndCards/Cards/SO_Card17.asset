@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 17
   character: {fileID: 0}
-  cardName: Blinders
-  menuBackgroundImage: {fileID: 21300000, guid: 01bb2584276799e4494e18c6c80967ac, type: 3}
-  cardImage: {fileID: 21300000, guid: 01bb2584276799e4494e18c6c80967ac, type: 3}
+  cardName: SummonerUnit
+  menuBackgroundImage: {fileID: 21300000, guid: 97f57caf16278434182dba70c594601e, type: 3}
+  cardImage: {fileID: 21300000, guid: 97f57caf16278434182dba70c594601e, type: 3}
   cardLore: 
   affiliation: []
-  resourceCost: 1
+  resourceCost: 5
   spawnZoneRestrictions: 0
   prefab:
-  - {fileID: 4489671066153867563, guid: b3715c7f936e32247a304cfcca96adf4, type: 3}
-  previewPrefab: {fileID: 9061750350620061380, guid: 061c7d25edacaef48bfd2852d7635f8f, type: 3}
+  - {fileID: 3925836232371597723, guid: c360c3b71a9b75148b14d3f2f378f4d3, type: 3}
+  previewPrefab: {fileID: 881476954545742613, guid: c981a0ad8a7b07f499f99687f02ef545, type: 3}
   previewDelays:
   - 0
   unitIndex: 0

@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 4
   character: {fileID: 0}
-  cardName: Steamwyrm
-  menuBackgroundImage: {fileID: 21300000, guid: a3615353b88c90a448ef598d9e2409e7, type: 3}
-  cardImage: {fileID: 21300000, guid: a3615353b88c90a448ef598d9e2409e7, type: 3}
+  cardName: Monsoon Gunners
+  menuBackgroundImage: {fileID: 21300000, guid: 526f2e41c56666847a887ac31f5fff5b, type: 3}
+  cardImage: {fileID: 21300000, guid: 526f2e41c56666847a887ac31f5fff5b, type: 3}
   cardLore: 
   affiliation: []
-  resourceCost: 4
+  resourceCost: 2
   spawnZoneRestrictions: 0
   prefab:
-  - {fileID: 3415333900699297907, guid: 88d8d05153de23e43a8727beab575034, type: 3}
-  previewPrefab: {fileID: 2091876083188452919, guid: ef0564141109bcb4281b5660d1246051, type: 3}
+  - {fileID: 4489671066153867563, guid: 8cf03c9655e5bea4fb85d248243bb54a, type: 3}
+  previewPrefab: {fileID: 9061750350620061380, guid: 169c0ab4dc9d6a740b2b39ad298d7286, type: 3}
   previewDelays:
   - 0
   unitIndex: 0

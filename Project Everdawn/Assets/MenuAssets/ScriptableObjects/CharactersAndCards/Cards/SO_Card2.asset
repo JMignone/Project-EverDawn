@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 2
   character: {fileID: 0}
-  cardName: Bao Zu
-  menuBackgroundImage: {fileID: 21300000, guid: 616f99a5a0da8bc4696cec0e5e538437, type: 3}
-  cardImage: {fileID: 21300000, guid: 616f99a5a0da8bc4696cec0e5e538437, type: 3}
-  cardLore: 
+  cardName: Cornut
+  menuBackgroundImage: {fileID: 21300000, guid: e351a62f6e3266644b0accb868e6a820, type: 3}
+  cardImage: {fileID: 21300000, guid: e351a62f6e3266644b0accb868e6a820, type: 3}
+  cardLore: he cluck
   affiliation: []
   resourceCost: 5
   spawnZoneRestrictions: 0
   prefab:
-  - {fileID: 4489671066153867563, guid: 97143c3ff03398a4a9833e0cbbd1d5ea, type: 3}
-  previewPrefab: {fileID: 9061750350620061380, guid: 6b106a57a97597b41b5b3ce5f3de747f, type: 3}
+  - {fileID: 4300487081235283213, guid: 5adae2a12427f2c42a05621d251f2e18, type: 3}
+  previewPrefab: {fileID: 7317817158688808453, guid: c00283b83b82b8643b43162d89268e96, type: 3}
   previewDelays:
   - 0
   unitIndex: 0
