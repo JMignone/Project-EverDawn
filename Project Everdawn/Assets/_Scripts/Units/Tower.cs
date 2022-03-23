@@ -39,12 +39,16 @@ public class Tower : MonoBehaviour, IDamageable
     private List<GameObject> enemyHitTargets;
 
     [SerializeField]
+    private List<GameObject> projectiles;
+
+    [SerializeField]
     protected bool leftTower;
+
+    private List<Component> applyEffectsComponents = new List<Component>();
 
     public Actor3D Agent
     {
         get { return agent; }
-        //set { agent = value; }
     }
 
     public Actor2D UnitSprite
@@ -63,6 +67,21 @@ public class Tower : MonoBehaviour, IDamageable
         get { return stats; }
     }
 
+    public DashStats DashStats
+    {
+        get { return dashStats; }
+    }
+
+    public ShadowStats ShadowStats
+    {
+        get { return shadowStats; }
+    }
+
+    public DeathStats DeathStats
+    {
+        get { return deathStats; }
+    }
+
     public List<GameObject> HitTargets 
     {
         get { return hitTargets; }
@@ -78,19 +97,14 @@ public class Tower : MonoBehaviour, IDamageable
         get { return enemyHitTargets; }
     }
 
-    public DashStats DashStats
+    public List<GameObject> Projectiles
     {
-        get { return dashStats; }
+        get { return projectiles; }
     }
 
-    public ShadowStats ShadowStats
+    public List<Component> ApplyEffectsComponents
     {
-        get { return shadowStats; }
-    }
-
-    public DeathStats DeathStats
-    {
-        get { return deathStats; }
+        get { return applyEffectsComponents; }
     }
 
     public bool IsMoving
@@ -126,11 +140,21 @@ public class Tower : MonoBehaviour, IDamageable
         if(stats.AttackReadyPercentage == 0)
             stats.AttackReadyPercentage = GameConstants.ATTACK_READY_PERCENTAGE;
         if(stats.MaximumAttackAngle == 0)
-            stats.MaximumAttackAngle = GameConstants.MAXIMUM_ATTACK_ANGLE;    
+            stats.MaximumAttackAngle = GameConstants.MAXIMUM_ATTACK_ANGLE;
+        if(stats.TowerDamage == 0)
+            stats.TowerDamage = stats.BaseDamage;
     }
 
     protected virtual void FixedUpdate()
     {
+        if(applyEffectsComponents.Count > 0) {
+            foreach(Component component in applyEffectsComponents) {
+                if(component != null)
+                    stats.ApplyAffects(component);
+            }
+            applyEffectsComponents = new List<Component>();
+        }
+
         if(stats.CurrHealth > 0) {
             stats.IncRange = false; //towers should never have its range incremented
             if((target == null || inRangeTargets.Count == 0) && stats.CanAct) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
@@ -172,12 +196,16 @@ public class Tower : MonoBehaviour, IDamageable
                 if(stats.CurrAttackDelay >= stats.AttackDelay) {
                     Component damageable = target.GetComponent(typeof(IDamageable));
                     if(damageable) { //is the target damageable
+                        float damage = stats.BaseDamage;
+                        if(damageable.GetComponent<Tower>())
+                            damage = stats.TowerDamage;
                         if(hitTargets.Contains(target)) {  //this and the above may not be needed, more of a santiy check
                             if(stats.EffectStats.AOEStats.AreaOfEffect)
-                                stats.EffectStats.AOEStats.Explode(gameObject, target, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                                stats.EffectStats.AOEStats.Explode(gameObject, target, damage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                             else {
-                                GameFunctions.Attack(damageable, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity, stats.EffectStats.CritStats);
-                                stats.ApplyAffects(damageable);
+                                GameFunctions.Attack(damageable, damage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity, stats.EffectStats.CritStats);
+                                //stats.ApplyAffects(damageable);
+                                applyEffectsComponents.Add(damageable);
                             }
                             stats.CurrAttackDelay = 0;
                             stats.ResetKillFlags(gameObject, target);

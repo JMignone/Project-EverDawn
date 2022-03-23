@@ -22,8 +22,6 @@ public class SummonStats
 
     [SerializeField] [Min(0)]
     private float timeToSummon;
-
-    [SerializeField] [Min(0)]
     private float currentSummonTime;
 
     public bool IsSummon
@@ -71,11 +69,6 @@ public class SummonStats
             return 1; //1 = Walkable area
     }
 
-    public void StartSummonStats()
-    {
-        currentSummonTime = 0;
-    }
-
     public void UpdateSummonStats(GameObject go, bool canAct) 
     {
         if(currentSummonTime < timeToSummon && canAct) 
@@ -105,13 +98,13 @@ public class SummonStats
         Vector3 position = cal.TargetLocation;
 
         GameObject summonGo = GameFunctions.SpawnUnit(summonUnit, GameManager.GetUnitsFolder(), position, cal.gameObject.tag);
-
         Component damageable = summonGo.GetComponent(typeof(IDamageable));
 
         (damageable as IDamageable).Stats.CurrHealth = (damageable as IDamageable).Stats.MaxHealth * percentHealth;
         (damageable as IDamageable).Stats.MaxHealth = (damageable as IDamageable).Stats.MaxHealth * percentHealth;
 
-        MonoBehaviour.print("SUMMMONED AT " + percentHealth + " HP");
+        cal.Caster.UnitSummon = summonGo;
+        //Debug.Log("SUMMMONED AT " + percentHealth + " HP");
     }
 
 }

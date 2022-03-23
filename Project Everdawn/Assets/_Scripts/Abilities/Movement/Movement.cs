@@ -19,6 +19,10 @@ public class Movement : Projectile
     [SerializeField]
     private bool hideUnit;
 
+    [Tooltip("If checked, any projectile targeting this unit will lose track at the start of the movement. This will hit a summoned unit if one exists")]
+    [SerializeField]
+    private bool avoidTargetedProjectiles;
+
     [SerializeField]
     private RetreatStats retreatStats;
 
@@ -33,22 +37,25 @@ public class Movement : Projectile
     }
 
     private void Start() {
-        HitBox.radius = Radius;
         StartStats();
+        
         TargetLocation = retreatStats.GetTargetLocation(Unit.Agent.transform.position, TargetLocation, passObstacles);
 
         LastKnownLocation = new Vector3(Unit.Agent.transform.position.x, 0, Unit.Agent.transform.position.z); //remembers the start location of a unit for boomerang effects
-        //we cant have a grenade and a boomerang
-        if(BoomerangStats.IsBoomerang && GrenadeStats.IsGrenade)
-            BoomerangStats.IsBoomerang = false;
-
-        if(ChosenTarget == null && !OnlyDamageIfTargeted)
-            Blockable = true;
 
         Unit.Agent.Agent.enabled = false;
 
         if(hideUnit)
             Unit.Stats.UnitMaterials.MakeInvisible();
+        
+        if(avoidTargetedProjectiles) {
+            foreach(GameObject go in Unit.Projectiles) {
+                go.GetComponent<Projectile>().ChosenTarget = null;
+                if(Caster.UnitSummon != null)
+                    go.GetComponent<Projectile>().ChosenTarget = Caster.UnitSummon.transform.GetChild(0).GetComponent<Actor3D>();
+            }
+            Unit.Projectiles.Clear();
+        }
     }
 
     private void OnDestroy()

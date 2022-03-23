@@ -182,8 +182,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 1701868423733107988}
-  anim: {fileID: 1701868424819537039}
-  agent: {fileID: 1701868423733107991}
   ability: {fileID: 7870179655350065263}
   isPreview: 0
 --- !u!95 &1701868424819537039
@@ -362,6 +360,9 @@ MonoBehaviour:
     baseDamage: 285
     attackDelay: 1.4
     currAttackDelay: 0
+    attackChargeLimiter: 0
+    attackReadyPercentage: 0
+    maximumAttackAngle: 0
     moveSpeed: 6
     noRotation: 0
     rotationSpeed: 140
@@ -456,18 +457,6 @@ MonoBehaviour:
         outSideResistance: 0
         isStunned: 0
         stunDelay: 0
-      resistStats:
-        resistedDamage: 0
-        resistedTarget: 0
-        resistedFreeze: 0
-        resistedSlow: 0
-        resistedRoot: 0
-        resistedPoison: 0
-        resistedKnockback: 0
-        resistedGrab: 0
-        resistedPull: 0
-        resistedBlind: 0
-        resistedStun: 0
       critStats:
         critOnFrozen: 1
         critOnSlow: 1
@@ -521,6 +510,7 @@ MonoBehaviour:
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
+  projectiles: []
 --- !u!54 &1701868425468477455
 Rigidbody:
   m_ObjectHideFlags: 0

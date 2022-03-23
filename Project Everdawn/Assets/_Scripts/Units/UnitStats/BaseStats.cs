@@ -36,6 +36,8 @@ public class BaseStats
     [SerializeField] [Min(0)]
     private float baseDamage;
     [SerializeField] [Min(0)]
+    private float towerDamage;
+    [SerializeField] [Min(0)]
     private float attackDelay;
     [SerializeField] [Min(0)]
     private float currAttackDelay;
@@ -139,6 +141,14 @@ public class BaseStats
         //set { healthDecay = value; }
     }
 
+    public bool LeavesArena {
+        get { return leavesArena; }
+    }
+
+    public float LeaveTimer {
+        get { return leaveTimer; }
+    }
+
     public float PercentArmor {
         get { return currArmor/maxArmor; }
     }
@@ -177,6 +187,12 @@ public class BaseStats
     {
         get { return baseDamage; }
         set { baseDamage = value; }
+    }
+
+    public float TowerDamage
+    {
+        get { return towerDamage; }
+        set { towerDamage = value; }
     }
 
     public float AttackDelay
@@ -415,21 +431,17 @@ public class BaseStats
             if(leavesArena) {
                 if(leaveTimer > 0)
                     leaveTimer -= Time.deltaTime;
-                else {
+                /*else {
                     ResetKillFlags(unit, target);
                     GameManager.RemoveObjectsFromList(unit);
                     if(target != null)
                         (target.GetComponent(typeof(IDamageable)) as IDamageable).EnemyHitTargets.Remove(unit);
-                        (unit.GetComponent(typeof(IDamageable)) as IDamageable).SetTarget(null);
+                    (unit.GetComponent(typeof(IDamageable)) as IDamageable).SetTarget(null);
                     MonoBehaviour.Destroy(unit);
-                }
+                }*/
             }
-
-
-            bool inVision = false;
-            if(target != null)
-                inVision = hitTargets.Contains(target);       
-            if( ( inRange > 0 || (currAttackDelay/attackDelay >= attackReadyPercentage && inVision) ) && CanAct && !IsCastingAbility && chargeAttack) { //if target is inRange, or the attack is nearly ready and their within vision AND not stunned
+  
+            if( ( inRange > 0 || (currAttackDelay/attackDelay >= attackReadyPercentage && hitTargets.Contains(target)) ) && CanAct && !IsCastingAbility && chargeAttack) { //if target is inRange, or the attack is nearly ready and their within vision AND not stunned
                 isAttacking = true;
                 if(target != null) {
                     Vector3 directionToTarget = target.transform.GetChild(0).position - unitAgent.transform.position;
@@ -570,13 +582,13 @@ public class BaseStats
                 enemyUnit.Stats.SoonToBeKilled = false;
 
                 foreach(GameObject go in enemyUnit.EnemyHitTargets) { //go through every unit targeting our target
-                    if(go != unit) {
+                    if(go != unit && go != null) {
                         IDamageable friendlyUnit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
                         friendlyUnit.Stats.SoonToKillOverride = false;
                     }
                 }
 
-                Collider[] colliders = Physics.OverlapSphere(target.transform.GetChild(0).position, target.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().radius);
+                Collider[] colliders = Physics.OverlapSphere(target.transform.GetChild(0).position, target.transform.GetChild(0).GetComponent<SphereCollider>().radius);
                 foreach(Collider collider in colliders) {
                     Component enemy = collider.transform.parent.parent.GetComponent(typeof(IDamageable));
                     if(enemy) {
@@ -632,7 +644,7 @@ public class BaseStats
             isShadow = true;
             Vector3 position = unitAgent.transform.position;
             position.y = 0;
-            Collider[] colliders = Physics.OverlapSphere(unitAgent.transform.position, unitAgent.Agent.radius);
+            Collider[] colliders = Physics.OverlapSphere(unitAgent.transform.position, unitAgent.HitBox.radius);
             foreach(Collider collider in colliders) {
                 Component enemy = collider.transform.parent.parent.GetComponent(typeof(IDamageable));
                 if(enemy) {
@@ -654,29 +666,27 @@ public class BaseStats
             isShadow = false;
             Vector3 position = unitAgent.transform.position;
             position.y = 0;
-            Collider[] colliders = Physics.OverlapSphere(position, unitAgent.Agent.radius);
+            Collider[] colliders = Physics.OverlapSphere(position, unitAgent.HitBox.radius);
             foreach(Collider collider in colliders) {
                 Component enemy = collider.transform.parent.parent.GetComponent(typeof(IDamageable));
                 if(enemy) {
-                    if(!enemy.CompareTag(unit.tag) && collider.CompareTag("Vision")) { //Are we in their vision detection object?
-                        if(!(enemy as IDamageable).HitTargets.Contains(unit))
-                            (enemy as IDamageable).HitTargets.Add(unit);
-                    }
-                }
-            }
-            colliders = Physics.OverlapSphere(position, unitAgent.Agent.radius);
-            foreach(Collider collider in colliders) {
-                Component enemy = collider.transform.parent.parent.GetComponent(typeof(IDamageable));
-                if(enemy) {
-                    if(!enemy.CompareTag(unit.tag) && collider.CompareTag("Range")) {
-                        if(GameFunctions.CanAttack(enemy.tag, unit.tag, unit.GetComponent(typeof(IDamageable)), (enemy as IDamageable).Stats)) { //only if the unit can actually target this one should we adjust this value
-                            if(!(enemy as IDamageable).InRangeTargets.Contains(unit))
-                                (enemy as IDamageable).InRangeTargets.Add(unit);
-                            if( ((enemy as IDamageable).InRangeTargets.Count == 1 || (enemy as IDamageable).Target == null) && (enemy as IDamageable).Stats.CanAct) { //we need this block here as well as stay in the case that a unit is placed inside a units range
-                                GameObject go = GameFunctions.GetNearestTarget((enemy as IDamageable).HitTargets, collider.transform.parent.parent.tag, (enemy as IDamageable).Stats);
-                                if(go != null) {
-                                    (enemy as IDamageable).SetTarget(go);
-                                    (enemy as IDamageable).Stats.IncRange = true;
+                    if(!enemy.CompareTag(unit.tag)) {
+                        if(collider.CompareTag("Vision")) {
+                            if(!(enemy as IDamageable).HitTargets.Contains(unit))
+                                (enemy as IDamageable).HitTargets.Add(unit);
+                        }
+                        else if(collider.CompareTag("Range")) {
+                            if(!(enemy as IDamageable).HitTargets.Contains(unit))
+                                (enemy as IDamageable).HitTargets.Add(unit);
+                            if(GameFunctions.CanAttack(enemy.tag, unit.tag, unit.GetComponent(typeof(IDamageable)), (enemy as IDamageable).Stats)) { //only if the unit can actually target this one should we adjust this value
+                                if(!(enemy as IDamageable).InRangeTargets.Contains(unit))
+                                    (enemy as IDamageable).InRangeTargets.Add(unit);
+                                if( ((enemy as IDamageable).InRangeTargets.Count == 1 || (enemy as IDamageable).Target == null) && (enemy as IDamageable).Stats.CanAct) { //we need this block here as well as stay in the case that a unit is placed inside a units range
+                                    GameObject go = GameFunctions.GetNearestTarget((enemy as IDamageable).HitTargets, collider.transform.parent.parent.tag, (enemy as IDamageable).Stats);
+                                    if(go != null) {
+                                        (enemy as IDamageable).SetTarget(go);
+                                        (enemy as IDamageable).Stats.IncRange = true;
+                                    }
                                 }
                             }
                         }
