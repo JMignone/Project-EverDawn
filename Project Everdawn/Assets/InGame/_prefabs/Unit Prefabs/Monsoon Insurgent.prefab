@@ -364,13 +364,10 @@ MonoBehaviour:
     leavesArena: 0
     leaveTimer: 0
     range: 4.5
-    visionRange: 20
+    visionRange: 15
     baseDamage: 133
     attackDelay: 1
     currAttackDelay: 0
-    attackChargeLimiter: 0
-    attackReadyPercentage: 0
-    maximumAttackAngle: 0
     moveSpeed: 11
     noRotation: 0
     rotationSpeed: 120
@@ -452,6 +449,9 @@ MonoBehaviour:
       grabbedStats:
         cantBeGrabbed: 0
         isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        grabDelay: 0
+        currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
         isStrengthened: 0
@@ -465,6 +465,18 @@ MonoBehaviour:
         outSideResistance: 0
         isStunned: 0
         stunDelay: 0
+      resistStats:
+        resistedDamage: 0
+        resistedTarget: 0
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+        resistedBlind: 0
+        resistedStun: 0
       critStats:
         critOnFrozen: 1
         critOnSlow: 1
@@ -585,6 +597,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 5028950966964901273}
+  anim: {fileID: 5028950967714293471}
+  agent: {fileID: 5028950966964901270}
   ability: {fileID: 5028950967757559709}
   isPreview: 0
 --- !u!95 &5028950967714293471

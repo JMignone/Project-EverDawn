@@ -379,13 +379,19 @@ public class Projectile : MonoBehaviour, IAbility
         return 1; //1 represents the 'walkable' area
     }
 
-    private void Start() {        
+    private void Start() {
+        hitBox.radius = radius;
         StartStats();
+
+        //we cant have a grenade and a boomerang
+        if(boomerangStats.IsBoomerang && grenadeStats.IsGrenade)
+            boomerangStats.IsBoomerang = false;
+
+        if(chosenTarget == null && !onlyDamageIfTargeted)
+            blockable = true;
     }
 
     protected void StartStats() {
-        hitBox.radius = radius;
-
         boomerangStats.StartBoomerangStats(gameObject);
         grenadeStats.StartGrenadeStats(gameObject);
         lingeringStats.StartLingeringStats(gameObject);
@@ -405,16 +411,6 @@ public class Projectile : MonoBehaviour, IAbility
 
         if(towerDamage == 0)
             towerDamage = baseDamage;
-
-        //we cant have a grenade and a boomerang
-        if(boomerangStats.IsBoomerang && grenadeStats.IsGrenade)
-            boomerangStats.IsBoomerang = false;
-
-        if(chosenTarget == null && !onlyDamageIfTargeted)
-            blockable = true;
-
-        if(chosenTarget != null)
-            chosenTarget.Unit.Projectiles.Add(gameObject);
     }
 
     protected void StopStats() {
@@ -434,9 +430,6 @@ public class Projectile : MonoBehaviour, IAbility
                     locationStats.LocationOveride();
             }
         }
-
-        if(chosenTarget != null)
-            chosenTarget.Unit.Projectiles.Remove(gameObject);
     }
 
     private void OnDestroy()
@@ -449,11 +442,6 @@ public class Projectile : MonoBehaviour, IAbility
         if(unit != null && !unit.Equals(null)) { //This is currently only used for boomerang
             lastKnownLocation = unit.Agent.transform.position;
             lastKnownLocation.y = 0;
-        }
-        
-        if(chosenTarget != null && !chosenTarget.Unit.Stats.Targetable) {
-            chosenTarget.Unit.Projectiles.Remove(gameObject);
-            chosenTarget = null;
         }
         if(chosenTarget != null && !boomerangStats.GoingBack) {//this is only used if the projectile was fired at a specified target. Must check if its a boomerang and already going back
             targetLocation = chosenTarget.Agent.transform.position;
@@ -533,9 +521,6 @@ public class Projectile : MonoBehaviour, IAbility
 
                 Actor3D newTarget = chainStats.FindTarget(gameObject, damageable.gameObject, this, unit);
                 if(newTarget != null) {
-                    if(chosenTarget != null)
-                        chosenTarget.Unit.Projectiles.Remove(gameObject);
-                    newTarget.Unit.Projectiles.Add(gameObject);
                     chosenTarget = newTarget;
                     hitBox.enabled = false;
                     hitBox.enabled = true;

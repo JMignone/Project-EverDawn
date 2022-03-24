@@ -157,21 +157,17 @@ MonoBehaviour:
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
-    leavesArena: 0
-    leaveTimer: 0
     range: 0
     visionRange: 0
     baseDamage: 0
     attackDelay: 0
     currAttackDelay: 0
-    attackChargeLimiter: 0
-    attackReadyPercentage: 0
-    maximumAttackAngle: 0
     moveSpeed: 0
     noRotation: 0
     rotationSpeed: 0
     summoningSicknessUI:
       summonSicknessDelay: 0
+      currSummonSicknessDelay: 0
       summonProtectionDelay: 0
       sSCanvas: {fileID: 0}
       sSSprite: {fileID: 0}
@@ -182,10 +178,10 @@ MonoBehaviour:
     abilityIndicator: {fileID: 0}
     detectionObject: {fileID: 0}
     visionObject: {fileID: 0}
-    unitMaterials:
-      renderers: []
     movementType: 0
     heightAttackable: 0
+    unitMaterials:
+      renderers: []
     unitType: 0
     unitGrouping: 1
     attackPriority: 0
@@ -238,6 +234,9 @@ MonoBehaviour:
       grabbedStats:
         cantBeGrabbed: 0
         isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        grabDelay: 0
+        currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
         isStrengthened: 0
@@ -251,13 +250,18 @@ MonoBehaviour:
         outSideResistance: 0
         isStunned: 0
         stunDelay: 0
-      critStats:
-        critOnFrozen: 0
-        critOnSlow: 0
-        critOnRoot: 0
-        critOnPoison: 0
-        critOnBlind: 0
-        critOnStun: 0
+      resistStats:
+        resistedDamage: 0
+        resistedTarget: 0
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+        resistedBlind: 0
+        resistedStun: 0
 --- !u!1001 &2072077755406566246
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -308,10 +312,6 @@ PrefabInstance:
     - target: {fileID: 1139482532155942412, guid: 304a4c69c2fd919499f930a64e2fda40, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2136763132012215346, guid: 304a4c69c2fd919499f930a64e2fda40, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5726148247449163227, guid: 304a4c69c2fd919499f930a64e2fda40, type: 3}
       propertyPath: m_Name

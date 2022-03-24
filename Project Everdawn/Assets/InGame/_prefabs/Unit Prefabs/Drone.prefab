@@ -226,6 +226,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 3415333901079641158}
+  anim: {fileID: 3415333899155088803}
+  agent: {fileID: 3415333901079641159}
   ability: {fileID: 7744991462775240170}
   isPreview: 0
 --- !u!95 &3415333899155088803
@@ -392,21 +394,18 @@ MonoBehaviour:
   unitSprite: {fileID: 3415333899155088802}
   target: {fileID: 0}
   stats:
-    currHealth: 300
-    maxHealth: 300
+    currHealth: 250
+    maxHealth: 250
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
     leavesArena: 0
     leaveTimer: 0
     range: 11
-    visionRange: 20
+    visionRange: 16
     baseDamage: 120
     attackDelay: 1
     currAttackDelay: 0
-    attackChargeLimiter: 0
-    attackReadyPercentage: 0
-    maximumAttackAngle: 0
     moveSpeed: 8.5
     noRotation: 0
     rotationSpeed: 160
@@ -493,6 +492,18 @@ MonoBehaviour:
         outSideResistance: 0
         isStunned: 0
         stunDelay: 0
+      resistStats:
+        resistedDamage: 0
+        resistedTarget: 0
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+        resistedBlind: 0
+        resistedStun: 0
       critStats:
         critOnFrozen: 1
         critOnSlow: 1

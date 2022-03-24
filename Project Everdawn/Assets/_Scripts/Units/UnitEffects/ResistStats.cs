@@ -203,7 +203,7 @@ public class ResistStats
     public void CanBeDamaged() {
         cantDamage = false;
         //check if there is currently an ability hovered over this unit now
-        Collider[] colliders = Physics.OverlapSphere(unit.Agent.transform.position, unit.Agent.HitBox.radius);
+        Collider[] colliders = Physics.OverlapSphere(unit.Agent.transform.position, unit.Agent.Agent.radius);
         foreach(Collider collider in colliders) {
             if(!collider.transform.parent.parent.CompareTag((unit as Component).gameObject.tag) && collider.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
                 AbilityPreview ability = collider.GetComponent<AbilityPreview>();
@@ -301,7 +301,7 @@ public class ResistStats
                 resistedDamage = false;
 
                 //check if there is currently an ability hovered over this unit now
-                Collider[] colliders = Physics.OverlapSphere(unit.Agent.transform.position, unit.Agent.HitBox.radius);
+                Collider[] colliders = Physics.OverlapSphere(unit.Agent.transform.position, unit.Agent.Agent.radius);
                 foreach(Collider collider in colliders) {
                     if(!collider.transform.parent.parent.CompareTag((unit as Component).gameObject.tag) && collider.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
                         AbilityPreview ability = collider.GetComponent<AbilityPreview>();

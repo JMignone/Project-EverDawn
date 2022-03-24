@@ -136,10 +136,6 @@ MonoBehaviour:
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0
-  chainStats:
-    chains: 0
-    chainRadius: 0
-    chainCount: 0
   lingeringStats:
     lingering: 0
     lingerAtEnd: 0
@@ -175,8 +171,6 @@ MonoBehaviour:
     resistPull: 1
     resistBlind: 0
     resistStun: 0
-    resistDamage: 0
-    resistTarget: 0
   applyResistanceStats:
     applyToSelf: 0
     applyToOthers: 0
@@ -205,8 +199,6 @@ MonoBehaviour:
   passObstacles: 2
   landInsideTarget: 0
   highlightEnemies: 0
-  hideUnit: 0
-  avoidTargetedProjectiles: 1
   retreatStats:
     retreats: 0
     distance: 0

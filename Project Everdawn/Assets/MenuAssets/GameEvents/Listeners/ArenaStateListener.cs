@@ -1,0 +1,1 @@
+public class ArenaStateListener : GameEventListener<ArenaState, ArenaStateEvent, UnityArenaStateEvent> { }

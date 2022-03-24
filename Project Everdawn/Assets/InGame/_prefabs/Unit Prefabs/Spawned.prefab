@@ -705,6 +705,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 7252514539315759073}
+  anim: {fileID: 8117330087057945763}
+  agent: {fileID: 9030593623510286143}
   ability: {fileID: 8885129445788087283}
   isPreview: 0
 --- !u!95 &8117330087057945763
@@ -1126,17 +1128,11 @@ MonoBehaviour:
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
-    leavesArena: 0
-    leaveTimer: 0
     range: 3
-    visionRange: 20
+    visionRange: 15
     baseDamage: 85
-    towerDamage: 0
     attackDelay: 1.1
     currAttackDelay: 0
-    attackChargeLimiter: 0
-    attackReadyPercentage: 0
-    maximumAttackAngle: 0
     moveSpeed: 7
     noRotation: 0
     rotationSpeed: 120
@@ -1210,6 +1206,9 @@ MonoBehaviour:
       grabbedStats:
         cantBeGrabbed: 0
         isGrabbed: 0
+        direction: {x: 0, y: 0, z: 0}
+        grabDelay: 0
+        currentStunDelay: 0
       strengthenedStats:
         cantBeStrengthened: 0
         isStrengthened: 0
@@ -1223,6 +1222,18 @@ MonoBehaviour:
         outSideResistance: 0
         isStunned: 0
         stunDelay: 0
+      resistStats:
+        resistedDamage: 0
+        resistedTarget: 0
+        resistedFreeze: 0
+        resistedSlow: 0
+        resistedRoot: 0
+        resistedPoison: 0
+        resistedKnockback: 0
+        resistedGrab: 0
+        resistedPull: 0
+        resistedBlind: 0
+        resistedStun: 0
       critStats:
         critOnFrozen: 1
         critOnSlow: 1
@@ -1276,7 +1287,6 @@ MonoBehaviour:
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
-  projectiles: []
 --- !u!54 &6825281274548537870
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2357,21 +2367,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8326997223694864424}
     m_Modifications:
-    - target: {fileID: 2683724731585702016, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2683724732500358883, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2683724732500358893, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2683724732576097059, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2683724732824738253, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
       propertyPath: m_Pivot.x
@@ -2474,7 +2476,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 4078519445697324528}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 

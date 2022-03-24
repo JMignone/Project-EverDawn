@@ -47,19 +47,16 @@ public class Unit : MonoBehaviour, IDamageable
     [SerializeField]
     private List<GameObject> enemyHitTargets;
 
-    [SerializeField]
-    private List<GameObject> projectiles;
-
-    private List<Component> applyEffectsComponents = new List<Component>();
-
     public Actor3D Agent
     {
         get { return agent; }
+        //set { agent = value; }
     }
 
     public Actor2D UnitSprite
     {
         get { return unitSprite; }
+        //set { unitSprite = value; }
     }
 
     public GameObject Target
@@ -110,16 +107,6 @@ public class Unit : MonoBehaviour, IDamageable
         get { return enemyHitTargets; }
     }
 
-    public List<GameObject> Projectiles
-    {
-        get { return projectiles; }
-    }
-
-    public List<Component> ApplyEffectsComponents
-    {
-        get { return applyEffectsComponents; }
-    }
-
     public bool IsMoving
     {
         get { if(agent.Agent.enabled && !agent.Agent.isStopped && agent.Agent.speed != 0) return true; else return false; }
@@ -157,71 +144,21 @@ public class Unit : MonoBehaviour, IDamageable
             stats.AttackReadyPercentage = GameConstants.ATTACK_READY_PERCENTAGE;
         if(stats.MaximumAttackAngle == 0)
             stats.MaximumAttackAngle = GameConstants.MAXIMUM_ATTACK_ANGLE;
-        if(stats.TowerDamage == 0)
-            stats.TowerDamage = stats.BaseDamage;
     }
 
     private void FixedUpdate()
     {
-        /*
-        foreach(GameObject go in enemyHitTargets) {
-            if(go == null) {
-                Debug.Log(gameObject);
-                Debug.Break();
-            }
-        }
-
-        foreach(GameObject go in InRangeTargets) {
-            if(go == null) {
-                Debug.Log(gameObject);
-                Debug.Break();
-            }
-        }
-
-        foreach(GameObject go in HitTargets) {
-            if(go == null) {
-                Debug.Log(gameObject);
-                Debug.Break();
-            }
-        }
-
-        foreach(GameObject go in Projectiles) {
-            if(go == null) {
-                Debug.Log(gameObject);
-                Debug.Break();
-            }
-        }
-        */
-
-        if(applyEffectsComponents.Count > 0) {
-            foreach(Component component in applyEffectsComponents) {
-                if(component != null)
-                    stats.ApplyAffects(component);
-            }
-            applyEffectsComponents = new List<Component>();
-        }
-
         if(noseDiveStats.IsDiving)
             noseDiveStats.UpdateStats();
-        else if(stats.CurrHealth > 0 && (!stats.LeavesArena || stats.LeaveTimer > 0) ) {
+        else if(stats.CurrHealth > 0) {
             if((target == null || inRangeTargets.Count == 0) && stats.CanAct && !stats.IsCastingAbility) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                 ReTarget();
-
-            // Detects if a unit is within range of another, but doesnt have the target inside enemyHitTargets
-            if(target != null) {
-                if(!inRangeTargets.Contains(target) && Vector3.Distance(target.transform.GetChild(0).position, agent.transform.position) < stats.Range + (target.GetComponent(typeof(IDamageable)) as IDamageable).Agent.Agent.radius ) {
-                    Debug.Log(GetInstanceID());
-                    Debug.Break();
-                }
-            }
-
 
             stats.UpdateStats(ChargeAttack, inRangeTargets.Count, agent, hitTargets, target, gameObject);
             buildUpStats.UpdateStats();
             chargeStats.UpdateChargeStats();
             dashStats.UpdateDashStats();
             shadowStats.UpdateShadowStats();
-
             Attack();
 
             if(dashStats.IsDashing)
@@ -248,7 +185,7 @@ public class Unit : MonoBehaviour, IDamageable
             deathStats.FireDeathSkill();
         }
         else {
-            //print(gameObject.name + " has died!" + System.DateTime.Now);
+            //print(gameObject.name + " has died!");
             stats.ResetKillFlags(gameObject, target);
             GameManager.RemoveObjectsFromList(gameObject);
             if(target != null)
@@ -256,7 +193,7 @@ public class Unit : MonoBehaviour, IDamageable
             Destroy(gameObject);
         }
     }
-    
+
     private void OnDestroy() {
         if(stats.EffectStats.GrabbedStats.IsGrabbed)
             stats.EffectStats.GrabbedStats.unGrab();
@@ -283,17 +220,11 @@ public class Unit : MonoBehaviour, IDamageable
                     Component damageable = target.GetComponent(typeof(IDamageable));
                     if(damageable) { //is the target damageable
                         if(hitTargets.Contains(target)) {  //this is needed for the rare occurance that a unit is 90% done with attack delay and the target leaves its range. It can still do its attack if its within vision given that its attack was already *90% thru
-                            float damage = stats.BaseDamage;
-                            if(damageable.GetComponent<Tower>())
-                                damage = stats.TowerDamage;
                             if(stats.EffectStats.AOEStats.AreaOfEffect)
-                                stats.EffectStats.AOEStats.Explode(gameObject, target, damage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                                stats.EffectStats.AOEStats.Explode(gameObject, target, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                             else {
-                                GameFunctions.Attack(damageable, damage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity, stats.EffectStats.CritStats);
-                                //StartCoroutine(stats.ApplyAffects(damageable));
-                                //StartCoroutine(GameManager.Instance.ApplyAffects(damageable, stats.EffectStats));
-                                //GameManager.ApplyAffects(damageable, stats.EffectStats);
-                                applyEffectsComponents.Add(damageable);
+                                GameFunctions.Attack(damageable, stats.BaseDamage * stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity, stats.EffectStats.CritStats);
+                                stats.ApplyAffects(damageable);
                             }
                             buildUpStats.BuildUp();
                             stats.Appear(gameObject, shadowStats, agent);
@@ -326,7 +257,7 @@ public class Unit : MonoBehaviour, IDamageable
     }
 
     public void ReTarget() {
-        if(stats.CurrAttackDelay <= stats.AttackDelay*stats.AttackReadyPercentage || inRangeTargets.Count >= 1) {
+        if(stats.CurrAttackDelay <= stats.AttackDelay*stats.AttackReadyPercentage) {
             if(hitTargets.Count > 0) {
                 GameObject go = GameFunctions.GetNearestTarget(hitTargets, gameObject.tag, stats);
                 if(go != null) {
@@ -354,6 +285,15 @@ public class Unit : MonoBehaviour, IDamageable
                     stats.CurrAttackDelay = stats.AttackDelay*stats.AttackChargeLimiter;
             }
             stats.IncRange = false;
+        }
+        else {
+            Debug.Log(gameObject);
+            Debug.Log(stats.CurrAttackDelay);
+            Debug.Log(stats.AttackDelay*stats.AttackReadyPercentage);
+            Debug.Log(stats.CurrAttackDelay - stats.AttackDelay*stats.AttackReadyPercentage);
+            Debug.Log(Mathf.Sign(stats.CurrAttackDelay - stats.AttackDelay*stats.AttackReadyPercentage));
+            if(stats.CurrAttackDelay <= stats.AttackDelay*stats.AttackReadyPercentage)
+                Debug.Log("WHAT");
         }
     }
 

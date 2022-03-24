@@ -39,16 +39,10 @@ public class DeathStats
     public void StartStats(GameObject go) {
         unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
         unit.SetTarget(null);
-        //unit.Stats.Vanish((unit as Component).gameObject, unit.Agent); //unit.EnemyHitTargets.ToArray());
-        unit.Stats.EffectStats.ResistStats.ResistDamage(100);
-        unit.Stats.EffectStats.ResistStats.ResistTarget(100);
-
-        unit.Agent.Agent.enabled = false;
-        unit.Agent.HitBox.enabled = false;
-        unit.Stats.DetectionObject.enabled = false;
-        unit.Stats.VisionObject.enabled = false;
-
+        unit.Stats.Vanish((unit as Component).gameObject, unit.Agent); //unit.EnemyHitTargets.ToArray());
+        unit.Stats.EffectStats.ResistStats.ResistDamage(999);
         isDying = true;
+        unit.Agent.Agent.enabled = false;
         if(unit.Stats.CanvasAbility != null)
             MonoBehaviour.Destroy(unit.Stats.CanvasAbility);
         MonoBehaviour.Destroy(unit.Stats.HealthBar.transform.parent.gameObject);

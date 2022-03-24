@@ -84,7 +84,7 @@ public class ShadowStats
     public void Appear() {
         if(shades && unit.Stats.IsShadow) {
             unit.Stats.IsShadow = false;
-            Collider[] colliders = Physics.OverlapSphere(unit.Agent.Agent.transform.position, unit.Agent.HitBox.radius);
+            Collider[] colliders = Physics.OverlapSphere(unit.Agent.Agent.transform.position, unit.Agent.Agent.radius);
             foreach(Collider collider in colliders) {
                 Component enemy = collider.transform.parent.parent.GetComponent(typeof(IDamageable));
                 if(enemy) {
@@ -94,7 +94,7 @@ public class ShadowStats
                     }
                 }
             }
-            colliders = Physics.OverlapSphere(unit.Agent.Agent.transform.position, unit.Agent.HitBox.radius);
+            colliders = Physics.OverlapSphere(unit.Agent.Agent.transform.position, unit.Agent.Agent.radius);
             foreach(Collider collider in colliders) {
                 Component enemy = collider.transform.parent.parent.GetComponent(typeof(IDamageable));
                 if(enemy) {

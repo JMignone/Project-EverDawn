@@ -181,8 +181,8 @@ MonoBehaviour:
   unitSprite: {fileID: 4300487081921077863}
   target: {fileID: 0}
   stats:
-    currHealth: 5000
-    maxHealth: 5000
+    currHealth: 4850
+    maxHealth: 4850
     currArmor: 0
     maxArmor: 0
     healthDecay: 0

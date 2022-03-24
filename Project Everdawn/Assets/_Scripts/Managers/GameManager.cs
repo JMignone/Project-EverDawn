@@ -15,8 +15,6 @@ public class GameManager : MonoBehaviour
     private List<PlayerStats> players;
     [SerializeField]
     private GameObject ground;
-    [SerializeField]
-    private GameObject unitsFolder;
     private int playerScore;
     private int enemyScore;
     [SerializeField]
@@ -97,13 +95,6 @@ public class GameManager : MonoBehaviour
         if(instance != this)
             instance = this;
 
-        /* --- Setting the framerate here for now --- */
-
-        QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 60;
-
-        /* ------------------------------------------ */
-
         timeLimit = timeLeft - 1;
 
         //for testing purposes, removes all non towers from the game immediatly
@@ -135,8 +126,8 @@ public class GameManager : MonoBehaviour
 
     public static void RemoveObjectsFromList(GameObject objectToRemove)
     {
-        //Vector3 objectToRemovePosition = objectToRemove.transform.GetChild(0).position;
-        //objectToRemovePosition = new Vector3(objectToRemovePosition.x, 0 ,objectToRemovePosition.z); // Setting the y to 0 to avoid increased distances with flying units
+        Vector3 objectToRemovePosition = objectToRemove.transform.GetChild(0).position;
+        objectToRemovePosition = new Vector3(objectToRemovePosition.x, 0 ,objectToRemovePosition.z); // Setting the y to 0 to avoid increased distances with flying units
         Component objectToRemoveComponent = objectToRemove.GetComponent(typeof(IDamageable));
 
         Actor3D objectToRemoveAgent = (objectToRemoveComponent as IDamageable).Agent; 
@@ -169,8 +160,8 @@ public class GameManager : MonoBehaviour
 
     public static void RemoveObjectsFromList(GameObject objectToRemove, bool leftTower, bool isKeep)
     {
-        //Vector3 objectToRemovePosition = objectToRemove.transform.GetChild(0).position;
-        //objectToRemovePosition = new Vector3(objectToRemovePosition.x, 0 ,objectToRemovePosition.z); // Setting the y to 0 to avoid increased distances with flying units
+        Vector3 objectToRemovePosition = objectToRemove.transform.GetChild(0).position;
+        objectToRemovePosition = new Vector3(objectToRemovePosition.x, 0 ,objectToRemovePosition.z); // Setting the y to 0 to avoid increased distances with flying units
         Component objectToRemoveComponent = objectToRemove.GetComponent(typeof(IDamageable));
 
         Actor3D objectToRemoveAgent = (objectToRemoveComponent as IDamageable).Agent; 
@@ -249,7 +240,7 @@ public class GameManager : MonoBehaviour
     }
 
     public static Transform GetUnitsFolder() {
-        return Instance.unitsFolder.transform;
+        return Instance.transform.parent.GetChild(1);
     }
 
     //this is mainly used, if not only used for locating towers, maybe usful for ability targeting later on
@@ -308,21 +299,4 @@ public class GameManager : MonoBehaviour
         //used for testing to disable the bot when the game ends, should be deleted later at soome point
         Instance.Complete = true;
     }
-
-    /*
-    public static void ApplyAffects(Component damageable, EffectStats effectStats) {
-        Instance.StartCoroutine(Instance.ApplyAffectsCoRoutine((damageable as IDamageable), effectStats));
-    }
-
-    public IEnumerator ApplyAffectsCoRoutine(IDamageable damageable, EffectStats effectStats) {
-        Vector3 unitPos = effectStats.KnockbackStats.UnitPosition;
-        yield return null; //THIS IS EVERY FRAME NOT EVERY CYCLE.. BAD
-        if(!damageable.Equals(null)) {
-            if(effectStats.SlowStats.CanSlow)
-                damageable.Stats.EffectStats.SlowedStats.Slow(effectStats.SlowStats.SlowDuration, effectStats.SlowStats.SlowIntensity);
-            if(effectStats.KnockbackStats.CanKnockback)
-                damageable.Stats.EffectStats.KnockbackedStats.Knockback(effectStats.KnockbackStats.KnockbackDuration, effectStats.KnockbackStats.InitialSpeed, unitPos);
-        }
-    }
-    */
 }
