@@ -64,11 +64,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     [SerializeField]
     private Sprite abilityPreviewRange;
 
-    //private float currentDelay;
-    //private bool isFiring;
-    //private int currentProjectileIndex;
-    //private Vector3 targetLocation;
-
     public PlayerStats PlayerInfo
     {
         get { return playerInfo; }
