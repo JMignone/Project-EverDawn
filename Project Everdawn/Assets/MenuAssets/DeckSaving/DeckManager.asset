@@ -17,7 +17,7 @@ MonoBehaviour:
     DeckName: Team
     CardsInDeck: 0100000002000000030000000400000005000000060000000700000008000000
   deckSize: 8
-  selectedDeckNumber: 1
+  selectedDeckNumber: 4
   selectedDeck:
     DeckName: Team
     CardsInDeck: 0100000002000000030000000400000005000000060000000700000008000000
