@@ -42,6 +42,7 @@ public class CardDisplay : MonoBehaviour
     {
         if(cardDisplayEvent != null)
         {
+            Debug.Log("test");
             cardDisplayEvent.Raise(this);
         }
     }

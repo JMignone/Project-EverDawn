@@ -10,8 +10,17 @@ EditorBuildSettings:
     guid: acfa36cf90463dd4db4679ee584cb50a
   - enabled: 1
     path: Assets/Scenes/MainMenuScene.unity
-    guid: 79f2e3a0b0dece14194da055ebe2d5b4
+    guid: 0a690e3094f624143931e5068b390cb4
   - enabled: 1
-    path: Assets/Scenes/InGameScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/Arena Scenes/InGameScene.unity
+    guid: da6e4ba0346b09a4ebc138139f154f37
+  - enabled: 1
+    path: Assets/Scenes/Arena Scenes/LongHole.unity
+    guid: 46ad7b881fcf6034b9f7d0e4b73f8077
+  - enabled: 1
+    path: Assets/Scenes/Arena Scenes/Short2Bridge.unity
+    guid: d422e6163d4019b4992a5af3d8ebdcf5
+  - enabled: 1
+    path: Assets/Scenes/Arena Scenes/ShortOval.unity
+    guid: 37f5328c8dbfc00458aa2e7c9d8b7f95
   m_configObjects: {}

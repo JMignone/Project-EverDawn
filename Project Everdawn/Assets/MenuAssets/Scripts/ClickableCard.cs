@@ -13,7 +13,7 @@ public class ClickableCard : MonoBehaviour, IPointerClickHandler
 
     private void OnEnable()
     {
-        card = cardDisplay.card;    
+        card = cardDisplay.Card;    
     }
 
     [ContextMenu("Run Click Function")]

@@ -14,7 +14,7 @@ PrefabInstance:
     - target: {fileID: 2884674392382964840, guid: 5294893c2b971c049b80ef7280df4eff, type: 3}
       propertyPath: cardDisplayEvent
       value: 
-      objectReference: {fileID: 11400000, guid: 5135ffdb07a645943a7f0aac3efc6a6a, type: 2}
+      objectReference: {fileID: 11400000, guid: c40b7297375aa504bb0d683cb618dbb6, type: 2}
     - target: {fileID: 3543102478144334001, guid: 5294893c2b971c049b80ef7280df4eff, type: 3}
       propertyPath: m_Name
       value: UnitCard(SwapCharacter)
@@ -49,11 +49,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3543102478144334014, guid: 5294893c2b971c049b80ef7280df4eff, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 300
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 3543102478144334014, guid: 5294893c2b971c049b80ef7280df4eff, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 400
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 3543102478144334014, guid: 5294893c2b971c049b80ef7280df4eff, type: 3}
       propertyPath: m_LocalPosition.x
@@ -131,9 +131,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: SO_Card, Assembly-CSharp
       objectReference: {fileID: 0}
-    - target: {fileID: 7822271048517627210, guid: 5294893c2b971c049b80ef7280df4eff, type: 3}
-      propertyPath: cardDisplayEvent
-      value: 
-      objectReference: {fileID: 11400000, guid: 5135ffdb07a645943a7f0aac3efc6a6a, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 5294893c2b971c049b80ef7280df4eff, type: 3}
