@@ -308,21 +308,4 @@ public class GameManager : MonoBehaviour
         //used for testing to disable the bot when the game ends, should be deleted later at soome point
         Instance.Complete = true;
     }
-
-    /*
-    public static void ApplyAffects(Component damageable, EffectStats effectStats) {
-        Instance.StartCoroutine(Instance.ApplyAffectsCoRoutine((damageable as IDamageable), effectStats));
-    }
-
-    public IEnumerator ApplyAffectsCoRoutine(IDamageable damageable, EffectStats effectStats) {
-        Vector3 unitPos = effectStats.KnockbackStats.UnitPosition;
-        yield return null; //THIS IS EVERY FRAME NOT EVERY CYCLE.. BAD
-        if(!damageable.Equals(null)) {
-            if(effectStats.SlowStats.CanSlow)
-                damageable.Stats.EffectStats.SlowedStats.Slow(effectStats.SlowStats.SlowDuration, effectStats.SlowStats.SlowIntensity);
-            if(effectStats.KnockbackStats.CanKnockback)
-                damageable.Stats.EffectStats.KnockbackedStats.Knockback(effectStats.KnockbackStats.KnockbackDuration, effectStats.KnockbackStats.InitialSpeed, unitPos);
-        }
-    }
-    */
 }
