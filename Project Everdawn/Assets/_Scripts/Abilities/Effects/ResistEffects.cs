@@ -116,6 +116,9 @@ public class ResistEffects //this type of resistance persists as long as the pro
         if(resistBlind)
             unit.Stats.EffectStats.BlindedStats.CantBeBlinded = false;
 
+        if(resistStun)
+            unit.Stats.EffectStats.StunnedStats.CantBeStunned = false;
+
         if(resistDamage)
             unit.Stats.EffectStats.ResistStats.CanBeDamaged();
 

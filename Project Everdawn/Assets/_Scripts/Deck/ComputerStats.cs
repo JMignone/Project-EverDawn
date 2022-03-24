@@ -78,6 +78,7 @@ public class ComputerStats
                     isPlaying = true;
                 }
             }
+            currResource = playerInfo.GetCurrResource;
         }
     }
 
@@ -205,6 +206,9 @@ public class ComputerStats
 
         if(leftChance > random)
             randNormalX *= -1;
+
+        if(playerInfo.transform.tag == "Player")
+            randNormalZ *= -1;
 
         return new Vector3(randNormalX, 0, randNormalZ);
     }

@@ -49,7 +49,7 @@ MonoBehaviour:
   unitSprite: {fileID: 4332999101628587706}
   radius: 1.5
   speed: 80
-  range: 200
+  range: 50
   baseDamage: 0
   towerDamage: 0
   heightAttackable: 0
@@ -63,7 +63,7 @@ MonoBehaviour:
   skipNumber: 0
   overridesTarget: 0
   onlyDamageIfTargeted: 0
-  hideRange: 1
+  hideRange: 0
   hidePreview: 0
   customPathStats:
     hasCustomPath: 0
@@ -206,6 +206,7 @@ MonoBehaviour:
   landInsideTarget: 0
   highlightEnemies: 0
   hideUnit: 1
+  avoidTargetedProjectiles: 0
   retreatStats:
     retreats: 0
     distance: 0

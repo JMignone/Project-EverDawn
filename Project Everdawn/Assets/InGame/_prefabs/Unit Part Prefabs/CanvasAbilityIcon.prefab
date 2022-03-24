@@ -31,7 +31,7 @@ RectTransform:
   m_GameObject: {fileID: 665771124876367457}
   m_LocalRotation: {x: 0, y: -0.76604444, z: 0.64278764, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 2.2}
-  m_LocalScale: {x: 0.05, y: 0.050000004, z: 0.08457514}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 665771126181773524}
   m_Father: {fileID: 0}
@@ -40,7 +40,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 5, y: 5}
-  m_SizeDelta: {x: 125, y: 125}
+  m_SizeDelta: {x: 7, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &665771124876367449
 MonoBehaviour:
@@ -93,6 +93,7 @@ MonoBehaviour:
   abilityPreviewCanvas: {fileID: 0}
   playersAttackable: 0
   autoTarget: 0
+  setTarget: 0
   onlyCircle: 0
   abilityPreviewLine: {fileID: 21300000, guid: d24184dab2f7f3d418f3a20dc032fa78, type: 3}
   abilityPreviewLinear: {fileID: 21300000, guid: 3d46296629f72914da3ffeb630c82832, type: 3}
@@ -144,14 +145,16 @@ MonoBehaviour:
   abilityUI:
     cooldownDelay: 0
     currCooldownDelay: 0
-    abilitySprite: {fileID: 665771126181773525}
-    cooldownMask: {fileID: 665771126156630032}
+    abilitySprite: {fileID: 0}
+    cooldownMask: {fileID: 0}
     abilityCancel: {fileID: 0}
   abilityPreviewCanvas: {fileID: 0}
   abilityPreviews: []
   playersAttackable: 0
   autoTarget: 0
+  setTarget: 0
   hidePreview: 0
+  trackTarget: 0
   abilityPreviewLine: {fileID: 21300000, guid: d24184dab2f7f3d418f3a20dc032fa78, type: 3}
   abilityPreviewLinear: {fileID: 21300000, guid: 3d46296629f72914da3ffeb630c82832, type: 3}
   abilityPreviewBomb: {fileID: 21300000, guid: 68c0303b57e53ce4188ea1bbcf918c1a, type: 3}
@@ -254,7 +257,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 665771124910107535}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -263,8 +266,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0}
-  m_SizeDelta: {x: 140, y: 140}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 7, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &665771124910107521
 CanvasRenderer:
@@ -288,7 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0.8627451}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -339,8 +342,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0}
-  m_SizeDelta: {x: 125, y: 125}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 6.25, y: 6.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &665771126383347267
 CanvasRenderer:
@@ -370,7 +373,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 78cd5f19747f13a4895c5a28e72a73d1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
