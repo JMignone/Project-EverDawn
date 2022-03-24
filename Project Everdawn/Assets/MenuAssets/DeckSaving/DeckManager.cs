@@ -38,24 +38,34 @@ public class DeckManager : ScriptableObject
 
     #region PlayerDeckList Internal Class (Used in Serialization)
         [System.Serializable]
-            private class PlayerDeckList
-            {
-                public List<PlayerDeck> playerDecks = new List<PlayerDeck>();
+        private class PlayerDeckList
+        {
+            public List<PlayerDeck> playerDecks = new List<PlayerDeck>();
 
-                public PlayerDeckList Copy()
-                {
-                    var result = new PlayerDeckList();
-                    result.playerDecks = new List<PlayerDeck>(this.playerDecks);
-                    return result;
-                }
+            public PlayerDeckList Copy()
+            {
+                var result = new PlayerDeckList();
+                result.playerDecks = new List<PlayerDeck>(this.playerDecks);
+                return result;
             }
+        }
     #endregion
   
+    [ContextMenu("Run Awake")]
     private void Awake()
     {
         DeleteOldDeck();
-        LoadDeckList();
-        CheckForDecks();
+        PlayerDeckList pdl = LoadDeckList();
+        if(pdl == null)
+        {
+            GenerateDecks(maxNumberOfDecks, deckList.playerDecks.Count, deckList.playerDecks);
+        }
+        CheckDecks();
+        bool cardsCheck = CheckCards(deckList.playerDecks);
+        if(cardsCheck != true)
+        {
+            ResetDecks();
+        }
         LoadAsSelectedDeck(LoadDeckNumberFromPlayerPrefs());
     }
 
@@ -66,7 +76,7 @@ public class DeckManager : ScriptableObject
 
     #region Deck Checking and Generation Methods
     [ContextMenu("Check for Decks")]
-    private void CheckForDecks() // Checks that there are only as many decks as we'd like to allow; resets or generates them depending on case
+    private void CheckDecks() // Checks that there are only as many decks as we'd like to allow; resets or generates them depending on case
     {
         try
         {
@@ -102,6 +112,39 @@ public class DeckManager : ScriptableObject
         }
     }
 
+    private bool CheckCards(List<PlayerDeck> listToCheck)
+    {
+        try
+        {
+            for(int i = 0; i < listToCheck.Count - 1; i++)
+            {
+                if(listToCheck[i].CardsInDeck.Count > 0)
+                {
+                    foreach(int cardID in listToCheck[i].CardsInDeck)
+                    {
+                        if(cardID < 0)
+                        {
+                            return false;
+                        }
+                        else if(cardID >= 0)
+                        {
+                            continue;
+                        }
+                    }
+                }
+                else if(listToCheck[i].CardsInDeck.Count <= 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
     private void GenerateDecks(int deckUpperLimit, int deckCount, List<PlayerDeck> listToGenerateTo) // Adds the default deck according to 
     {
         try
@@ -123,6 +166,7 @@ public class DeckManager : ScriptableObject
     {
         deckList.playerDecks.Clear();
         GenerateDecks(maxNumberOfDecks, deckList.playerDecks.Count, deckList.playerDecks);
+        SaveDeckList();
     }
 
     private void ResetDeck(PlayerDeck pd) // Attempts to reset deck to default
