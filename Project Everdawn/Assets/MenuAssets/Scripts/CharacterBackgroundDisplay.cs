@@ -1,14 +1,15 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterBackgroundDisplay : MonoBehaviour
 {
-    [SerializeField] private SO_CardList cardDatabase;
+    [SerializeField] private SO_CardDatabase cardDatabase;
     [SerializeField] private Image characterImage;
     [SerializeField] private int cardID;
 
-    private readonly string backgroundCharacterID = "backgroundCharacterID";
+    private readonly string backgroundCharacterID;
 
     private void OnEnable()
     {
@@ -18,7 +19,7 @@ public class CharacterBackgroundDisplay : MonoBehaviour
         }
         else
         {
-            cardID = 1;
+            cardID = 0;
         }
 
         ChangeCharacterBackgroundImage(cardID);
@@ -34,25 +35,15 @@ public class CharacterBackgroundDisplay : MonoBehaviour
         }
         else
         {
-            //Debug.Log("Card ID " + cd.cardID.ToString() + " was not found in the database.");
+            Debug.Log("Card ID " + cd.cardID.ToString() + " was not found in the database.");
         }
     }
 
-    private void ChangeCharacterBackgroundImage(int CardID)
+    public void ChangeCharacterBackgroundImage(int CardID)
     {
-        SO_Card card;
-
-        if(CardID <= cardDatabase.cardList.Count)
-        {
-            card = cardDatabase.cardList[CardID];
-            characterImage.sprite = card.cardImage;
-        }
-        else
-        {
-            card = cardDatabase.cardList[0];
-        }
-
+        SO_Card card = cardDatabase.cardList[CardID];
         characterImage.sprite = card.cardImage;
+
         PlayerPrefs.SetInt(backgroundCharacterID, CardID);
     }
 }

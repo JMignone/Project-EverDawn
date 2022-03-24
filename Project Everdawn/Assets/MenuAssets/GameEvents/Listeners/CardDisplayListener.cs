@@ -1,1 +1,1 @@
-public class CardDisplayListener : GameEventListener<CardDisplay, CardDisplayEvent, UnityCardDisplayEvent> { }
+public class CardDisplayListener : GameEventListener<CardDisplay, CardDisplayEvent, UnityCardDisplayEvent> {}

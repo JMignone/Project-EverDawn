@@ -1,1 +1,0 @@
-public class MenuStateListener : GameEventListener<MenuState, MenuStateEvent, UnityMenuStateEvent> { }

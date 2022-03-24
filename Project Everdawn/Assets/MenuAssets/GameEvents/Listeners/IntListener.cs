@@ -1,1 +1,1 @@
-public class IntListener : GameEventListener<int, IntEvent, UnityIntEvent> { }
+public class IntListener : GameEventListener<int, IntEvent, UnityIntEvent> {}

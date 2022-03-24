@@ -1,48 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class CardDisplay : MonoBehaviour
 {
-    [Header("Card")]
-    public SO_Card Card;
+    public SO_Card card;
 
-    [Header("Bound Data")]
     public int cardID;
     [SerializeField] private TMP_Text cardName;
     [SerializeField] private Image cardImage;
     [SerializeField] private TMP_Text resourceCost;
 
-    [Header("Click Event Settings")]
-    [SerializeField] private CardDisplayEvent cardDisplayEvent;
-
     void Awake()
     {
-        BindCardData(Card);
+        BindCardData(card);
     }
 
-    public void BindCardData(SO_Card card)
+    public void BindCardData(SO_Card cd)
     {
-        if(card != null) // Check that there is an object to bind the data from
+        if(cd != null) // Check that there is a card to bind the data to
         {
             // Bind the data from the scriptable object
-            Card = card;
-            cardID = card.cardID;
-            cardName.text = card.cardName;
-            cardImage.sprite = card.cardImage;
-            resourceCost.text = card.resourceCost.ToString();
+            cardID = cd.cardID;
+            cardName.text = cd.cardName;
+            cardImage.sprite = cd.cardImage;
+            resourceCost.text = cd.resourceCost.ToString();
         }
         else
         {
-            //Debug.Log("No card found");
-        }
-    }
-
-    public void RaiseCardAsEvent()
-    {
-        if(cardDisplayEvent != null)
-        {
-            cardDisplayEvent.Raise(this);
+            Debug.Log("No card found");
         }
     }
 }

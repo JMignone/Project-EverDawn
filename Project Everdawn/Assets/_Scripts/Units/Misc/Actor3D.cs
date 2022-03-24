@@ -8,6 +8,8 @@ public class Actor3D : MonoBehaviour
     private NavMeshAgent agent;
     private SphereCollider hitBox;
 
+    private IDamageable unit;
+
     public NavMeshAgent Agent
     {
         get { return agent; }
@@ -19,9 +21,15 @@ public class Actor3D : MonoBehaviour
         get { return hitBox; }
     }
 
+    public IDamageable Unit
+    {
+        get { return unit; }
+    }
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         hitBox = GetComponent<SphereCollider>();
+        unit = (transform.parent.GetComponent<IDamageable>() as IDamageable);
     }
 }

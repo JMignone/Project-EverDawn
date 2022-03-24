@@ -5,9 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class InputAnimator : MonoBehaviour //IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class InputAnimator : MonoBehaviour//, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [SerializeField] private Camera mainCamera;
     [SerializeField] private bool playTapAnimation;
     [SerializeField] private bool playCursorTrail;
     [SerializeField] private ParticleSystem tapAnimationParticleSystem;
@@ -16,22 +15,10 @@ public class InputAnimator : MonoBehaviour //IPointerClickHandler, IBeginDragHan
     private ParticleSystem cursorTrailInstance;
     private Vector2 inputPosition;
 
-    /*
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (playTapAnimation) // Check if tap animation is enabled
-        {
-            Vector3 pos = new Vector3(eventData.position.x, eventData.position.y, 1);
-            Instantiate(tapAnimationParticleSystem, pos, Quaternion.identity);
-        }
-    }
-    */
-
-
     // Update is called once per frame
     void Update()
     {
-        inputPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); // Set inputPosition variable to be the location of the click
+        inputPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition); // Set inputPosition variable to be the location of the click
         transform.position = inputPosition; // Change Instantiation location to be the same as the input position
         if (playTapAnimation == true && Input.GetMouseButtonDown(0) == true) // Check if tap animation is enabled and if a tap/click has occurred
         {
@@ -81,6 +68,5 @@ public class InputAnimator : MonoBehaviour //IPointerClickHandler, IBeginDragHan
     {
         cursorTrailInstance = Instantiate(cursorTrailParticleSystem, instantiationObject.transform); //Intatntiate the cursor trail particle system as cursorTrailInstance
     }
-    
 
 } // End of Class

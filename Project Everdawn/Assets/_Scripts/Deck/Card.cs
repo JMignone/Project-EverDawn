@@ -31,6 +31,12 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     private int layoutIndex;
     private bool isDragging;
+    private bool specialDrag; //set to true if the card is being dragged via touching the field after the card was selected
+    private bool abilityClicked; //set to true if a unit ability has been clicked, such that we cant special drag while this is true
+    private Touch touch;
+    private int touchId;
+    private bool touched; //set to true if the user is using a touch screen and not a mouse
+    private bool clickDelay; //set to true after the special drag is over for the end of an update cycle to prevent the player from deselecting the card
     private GameObject unitPreview;
     private NavMeshAgent unitPreviewAgent;
     private List<GameObject> abilityPreviews;
@@ -62,8 +68,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     //private bool isFiring;
     //private int currentProjectileIndex;
     //private Vector3 targetLocation;
-
-    private bool selected;
 
     public PlayerStats PlayerInfo
     {
@@ -239,6 +243,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     private void FixedUpdate()
     {
+        clickDelay = false;
+
         if(played) {
             played = false;
             GetNewCard();
@@ -254,20 +260,108 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             transparentCost.text = cardInfo.Cost.ToString();
         }
 
+        if(isDragging && playerInfo.NumDragging == 1 && playerInfo.SelectedCardId != cardInfo.CardId)
+            playerInfo.SelectNewCard(cardInfo.CardId);
+
         if(isBuffering && playerInfo.GetCurrResource >= cardInfo.Cost) { //if the player was buffering a card and now has enough resource
             QueCard(bufferingPosition);
             isBuffering = false;
             playerInfo.DueResource -= cardInfo.Cost;
         }
+        
+        //all of the below is to handle placing selected cards directly on the field, not by dragging them from the hand
+        if(specialDrag) { //if we have already started the special dragging
+            PointerEventData eventData = new PointerEventData (EventSystem.current);
+            specialDrag = false;
+            if(touched) {
+                bool found = false;
+                foreach(Touch t in Input.touches) {
+                    if(t.fingerId == touchId) {
+                        touch = t;
+                        found = true;
+                    }
+                }
+                eventData.position = touch.position;
+                if(!found)
+                    touch.phase = TouchPhase.Ended;
+                switch(touch.phase) {
+                    case TouchPhase.Moved:
+                        ExecuteEvents.Execute(this.gameObject, eventData, ExecuteEvents.dragHandler);
+                        specialDrag = true;
+                        break;
+
+                    case TouchPhase.Stationary:
+                        specialDrag = true;
+                        break;
+
+                    case TouchPhase.Ended:
+                    case TouchPhase.Canceled:
+                        ExecuteEvents.Execute(this.gameObject, eventData, ExecuteEvents.endDragHandler);
+                        clickDelay = true;
+                        touched = false;
+                        break;
+                }
+            }
+            else {
+                eventData.position = Input.mousePosition;
+                if(Input.GetMouseButton(0)) { //if we are still dragging
+                    ExecuteEvents.Execute(this.gameObject, eventData, ExecuteEvents.dragHandler);
+                    specialDrag = true;
+                }
+                else {
+                    ExecuteEvents.Execute(this.gameObject, eventData, ExecuteEvents.endDragHandler);
+                    clickDelay = true;
+                }
+            }
+        }
+        else {
+            if(!Input.GetMouseButton(0) && Input.touchCount == 0 && abilityClicked)
+                abilityClicked = false;
+
+            Vector2 pos = Vector2.zero;
+            if(Input.touchCount > 0) {
+                touch = Input.GetTouch(Input.touchCount-1);
+                pos = touch.position;
+                touchId = touch.fingerId;
+                touched = true;
+            }
+            else if(Input.GetMouseButton(0))
+                pos = Input.mousePosition;
+
+            if((Input.GetMouseButton(0) || Input.touchCount > 0) && playerInfo.NumDragging == 0 && !isDragging && canDrag && playerInfo.SelectedCardId == cardInfo.CardId && pos.y > cardCanvasDim.rect.height*cardCanvasScale && !abilityClicked) {
+                PointerEventData eventData = new PointerEventData (EventSystem.current);
+                eventData.position = pos;
+
+                abilityClicked = false;
+                List<RaycastResult> raysastResults = new List<RaycastResult>();
+                EventSystem.current.RaycastAll(eventData, raysastResults);
+                foreach(RaycastResult raysastResult in raysastResults) {
+                    if(raysastResult.gameObject.name == "CooldownSprite") {
+                        abilityClicked = true;
+                        break;
+                    }
+                }
+
+                if(!abilityClicked) {
+                    ExecuteEvents.Execute(this.gameObject, eventData, ExecuteEvents.beginDragHandler);
+                    ExecuteEvents.Execute(this.gameObject, eventData, ExecuteEvents.dragHandler);
+                    specialDrag = true;
+                }
+            }
+            else
+                touched = false;
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(!playerInfo.OnDragging && !isDragging) {
+        //if(!playerInfo.OnDragging && !isDragging) {
+        if(!isDragging && !specialDrag) {
             if(canDrag) {
                 isDragging = true;
                 //SelectCard();
-                playerInfo.SelectNewCard(cardInfo.CardId);
+                if(playerInfo.NumDragging == 0)
+                    playerInfo.SelectNewCard(cardInfo.CardId);
 
                 //if the card is buffering, cancel the cast
                 if(isBuffering) {
@@ -289,25 +383,30 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                     }
                 }
                 
-                playerInfo.OnDragging = true;
-                transform.GetChild(3).position = Input.mousePosition;
+                //playerInfo.OnDragging = true;
+                playerInfo.NumDragging++;
+                transform.GetChild(3).position = eventData.position;
             }
         }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if(playerInfo.OnDragging && !isBuffering && isDragging) {
-            transform.GetChild(3).position = Input.mousePosition;
+        //if(playerInfo.OnDragging && !isBuffering && isDragging) {
+        if(!isBuffering && isDragging && !specialDrag) {
+            //transform.GetChild(3).position = Input.mousePosition;
+            transform.GetChild(3).position = eventData.position;
 
-            float scale = (cardCanvasDim.rect.height*cardCanvasScale - Input.mousePosition.y)/(cardCanvasDim.rect.height*cardCanvasScale - transform.position.y); 
+            //float scale = (cardCanvasDim.rect.height*cardCanvasScale - Input.mousePosition.y)/(cardCanvasDim.rect.height*cardCanvasScale - transform.position.y);
+            float scale = (cardCanvasDim.rect.height*cardCanvasScale - eventData.position.y)/(cardCanvasDim.rect.height*cardCanvasScale - transform.position.y); 
             if(scale > 1)
                 scale = 1;
             else if(scale < 0)
                 scale = 0;
             transform.GetChild(3).localScale = new Vector3(scale, scale, 1);
 
-            if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale) {
+            //if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale) {
+            if(eventData.position.y > cardCanvasDim.rect.height*cardCanvasScale) {
                 foreach(GameObject preview in abilityPreviews)
                     preview.SetActive(true);
                 if(cardInfo.UnitIndex != -1)
@@ -323,7 +422,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             }
 
             NavMeshHit hit;
-            Vector3 position = adjustForSpawnZones(GameFunctions.getPosition(isFlying));
+            Vector3 position = adjustForSpawnZones(GameFunctions.getPosition(isFlying, eventData.position));
             position = GameFunctions.adjustForBoundary(position);
             if(cardInfo.UnitIndex != -1)
                 position = GameFunctions.adjustForTowers(position, radius);
@@ -354,9 +453,10 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if(playerInfo.OnDragging && !isBuffering && isDragging) {
+        //if(playerInfo.OnDragging && !isBuffering && isDragging) {
+        if(!isBuffering && isDragging && !specialDrag) {
             NavMeshHit hit;
-            Vector3 position = adjustForSpawnZones(GameFunctions.getPosition(isFlying));
+            Vector3 position = adjustForSpawnZones(GameFunctions.getPosition(isFlying, eventData.position));
             position = GameFunctions.adjustForBoundary(position);
             if(cardInfo.UnitIndex != -1)
                 position = GameFunctions.adjustForTowers(position, radius);
@@ -379,15 +479,19 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 }
             }
 
-            if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= (cardInfo.Cost + playerInfo.DueResource)) { //if the player isnt hovering the cancel zone and has enough resource
+            //if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= (cardInfo.Cost + playerInfo.DueResource)) { //if the player isnt hovering the cancel zone and has enough resource
+            if(eventData.position.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= (cardInfo.Cost + playerInfo.DueResource)) { //if the player isnt hovering the cancel zone and has enough resource
                 QueCard(position);
-                playerInfo.SelectNewCard(-1);
+                if(playerInfo.SelectedCardId == cardInfo.CardId)
+                    playerInfo.SelectNewCard(-1);
             }
-            else if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= ( (cardInfo.Cost + playerInfo.DueResource) - 1) ) { //if the player isnt hovering the cancel zone and has 1 under enough resource
+            //else if(Input.mousePosition.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= ( (cardInfo.Cost + playerInfo.DueResource) - 1) ) { //if the player isnt hovering the cancel zone and has 1 under enough resource
+            else if(eventData.position.y > cardCanvasDim.rect.height*cardCanvasScale && playerInfo.GetCurrResource >= ( (cardInfo.Cost + playerInfo.DueResource) - 1) ) { //if the player isnt hovering the cancel zone and has 1 under enough resource
                 isBuffering = true;
                 bufferingPosition = position;
                 playerInfo.DueResource += cardInfo.Cost;
-                playerInfo.SelectNewCard(-1);
+                if(playerInfo.SelectedCardId == cardInfo.CardId)
+                    playerInfo.SelectNewCard(-1);
             }
             else {
                 transform.GetChild(3).localPosition = new Vector3(0,0,0);
@@ -406,8 +510,11 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                     unitPreview.SetActive(false);
             }
             isDragging = false;
-            playerInfo.OnDragging = false;
-            //playerInfo.SpawnZone = GameConstants.SPAWN_ZONE_RESTRICTION.NONE;
+
+            //if(playerInfo.SelectedCardId == -1)
+            //    playerInfo.OnDragging = false;
+            playerInfo.NumDragging--;
+            
 
             if(cardInfo.Prefab.Count != 1 || cardInfo.UnitIndex != 0)
                 GameManager.removeAbililtyIndicators();
@@ -415,7 +522,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     }
 
     public void OnPointerClick(PointerEventData pointerEventData) {
-        if(!playerInfo.OnDragging && !isDragging && canDrag) {
+        if(playerInfo.NumDragging == 0 && !isDragging && canDrag && !specialDrag && !clickDelay) {
             transform.GetChild(3).localPosition = new Vector3(0,0,0);
             transform.GetChild(3).localScale = new Vector3(1,1,1);
 

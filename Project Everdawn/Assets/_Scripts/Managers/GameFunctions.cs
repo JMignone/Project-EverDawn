@@ -328,9 +328,12 @@ public static class GameFunctions
 
     //This code was found from https://answers.unity.com/questions/566519/camerascreentoworldpoint-in-perspective.html
     //It finds the position in the game space relative to where the cursor is on the screen.
-    public static Vector3 getPosition(bool isFlying) {
+    public static Vector3 getPosition(bool isFlying, Vector2 position) {
         Vector3 positionOffset= new Vector3(0, 0, 5); //offset the position so its not covered by users fingers
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Camera.main.ScreenPointToRay(position);
+
         Plane xy;
         if(isFlying)
             xy = new Plane(Vector3.up, new Vector3(0, GameConstants.FLY_ZONE_HEIGHT, 0));
@@ -433,11 +436,13 @@ public static class GameFunctions
 
     public static void EnableAbilities(GameObject go) {
         if(go.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors back to green
-            foreach(Transform child in go.transform.GetChild(1).GetChild(5).GetChild(2)) {
-                if(child.childCount > 1) //this means its a complicated summon preview
-                    child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,255,255,100);
-                else
-                    child.GetChild(0).GetComponent<Image>().color = new Color32(255,255,255,100);
+            if((go.transform.GetChild(1).GetChild(5).GetChild(1).GetComponent(typeof(ICaster)) as ICaster).AbilityUI.CanFire) {
+                foreach(Transform child in go.transform.GetChild(1).GetChild(5).GetChild(2)) {
+                    if(child.childCount > 1) //this means its a complicated summon preview
+                        child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,255,255,100);
+                    else
+                        child.GetChild(0).GetComponent<Image>().color = new Color32(255,255,255,100);
+                }
             }
         }
     }

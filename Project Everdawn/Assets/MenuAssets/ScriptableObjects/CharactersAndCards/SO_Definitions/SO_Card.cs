@@ -20,9 +20,13 @@ public class SO_Card : ScriptableObject
         public Sprite menuBackgroundImage;
         public Sprite cardImage;
 
+    [Space]
+
     [Header("Creative Attributes")]
         [TextArea(3, 10)] public string cardLore;
         public SO_Faction[] affiliation;
+
+    [Space]
 
     [Header("Gameplay Attributes")]
         [Range(1,10)] public int resourceCost;
@@ -32,6 +36,8 @@ public class SO_Card : ScriptableObject
         [SerializeField] private List<float> previewDelays;
         [Tooltip("The index of the unit in the lists, must match or be -1, meaning there is no unit")]
         [SerializeField] private int unitIndex;
+
+    [Space]
 
     [Header("Player Attributes")]
         public bool obtained;

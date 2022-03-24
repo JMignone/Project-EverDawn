@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,21 +11,16 @@ public class DeckDisplay : MonoBehaviour
 
     [Space]
     
-    [SerializeField] private int selectedDeckNumber;
+    [SerializeField] [Min(1)] private int selectedDeckNumber;
     [SerializeField] private PlayerDeck selectedDeck = new PlayerDeck();
-    private List<GameObject> cardsBeingDisplayed = new List<GameObject>();
+    public List<GameObject> cardsBeingDisplayed = new List<GameObject>();
 
     private GameObject cardInstance;
     private CardDisplay selectedCardDisplay;
 
-    public List<GameObject> CardsBeingDisplayed
-    {
-        get{return cardsBeingDisplayed;}
-    }
-
     private void OnEnable()
     {
-        LoadDeck(deckManager.SelectedDeckNumber);
+        LoadDeck(selectedDeckNumber);
     }
 
     private void OnDisable()
@@ -34,23 +30,29 @@ public class DeckDisplay : MonoBehaviour
 
     private void SaveDeck()
     {
-        for(int i = 0; i < CardsBeingDisplayed.Count; i++) //Loop over the new list of cards and set the local list of IDs to reflect changes
+        for(int i = 0; i < cardsBeingDisplayed.Count; i++) //Loop over the new list of cards and set the local list of IDs to reflect changes
         {
-            selectedDeck.CardsInDeck[i] = CardsBeingDisplayed[i].GetComponent<CardDisplay>().cardID;
+            selectedDeck.cardsInDeck[i] = cardsBeingDisplayed[i].GetComponent<CardDisplay>().cardID;
         }
-        deckManager.SaveDeck(selectedDeckNumber, selectedDeck);
+        deckManager.selectedDeck = selectedDeck;
+        deckManager.SaveSelectedDeck(selectedDeckNumber);
     }
 
-    private void LoadDeck(int deckNumber)
+    public void LoadDeck(int deckNumber)
     {
-        deckManager.ChangeSelectedDeck(deckNumber);
-        selectedDeck = deckManager.SelectedDeck;
-        List<SO_Card> cardList = deckManager.ConvertIntListToCardList(deckManager.SelectedDeck.CardsInDeck);
-        for (int i = 0; i < selectedDeck.CardsInDeck.Count; i++)
+        selectedDeckNumber = deckNumber;
+        if(deckNumber != 0)
+            deckManager.selectedDeckNumber = deckNumber;
+            
+        deckManager.LoadDeck(deckNumber);
+        selectedDeck = deckManager.selectedDeck;
+        List<SO_Card> cardList = new List<SO_Card>();
+        cardList = deckManager.ConvertIntListToCardList(selectedDeck.cardsInDeck);
+        for (int i = 0; i < selectedDeck.cardsInDeck.Count; i++)
         {
-            cardInstance = Instantiate(cardPrefab.gameObject, this.transform); // Instantiate the card from the list
-            CardDisplay cardInstanceDisplay = cardInstance.GetComponent<CardDisplay>(); // Grab the instantiated card's CardDisplay
-            cardInstanceDisplay.BindCardData(cardList[i]); // Bind the Instance's CardDisplay to the data pulled from the list
+            CardDisplay cardToDisplay = cardPrefab.GetComponent<CardDisplay>(); // Pull card data from card database
+            cardToDisplay.card = cardList[i]; // Set new card's instance data to be the data pulled from the database
+            cardInstance = Instantiate(cardToDisplay.gameObject, this.transform); // Instantiate the card from the list
             cardsBeingDisplayed.Add(cardInstance); // Add the new card instance to the list of cards
         }
     }
@@ -65,15 +67,15 @@ public class DeckDisplay : MonoBehaviour
     {
         if(saveDeckOnUnload == true)
         {
-            SaveDeck();
+        SaveDeck();
         }
 
-        if(CardsBeingDisplayed != null && transform.childCount != 0) // Check that there are objects that have been instantiated and are in the list
+        if(cardsBeingDisplayed != null && transform.childCount != 0) // Check that there are objects that have been instantiated and are in the list
         {
-            for (int i = CardsBeingDisplayed.Count - 1; i >= 0; i--) // Reverse loop over objects in list and destroy them
+            for (int i = cardsBeingDisplayed.Count - 1; i >= 0; i--) // Reverse loop over objects in list and destroy them
             {
-                GameObject.Destroy(CardsBeingDisplayed[i]);
-                CardsBeingDisplayed.Remove(CardsBeingDisplayed[i]);
+                GameObject.Destroy(cardsBeingDisplayed[i]);
+                cardsBeingDisplayed.Remove(cardsBeingDisplayed[i]);
             }
         }
     }
@@ -87,7 +89,7 @@ public class DeckDisplay : MonoBehaviour
     {
         if(selectedCardDisplay != null)
         {
-            cd.BindCardData(selectedCardDisplay.Card);
+            cd.BindCardData(selectedCardDisplay.card);
             if(allowDeckMultiselection == false)
             {
                 selectedCardDisplay = null; // Prevents only tapping bottom card once and being able to change all top cards without re-inputting any other actions - could be useful for testing down the line? add toggle?

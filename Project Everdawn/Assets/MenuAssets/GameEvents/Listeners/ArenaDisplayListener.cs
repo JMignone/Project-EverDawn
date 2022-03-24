@@ -1,1 +1,0 @@
-public class ArenaDisplayListener : GameEventListener<ArenaDisplay, ArenaDisplayEvent, UnityArenaDisplayEvent> { }

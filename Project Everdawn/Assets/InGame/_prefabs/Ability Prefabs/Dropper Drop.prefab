@@ -201,9 +201,13 @@ MonoBehaviour:
     selfDestructs: 1
     onTarget: 0
     explosionEffect: {fileID: 8690222435761223237, guid: 6da804001015963439247141d19a1ee2, type: 3}
-    explosionDamage: 300
+    explosionDamage: 230
     towerDamage: 0
     explosionRadius: 11
+  chainStats:
+    chains: 0
+    chainRadius: 0
+    chainCount: 0
   linearStats:
     isLinear: 0
     isVertical: 0

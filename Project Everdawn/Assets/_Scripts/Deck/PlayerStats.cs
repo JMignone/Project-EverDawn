@@ -36,6 +36,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField]
     private GameObject rightArea;
     private bool onDragging;
+    private int numDragging;
 
     private int selectedCardId;
 
@@ -143,6 +144,12 @@ public class PlayerStats : MonoBehaviour
         set { onDragging = value; }
     }
 
+    public int NumDragging
+    {
+        get { return numDragging; }
+        set { numDragging = value; }
+    }
+
     public ComputerStats ComputerStats
     {
         get { return computerStats; }
@@ -181,7 +188,7 @@ public class PlayerStats : MonoBehaviour
     private void Start()
     {
         if(!computerStats.IsComputer) {         
-            List<SO_Card> cardList = deckManager.ConvertIntListToCardList(deckManager.LoadDeck(deckManager.SelectedDeckNumber).CardsInDeck);
+            List<SO_Card> cardList = deckManager.ConvertIntListToCardList(deckManager.LoadDeck(deckManager.selectedDeckNumber).cardsInDeck);
             List<CardStats> cards = new List<CardStats>();
             
             for (int i = 0; i < cardList.Count; i++)
@@ -191,7 +198,7 @@ public class PlayerStats : MonoBehaviour
             playersDeck.Cards = cards;
         }
         else {
-            List<SO_Card> cardList = deckManager.ConvertIntListToCardList(deckManager.LoadDeck(5).CardsInDeck);
+            List<SO_Card> cardList = deckManager.ConvertIntListToCardList(deckManager.LoadDeck(5).cardsInDeck);
             List<CardStats> cards = new List<CardStats>();
             
             for (int i = 0; i < cardList.Count; i++)
@@ -288,7 +295,7 @@ public class PlayerStats : MonoBehaviour
     }
 
     public void SelectNewCard(int id) {
-        Debug.Log(id);
+        //Debug.Log(id);
         if(selectedCardId != id) {
             foreach(Transform go in handParent.transform) {
                 Card card = go.gameObject.GetComponent<Card>();
