@@ -3074,6 +3074,7 @@ MonoBehaviour:
   - {fileID: 44973271}
   ground: {fileID: 2076744824}
   unitsFolder: {fileID: 1929830506}
+  canvas: {fileID: 839584463}
   playerTextScore: {fileID: 659266555}
   enemyTextScore: {fileID: 1718325351}
   timeLeft: 181

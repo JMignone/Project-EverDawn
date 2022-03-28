@@ -446,8 +446,4 @@ public static class GameFunctions
             }
         }
     }
-
-    public static Transform GetCanvas() {
-        return GameObject.Find(GameConstants.HUD_CANVAS).transform;
-    }
 }

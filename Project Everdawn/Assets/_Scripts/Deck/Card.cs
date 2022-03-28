@@ -174,9 +174,11 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
 
         abilityPreviewCanvas = playerInfo.PlayerCanvas;
+    }
 
-        cardCanvasDim = GameFunctions.GetCanvas().GetChild(0).GetComponent<RectTransform>();
-        cardCanvasScale = GameFunctions.GetCanvas().GetComponent<RectTransform>().localScale.x; //this is used to compensate for differing resolutions
+    private void Start() {
+        cardCanvasDim = GameManager.Instance.Canvas.GetChild(0).GetComponent<RectTransform>();
+        cardCanvasScale = GameManager.Instance.Canvas.GetComponent<RectTransform>().localScale.x; //this is used to compensate for differing resolutions
     }
 
     public void GetNewCard() {

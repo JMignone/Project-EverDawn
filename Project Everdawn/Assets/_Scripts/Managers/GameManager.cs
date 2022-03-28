@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     private GameObject ground;
     [SerializeField]
     private GameObject unitsFolder;
+    [SerializeField]
+    private Transform canvas;
     private int playerScore;
     private int enemyScore;
     [SerializeField]
@@ -70,6 +72,11 @@ public class GameManager : MonoBehaviour
     public GameObject Ground
     {
         get { return ground; }
+    }
+
+    public Transform Canvas
+    {
+        get { return canvas; }
     }
 
     public float TimeLimit
@@ -159,7 +166,7 @@ public class GameManager : MonoBehaviour
         if((objectToRemoveComponent as IDamageable).Stats.IsHoveringAbility) {
             removeAbililtyIndicators();
             Instance.Players[0].OnDragging = false;
-            GameFunctions.GetCanvas().GetChild(3).GetComponent<Image>().enabled = false;
+            Instance.canvas.GetChild(3).GetComponent<Image>().enabled = false;
         }
 
         Instance.Objects.Remove(objectToRemove);
@@ -288,7 +295,7 @@ public class GameManager : MonoBehaviour
                 (component as IDamageable).Stats.UnitMaterials.RemoveAbilityHover();
             }
         }
-        GameFunctions.GetCanvas().GetChild(3).GetComponent<Image>().enabled = false;
+        Instance.canvas.GetChild(3).GetComponent<Image>().enabled = false;
     }
 
     public static void GameEnd() {
