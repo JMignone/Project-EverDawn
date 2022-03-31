@@ -621,8 +621,8 @@ MonoBehaviour:
   unitSprite: {fileID: 3925836231506596151}
   target: {fileID: 0}
   stats:
-    currHealth: 1800
-    maxHealth: 1800
+    currHealth: 1620
+    maxHealth: 1620
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
@@ -783,6 +783,8 @@ MonoBehaviour:
   inRangeTargets: []
   enemyHitTargets: []
   projectiles: []
+  jumping: 0
+  jumpDirection: {x: 0, y: 0, z: 0}
 --- !u!54 &3925836232371597726
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1019,7 +1021,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityUI.cooldownDelay
-      value: 6
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityDelays.Array.size
@@ -1051,7 +1053,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityUI.currCooldownDelay
-      value: 6
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: dd644e3f49152ab48b3d0210357d8219, type: 3}
       propertyPath: abilityPrefabs.Array.data[0]

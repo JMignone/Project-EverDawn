@@ -35,7 +35,7 @@ public class PlayerStats : MonoBehaviour
     private GameObject leftArea;
     [SerializeField]
     private GameObject rightArea;
-    private bool onDragging;
+
     private int numDragging;
 
     private int selectedCardId;
@@ -136,12 +136,6 @@ public class PlayerStats : MonoBehaviour
     {
         get { return rightArea; }
         set { rightArea = value; }
-    }
-
-    public bool OnDragging
-    {
-        get { return onDragging; }
-        set { onDragging = value; }
     }
 
     public int NumDragging

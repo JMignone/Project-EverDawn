@@ -55,7 +55,7 @@ public class DeathStats
 
         if(unit.Stats.IsHoveringAbility) {
             GameManager.removeAbililtyIndicators();
-            GameManager.Instance.Players[0].OnDragging = false;
+            GameManager.GetPlayer(go.tag).NumDragging--;
         }
 
         startPosition = new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z);

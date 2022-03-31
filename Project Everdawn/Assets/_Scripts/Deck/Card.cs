@@ -352,7 +352,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //if(!playerInfo.OnDragging && !isDragging) {
         if(!isDragging && !specialDrag) {
             if(canDrag) {
                 isDragging = true;
@@ -380,7 +379,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                     }
                 }
                 
-                //playerInfo.OnDragging = true;
                 playerInfo.NumDragging++;
                 transform.GetChild(3).position = eventData.position;
             }
@@ -389,7 +387,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnDrag(PointerEventData eventData)
     {
-        //if(playerInfo.OnDragging && !isBuffering && isDragging) {
         if(!isBuffering && isDragging && !specialDrag) {
             //transform.GetChild(3).position = Input.mousePosition;
             transform.GetChild(3).position = eventData.position;
@@ -450,7 +447,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        //if(playerInfo.OnDragging && !isBuffering && isDragging) {
         if(!isBuffering && isDragging && !specialDrag) {
             NavMeshHit hit;
             Vector3 position = adjustForSpawnZones(GameFunctions.getPosition(isFlying, eventData.position));
@@ -507,12 +503,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                     unitPreview.SetActive(false);
             }
             isDragging = false;
-
-            //if(playerInfo.SelectedCardId == -1)
-            //    playerInfo.OnDragging = false;
             playerInfo.NumDragging--;
             
-
             if(cardInfo.Prefab.Count != 1 || cardInfo.UnitIndex != 0)
                 GameManager.removeAbililtyIndicators();
         }

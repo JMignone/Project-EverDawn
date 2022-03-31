@@ -1277,6 +1277,8 @@ MonoBehaviour:
   inRangeTargets: []
   enemyHitTargets: []
   projectiles: []
+  jumping: 0
+  jumpDirection: {x: 0, y: 0, z: 0}
 --- !u!54 &6825281274548537870
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1814,7 +1816,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 10
   m_BaseOffset: 0
-  m_WalkableMask: 1
+  m_WalkableMask: 5
   m_ObstacleAvoidanceType: 2
 --- !u!114 &1841176456078110694
 MonoBehaviour:

@@ -753,7 +753,7 @@ MonoBehaviour:
     attackChargeLimiter: 0
     attackReadyPercentage: 0
     maximumAttackAngle: 0
-    moveSpeed: 10
+    moveSpeed: 11
     noRotation: 0
     rotationSpeed: 180
     summoningSicknessUI:
@@ -898,6 +898,8 @@ MonoBehaviour:
   inRangeTargets: []
   enemyHitTargets: []
   projectiles: []
+  jumping: 0
+  jumpDirection: {x: 0, y: 0, z: 0}
 --- !u!54 &3925836232371597726
 Rigidbody:
   m_ObjectHideFlags: 0

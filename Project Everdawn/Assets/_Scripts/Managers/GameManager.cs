@@ -165,7 +165,7 @@ public class GameManager : MonoBehaviour
         }
         if((objectToRemoveComponent as IDamageable).Stats.IsHoveringAbility) {
             removeAbililtyIndicators();
-            Instance.Players[0].OnDragging = false;
+            GetPlayer(objectToRemove.tag).NumDragging--;
             Instance.canvas.GetChild(3).GetComponent<Image>().enabled = false;
         }
 
@@ -314,5 +314,12 @@ public class GameManager : MonoBehaviour
 
         //used for testing to disable the bot when the game ends, should be deleted later at soome point
         Instance.Complete = true;
+    }
+
+    public static PlayerStats GetPlayer(string tag) {
+        if(Instance.Players[0].transform.tag == tag)
+            return Instance.Players[0];
+        else 
+            return Instance.Players[1];
     }
 }

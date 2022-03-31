@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class Unit : MonoBehaviour, IDamageable
 {
@@ -51,6 +52,11 @@ public class Unit : MonoBehaviour, IDamageable
     private List<GameObject> projectiles;
 
     private List<Component> applyEffectsComponents = new List<Component>();
+
+    private NavMeshLink link;
+    private OffMeshLink link2;
+    public bool jumping; //set to true if the unit is on an off-mesh link
+    public Vector3 jumpDirection;
 
     public Actor3D Agent
     {
@@ -132,6 +138,9 @@ public class Unit : MonoBehaviour, IDamageable
 
     private void Start()
     {
+        link = null;
+        link2 = null;
+
         agent.Agent.stoppingDistance = 0; //Set to be zero, incase someone forgets or accidently changes this value to be a big number
         agent.Agent.speed = stats.MoveSpeed;
         agent.Agent.angularSpeed = stats.RotationSpeed;
@@ -207,14 +216,17 @@ public class Unit : MonoBehaviour, IDamageable
             if((target == null || inRangeTargets.Count == 0) && stats.CanAct && !stats.IsCastingAbility) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                 ReTarget();
 
-            // Detects if a unit is within range of another, but doesnt have the target inside enemyHitTargets
+            /* 
+                ---- DEBUGGING ---- 
+                Detects if a unit is within range of another, but doesnt have the target inside enemyHitTargets 
             if(target != null) {
                 if(!inRangeTargets.Contains(target) && Vector3.Distance(target.transform.GetChild(0).position, agent.transform.position) < stats.Range + (target.GetComponent(typeof(IDamageable)) as IDamageable).Agent.Agent.radius ) {
                     Debug.Log(GetInstanceID());
                     Debug.Break();
                 }
             }
-
+                ---- DEBUGGING ----
+            */
 
             stats.UpdateStats(ChargeAttack, inRangeTargets.Count, agent, hitTargets, target, gameObject);
             buildUpStats.UpdateStats();
@@ -224,11 +236,38 @@ public class Unit : MonoBehaviour, IDamageable
 
             Attack();
 
+
+            if(agent.Agent.currentOffMeshLinkData.valid) {
+                Debug.Log(agent.Agent.currentOffMeshLinkData.startPos);
+                Debug.Log(agent.Agent.currentOffMeshLinkData.endPos);
+                Debug.Log(agent.Agent.currentOffMeshLinkData.valid);
+                Debug.Log(agent.Agent.currentOffMeshLinkData.activated);
+                AcquireOffmeshLink();
+            }
+            else
+                ReleaseOffmeshLink();
+
             if(dashStats.IsDashing)
                 lookAtTarget();
+
+/*
+            if(agent.Agent.isOnOffMeshLink && !jumping) {
+                jumping = true;
+                jumpDirection = agent.Agent.currentOffMeshLinkData.endPos - agent.transform.position;
+                jumpDirection.y = 0;
+                jumpDirection = jumpDirection.normalized;
+                //agent.Agent.CompleteOffMeshLink();
+            }
+            else if(jumping)
+                Jump();
+*/
+
             else if(target != null && !attackStats.IsFiring) {
                 Vector3 direction = target.transform.GetChild(0).position - agent.transform.position;
                 direction.y = 0;
+
+                //if the unit can jump the river, set towerPosOffset to 0
+
                 agent.Agent.SetDestination(new Vector3(target.transform.GetChild(0).position.x + stats.TowerPosOffset, 0, target.transform.GetChild(0).position.z) - (direction.normalized * .25f));
                 if(hitTargets.Contains(target)) {
                     if(inRangeTargets.Count > 0 || stats.CurrAttackDelay > stats.AttackDelay*stats.AttackReadyPercentage) { //is in range, OR is 90% thru attack cycle -
@@ -248,6 +287,7 @@ public class Unit : MonoBehaviour, IDamageable
             deathStats.FireDeathSkill();
         }
         else {
+            ReleaseOffmeshLink();
             //print(gameObject.name + " has died!" + System.DateTime.Now);
             stats.ResetKillFlags(gameObject, target);
             GameManager.RemoveObjectsFromList(gameObject);
@@ -474,5 +514,48 @@ public class Unit : MonoBehaviour, IDamageable
             stats.CurrHealth -= amount;
         if(shadowStats.InterruptsByDamage)
             stats.Appear(gameObject, shadowStats, agent);
+    }
+
+    /*
+    void Jump() {
+        if(!agent.Agent.isOnNavMesh)
+            agent.transform.position += jumpDirection * stats.MoveSpeed * Time.deltaTime;
+        else
+           jumping = false;
+    }
+*/
+
+    void AcquireOffmeshLink() {
+        if(link == null && link2 == null) {
+            link2 = agent.Agent.currentOffMeshLinkData.offMeshLink;
+            if(link2 == null) {
+                Debug.Log(agent.Agent.currentOffMeshLinkData.startPos);
+                Debug.Log(agent.Agent.currentOffMeshLinkData.endPos);
+                Debug.Log(agent.Agent.currentOffMeshLinkData.valid);
+                Debug.Log(agent.Agent.currentOffMeshLinkData.activated);
+                link = (NavMeshLink) agent.Agent.navMeshOwner;
+                link.costModifier = 1000;
+                DumpToConsole(link);
+            }
+            else
+                link2.costOverride = 1000.0f;
+        }
+    }
+   
+    void ReleaseOffmeshLink() {
+        if(link != null) {
+            link.costModifier = -1;
+            link = null;
+        }
+        else if(link2 != null) {
+            link2.costOverride = -1;
+            link2 = null;
+        }
+    }
+
+    public static void DumpToConsole(object obj)
+    {
+        var output = JsonUtility.ToJson(obj, true);
+        Debug.Log(output);
     }
 }

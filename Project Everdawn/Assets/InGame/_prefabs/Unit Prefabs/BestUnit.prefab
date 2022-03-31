@@ -358,12 +358,13 @@ MonoBehaviour:
     range: 4.5
     visionRange: 20
     baseDamage: 285
+    towerDamage: 0
     attackDelay: 1.4
     currAttackDelay: 0
     attackChargeLimiter: 0
     attackReadyPercentage: 0
     maximumAttackAngle: 0
-    moveSpeed: 6
+    moveSpeed: 7
     noRotation: 0
     rotationSpeed: 140
     summoningSicknessUI:
@@ -511,6 +512,8 @@ MonoBehaviour:
   inRangeTargets: []
   enemyHitTargets: []
   projectiles: []
+  jumping: 0
+  jumpDirection: {x: 0, y: 0, z: 0}
 --- !u!54 &1701868425468477455
 Rigidbody:
   m_ObjectHideFlags: 0
