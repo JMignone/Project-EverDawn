@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Temp Art Assets/_Scenes/ShowcaseScene.unity
+- path: Assets/Scenes/Arena Scenes/InGameScene.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
