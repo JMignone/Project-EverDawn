@@ -23,9 +23,12 @@ public class ChargeStats
     [Tooltip("Determines the amount of time walking before starting to charge")]
     [SerializeField]
     private float chargeDelay;
-
-    [SerializeField]
     private float currentDelay;
+
+    [Tooltip("Gives the unit the ability to jump the river while charging")]
+    [SerializeField]
+    private bool jumpWhileCharging;
+    private int originalAreaMask;
 
     public bool Charges
     {
@@ -37,9 +40,15 @@ public class ChargeStats
         get { return isCharging; }
     }
 
-    public void StartChargeStats(IDamageable go) {
+    public bool JumpWhileCharging
+    {
+        get { return jumpWhileCharging; }
+    }
+
+    public void StartStats(IDamageable go) {
         unit = go;
         speed = unit.Stats.MoveSpeed;
+        originalAreaMask = unit.Agent.Agent.areaMask;
     }
 
     public void UpdateChargeStats() {
@@ -50,6 +59,9 @@ public class ChargeStats
                 else {
                     currentDelay = 0;
                     isCharging = true;
+
+                    if(jumpWhileCharging)
+                        unit.Agent.Agent.areaMask = originalAreaMask + 4;
                 }
             }
             else
@@ -64,11 +76,13 @@ public class ChargeStats
             if(unit.InRangeTargets.Contains(unit.Target)) {
                 ChargeAttack();
                 isCharging = false;
+                unit.Agent.Agent.areaMask = originalAreaMask;
             }
         }
         else {
             unit.Stats.MoveSpeed = speed;
             isCharging = false;
+            unit.Agent.Agent.areaMask = originalAreaMask;
         }
     }
 

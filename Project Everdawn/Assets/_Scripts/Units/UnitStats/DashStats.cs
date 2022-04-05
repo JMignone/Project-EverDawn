@@ -28,8 +28,6 @@ public class DashStats
     [Tooltip("Determines the amount of time before starting to dash")]
     [SerializeField] [Min(0)]
     private float dashDelay;
-
-    [SerializeField] [Min(0)]
     private float currentDelay;
 
     public bool Dashes

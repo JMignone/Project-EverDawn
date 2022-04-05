@@ -24,6 +24,9 @@ public class Tower : MonoBehaviour, IDamageable
     private DashStats dashStats;
 
     //[SerializeField]
+    private JumpStats jumpStats;
+
+    //[SerializeField]
     private ShadowStats shadowStats;
     
     //[SerializeField]
@@ -80,6 +83,11 @@ public class Tower : MonoBehaviour, IDamageable
     public DeathStats DeathStats
     {
         get { return deathStats; }
+    }
+
+    public JumpStats JumpStats
+    {
+        get { return jumpStats; }
     }
 
     public List<GameObject> HitTargets 
@@ -240,7 +248,7 @@ public class Tower : MonoBehaviour, IDamageable
 
     /* I dont think structres need a vision radius, keep it for now */
     public void OnTriggerEnter(Collider other) {
-        if(!other.transform.parent.parent.CompareTag(gameObject.tag) && stats.CurrHealth != 0) { //checks to make sure the target isnt on the same team
+        if(!other.transform.parent.parent.CompareTag(gameObject.tag) && stats.CurrHealth > 0) { //checks to make sure the target isnt on the same team
             if(other.CompareTag("Projectile")) { //Did we get hit by a skill shot?
                 Projectile projectile = other.transform.parent.parent.GetComponent<Projectile>();
                 Component unit = this.GetComponent(typeof(IDamageable));
@@ -248,8 +256,10 @@ public class Tower : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an abililty?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) 
-                stats.IncIndicatorNum();
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {
+                    stats.IncIndicatorNum();
+                    ability.Targets.Add(gameObject);
+                }
             }
             else if(other.CompareTag("Dash")) {
                 Component unit = other.transform.parent.parent.GetComponent(typeof(IDamageable));
@@ -280,10 +290,12 @@ public class Tower : MonoBehaviour, IDamageable
                 }
             }
         }
-        else if(other.CompareTag("FriendlyAbilityHighlight")) { //if the hitbox is from a friendly units ability that hits friendly units
+        else if(other.CompareTag("FriendlyAbilityHighlight") && stats.CurrHealth > 0) { //if the hitbox is from a friendly units ability that hits friendly units
             AbilityPreview ability = other.GetComponent<AbilityPreview>();
-            if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) 
+            if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {
                 stats.IncIndicatorNum();
+                ability.Targets.Add(gameObject);
+            }
         }
     }
 
@@ -294,8 +306,10 @@ public class Tower : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an abililty?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) 
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {
                     stats.DecIndicatorNum();
+                    ability.Targets.Remove(gameObject);
+                }
             }
             else { //is it another units vision/range?
                 Component unit = other.transform.parent.parent.GetComponent(typeof(IDamageable));
@@ -323,8 +337,10 @@ public class Tower : MonoBehaviour, IDamageable
         }
         else if(other.CompareTag("FriendlyAbilityHighlight")) { //if the hitbox is from a friendly units ability that hits friendly units
             AbilityPreview ability = other.GetComponent<AbilityPreview>();
-            if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) 
+            if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {
                 stats.DecIndicatorNum();
+                ability.Targets.Remove(gameObject);
+            }
         }
     }
 

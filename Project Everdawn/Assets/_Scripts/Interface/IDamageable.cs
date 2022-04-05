@@ -14,6 +14,7 @@ public interface IDamageable
     Actor2D UnitSprite { get; }
     DashStats DashStats { get; }
     ShadowStats ShadowStats { get; }
+    JumpStats JumpStats { get; }
     //DeathStats DeathStats { get; }
     bool IsMoving { get; }
 

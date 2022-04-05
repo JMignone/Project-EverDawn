@@ -707,9 +707,13 @@ public class BaseStats
     }
 
     public void DecIndicatorNum() {
-        indicatorNum--;
-        if(indicatorNum == 0)
-            unitMaterials.RemoveAbilityHover();
+        if(indicatorNum > 0) {
+            indicatorNum--;
+            if(indicatorNum == 0)
+                unitMaterials.RemoveAbilityHover();
+        }
+        else
+            Debug.Log("WARNING: indicatorNum ATTEMPTED TO BE DECREMENTED PAST 0. HAS THIS UNIT BECOME UNDAMAGEABLE?");
     }
 
     public void ApplyAffects(Component damageable) {

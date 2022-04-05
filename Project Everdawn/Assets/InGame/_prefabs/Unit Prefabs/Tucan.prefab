@@ -764,7 +764,6 @@ MonoBehaviour:
     dashSpeed: 0
     dashRange: 0
     dashDelay: 0
-    currentDelay: 0
   shadowStats:
     shades: 0
     interruptsByDamage: 0
@@ -779,12 +778,13 @@ MonoBehaviour:
     noseDives: 0
     createAtLocation: {fileID: 0}
     speed: 0
+  jumpStats:
+    jumps: 0
+    maxJumpAngle: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
   projectiles: []
-  jumping: 0
-  jumpDirection: {x: 0, y: 0, z: 0}
 --- !u!54 &3925836232371597726
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1445,51 +1445,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Center.x
-      value: 0.20101398
+      value: 0.20125917
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Center.y
-      value: 0.14695592
+      value: 0.14531016
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Center.z
-      value: 0.0030395985
+      value: 0.0043146014
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Extent.x
-      value: 0.31733721
+      value: 0.3175824
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Extent.y
-      value: 0.050402325
+      value: 0.04875657
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459010, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Extent.z
-      value: 0.17296419
+      value: 0.17404905
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Center.x
-      value: 0.1362294
+      value: 0.13623187
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Center.y
-      value: 0.022992592
+      value: 0.02323468
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Center.z
-      value: 0.1332598
+      value: 0.13292363
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Extent.x
-      value: 0.3000756
+      value: 0.30007806
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Extent.y
-      value: 0.13946716
+      value: 0.13954538
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126718459012, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_AABB.m_Extent.z
-      value: 0.29101714
+      value: 0.2906517
       objectReference: {fileID: 0}
     - target: {fileID: 5880290126723731848, guid: 9539b535e8bcf43459f176e9bf890235, type: 3}
       propertyPath: m_Name

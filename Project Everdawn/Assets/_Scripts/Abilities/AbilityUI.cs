@@ -23,6 +23,8 @@ public class AbilityUI
 
     private bool canDrag;
     private bool canFire;
+    private bool offCooldown;
+    private bool cantFire;
     private RectTransform cardCanvasDim;
 
     public float CooldownDelay
@@ -68,8 +70,18 @@ public class AbilityUI
 
     public bool CanFire
     {
-        get { return canFire; }
-        set { canFire = value; }
+        get { if(!cantFire && offCooldown) return true; else return false; }
+    }
+
+    public bool OffCooldown
+    {
+        get { return offCooldown; }
+    }
+
+    public bool CantFire
+    {
+        get { return cantFire; }
+        set { cantFire = value; }
     }
 
     public float PercentCooldown {
@@ -80,7 +92,7 @@ public class AbilityUI
         cardCanvasDim = GameManager.Instance.Canvas.GetChild(0).GetComponent<RectTransform>();
         //abilityCancel = GameManager.Instance.Canvas.GetChild(3).GetComponent<Image>();
         abilityCancel = GameManager.Instance.AbilityCancel;
-        canFire = true;
+        offCooldown = true;
     }
     /*
     public void UpdateStats() {
@@ -105,13 +117,13 @@ public class AbilityUI
                 canDrag = true;
             cooldownMask.fillAmount = 1 - PercentCooldown;
         }
-        else if(!canFire) {
+        else if(!offCooldown) {
             if(currCooldownDelay < cooldownDelay) {
                 currCooldownDelay += Time.deltaTime;
                 //canDrag = false;
             }
             else {
-                canFire = true;
+                offCooldown = true;
                 EnableAbilities();
             }
             cooldownMask.fillAmount = 1 - PercentCooldown;
@@ -126,7 +138,7 @@ public class AbilityUI
     public void resetAbility() {
         currCooldownDelay = 0;
         canDrag = false;
-        canFire = false;
+        offCooldown = false;
         DisableAbilities();
     }
 

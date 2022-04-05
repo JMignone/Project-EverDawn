@@ -407,12 +407,14 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                     unitPreview.SetActive(true);
             }
             else {
-                foreach(GameObject preview in abilityPreviews)
+                foreach(GameObject preview in abilityPreviews) {
                     preview.SetActive(false);
+                    preview.GetComponent<AbilityPreview>().ReduceHighlightIndicator();
+                }
                 if(cardInfo.UnitIndex != -1)
                     unitPreview.SetActive(false);
-                if(cardInfo.Prefab.Count != 1 || cardInfo.UnitIndex != 0)
-                    GameManager.removeAbililtyIndicators();
+                //if(cardInfo.Prefab.Count != 1 || cardInfo.UnitIndex != 0)
+                //    GameManager.removeAbililtyIndicators();
             }
 
             NavMeshHit hit;
@@ -467,8 +469,10 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 if(preview.transform.childCount > 0)
                     preview.transform.GetChild(1).GetChild(0).GetComponent<Collider>().enabled = false;
                 else {
-                    if(preview.GetComponent<Collider>())
+                    if(preview.GetComponent<Collider>()) {
                         preview.GetComponent<Collider>().enabled = false;
+                        preview.GetComponent<AbilityPreview>().ReduceHighlightIndicator();
+                    }
                 }
             }
 

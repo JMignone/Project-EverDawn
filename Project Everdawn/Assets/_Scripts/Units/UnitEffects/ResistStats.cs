@@ -205,10 +205,13 @@ public class ResistStats
         //check if there is currently an ability hovered over this unit now
         Collider[] colliders = Physics.OverlapSphere(unit.Agent.transform.position, unit.Agent.HitBox.radius);
         foreach(Collider collider in colliders) {
-            if(!collider.transform.parent.parent.CompareTag((unit as Component).gameObject.tag) && collider.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
+            if( (!collider.transform.parent.parent.CompareTag((unit as Component).gameObject.tag) && collider.CompareTag("AbilityHighlight")) 
+               || collider.transform.parent.parent.CompareTag((unit as Component).gameObject.tag) && collider.CompareTag("FriendlyAbilityHighlight")) { //Our we getting previewed for an ability?
                 AbilityPreview ability = collider.GetComponent<AbilityPreview>();
-                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, (unit as Component))) 
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, (unit as Component))) {
                     unit.Stats.IncIndicatorNum();
+                    ability.Targets.Add((unit as Component).gameObject);
+                }
             }
         }
     }
@@ -305,8 +308,10 @@ public class ResistStats
                 foreach(Collider collider in colliders) {
                     if(!collider.transform.parent.parent.CompareTag((unit as Component).gameObject.tag) && collider.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
                         AbilityPreview ability = collider.GetComponent<AbilityPreview>();
-                        if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, (unit as Component))) 
+                        if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, (unit as Component))) {
                             unit.Stats.IncIndicatorNum();
+                            ability.Targets.Add((unit as Component).gameObject);
+                        }
                     }
                 }
             }

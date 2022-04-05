@@ -44,33 +44,38 @@ public class TeleportStats
 
     public void Warp(GameObject go) {
         //Instantiate(explosionEffect, go.transform.position, go.transform.rotation);
-        if(teleportsAllies) {
-            Vector3 unitPosition = new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z);
-            Collider[] colliders = Physics.OverlapSphere(unitPosition, allyRadius);
+        if(!unit.Equals(null)) {
+            if(teleportsAllies) {
+                Vector3 unitPosition = new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z);
+                Collider[] colliders = Physics.OverlapSphere(unitPosition, allyRadius);
 
-            Component ability = go.GetComponent(typeof(IAbility));
-            foreach(Collider collider in colliders) {
-                //MonoBehaviour.print(collider);
-                if(collider.CompareTag(go.tag) && collider.name == "Agent") {
-                    Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-                    if((damageable as Component).gameObject != (unit as Component).gameObject && GameFunctions.WillHit((ability as IAbility).HeightAttackable, (ability as IAbility).TypeAttackable, damageable)) {
-                        Vector3 position = go.transform.position - (unit.Agent.transform.position - (damageable as IDamageable).Agent.transform.position);
-                        //if the friendly unit is a flying unit
-                        if((damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING) 
-                            (damageable as IDamageable).Agent.Agent.Warp(new Vector3(position.x, (damageable as IDamageable).Agent.transform.position.y, position.z));
-                        else {
-                            UnityEngine.AI.NavMeshHit hit;
-                            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, 9))
-                                position = hit.position;
-                            (damageable as IDamageable).Agent.Agent.Warp(new Vector3(position.x, (damageable as IDamageable).Agent.transform.position.y, position.z));
+                Component ability = go.GetComponent(typeof(IAbility));
+                foreach(Collider collider in colliders) {
+                    //MonoBehaviour.print(collider);
+                    if(collider.CompareTag(go.tag) && collider.name == "Agent") {
+                        Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
+                        if((damageable as Component).gameObject != (unit as Component).gameObject && GameFunctions.WillHit((ability as IAbility).HeightAttackable, (ability as IAbility).TypeAttackable, damageable)) {
+                            Vector3 position = go.transform.position - (unit.Agent.transform.position - (damageable as IDamageable).Agent.transform.position);
+                            //if the friendly unit is a flying unit
+                            if((damageable as IDamageable).Stats.MovementType == GameConstants.MOVEMENT_TYPE.FLYING) {
+                                (damageable as IDamageable).Agent.Agent.Warp(new Vector3(position.x, (damageable as IDamageable).Agent.transform.position.y, position.z));
+                                (damageable as IDamageable).JumpStats.CancelJump();
+                            }
+                            else {
+                                UnityEngine.AI.NavMeshHit hit;
+                                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, 9))
+                                    position = hit.position;
+                                (damageable as IDamageable).Agent.Agent.Warp(new Vector3(position.x, (damageable as IDamageable).Agent.transform.position.y, position.z));
+                                (damageable as IDamageable).JumpStats.CancelJump();
+                            }
+
+                            //replace freeze with stun maybe later on
+                            (damageable as IDamageable).Stats.EffectStats.StunnedStats.Stun(allyWarpSickness);
                         }
-
-                        //replace freeze with stun maybe later on
-                        (damageable as IDamageable).Stats.EffectStats.FrozenStats.Freeze(allyWarpSickness);
                     }
                 }
             }
+            unit.Agent.Agent.Warp(new Vector3(go.transform.position.x, unit.Agent.transform.position.y, go.transform.position.z));
         }
-        unit.Agent.Agent.Warp(new Vector3(go.transform.position.x, unit.Agent.transform.position.y, go.transform.position.z));
     }
 }

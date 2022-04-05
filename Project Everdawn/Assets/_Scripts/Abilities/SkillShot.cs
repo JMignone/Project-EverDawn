@@ -335,12 +335,14 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 } 
                 else {
                     preview.transform.GetChild(0).GetComponent<Image>().enabled = false;
-                    if (preview.GetComponent<Collider>())
+                    if(preview.GetComponent<Collider>()) {
                         preview.GetComponent<Collider>().enabled = false;
+                        preview.GetComponent<AbilityPreview>().ReduceHighlightIndicator();
+                    }
                 }
             }
 
-            GameManager.removeAbililtyIndicators();
+            //GameManager.removeAbililtyIndicators();
 
             if(abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y && Unit.Stats.CanAct && abilityUI.CanFire) {
                 fireStartPosition = abilityPreviewCanvas.transform.position;

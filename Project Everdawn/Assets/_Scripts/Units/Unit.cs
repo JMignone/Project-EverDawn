@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.AI;
 
 public class Unit : MonoBehaviour, IDamageable
 {
@@ -40,6 +39,9 @@ public class Unit : MonoBehaviour, IDamageable
     private NoseDiveStats noseDiveStats;
 
     [SerializeField]
+    private JumpStats jumpStats;
+
+    [SerializeField]
     private List<GameObject> hitTargets;
 
     [SerializeField]
@@ -53,10 +55,10 @@ public class Unit : MonoBehaviour, IDamageable
 
     private List<Component> applyEffectsComponents = new List<Component>();
 
-    private NavMeshLink link;
+    /*private NavMeshLink link;
     private OffMeshLink link2;
     public bool jumping; //set to true if the unit is on an off-mesh link
-    public Vector3 jumpDirection;
+    public Vector3 jumpEndpoint;*/
 
     public Actor3D Agent
     {
@@ -99,6 +101,11 @@ public class Unit : MonoBehaviour, IDamageable
         get { return deathStats; }
     }
 
+    public JumpStats JumpStats
+    {
+        get { return jumpStats; }
+    }
+
     public List<GameObject> HitTargets
     {
         get { return hitTargets; }
@@ -133,13 +140,13 @@ public class Unit : MonoBehaviour, IDamageable
 
     public bool ChargeAttack
     {
-        get { return !chargeStats.IsCharging && !attackStats.IsFiring && !dashStats.IsDashing; }
+        get { return !chargeStats.IsCharging && !attackStats.IsFiring && !dashStats.IsDashing && !jumpStats.Jumping; }
     }
 
     private void Start()
     {
-        link = null;
-        link2 = null;
+        //link = null;
+        //link2 = null;
 
         agent.Agent.stoppingDistance = 0; //Set to be zero, incase someone forgets or accidently changes this value to be a big number
         agent.Agent.speed = stats.MoveSpeed;
@@ -150,10 +157,11 @@ public class Unit : MonoBehaviour, IDamageable
         stats.EffectStats.StartStats(unit);
         attackStats.StartAttackStats(unit);
         buildUpStats.StartStats(unit);
-        chargeStats.StartChargeStats(unit);
+        chargeStats.StartStats(unit);
         dashStats.StartDashStats(unit);
         shadowStats.StartShadowStats(unit);
         noseDiveStats.StartStats(unit);
+        jumpStats.StartStats(unit);
 
         stats.IsHoveringAbility = false;
         stats.AbilityIndicator.enabled = false;
@@ -200,6 +208,15 @@ public class Unit : MonoBehaviour, IDamageable
                 Debug.Break();
             }
         }
+
+        //Detects if a unit is within range of another, but doesnt have the target inside enemyHitTargets 
+        if(target != null) {
+            if(!inRangeTargets.Contains(target) && Vector3.Distance(target.transform.GetChild(0).position, agent.transform.position) < stats.Range + (target.GetComponent(typeof(IDamageable)) as IDamageable).Agent.Agent.radius ) {
+                Debug.Log(GetInstanceID());
+                Debug.Break();
+            }
+        }
+
         */
 
         if(applyEffectsComponents.Count > 0) {
@@ -216,17 +233,7 @@ public class Unit : MonoBehaviour, IDamageable
             if((target == null || inRangeTargets.Count == 0) && stats.CanAct && !stats.IsCastingAbility) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                 ReTarget();
 
-            /* 
-                ---- DEBUGGING ---- 
-                Detects if a unit is within range of another, but doesnt have the target inside enemyHitTargets 
-            if(target != null) {
-                if(!inRangeTargets.Contains(target) && Vector3.Distance(target.transform.GetChild(0).position, agent.transform.position) < stats.Range + (target.GetComponent(typeof(IDamageable)) as IDamageable).Agent.Agent.radius ) {
-                    Debug.Log(GetInstanceID());
-                    Debug.Break();
-                }
-            }
-                ---- DEBUGGING ----
-            */
+            
 
             stats.UpdateStats(ChargeAttack, inRangeTargets.Count, agent, hitTargets, target, gameObject);
             buildUpStats.UpdateStats();
@@ -236,37 +243,22 @@ public class Unit : MonoBehaviour, IDamageable
 
             Attack();
 
-
-            if(agent.Agent.currentOffMeshLinkData.valid) {
-                Debug.Log(agent.Agent.currentOffMeshLinkData.startPos);
-                Debug.Log(agent.Agent.currentOffMeshLinkData.endPos);
-                Debug.Log(agent.Agent.currentOffMeshLinkData.valid);
-                Debug.Log(agent.Agent.currentOffMeshLinkData.activated);
-                AcquireOffmeshLink();
-            }
-            else
-                ReleaseOffmeshLink();
-
+            Debug.DrawRay(jumpStats.JumpEndPoint, Vector3.up*10, Color.red);
             if(dashStats.IsDashing)
                 lookAtTarget();
 
-/*
-            if(agent.Agent.isOnOffMeshLink && !jumping) {
-                jumping = true;
-                jumpDirection = agent.Agent.currentOffMeshLinkData.endPos - agent.transform.position;
-                jumpDirection.y = 0;
-                jumpDirection = jumpDirection.normalized;
-                //agent.Agent.CompleteOffMeshLink();
-            }
-            else if(jumping)
-                Jump();
-*/
+            else if(agent.Agent.currentOffMeshLinkData.valid) 
+                jumpStats.StartJump();
+            else if(jumpStats.Jumping)
+                jumpStats.Jump();
 
             else if(target != null && !attackStats.IsFiring) {
                 Vector3 direction = target.transform.GetChild(0).position - agent.transform.position;
                 direction.y = 0;
 
                 //if the unit can jump the river, set towerPosOffset to 0
+                if(jumpStats.Jumps || (chargeStats.IsCharging && chargeStats.JumpWhileCharging))
+                    stats.TowerPosOffset /= 3;
 
                 agent.Agent.SetDestination(new Vector3(target.transform.GetChild(0).position.x + stats.TowerPosOffset, 0, target.transform.GetChild(0).position.z) - (direction.normalized * .25f));
                 if(hitTargets.Contains(target)) {
@@ -287,7 +279,6 @@ public class Unit : MonoBehaviour, IDamageable
             deathStats.FireDeathSkill();
         }
         else {
-            ReleaseOffmeshLink();
             //print(gameObject.name + " has died!" + System.DateTime.Now);
             stats.ResetKillFlags(gameObject, target);
             GameManager.RemoveObjectsFromList(gameObject);
@@ -398,7 +389,7 @@ public class Unit : MonoBehaviour, IDamageable
     }
 
     public void OnTriggerEnter(Collider other) {
-        if(!other.transform.parent.parent.CompareTag(gameObject.tag) && stats.CurrHealth != 0) { //checks to make sure the target isnt on the same team
+        if(!other.transform.parent.parent.CompareTag(gameObject.tag) && stats.CurrHealth > 0) { //checks to make sure the target isnt on the same team
             if(other.CompareTag("Projectile")) { //Did we get hit by a skill shot?
                 Projectile projectile = other.transform.parent.parent.GetComponent<Projectile>();
                 Component unit = this.GetComponent(typeof(IDamageable));
@@ -406,8 +397,10 @@ public class Unit : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) 
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {
                     stats.IncIndicatorNum();
+                    ability.Targets.Add(gameObject);
+                }
             }
             else if(other.CompareTag("Pull")) {
                 Component IAbility = other.transform.parent.parent.GetComponent(typeof(IAbility));
@@ -445,10 +438,12 @@ public class Unit : MonoBehaviour, IDamageable
                 }
             }
         }
-        else if(other.CompareTag("FriendlyAbilityHighlight")) { //if the hitbox is from a friendly units ability that hits friendly units
+        else if(other.CompareTag("FriendlyAbilityHighlight") && stats.CurrHealth > 0) { //if the hitbox is from a friendly units ability that hits friendly units
             AbilityPreview ability = other.GetComponent<AbilityPreview>();
-            if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
+            if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {
                 stats.IncIndicatorNum();
+                ability.Targets.Add(gameObject);
+            }
         }
     }
 
@@ -459,8 +454,10 @@ public class Unit : MonoBehaviour, IDamageable
             }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
-                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {
                     stats.DecIndicatorNum();
+                    ability.Targets.Remove(gameObject);
+                }
             }
             else if(other.CompareTag("Pull")) {
                 Component IAbility = other.transform.parent.parent.GetComponent(typeof(IAbility));
@@ -493,18 +490,20 @@ public class Unit : MonoBehaviour, IDamageable
         }
         else if(other.CompareTag("FriendlyAbilityHighlight")) { //if the hitbox is from a friendly units ability that hits friendly units
             AbilityPreview ability = other.GetComponent<AbilityPreview>();
-            if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable))))
+            if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {
                 stats.DecIndicatorNum();
+                ability.Targets.Remove(gameObject);
+            }
         }
     }
 
     void lookAtTarget() {
         var targetPosition = target.transform.GetChild(0).position;  //
 
-        Vector3 direction = targetPosition - agent.Agent.transform.position;
+        Vector3 direction = targetPosition - agent.transform.position;
         direction.y = 0; // Ignore Y, usful for airborne units
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        agent.Agent.transform.rotation = Quaternion.RotateTowards(agent.Agent.transform.rotation, targetRotation, stats.RotationSpeed * Time.deltaTime); //the number is degrees/second, maybe differnt per unit
+        agent.transform.rotation = Quaternion.RotateTowards(agent.transform.rotation, targetRotation, stats.RotationSpeed * Time.deltaTime); //the number is degrees/second, maybe differnt per unit
     }
 
     void IDamageable.TakeDamage(float amount) {
@@ -523,7 +522,7 @@ public class Unit : MonoBehaviour, IDamageable
         else
            jumping = false;
     }
-*/
+
 
     void AcquireOffmeshLink() {
         if(link == null && link2 == null) {
@@ -531,10 +530,9 @@ public class Unit : MonoBehaviour, IDamageable
             if(link2 == null) {
                 Debug.Log(agent.Agent.currentOffMeshLinkData.startPos);
                 Debug.Log(agent.Agent.currentOffMeshLinkData.endPos);
-                Debug.Log(agent.Agent.currentOffMeshLinkData.valid);
-                Debug.Log(agent.Agent.currentOffMeshLinkData.activated);
                 link = (NavMeshLink) agent.Agent.navMeshOwner;
-                link.costModifier = 1000;
+                //link.costModifier = 1000;
+                link.costModifier = -1;
                 DumpToConsole(link);
             }
             else
@@ -545,13 +543,13 @@ public class Unit : MonoBehaviour, IDamageable
     void ReleaseOffmeshLink() {
         if(link != null) {
             link.costModifier = -1;
-            link = null;
+            //link = null;
         }
         else if(link2 != null) {
             link2.costOverride = -1;
-            link2 = null;
+            //link2 = null;
         }
-    }
+    }*/
 
     public static void DumpToConsole(object obj)
     {

@@ -62,7 +62,7 @@ public class DeckManager : ScriptableObject
         }
         CheckDecks();
         bool cardsCheck = CheckCards(deckList.playerDecks);
-        if(cardsCheck != true)
+        if(cardsCheck == false)
         {
             ResetDecks();
         }
@@ -118,10 +118,12 @@ public class DeckManager : ScriptableObject
         {
             for(int i = 0; i < listToCheck.Count - 1; i++)
             {
-                if(listToCheck[i].CardsInDeck.Count > 0)
+                //Debug.Log("Checking deck" + i.ToString());
+                if(listToCheck[i].CardsInDeck.Count == deckSize)
                 {
                     foreach(int cardID in listToCheck[i].CardsInDeck)
                     {
+                        //Debug.Log("Found card with ID: " + cardID.ToString());
                         if(cardID < 0)
                         {
                             return false;
@@ -132,7 +134,7 @@ public class DeckManager : ScriptableObject
                         }
                     }
                 }
-                else if(listToCheck[i].CardsInDeck.Count <= 0)
+                else if(listToCheck[i].CardsInDeck.Count != deckSize)
                 {
                     return false;
                 }
@@ -141,17 +143,17 @@ public class DeckManager : ScriptableObject
         }
         catch
         {
-            throw;
+            return false;
         }
     }
 
-    private void GenerateDecks(int deckUpperLimit, int deckCount, List<PlayerDeck> listToGenerateTo) // Adds the default deck according to 
+    private void GenerateDecks(int deckUpperLimit, int deckCount, List<PlayerDeck> targetList) // Adds the default deck according to 
     {
         try
         {
             for(int i = 1; i <= deckUpperLimit - deckCount; i++)
             {
-                listToGenerateTo.Add(defaultDeck.Copy());
+                targetList.Add(defaultDeck.Copy());
                 //Debug.Log(i.ToString() + " added");
             }
         }

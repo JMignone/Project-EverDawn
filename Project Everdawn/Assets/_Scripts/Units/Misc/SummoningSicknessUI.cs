@@ -69,8 +69,10 @@ public class SummoningSicknessUI
                     foreach(Collider collider in colliders) {
                         if(!collider.transform.parent.parent.CompareTag((unit as Component).gameObject.tag) && collider.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
                             AbilityPreview ability = collider.GetComponent<AbilityPreview>();
-                            if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, (unit as Component))) 
+                            if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, (unit as Component))) {
                                 unit.Stats.IncIndicatorNum();
+                                ability.Targets.Add((unit as Component).gameObject);
+                            }
                         }
                     }
                 }

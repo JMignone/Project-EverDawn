@@ -337,11 +337,13 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
 
             foreach(GameObject preview in abilityPreviews) {
                 preview.transform.GetChild(0).GetComponent<Image>().enabled = false;
-                if(preview.GetComponent<Collider>())
+                if(preview.GetComponent<Collider>()) {
                     preview.GetComponent<Collider>().enabled = false;
+                    preview.GetComponent<AbilityPreview>().ReduceHighlightIndicator();
+                }
             }
 
-            GameManager.removeAbililtyIndicators();
+            //GameManager.removeAbililtyIndicators();
 
             if(abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y && target != null && unit.Stats.CanAct && abilityUI.CanFire) {
                 fireStartPosition = abilityPreviewCanvas.transform.position;

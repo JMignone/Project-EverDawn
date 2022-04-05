@@ -51,7 +51,11 @@ public class PulledStats
                 totalMovement += direction;
             }
             totalMovement.y = 0;
-            unit.Agent.transform.position += totalMovement * Time.deltaTime;
+
+            if(unit.JumpStats.Jumping)
+                unit.JumpStats.DirectionalInfluence(totalMovement);
+            else
+                unit.Agent.transform.position += totalMovement * Time.deltaTime;
         }
     }
 

@@ -422,9 +422,10 @@ public static class GameFunctions
         go.tag = tag;
     }
 
-    //sets the ability previews to red to display that they are disabled
+    //sets the ability previews to red to display that they are disabled, DOESNT ACTUALLY DISABLE, ONLY VISUAL
     public static void DisableAbilities(GameObject go) {
         if(go.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors to red
+            (go.transform.GetChild(1).GetChild(5).GetChild(1).GetComponent(typeof(ICaster)) as ICaster).AbilityUI.CantFire = true;
             foreach(Transform child in go.transform.GetChild(1).GetChild(5).GetChild(2)) {
                 if(child.childCount > 1) //this means its a complicated summon preview
                     child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,0,0,50);
@@ -436,7 +437,8 @@ public static class GameFunctions
 
     public static void EnableAbilities(GameObject go) {
         if(go.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors back to green
-            if((go.transform.GetChild(1).GetChild(5).GetChild(1).GetComponent(typeof(ICaster)) as ICaster).AbilityUI.CanFire) {
+            (go.transform.GetChild(1).GetChild(5).GetChild(1).GetComponent(typeof(ICaster)) as ICaster).AbilityUI.CantFire = false;
+            if((go.transform.GetChild(1).GetChild(5).GetChild(1).GetComponent(typeof(ICaster)) as ICaster).AbilityUI.OffCooldown) {
                 foreach(Transform child in go.transform.GetChild(1).GetChild(5).GetChild(2)) {
                     if(child.childCount > 1) //this means its a complicated summon preview
                         child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,255,255,100);
@@ -445,5 +447,26 @@ public static class GameFunctions
                 }
             }
         }
+    }
+
+    //https://stackoverflow.com/questions/15648607/finding-the-intersection-between-two-lines
+    public static Vector3 FindIntersection(Vector3 point1, Vector3 point2, Vector3 point3, Vector3 point4) {
+        float A1 = point2.z - point1.z;
+        float B1 = point1.x - point2.x;
+        float C1 = A1 * point1.x + B1 * point1.z;
+
+        float A2 = point4.z - point3.z;
+        float B2 = point3.x - point4.x;
+        float C2 = A2 * point3.x + B2 * point3.z;
+
+        float det = A1 * B2 - A2 * B1;
+
+        if(det == 0)
+            return Vector3.positiveInfinity;
+
+        float x = (B2 * C1 - B1 * C2) / det;
+        float z = (A1 * C2 - A2 * C1) / det;
+
+        return new Vector3(x, 0, z);
     }
 }

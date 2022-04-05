@@ -1250,7 +1250,7 @@ MonoBehaviour:
     chargeDamage: 0
     chargeSpeed: 0
     chargeDelay: 0
-    currentDelay: 0
+    jumpWhileCharging: 0
   dashStats:
     dashes: 0
     isDashing: 0
@@ -1258,7 +1258,6 @@ MonoBehaviour:
     dashSpeed: 0
     dashRange: 0
     dashDelay: 0
-    currentDelay: 0
   shadowStats:
     shades: 0
     interruptsByDamage: 0
@@ -1273,12 +1272,13 @@ MonoBehaviour:
     noseDives: 0
     createAtLocation: {fileID: 0}
     speed: 0
+  jumpStats:
+    jumps: 0
+    maxJumpAngle: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
   projectiles: []
-  jumping: 0
-  jumpDirection: {x: 0, y: 0, z: 0}
 --- !u!54 &6825281274548537870
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1816,7 +1816,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 10
   m_BaseOffset: 0
-  m_WalkableMask: 5
+  m_WalkableMask: 1
   m_ObstacleAvoidanceType: 2
 --- !u!114 &1841176456078110694
 MonoBehaviour:

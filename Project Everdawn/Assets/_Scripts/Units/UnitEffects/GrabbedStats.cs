@@ -149,6 +149,7 @@ public class GrabbedStats
             if(grabSpeed != 0) 
                 grabDelay = totalDistance/grabSpeed;
 
+            unit.JumpStats.CancelJump();
             unit.Agent.Agent.enabled = false;
             unit.SetTarget(null);
             unit.Stats.IsCastingAbility = false; //normally this is done automatically, but some abilitys use the 'abilityOverride', so we will need to set it

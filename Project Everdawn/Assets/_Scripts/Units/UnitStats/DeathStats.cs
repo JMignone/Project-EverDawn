@@ -54,7 +54,7 @@ public class DeathStats
         MonoBehaviour.Destroy(unit.Stats.HealthBar.transform.parent.gameObject);
 
         if(unit.Stats.IsHoveringAbility) {
-            GameManager.removeAbililtyIndicators();
+            //GameManager.removeAbililtyIndicators();
             GameManager.GetPlayer(go.tag).NumDragging--;
         }
 

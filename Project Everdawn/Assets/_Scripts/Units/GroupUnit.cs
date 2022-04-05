@@ -16,6 +16,7 @@ public class GroupUnit : MonoBehaviour, IDamageable
     private DashStats dashStats;
     private ShadowStats shadowStats;
     private DeathStats deathStats;
+    private JumpStats jumpStats;
     private List<GameObject> hitTargets;
     private List<GameObject> inRangeTargets;
     private List<GameObject> enemyHitTargets;
@@ -93,6 +94,11 @@ public class GroupUnit : MonoBehaviour, IDamageable
     public DeathStats DeathStats
     {
         get { return deathStats; }
+    }
+
+    public JumpStats JumpStats
+    {
+        get { return jumpStats; }
     }
 
     public List<Component> ApplyEffectsComponents
