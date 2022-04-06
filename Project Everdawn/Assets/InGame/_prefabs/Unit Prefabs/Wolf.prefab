@@ -221,7 +221,6 @@ MonoBehaviour:
     unitType: 0
     unitGrouping: 0
     attackPriority: 1
-    unitRange: 0
     effectStats:
       aoeStats:
         areaOfEffect: 0
@@ -310,7 +309,7 @@ MonoBehaviour:
     chargeDamage: 0
     chargeSpeed: 0
     chargeDelay: 0
-    currentDelay: 0
+    jumpWhileCharging: 0
   dashStats:
     dashes: 1
     isDashing: 0
@@ -318,7 +317,6 @@ MonoBehaviour:
     dashSpeed: 25
     dashRange: 20
     dashDelay: 1.5
-    currentDelay: 0
   shadowStats:
     shades: 0
     interruptsByDamage: 0
@@ -333,12 +331,13 @@ MonoBehaviour:
     noseDives: 0
     createAtLocation: {fileID: 0}
     speed: 0
+  jumpStats:
+    jumps: 1
+    maxJumpAngle: 45
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
   projectiles: []
-  jumping: 0
-  jumpDirection: {x: 0, y: 0, z: 0}
 --- !u!54 &4300487081235283210
 Rigidbody:
   m_ObjectHideFlags: 0

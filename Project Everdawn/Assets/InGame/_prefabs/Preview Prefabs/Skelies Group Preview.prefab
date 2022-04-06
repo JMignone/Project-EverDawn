@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 9061750350620061499}
   - component: {fileID: -8215972761176478673}
   m_Layer: 0
-  m_Name: Spawned Group Preview
+  m_Name: Skelies Group Preview
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

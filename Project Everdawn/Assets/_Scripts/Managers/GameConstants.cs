@@ -76,11 +76,11 @@ public static class GameConstants
         EVERYTHING,
         STRUCTURE
     }
-
+/*
     public enum UNIT_RANGE {
         MELEE,
         RANGE
-    }
+    }*/
 
     //The start location an airstrike should take
     public enum AIR_STRIKE_LOCATION {

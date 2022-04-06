@@ -97,8 +97,8 @@ public class BaseStats
     [Tooltip("Determines if the unit strictly prioritizes certain enemies")]
     [SerializeField]
     private GameConstants.ATTACK_PRIORITY attackPriority;
-    [SerializeField]
-    private GameConstants.UNIT_RANGE unitRange;
+    //[SerializeField]
+    //private GameConstants.UNIT_RANGE unitRange;
     [SerializeField]
     private EffectStats effectStats;
 
@@ -313,12 +313,6 @@ public class BaseStats
     {
         get { return attackPriority; }
         //set { attackPriority = value; }
-    }
-
-    public GameConstants.UNIT_RANGE UnitRange
-    {
-        get { return unitRange; }
-        //set { unitRange = value; }
     }
 
     public EffectStats EffectStats

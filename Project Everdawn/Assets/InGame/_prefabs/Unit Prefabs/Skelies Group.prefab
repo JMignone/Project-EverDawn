@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 4489671066153867476}
   - component: {fileID: 6931314265539079310}
   m_Layer: 0
-  m_Name: Spawned Group
+  m_Name: Skelies Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -162,6 +162,7 @@ MonoBehaviour:
     range: 0
     visionRange: 0
     baseDamage: 0
+    towerDamage: 0
     attackDelay: 0
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -189,7 +190,6 @@ MonoBehaviour:
     unitType: 0
     unitGrouping: 1
     attackPriority: 0
-    unitRange: 0
     effectStats:
       aoeStats:
         areaOfEffect: 0
@@ -448,6 +448,10 @@ PrefabInstance:
     - target: {fileID: 5726148247449163227, guid: 304a4c69c2fd919499f930a64e2fda40, type: 3}
       propertyPath: m_Name
       value: Spawned (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8687623084184292484, guid: 304a4c69c2fd919499f930a64e2fda40, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8687623084901217457, guid: 304a4c69c2fd919499f930a64e2fda40, type: 3}
       propertyPath: m_LocalPosition.z
