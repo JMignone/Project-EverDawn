@@ -213,9 +213,7 @@ MonoBehaviour:
     detectionObject: {fileID: 4300487082722879881}
     visionObject: {fileID: 4300487081709656634}
     unitMaterials:
-      renderers:
-      - {fileID: 0}
-      - {fileID: 0}
+      renderers: []
     movementType: 0
     heightAttackable: 1
     unitType: 0
@@ -629,6 +627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 4300487081545407402}
+  anim: {fileID: 1332912344503512171}
   ability: {fileID: 4286050856114231759}
   isPreview: 0
 --- !u!1 &4300487082722879883
@@ -870,6 +869,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 796a0e3cf0eb88940bf0c92815948353, type: 3}
+--- !u!95 &1332912344503512171 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 261754510465851329, guid: 796a0e3cf0eb88940bf0c92815948353, type: 3}
+  m_PrefabInstance: {fileID: 1287612642096133034}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4944768100779210257 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6143433824657311163, guid: 796a0e3cf0eb88940bf0c92815948353, type: 3}
@@ -1096,6 +1100,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
+--- !u!224 &609765237157225384 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
+  m_PrefabInstance: {fileID: 7742620429236436747}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &609765237157225364 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 7135111395446791327, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
+  m_PrefabInstance: {fileID: 7742620429236436747}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &609765236675681183 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7135111394721948820, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
@@ -1118,13 +1132,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &609765237157225384 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
-  m_PrefabInstance: {fileID: 7742620429236436747}
-  m_PrefabAsset: {fileID: 0}
---- !u!223 &609765237157225364 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 7135111395446791327, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
-  m_PrefabInstance: {fileID: 7742620429236436747}
-  m_PrefabAsset: {fileID: 0}

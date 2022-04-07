@@ -359,9 +359,7 @@ MonoBehaviour:
     detectionObject: {fileID: 6233150844581326293}
     visionObject: {fileID: 6233150846021740420}
     unitMaterials:
-      renderers:
-      - {fileID: 0}
-      - {fileID: 0}
+      renderers: []
     movementType: 0
     heightAttackable: 0
     unitType: 1

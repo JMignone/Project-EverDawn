@@ -260,6 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 3925836231010811492}
+  anim: {fileID: 927444683160345937}
   ability: {fileID: 3925836231430602714}
   isPreview: 0
 --- !u!1 &3925836231725190130
@@ -634,15 +635,7 @@ MonoBehaviour:
     detectionObject: {fileID: 3925836231993521891}
     visionObject: {fileID: 3925836231725190131}
     unitMaterials:
-      renderers:
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
+      renderers: []
     movementType: 0
     heightAttackable: 1
     unitType: 0
@@ -1227,6 +1220,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddee5cb414d1778468f5bfafc1bc9d52, type: 3}
+--- !u!95 &927444683160345937 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2938602751053218243, guid: ddee5cb414d1778468f5bfafc1bc9d52, type: 3}
+  m_PrefabInstance: {fileID: 2600531536295730322}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &927444683151258303 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2938602751046037037, guid: ddee5cb414d1778468f5bfafc1bc9d52, type: 3}

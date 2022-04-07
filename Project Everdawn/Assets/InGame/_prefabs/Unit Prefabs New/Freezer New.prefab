@@ -376,6 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 3925836231010811492}
+  anim: {fileID: 17392040173741039}
   ability: {fileID: 3925836231430602714}
   isPreview: 0
 --- !u!1 &3925836231725190130
@@ -750,14 +751,7 @@ MonoBehaviour:
     detectionObject: {fileID: 3925836231993521891}
     visionObject: {fileID: 3925836231725190131}
     unitMaterials:
-      renderers:
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
+      renderers: []
     movementType: 0
     heightAttackable: 1
     unitType: 0
@@ -1039,6 +1033,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+--- !u!95 &17392040173741039 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1262585263, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+  m_PrefabInstance: {fileID: 17392039011821120}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1452878222215078862 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1446888015778530702, guid: c39c2e60090e83641a924d6834138b13, type: 3}
@@ -1505,6 +1504,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
+--- !u!224 &1388760342342179361 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2683724732824738253, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
+  m_PrefabInstance: {fileID: 3925836231040451564}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1388760341355096940 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2683724731585702016, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
@@ -1527,11 +1531,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &1388760342342179361 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2683724732824738253, guid: 96a82a6be5f86594d885fe397f8e3b0c, type: 3}
-  m_PrefabInstance: {fileID: 3925836231040451564}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3925836232468972412
 PrefabInstance:
   m_ObjectHideFlags: 0

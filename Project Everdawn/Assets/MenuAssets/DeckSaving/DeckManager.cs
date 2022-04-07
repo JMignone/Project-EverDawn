@@ -141,7 +141,7 @@ public class DeckManager : ScriptableObject
         }
         catch
         {
-            throw;
+            return false;
         }
     }
 

@@ -388,17 +388,7 @@ MonoBehaviour:
     detectionObject: {fileID: 5028950968597663479}
     visionObject: {fileID: 5028950968383091483}
     unitMaterials:
-      renderers:
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
+      renderers: []
     movementType: 0
     heightAttackable: 1
     unitType: 0
@@ -586,6 +576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 5028950966964901273}
+  anim: {fileID: 3739720753226900695}
   ability: {fileID: 5028950967757559709}
   isPreview: 0
 --- !u!1 &5028950967757559709
@@ -883,6 +874,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 228281755522704062, guid: 843c593107f9cb3479c84b08f4407319, type: 3}
   m_PrefabInstance: {fileID: 3516516611664783383}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &3739720753226900695 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 228281755515538624, guid: 843c593107f9cb3479c84b08f4407319, type: 3}
+  m_PrefabInstance: {fileID: 3516516611664783383}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5028950967971996066
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1104,16 +1100,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
---- !u!224 &2796575116556131565 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
-  m_PrefabInstance: {fileID: 5028950968200642638}
-  m_PrefabAsset: {fileID: 0}
---- !u!223 &2796575116556131537 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 7135111395446791327, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
-  m_PrefabInstance: {fileID: 5028950968200642638}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2796575115973403866 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7135111394721948820, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
@@ -1136,3 +1122,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &2796575116556131565 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
+  m_PrefabInstance: {fileID: 5028950968200642638}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &2796575116556131537 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 7135111395446791327, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
+  m_PrefabInstance: {fileID: 5028950968200642638}
+  m_PrefabAsset: {fileID: 0}

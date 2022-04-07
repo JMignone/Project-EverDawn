@@ -73,7 +73,10 @@ public class FrozenStats
             isFrozen = true;
             frozenDelay = duration;
             currentFrozenDelay = 0;
-            unit.UnitSprite.Animator.enabled = false;
+            if (unit.UnitSprite.Animator != null)
+            {
+                unit.UnitSprite.Animator.enabled = false;
+            }
             unit.SetTarget(null);
             unit.Stats.IsCastingAbility = false; //normally this is done automatically, but some abilitys use the 'abilityOverride', so we will need to set it
             GameFunctions.DisableAbilities((unit as Component).gameObject);
@@ -84,7 +87,10 @@ public class FrozenStats
         unit.Stats.UnitMaterials.RemoveCyan();
 
         isFrozen = false;
-        unit.UnitSprite.Animator.enabled = true;
+        if (unit.UnitSprite.Animator != null)
+        {
+            unit.UnitSprite.Animator.enabled = true;
+        }
         GameFunctions.EnableAbilities((unit as Component).gameObject);
     }
 }

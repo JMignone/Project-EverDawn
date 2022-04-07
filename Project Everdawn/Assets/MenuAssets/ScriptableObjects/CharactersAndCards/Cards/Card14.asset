@@ -22,8 +22,8 @@ MonoBehaviour:
   resourceCost: 3
   spawnZoneRestrictions: 0
   prefab:
-  - {fileID: 4714127562419118005, guid: 982797ff01e863149ace0765dbec3d8b, type: 3}
-  previewPrefab: {fileID: 1401404796868230813, guid: a14ef44f75d7cc94c8fb40ccd82a06d7, type: 3}
+  - {fileID: 4714127562419118005, guid: a4e6949338ceabb479462f4f39ea7a93, type: 3}
+  previewPrefab: {fileID: 1401404796868230813, guid: 21d74b71917d6f74ca2565c372259148, type: 3}
   previewDelays:
   - 0
   unitIndex: 0

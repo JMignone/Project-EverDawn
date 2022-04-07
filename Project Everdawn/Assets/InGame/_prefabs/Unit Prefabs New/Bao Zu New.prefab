@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 7301237269583115198}
+  anim: {fileID: 2010730321619035576}
   ability: {fileID: 7301237269661400000}
   isPreview: 0
 --- !u!1 &7301237268719862566
@@ -499,12 +500,7 @@ MonoBehaviour:
     detectionObject: {fileID: 7301237268719862564}
     visionObject: {fileID: 7301237269160403224}
     unitMaterials:
-      renderers:
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
+      renderers: []
     movementType: 0
     heightAttackable: 0
     unitType: 0
@@ -629,6 +625,7 @@ MonoBehaviour:
   inRangeTargets: []
   enemyHitTargets: []
   projectiles: []
+  animator: {fileID: 0}
 --- !u!54 &7301237269475668353
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -876,6 +873,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8e7474d7b8c0214694394f72a944f93, type: 3}
+--- !u!95 &2010730321619035576 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1326100982662518662, guid: c8e7474d7b8c0214694394f72a944f93, type: 3}
+  m_PrefabInstance: {fileID: 684772833839084094}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2010730321626221516 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1326100982655072754, guid: c8e7474d7b8c0214694394f72a944f93, type: 3}

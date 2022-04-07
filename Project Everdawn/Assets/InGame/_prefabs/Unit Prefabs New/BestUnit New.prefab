@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 1701868423733107988}
+  anim: {fileID: 5426357877602752780}
   ability: {fileID: 7870179655350065263}
   isPreview: 0
 --- !u!1 &1701868425020950973
@@ -360,17 +361,7 @@ MonoBehaviour:
     detectionObject: {fileID: 1701868425020950975}
     visionObject: {fileID: 1701868425526003444}
     unitMaterials:
-      renderers:
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
+      renderers: []
     movementType: 0
     heightAttackable: 1
     unitType: 0
@@ -492,6 +483,7 @@ MonoBehaviour:
   inRangeTargets: []
   enemyHitTargets: []
   projectiles: []
+  animator: {fileID: 0}
 --- !u!54 &1701868425468477455
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1134,5 +1126,10 @@ PrefabInstance:
 --- !u!4 &6870851740214352173 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1446888015778530702, guid: 48ac6ef85fb6c944483ef859afb98e68, type: 3}
+  m_PrefabInstance: {fileID: 5426357876650548387}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5426357877602752780 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1262585263, guid: 48ac6ef85fb6c944483ef859afb98e68, type: 3}
   m_PrefabInstance: {fileID: 5426357876650548387}
   m_PrefabAsset: {fileID: 0}

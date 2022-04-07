@@ -7,7 +7,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64a561a7b17893044b2a1c377e2917f1, type: 3}
   m_Name: DeckManager
@@ -17,7 +17,7 @@ MonoBehaviour:
     DeckName: Team
     CardsInDeck: 0100000002000000030000000400000005000000060000000700000008000000
   deckSize: 8
-  selectedDeckNumber: 1
+  selectedDeckNumber: 2
   selectedDeck:
     DeckName: Team
     CardsInDeck: 0100000002000000030000000400000005000000060000000700000008000000

@@ -783,7 +783,7 @@ Transform:
   m_GameObject: {fileID: 4952238894198127122}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 60, y: 60, z: 60}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_Children:
   - {fileID: 45529441962262345}
   - {fileID: 5033692641107470214}
@@ -1131,6 +1131,7 @@ MonoBehaviour:
     range: 22.5
     visionRange: 25
     baseDamage: 115
+    towerDamage: 0
     attackDelay: 1.2
     currAttackDelay: 0
     attackChargeLimiter: 0
@@ -1282,6 +1283,7 @@ MonoBehaviour:
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
+  projectiles: []
 --- !u!54 &6825281274548537870
 Rigidbody:
   m_ObjectHideFlags: 0
