@@ -116,12 +116,14 @@
     <Compile Include="Assets\MenuAssets\GameEvents\Listeners\CardListener.cs" />
     <Compile Include="Assets\LeanTween\Framework\LeanAudio.cs" />
     <Compile Include="Assets\_Scripts\Abilities\Effects\LingeringStats.cs" />
+    <Compile Include="Assets\Temp Art Assets\aCommon\Scripts\AnimatorStateController.cs" />
     <Compile Include="Assets\MenuAssets\Scripts\UIAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\_Scripts\Units\UnitEffects\PulledStats.cs" />
     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Events\ArenaDisplayEvent.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\_Scripts\UI\DontOverlap.cs" />
+    <Compile Include="Assets\Temp Art Assets\aCommon\Scripts\AttackParticleController.cs" />
     <Compile Include="Assets\_Scripts\Abilities\Effects\ResistEffects.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\_Scripts\Abilities\Projectile\ProjEffects\CustomPathStats.cs" />
@@ -268,6 +270,7 @@
     <Compile Include="Assets\LeanTween\Examples\Scripts\Following.cs" />
     <Compile Include="Assets\MenuAssets\Scripts\TeamDisplay.cs" />
     <Compile Include="Assets\MenuAssets\GameEvents\Listeners\ArenaDisplayListener.cs" />
+    <Compile Include="Assets\Temp Art Assets\Droid\Scripts\RepeatedlyInstantiate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\InGame\_Units\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />

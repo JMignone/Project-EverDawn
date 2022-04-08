@@ -335,6 +335,7 @@ MonoBehaviour:
   inRangeTargets: []
   enemyHitTargets: []
   projectiles: []
+  animator: {fileID: 0}
 --- !u!54 &4300487081235283210
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -725,6 +726,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1513752775663605791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5760504014998698031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b9733be55522d64d981375ee8154541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitStats: {fileID: 4300487081235283212}
+  agent: {fileID: 4300487081545407401}
+  animationAttackDelayStartTiming: 1.18
 --- !u!1 &8932841558933548655
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,6 +1017,11 @@ Animator:
 --- !u!4 &4952476679894540949 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2565202582403436096, guid: 5c5514de64c6c26438302e0a75ab8f8d, type: 3}
+  m_PrefabInstance: {fileID: 7432018441245519061}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5760504014998698031 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2941622984120603898, guid: 5c5514de64c6c26438302e0a75ab8f8d, type: 3}
   m_PrefabInstance: {fileID: 7432018441245519061}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7742620429236436747

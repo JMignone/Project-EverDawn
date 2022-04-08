@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1757805357123652091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5401603757482617148}
+  m_Layer: 0
+  m_Name: TowerMuzzleFlashParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5401603757482617148
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1757805357123652091}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.9269, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7573727757993340935}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6233150844085661134
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,6 +738,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 6233150844194078992}
+  anim: {fileID: 0}
   ability: {fileID: 6233150844085661134}
   isPreview: 0
 --- !u!1 &6233150846021740422
@@ -805,6 +836,29 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 30
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6409639380737493787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573727757993340932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83d7b4840463d6d41bc02630328abb3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitStats: {fileID: 0}
+  buildingStats: {fileID: 6233150844707143723}
+  particleParents:
+  - {fileID: 5401603757482617148}
+  - {fileID: 5401603757482617148}
+  particlesToSpawn:
+  - {fileID: 128846, guid: 51e57dcfc98a4a84c9f0e4421b4278f0, type: 3}
+  - {fileID: 100534, guid: 37703eac1d8575143b99ee99cf5ab0fb, type: 3}
+  particleAttackDelayStartTimings:
+  - 0.58
+  - 0.98
 --- !u!1001 &1286780557802749257
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1001,6 +1055,11 @@ PrefabInstance:
 --- !u!4 &7573727757993340935 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6302787260023718740, guid: 5e6b6348e17c4b64e83df3bf93eb6849, type: 3}
+  m_PrefabInstance: {fileID: 4498171176600154963}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7573727757993340932 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6302787260023718743, guid: 5e6b6348e17c4b64e83df3bf93eb6849, type: 3}
   m_PrefabInstance: {fileID: 4498171176600154963}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7782827158187772852

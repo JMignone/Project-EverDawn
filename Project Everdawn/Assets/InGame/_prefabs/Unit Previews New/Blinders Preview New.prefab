@@ -192,6 +192,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3473094878675778363}
     m_Modifications:
+    - target: {fileID: 2187872684371927873, guid: f7ba44f0bf6af7b4b84e8e8d3efbb30f, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 7707771571503102184}
+    - target: {fileID: 2187872684371927873, guid: f7ba44f0bf6af7b4b84e8e8d3efbb30f, type: 3}
+      propertyPath: followTarget
+      value: 
+      objectReference: {fileID: 2135184445494677536}
     - target: {fileID: 7317817158688808451, guid: f7ba44f0bf6af7b4b84e8e8d3efbb30f, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -247,6 +255,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7317817158688808451, guid: f7ba44f0bf6af7b4b84e8e8d3efbb30f, type: 3}
   m_PrefabInstance: {fileID: 2466692149635715012}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &7707771571503102184 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5245833854161516332, guid: f7ba44f0bf6af7b4b84e8e8d3efbb30f, type: 3}
+  m_PrefabInstance: {fileID: 2466692149635715012}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3078955462248188193
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -254,6 +267,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3473094878675778363}
     m_Modifications:
+    - target: {fileID: 2187872684371927873, guid: f7ba44f0bf6af7b4b84e8e8d3efbb30f, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 7094954705562811917}
+    - target: {fileID: 2187872684371927873, guid: f7ba44f0bf6af7b4b84e8e8d3efbb30f, type: 3}
+      propertyPath: followTarget
+      value: 
+      objectReference: {fileID: 2135184445494677536}
     - target: {fileID: 7317817158688808451, guid: f7ba44f0bf6af7b4b84e8e8d3efbb30f, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -307,5 +328,10 @@ PrefabInstance:
 --- !u!4 &5707395815181047586 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7317817158688808451, guid: f7ba44f0bf6af7b4b84e8e8d3efbb30f, type: 3}
+  m_PrefabInstance: {fileID: 3078955462248188193}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7094954705562811917 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5245833854161516332, guid: f7ba44f0bf6af7b4b84e8e8d3efbb30f, type: 3}
   m_PrefabInstance: {fileID: 3078955462248188193}
   m_PrefabAsset: {fileID: 0}

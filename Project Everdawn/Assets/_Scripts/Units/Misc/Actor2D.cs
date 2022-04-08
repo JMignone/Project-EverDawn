@@ -13,11 +13,11 @@ public class Actor2D : MonoBehaviour
     GameObject ability;
     [SerializeField]
     bool isPreview;
-
+    /*
     // added to support having an animation trigger (temporary, recommended future refactor) -Eagle
     private bool previousIsCastingAbility = false;
     private bool previousIsAttacking = false;
-
+    */
     float offset;
 
     public Animator Animator
@@ -44,7 +44,7 @@ public class Actor2D : MonoBehaviour
             offset = -agent.baseOffset;
         }
     }
-
+    /* removed for new animation code in AnimatorStateController -Eagle
     private void Update()
     {
         // new animation code -Eagle
@@ -55,17 +55,17 @@ public class Actor2D : MonoBehaviour
             Component damageable = followTarget.transform.parent.GetComponent(typeof(IDamageable));
             Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
 
-            /* // restore this block when code is refactored to support individual attacks -Eagle
-            if (previousIsCastingAbility == false && (unit as IDamageable).Stats.IsCastingAbility == true)
-            {
-                anim.SetTrigger("Ability");
-            }
+            // restore this block when code is refactored to support individual attacks -Eagle
+            //if (previousIsCastingAbility == false && (unit as IDamageable).Stats.IsCastingAbility == true)
+            //{
+            //    anim.SetTrigger("Ability");
+            //}
 
-            if (previousIsAttacking == false && (unit as IDamageable).Stats.IsAttacking == true)
-            {
-                anim.SetTrigger("Attack");
-            }
-            */
+            //if (previousIsAttacking == false && (unit as IDamageable).Stats.IsAttacking == true)
+            //{
+            //    anim.SetTrigger("Attack");
+            //}
+            
 
             // remove this block when code is refactored to support individual attacks -Eagle
             if ((unit as IDamageable).Stats.IsCastingAbility == true)
@@ -81,7 +81,7 @@ public class Actor2D : MonoBehaviour
             previousIsAttacking = (unit as IDamageable).Stats.IsAttacking;
         }
     }
-    /* // disabled for new animation code -Eagle
+    
     private void FixedUpdate()
     {
         if (!isPreview && anim != null)

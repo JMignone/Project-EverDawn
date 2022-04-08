@@ -622,6 +622,7 @@ MonoBehaviour:
   inRangeTargets: []
   enemyHitTargets: []
   projectiles: []
+  animator: {fileID: 0}
 --- !u!54 &6825281274548537870
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -769,6 +770,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5cdf01e7aa2ac64598c95c3cd499783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8482253443339347256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8085465065384723021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b9733be55522d64d981375ee8154541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitStats: {fileID: 1650009125952325119}
+  agent: {fileID: 9030593623510286143}
+  animationAttackDelayStartTiming: 0.68
 --- !u!1 &8885129445788087283
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,6 +1022,11 @@ Animator:
 --- !u!4 &8085465065384435245 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5128598488645629181, guid: d5a19f28982a6ef47b0ceacc8057bb93, type: 3}
+  m_PrefabInstance: {fileID: 3970246896177523408}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8085465065384723021 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5128598488645658781, guid: d5a19f28982a6ef47b0ceacc8057bb93, type: 3}
   m_PrefabInstance: {fileID: 3970246896177523408}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4078519445697324528

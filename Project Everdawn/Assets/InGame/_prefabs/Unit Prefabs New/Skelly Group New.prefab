@@ -312,7 +312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5726148247449163227, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
       propertyPath: m_Name
-      value: Spawned New (2)
+      value: Skelly New (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
@@ -374,7 +374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5726148247449163227, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
       propertyPath: m_Name
-      value: Spawned New (1)
+      value: Skelly New (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
@@ -436,7 +436,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5726148247449163227, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
       propertyPath: m_Name
-      value: Spawned New
+      value: Skelly New
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}

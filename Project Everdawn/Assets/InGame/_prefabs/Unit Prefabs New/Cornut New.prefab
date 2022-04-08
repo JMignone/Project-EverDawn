@@ -100,6 +100,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &175253265382827442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4151314425278014501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b9733be55522d64d981375ee8154541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitStats: {fileID: 4300487081235283212}
+  agent: {fileID: 4300487081545407401}
+  animationAttackDelayStartTiming: 0.95
 --- !u!1 &4286050856114231759
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,6 +350,7 @@ MonoBehaviour:
   inRangeTargets: []
   enemyHitTargets: []
   projectiles: []
+  animator: {fileID: 0}
 --- !u!54 &4300487081235283210
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1070,15 +1086,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4752523750235612364, guid: 713946674689e6d4e9662ba92becdd75, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 4752523750235612364, guid: 713946674689e6d4e9662ba92becdd75, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 4752523750235612364, guid: 713946674689e6d4e9662ba92becdd75, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.2
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 4752523750235612364, guid: 713946674689e6d4e9662ba92becdd75, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1130,5 +1146,10 @@ Animator:
 --- !u!4 &4151314425277659143 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4752523750235612364, guid: 713946674689e6d4e9662ba92becdd75, type: 3}
+  m_PrefabInstance: {fileID: 8676243308882140363}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4151314425278014501 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4752523750235257070, guid: 713946674689e6d4e9662ba92becdd75, type: 3}
   m_PrefabInstance: {fileID: 8676243308882140363}
   m_PrefabAsset: {fileID: 0}

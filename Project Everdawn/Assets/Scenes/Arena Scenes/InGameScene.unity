@@ -1167,6 +1167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 1403972039}
+  anim: {fileID: 0}
   ability: {fileID: 0}
   isPreview: 1
 --- !u!95 &158509299
@@ -5214,6 +5215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 1536723287}
+  anim: {fileID: 0}
   ability: {fileID: 0}
   isPreview: 1
 --- !u!95 &478127565
@@ -5538,6 +5540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 808605432}
+  anim: {fileID: 0}
   ability: {fileID: 0}
   isPreview: 1
 --- !u!95 &502710459
@@ -7206,6 +7209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 1450361168}
+  anim: {fileID: 0}
   ability: {fileID: 0}
   isPreview: 1
 --- !u!95 &688873989
@@ -7619,14 +7623,14 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.8392157, g: 1, b: 0.8567746, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1.25
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.2
@@ -12693,6 +12697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 829696480}
+  anim: {fileID: 0}
   ability: {fileID: 0}
   isPreview: 1
 --- !u!95 &1315974521
@@ -20569,6 +20574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 561815899}
+  anim: {fileID: 0}
   ability: {fileID: 0}
   isPreview: 1
 --- !u!95 &2137932697

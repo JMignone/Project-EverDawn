@@ -100,6 +100,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8498447407944041634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4227427531032147857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b9733be55522d64d981375ee8154541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitStats: {fileID: 4300487081235283212}
+  agent: {fileID: 4300487081545407401}
+  animationAttackDelayStartTiming: 0.52
 --- !u!1 &4286050856114231759
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,6 +350,7 @@ MonoBehaviour:
   inRangeTargets: []
   enemyHitTargets: []
   projectiles: []
+  animator: {fileID: 0}
 --- !u!54 &4300487081235283210
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -877,6 +893,11 @@ Animator:
 --- !u!4 &4227427531032570865 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2125849704715217509, guid: 346ba98a00eafbe40b4163738732e9cf, type: 3}
+  m_PrefabInstance: {fileID: 2822173643907023252}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4227427531032147857 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2125849704715318789, guid: 346ba98a00eafbe40b4163738732e9cf, type: 3}
   m_PrefabInstance: {fileID: 2822173643907023252}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4860593887191606636
