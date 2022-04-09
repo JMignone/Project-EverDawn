@@ -12,6 +12,9 @@ public class Tower : MonoBehaviour, IDamageable
     private Actor2D unitSprite;
 
     [SerializeField]
+    private TMPro.TextMeshProUGUI towerHp;
+
+    [SerializeField]
     protected GameObject target;
 
     [SerializeField]
@@ -57,6 +60,11 @@ public class Tower : MonoBehaviour, IDamageable
     public Actor2D UnitSprite
     {
         get { return unitSprite; }
+    }
+
+    public TMPro.TextMeshProUGUI TowerHp
+    {
+        get { return towerHp; }
     }
 
     public GameObject Target 
@@ -164,6 +172,9 @@ public class Tower : MonoBehaviour, IDamageable
         }
 
         if(stats.CurrHealth > 0) {
+            if(stats.CurrHealth < stats.MaxHealth)
+                towerHp.text = stats.CurrHealth.ToString();
+
             stats.IncRange = false; //towers should never have its range incremented
             if((target == null || inRangeTargets.Count == 0) && stats.CanAct) //if the target is null, we must find the closest target in hit targets. If hit targets is empty or failed, find the closest tower
                 ReTarget();
@@ -346,21 +357,21 @@ public class Tower : MonoBehaviour, IDamageable
 
     protected void lookAtTarget() {
         var targetPosition = target.transform.GetChild(0).position;
-        Vector3 direction = targetPosition - agent.Agent.transform.position; //flip this as needed if the tower is in the oppisite direction
+        Vector3 direction = targetPosition - agent.transform.position; //flip this as needed if the tower is in the oppisite direction
         direction.y = 0; // Ignore Y
         Quaternion targetRotation = Quaternion.LookRotation(direction);
 
         // encase somthing here such that the base of the turret does not rotate
-        agent.Agent.transform.rotation = Quaternion.RotateTowards(agent.Agent.transform.rotation, targetRotation, stats.RotationSpeed * Time.deltaTime); //the number is degrees/second, maybe differnt per unit
+        agent.transform.rotation = Quaternion.RotateTowards(agent.transform.rotation, targetRotation, stats.RotationSpeed * Time.deltaTime); //the number is degrees/second, maybe differnt per unit
          //
     }
 
     protected void resetToCenter() { //resets a towers direction
-        var targetPosition = agent.Agent.transform.position;
+        var targetPosition = agent.transform.position;
         targetPosition.z = 0;
-        Vector3 direction = targetPosition - agent.Agent.transform.position;
+        Vector3 direction = targetPosition - agent.transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        agent.Agent.transform.rotation = Quaternion.RotateTowards(agent.Agent.transform.rotation, targetRotation, stats.RotationSpeed * Time.deltaTime);
+        agent.transform.rotation = Quaternion.RotateTowards(agent.transform.rotation, targetRotation, stats.RotationSpeed * Time.deltaTime);
     }
 
     void IDamageable.TakeDamage(float amount) {

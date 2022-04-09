@@ -392,7 +392,7 @@ public class BaseStats
     public bool CanAct { get { return effectStats.CanAct() && summoningSicknessUI.IsReady; } }
 
     public float SpeedMultiplier() {
-        if(effectStats.RootedStats.IsRooted || effectStats.FrozenStats.IsFrozen)
+        if(effectStats.RootedStats.IsRooted || effectStats.FrozenStats.IsFrozen || effectStats.StunnedStats.IsStunned)
             return 0;
         else
             return effectStats.SlowedStats.CurrentSlowIntensity;

@@ -362,7 +362,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
 
     public void OnPointerClick(PointerEventData pointerEventData) {
         if(!isDragging && abilityUI.CanFire && unit.Stats.CanAct && autoTag != "None") { //if the abililty can be clicked
-            Collider[] colliders = Physics.OverlapSphere(unit.Agent.Agent.transform.position, maxRange);
+            Collider[] colliders = Physics.OverlapSphere(unit.Agent.transform.position, maxRange);
             Component testComponent = abilityPrefabs[0].GetComponent(typeof(IAbility));
 
             Actor3D closestTarget = null;
@@ -383,7 +383,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
                         }
 
                         if(GameFunctions.WillHit((testComponent as IAbility).HeightAttackable, (testComponent as IAbility).TypeAttackable, damageable)) {
-                            distance = Vector3.Distance(unit.Agent.Agent.transform.position, collider.transform.position);
+                            distance = Vector3.Distance(unit.Agent.transform.position, collider.transform.position);
                             if(distance < closestDistance) {
                                 closestDistance = distance;
                                 closestTarget = collider.gameObject.GetComponent<Actor3D>();
@@ -430,7 +430,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
                     }
 
                     if((damageable as IDamageable).Stats.Targetable && GameFunctions.WillHit((testComponent as IAbility).HeightAttackable, (testComponent as IAbility).TypeAttackable, damageable)) {
-                        distance = Vector3.Distance(unit.Agent.Agent.transform.position, collider.transform.position);
+                        distance = Vector3.Distance(unit.Agent.transform.position, collider.transform.position);
                         if(distance < closestDistance) {
                             closestDistance = distance;
                             chosenTarget = collider.gameObject.GetComponent<Actor3D>();

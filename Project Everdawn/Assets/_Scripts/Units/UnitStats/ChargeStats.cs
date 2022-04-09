@@ -53,19 +53,21 @@ public class ChargeStats
 
     public void UpdateChargeStats() {
         if(charges) {
-            if(unit.IsMoving && !unit.Stats.IsAttacking && !isCharging && unit.Stats.CanAct && !unit.Stats.IsCastingAbility) {
-                if(currentDelay < chargeDelay) 
-                    currentDelay += Time.deltaTime * unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
-                else {
-                    currentDelay = 0;
-                    isCharging = true;
+            if(!unit.JumpStats.Jumping) {
+                if(unit.IsMoving && !unit.Stats.IsAttacking && !isCharging && unit.Stats.CanAct && !unit.Stats.IsCastingAbility) {
+                    if(currentDelay < chargeDelay) 
+                        currentDelay += Time.deltaTime * unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
+                    else {
+                        currentDelay = 0;
+                        isCharging = true;
 
-                    if(jumpWhileCharging)
-                        unit.Agent.Agent.areaMask = originalAreaMask + 4;
+                        if(jumpWhileCharging)
+                            unit.Agent.Agent.areaMask = originalAreaMask + 4;
+                    }
                 }
+                else
+                    currentDelay = 0;
             }
-            else
-                currentDelay = 0;
             Charge();
         }
     }

@@ -13,8 +13,10 @@ public class AbilityPreview : MonoBehaviour
 
     public void ReduceHighlightIndicator() {
         foreach(GameObject go in targets) {
-            IDamageable unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
-            unit.Stats.DecIndicatorNum();
+            if(go != null) {
+                IDamageable unit = (go.GetComponent(typeof(IDamageable)) as IDamageable);
+                unit.Stats.DecIndicatorNum();
+            }
         }
         targets = new List<GameObject>();
     }

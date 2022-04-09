@@ -36,7 +36,7 @@ public class ChainStats
         chainCount--;
 
         Vector3 position = (enemyGo.GetComponent(typeof(IDamageable)) as IDamageable).Agent.transform.position;
-        Collider[] colliders = Physics.OverlapSphere((enemyGo.GetComponent(typeof(IDamageable)) as IDamageable).Agent.transform.position, chainRadius);
+        Collider[] colliders = Physics.OverlapSphere(position, chainRadius);
 
         Actor3D enemyTarget = null;
         if(colliders.Length > 0) {
@@ -55,7 +55,7 @@ public class ChainStats
                     //make sure we are not rebounding to the same object
                     if(enemyGo == damageable.gameObject)
                         continue;
-                        
+
                     if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, damageable)) {
                         distance = Vector3.Distance(damageable.transform.position, collider.transform.position);
                         if(distance < closestDistance) {
@@ -66,7 +66,7 @@ public class ChainStats
                 }
             }
         }
-    
+
         return enemyTarget;
     }
 }

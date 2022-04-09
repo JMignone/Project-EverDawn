@@ -364,7 +364,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
 
     public void OnPointerClick(PointerEventData pointerEventData) {
         if(!isDragging && abilityUI.CanFire && Unit.Stats.CanAct && autoTag != "None") { //if the abililty can be clicked
-            Collider[] colliders = Physics.OverlapSphere(Unit.Agent.Agent.transform.position, maxRange);
+            Collider[] colliders = Physics.OverlapSphere(Unit.Agent.transform.position, maxRange);
             Component testComponent = abilityPrefabs[0].GetComponent(typeof(IAbility));
 
             Vector3 closestTargetPosition = new Vector3(-1, -1, -1);
@@ -385,7 +385,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                         }
                         
                         if(GameFunctions.WillHit((testComponent as IAbility).HeightAttackable, (testComponent as IAbility).TypeAttackable, damageable)) {
-                            distance = Vector3.Distance(Unit.Agent.Agent.transform.position, collider.transform.position);
+                            distance = Vector3.Distance(Unit.Agent.transform.position, collider.transform.position);
                             if(distance < closestDistance) {
                                 closestDistance = distance;
                                 closestTargetPosition = collider.transform.position;
@@ -409,7 +409,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 }
                 else if(passesObstacles == GameConstants.PASS_OBSTACLES.NONE) {
                     UnityEngine.AI.NavMeshHit hit;
-                    UnityEngine.AI.NavMesh.Raycast(Unit.Agent.Agent.transform.position, closestTargetPosition, out hit, 1);
+                    UnityEngine.AI.NavMesh.Raycast(Unit.Agent.transform.position, closestTargetPosition, out hit, 1);
                     fireMousePosition = hit.position;
                 }
                 else
@@ -533,12 +533,12 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             }
             else if(move.PassObstacles == GameConstants.PASS_OBSTACLES.HALF) {
                 if(!UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 1f, areaMask)) {
-                    UnityEngine.AI.NavMesh.Raycast(Unit.Agent.Agent.transform.position, position, out hit, 1);
+                    UnityEngine.AI.NavMesh.Raycast(Unit.Agent.transform.position, position, out hit, 1);
                     position = hit.position;
                 }
             }
             else {
-                UnityEngine.AI.NavMesh.Raycast(Unit.Agent.Agent.transform.position, position, out hit, 1);
+                UnityEngine.AI.NavMesh.Raycast(Unit.Agent.transform.position, position, out hit, 1);
                 //position = GameFunctions.adjustForTowers(hit.position, radius);
                 position = hit.position;
             }
@@ -575,12 +575,12 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             }
             else if(move.PassObstacles == GameConstants.PASS_OBSTACLES.HALF) {
                 if(!UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 1f, areaMask)) {
-                    UnityEngine.AI.NavMesh.Raycast(Unit.Agent.Agent.transform.position, position, out hit, 1);
+                    UnityEngine.AI.NavMesh.Raycast(Unit.Agent.transform.position, position, out hit, 1);
                     position = hit.position;
                 }
             }
             else {
-                UnityEngine.AI.NavMesh.Raycast(Unit.Agent.Agent.transform.position, position, out hit, 1);
+                UnityEngine.AI.NavMesh.Raycast(Unit.Agent.transform.position, position, out hit, 1);
                 //position = GameFunctions.adjustForTowers(hit.position, radius);
                 position = hit.position;
             }

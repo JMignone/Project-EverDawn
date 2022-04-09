@@ -47,6 +47,10 @@ public class JumpStats
             jumping = true;
             Vector3 jumpStartPoint = unit.Agent.Agent.currentOffMeshLinkData.startPos;
             jumpEndPoint = unit.Agent.Agent.currentOffMeshLinkData.endPos;
+            if(jumpEndPoint.z > jumpStartPoint.z)
+                jumpEndPoint.z += 1;
+            else
+                jumpEndPoint.z -= 1;
 
             link = (NavMeshLink) unit.Agent.Agent.navMeshOwner;
             link.costModifier = -1; //resets the link so other units can use
@@ -68,7 +72,7 @@ public class JumpStats
     }
 
     public void Jump() {
-        if(Vector3.Distance(jumpEndPoint, unit.Agent.transform.position) > unit.Agent.Agent.radius) {
+        if(Vector3.Distance(jumpEndPoint, unit.Agent.transform.position) > unit.Agent.Agent.radius/3) {
             Vector3 direction = jumpEndPoint - unit.Agent.transform.position;
             direction.y = 0;
             direction = direction.normalized;
@@ -76,7 +80,7 @@ public class JumpStats
             unit.Agent.transform.position += direction * unit.Stats.MoveSpeed * AdjustedSpeedMultiplier() * Time.deltaTime;
 
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            unit.Agent.transform.rotation = Quaternion.RotateTowards(unit.Agent.transform.rotation, targetRotation, unit.Stats.RotationSpeed * Time.deltaTime); //the number is degrees/second, maybe differnt per unit
+            unit.Agent.transform.rotation = Quaternion.RotateTowards(unit.Agent.transform.rotation, targetRotation, unit.Stats.RotationSpeed*2 * Time.deltaTime); //the number is degrees/second, maybe differnt per unit
         }
         else {
             unit.Agent.Agent.CompleteOffMeshLink();
@@ -137,7 +141,7 @@ public class JumpStats
     }
 
     public float AdjustedSpeedMultiplier() {
-        if(unit.Stats.EffectStats.FrozenStats.IsFrozen)
+        if(unit.Stats.EffectStats.FrozenStats.IsFrozen || unit.Stats.EffectStats.StunnedStats.IsStunned)
             return 0;
         else
             return unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;

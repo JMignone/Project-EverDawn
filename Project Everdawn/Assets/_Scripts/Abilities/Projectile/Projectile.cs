@@ -512,7 +512,7 @@ public class Projectile : MonoBehaviour, IAbility
     }
 
     public void Hit(Component damageable) {
-        if(blockable || (damageable as IDamageable).Agent == chosenTarget) { //if the projectile is blockable, or this is infact the chosen target
+        if((blockable || (damageable as IDamageable).Agent == chosenTarget) && !(hit && !canPierce && !chainStats.Chains)) { //if the projectile is blockable, or this is infact the chosen target
         
             if(GameFunctions.WillHit(heightAttackable, typeAttackable, damageable)) {
                 hit = true;

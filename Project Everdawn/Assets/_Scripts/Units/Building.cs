@@ -336,10 +336,10 @@ public class Building : MonoBehaviour, IDamageable
     void lookAtTarget() {
         var targetPosition = target.transform.GetChild(0).position;  //
 
-        Vector3 direction = targetPosition - agent.Agent.transform.position;
+        Vector3 direction = targetPosition - agent.transform.position;
         direction.y = 0; // Ignore Y, usful for airborne units
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        agent.Agent.transform.rotation = Quaternion.RotateTowards(agent.Agent.transform.rotation, targetRotation, stats.RotationSpeed * Time.deltaTime); //the number is degrees/second, maybe differnt per unit
+        agent.transform.rotation = Quaternion.RotateTowards(agent.transform.rotation, targetRotation, stats.RotationSpeed * Time.deltaTime); //the number is degrees/second, maybe differnt per unit
     }
 
     public void OnTriggerEnter(Collider other) {

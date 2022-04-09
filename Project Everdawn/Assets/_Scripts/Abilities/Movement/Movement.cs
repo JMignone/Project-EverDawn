@@ -74,7 +74,7 @@ public class Movement : Projectile
             Destroy(gameObject);
             return;
         }
-        Unit.Agent.Agent.transform.position = new Vector3(transform.position.x, Unit.Agent.transform.position.y, transform.position.z);
+        Unit.Agent.transform.position = new Vector3(transform.position.x, Unit.Agent.transform.position.y, transform.position.z);
         Unit.Agent.transform.rotation = transform.rotation;
             
         if(ChosenTarget != null && !BoomerangStats.GoingBack) { //this is only used if the projectile was fired at a specified target. Must check if its a boomerang and already going back
@@ -98,7 +98,7 @@ public class Movement : Projectile
             if(targetReached || (Vector3.Distance(transform.position, TargetLocation) <= Radius || ( (Vector3.Distance(transform.position, LastKnownLocation) <= Radius) && BoomerangStats.IsBoomerang && BoomerangStats.GoingBack ) ) ){ //if the projectile is at the end of its flight
                 targetReached = true;
                 NavMeshHit hit;
-                if(!NavMesh.SamplePosition(Unit.Agent.Agent.transform.position, out hit, 1f, 9)) { //if the dashing unit ended up in an obstacle
+                if(!NavMesh.SamplePosition(Unit.Agent.transform.position, out hit, 1f, 9)) { //if the dashing unit ended up in an obstacle
                     //MonoBehaviour.print("TESTS");
                     if(retreatStats.Retreats) {
                         transform.position -= transform.forward * Speed * SpeedReduction * Time.deltaTime;
