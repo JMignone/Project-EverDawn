@@ -98,9 +98,10 @@
     <Compile Include="Assets\_Scripts\Abilities\SkillShot.cs" />
     <Compile Include="Assets\_Scripts\Units\UnitEffects\PoisonedStats.cs" />
     <Compile Include="Assets\_Scripts\Units\UnitEffects\StunnedStats.cs" />
-    <Compile Include="Assets\MenuAssets\Scripts\CardDisplay.cs" />
+    <Compile Include="Assets\Temp Art Assets\Droid\Scripts\RepeatedlyInstantiate.cs" />
     <Compile Include="Assets\MenuAssets\Scripts\Player.cs" />
     <Compile Include="Assets\_Scripts\Managers\GameFunctions.cs" />
+    <Compile Include="Assets\MenuAssets\Scripts\CardDisplay.cs" />
     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Events\MenuStateEvent.cs" />
     <Compile Include="Assets\_Scripts\Units\UnitEffects\StrengthenedStats.cs" />
     <Compile Include="Assets\MenuAssets\ScriptableObjects\CharactersAndCards\SO_Definitions\SO_CharacterDatabase.cs" />
@@ -270,7 +271,6 @@
     <Compile Include="Assets\LeanTween\Examples\Scripts\Following.cs" />
     <Compile Include="Assets\MenuAssets\Scripts\TeamDisplay.cs" />
     <Compile Include="Assets\MenuAssets\GameEvents\Listeners\ArenaDisplayListener.cs" />
-    <Compile Include="Assets\Temp Art Assets\Droid\Scripts\RepeatedlyInstantiate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\InGame\_Units\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />

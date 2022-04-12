@@ -13,6 +13,7 @@ public class AnimatorStateController : MonoBehaviour
     
     private Animator animator;
     private bool attackTriggered = false;
+    private bool previousIsCasting = false;
 
     private void Awake()
     {
@@ -51,6 +52,18 @@ public class AnimatorStateController : MonoBehaviour
             {
                 attackTriggered = false;
             }
+        }
+
+        // check if casting ability state as changed
+        if (previousIsCasting != unitStats.Stats.IsCastingAbility)
+        {
+            // !previousIsCasting is a faster way of checking unitStats.Stats.IsCastingAbility in this case
+            if (!previousIsCasting == true)
+            {
+                animator.SetTrigger("Ability");
+            }
+
+            previousIsCasting = unitStats.Stats.IsCastingAbility;
         }
     }
 }
