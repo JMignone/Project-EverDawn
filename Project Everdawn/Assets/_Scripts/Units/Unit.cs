@@ -81,6 +81,11 @@ public class Unit : MonoBehaviour, IDamageable
         get { return attackStats; }
     }
 
+    public ChargeStats ChargeStats
+    {
+        get { return chargeStats; }
+    }
+
     public DashStats DashStats
     {
         get { return dashStats; }

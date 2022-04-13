@@ -709,6 +709,7 @@ MonoBehaviour:
   inRangeTargets: []
   enemyHitTargets: []
   projectiles: []
+  animator: {fileID: 0}
 --- !u!54 &3925836232371597726
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -808,6 +809,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 3925836231506596150}
     m_Modifications:
     - target: {fileID: 228281755519758848, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228281755519758848, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228281755519758848, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: bf9385f8ea603464c8f1daf08d711f69, type: 2}
@@ -878,6 +887,14 @@ PrefabInstance:
     - target: {fileID: 228281755522940640, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
       propertyPath: m_Name
       value: Dasher
+      objectReference: {fileID: 0}
+    - target: {fileID: 228281756301717258, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228281756301717258, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 228281756301717258, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
       propertyPath: m_Materials.Array.data[0]

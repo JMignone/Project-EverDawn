@@ -94,11 +94,12 @@
     <Compile Include="Assets\MenuAssets\ScriptableObjects\Arenas\SO_Definitions\SO_ArenaList.cs" />
     <Compile Include="Assets\_Scripts\Abilities\AbilityPreview.cs" />
     <Compile Include="Assets\LeanTween\Framework\LTSeq.cs" />
+    <Compile Include="Assets\Temp Art Assets\aCommon\Scripts\WolfASC.cs" />
     <Compile Include="Assets\MenuAssets\Scripts\Clan.cs" />
     <Compile Include="Assets\_Scripts\Abilities\SkillShot.cs" />
     <Compile Include="Assets\_Scripts\Units\UnitEffects\PoisonedStats.cs" />
     <Compile Include="Assets\_Scripts\Units\UnitEffects\StunnedStats.cs" />
-    <Compile Include="Assets\Temp Art Assets\Droid\Scripts\RepeatedlyInstantiate.cs" />
+    <Compile Include="Assets\Temp Art Assets\aCommon\Scripts\RepeatedlyInstantiate.cs" />
     <Compile Include="Assets\MenuAssets\Scripts\Player.cs" />
     <Compile Include="Assets\_Scripts\Managers\GameFunctions.cs" />
     <Compile Include="Assets\MenuAssets\Scripts\CardDisplay.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\MenuAssets\Scripts\InputAnimator.cs" />
+    <Compile Include="Assets\Temp Art Assets\aCommon\Scripts\AbilityASC.cs" />
     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\UnityEvents\UnityArenaDisplayEvent.cs" />
     <Compile Include="Assets\MenuAssets\Scripts\ArenaDisplay.cs" />
     <Compile Include="Assets\_Scripts\Abilities\CreateAtLocation\CreateAtLocation.cs" />
@@ -235,6 +237,7 @@
     <Compile Include="Assets\MenuAssets\Scripts\AverageResourceDisplay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
+    <Compile Include="Assets\Temp Art Assets\aCommon\Scripts\BoarASC.cs" />
     <Compile Include="Assets\_Scripts\Interface\IDamageable.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
@@ -271,6 +274,7 @@
     <Compile Include="Assets\LeanTween\Examples\Scripts\Following.cs" />
     <Compile Include="Assets\MenuAssets\Scripts\TeamDisplay.cs" />
     <Compile Include="Assets\MenuAssets\GameEvents\Listeners\ArenaDisplayListener.cs" />
+    <Compile Include="Assets\Temp Art Assets\Cannon\Scripts\FaceTarget.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\InGame\_Units\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />

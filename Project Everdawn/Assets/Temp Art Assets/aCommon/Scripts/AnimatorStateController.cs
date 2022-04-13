@@ -5,22 +5,21 @@ using UnityEngine.AI;
 public class AnimatorStateController : MonoBehaviour
 {
     [SerializeField]
-    private Unit unitStats;
+    protected Unit unitStats;
     [SerializeField]
-    private NavMeshAgent agent;
+    protected NavMeshAgent agent;
     [SerializeField]
-    private float animationAttackDelayStartTiming = 1f;
+    protected float animationAttackDelayStartTiming = 1f;
     
-    private Animator animator;
-    private bool attackTriggered = false;
-    private bool previousIsCasting = false;
+    protected Animator animator;
+    protected bool attackTriggered = false;
 
-    private void Awake()
+    protected void Awake()
     {
         animator = gameObject.GetComponent<Animator>();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (agent != null)
         {
@@ -52,18 +51,6 @@ public class AnimatorStateController : MonoBehaviour
             {
                 attackTriggered = false;
             }
-        }
-
-        // check if casting ability state as changed
-        if (previousIsCasting != unitStats.Stats.IsCastingAbility)
-        {
-            // !previousIsCasting is a faster way of checking unitStats.Stats.IsCastingAbility in this case
-            if (!previousIsCasting == true)
-            {
-                animator.SetTrigger("Ability");
-            }
-
-            previousIsCasting = unitStats.Stats.IsCastingAbility;
         }
     }
 }
