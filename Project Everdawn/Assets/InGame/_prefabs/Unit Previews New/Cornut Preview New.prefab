@@ -198,6 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 7317817158579484834}
+  anim: {fileID: 0}
   ability: {fileID: 0}
   isPreview: 1
 --- !u!1001 &7859250031333687349
@@ -217,15 +218,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4752523750235612364, guid: 713946674689e6d4e9662ba92becdd75, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 4752523750235612364, guid: 713946674689e6d4e9662ba92becdd75, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 4752523750235612364, guid: 713946674689e6d4e9662ba92becdd75, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.2
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 4752523750235612364, guid: 713946674689e6d4e9662ba92becdd75, type: 3}
       propertyPath: m_LocalPosition.x
