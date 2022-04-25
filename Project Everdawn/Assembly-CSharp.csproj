@@ -120,6 +120,7 @@
     <Compile Include="Assets\LeanTween\Framework\LeanAudio.cs" />
     <Compile Include="Assets\_Scripts\Abilities\Effects\LingeringStats.cs" />
     <Compile Include="Assets\Temp Art Assets\aCommon\Scripts\AnimatorStateController.cs" />
+    <Compile Include="Assets\Temp Art Assets\aCommon\Scripts\StatusEffectMaterialSwapping.cs" />
     <Compile Include="Assets\MenuAssets\Scripts\UIAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\_Scripts\Units\UnitEffects\PulledStats.cs" />

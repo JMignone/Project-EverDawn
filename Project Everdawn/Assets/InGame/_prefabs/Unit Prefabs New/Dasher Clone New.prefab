@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &5979464699466938161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236235106112296420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e67a410c2d1f3d640973da6014417a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers:
+  - {fileID: 1236235104742114318}
+  - {fileID: 1236235106107021572}
+  statusMaterialSolidColor: {fileID: 2100000, guid: 549e03e4ffa62924a86ed215c3a18c64, type: 2}
 --- !u!1 &3925836231010811492
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,7 +603,7 @@ MonoBehaviour:
     detectionObject: {fileID: 3925836231993521891}
     visionObject: {fileID: 3925836231725190131}
     unitMaterials:
-      renderers: []
+      materialSwapper: {fileID: 5979464699466938161}
     movementType: 0
     heightAttackable: 1
     unitType: 0
@@ -906,6 +922,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: bf9385f8ea603464c8f1daf08d711f69, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
+--- !u!23 &1236235104742114318 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 228281756301717258, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
+  m_PrefabInstance: {fileID: 1300687395088591620}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &1236235106102912964 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 228281755515538624, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
@@ -914,6 +935,16 @@ Animator:
 --- !u!4 &1236235106112719290 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 228281755522704062, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
+  m_PrefabInstance: {fileID: 1300687395088591620}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1236235106112296420 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 228281755522940640, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
+  m_PrefabInstance: {fileID: 1300687395088591620}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &1236235106107021572 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 228281755519758848, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
   m_PrefabInstance: {fileID: 1300687395088591620}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3925836231040451564
