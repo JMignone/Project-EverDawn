@@ -18,6 +18,7 @@ public class UnitMaterials
     [SerializeField]
     private StatusEffectMaterialSwapping materialSwapper;
 
+    private Vector4 statusHDRColor = new Vector4(0, 0, 0, 1);
     private bool hovered;
 
 /*
@@ -33,8 +34,9 @@ public class UnitMaterials
         get { return renderers; }
     }
 
-    public void Start() {
-        emissionColor = new Color(1f,1f,1f,1f);
+    public void Start()
+    {
+        //emissionColor = new Color(1f,1f,1f,1f);
     }
 */
     public void MakeInvisible()
@@ -104,8 +106,9 @@ public class UnitMaterials
 
         if (hovered == false)
         {
-            Vector4 statusMaterialHDRColor = materialSwapper.StatusMaterialHDRColor;
-            materialSwapper.ChangeHDRColor(new Vector4(statusMaterialHDRColor.x + .1569f, statusMaterialHDRColor.y, statusMaterialHDRColor.z + .4706f, 1));
+            statusHDRColor = new Vector4(statusHDRColor.x + .1569f, statusHDRColor.y, statusHDRColor.z + .4706f, 1);
+
+            materialSwapper.ChangeHDRColor(statusHDRColor);
         }
     }
 
@@ -122,8 +125,9 @@ public class UnitMaterials
 
         if (hovered == false)
         {
-            Vector4 statusMaterialHDRColor = materialSwapper.StatusMaterialHDRColor;
-            materialSwapper.ChangeHDRColor(new Vector4(statusMaterialHDRColor.x - .1569f, statusMaterialHDRColor.y, statusMaterialHDRColor.z - .4706f, 1));
+            statusHDRColor = new Vector4(statusHDRColor.x - .1569f, statusHDRColor.y, statusHDRColor.z - .4706f, 1);
+
+            materialSwapper.ChangeHDRColor(statusHDRColor);
         }
     }
 
@@ -140,8 +144,9 @@ public class UnitMaterials
 
         if (hovered == false)
         {
-            Vector4 statusMaterialHDRColor = materialSwapper.StatusMaterialHDRColor;
-            materialSwapper.ChangeHDRColor(new Vector4(statusMaterialHDRColor.x + .0784f, statusMaterialHDRColor.y + .451f, statusMaterialHDRColor.z + .39216f, 1));
+            statusHDRColor = new Vector4(statusHDRColor.x + .0784f, statusHDRColor.y + .451f, statusHDRColor.z + .39216f, 1);
+
+            materialSwapper.ChangeHDRColor(statusHDRColor);
         }
     }
 
@@ -158,8 +163,9 @@ public class UnitMaterials
 
         if (hovered == false)
         {
-            Vector4 statusMaterialHDRColor = materialSwapper.StatusMaterialHDRColor;
-            materialSwapper.ChangeHDRColor(new Vector4(statusMaterialHDRColor.x - .0784f, statusMaterialHDRColor.y - .451f, statusMaterialHDRColor.z - .39216f, 1));
+            statusHDRColor = new Vector4(statusHDRColor.x - .0784f, statusHDRColor.y - .451f, statusHDRColor.z - .39216f, 1);
+
+            materialSwapper.ChangeHDRColor(statusHDRColor);
         }
     }
 
@@ -175,7 +181,6 @@ public class UnitMaterials
         }
         */
 
-        Vector4 statusMaterialHDRColor = materialSwapper.StatusMaterialHDRColor;
         materialSwapper.ChangeHDRColor(new Vector4(.5f, 0, 0, 1));
 
         hovered = true;
@@ -192,8 +197,7 @@ public class UnitMaterials
         }
         */
 
-        Vector4 statusMaterialHDRColor = materialSwapper.StatusMaterialHDRColor;
-        materialSwapper.ChangeHDRColor(new Vector4(0, 0, 0, 1));
+        materialSwapper.ChangeHDRColor(statusHDRColor);
 
         hovered = false;
     }

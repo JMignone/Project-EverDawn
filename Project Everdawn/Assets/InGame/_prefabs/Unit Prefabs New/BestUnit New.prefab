@@ -730,7 +730,7 @@ MonoBehaviour:
   - {fileID: 1933008239729106031}
   - {fileID: 4407296418576737664}
   - {fileID: 1596981882384908691}
-  statusMaterial: {fileID: 2100000, guid: 549e03e4ffa62924a86ed215c3a18c64, type: 2}
+  statusMaterialSolidColor: {fileID: 2100000, guid: 549e03e4ffa62924a86ed215c3a18c64, type: 2}
 --- !u!1 &7870179655350065263
 GameObject:
   m_ObjectHideFlags: 0

@@ -30,7 +30,7 @@ MonoBehaviour:
   renderers:
   - {fileID: 2010730319527503700}
   - {fileID: 2010730321623145336}
-  statusMaterial: {fileID: 2100000, guid: 549e03e4ffa62924a86ed215c3a18c64, type: 2}
+  statusMaterialSolidColor: {fileID: 2100000, guid: 549e03e4ffa62924a86ed215c3a18c64, type: 2}
 --- !u!1 &7301237268377999428
 GameObject:
   m_ObjectHideFlags: 0

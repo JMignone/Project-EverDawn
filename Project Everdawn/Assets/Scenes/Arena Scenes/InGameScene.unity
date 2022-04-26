@@ -1785,6 +1785,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 193966697}
+  - component: {fileID: 193966698}
   m_Layer: 6
   m_Name: TurretArt
   m_TagString: Untagged
@@ -1808,6 +1809,22 @@ Transform:
   m_Father: {fileID: 1315974519}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &193966698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193966696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e67a410c2d1f3d640973da6014417a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers:
+  - {fileID: 219846589}
+  - {fileID: 549411066}
+  statusMaterialSolidColor: {fileID: 2100000, guid: 549e03e4ffa62924a86ed215c3a18c64, type: 2}
 --- !u!1001 &200419524
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4099,9 +4116,7 @@ MonoBehaviour:
     detectionObject: {fileID: 1429048356}
     visionObject: {fileID: 877213780}
     unitMaterials:
-      renderers:
-      - {fileID: 1711813856095320006}
-      - {fileID: 1711813855785521548}
+      materialSwapper: {fileID: 1746201452}
     movementType: 0
     heightAttackable: 0
     unitType: 1
@@ -4295,9 +4310,7 @@ MonoBehaviour:
     detectionObject: {fileID: 208280334}
     visionObject: {fileID: 697741515}
     unitMaterials:
-      renderers:
-      - {fileID: 790698095}
-      - {fileID: 295379909}
+      materialSwapper: {fileID: 929296019}
     movementType: 0
     heightAttackable: 0
     unitType: 1
@@ -9490,9 +9503,7 @@ MonoBehaviour:
     detectionObject: {fileID: 1055625688}
     visionObject: {fileID: 527617589}
     unitMaterials:
-      renderers:
-      - {fileID: 219846589}
-      - {fileID: 549411066}
+      materialSwapper: {fileID: 193966698}
     movementType: 0
     heightAttackable: 0
     unitType: 1
@@ -9665,6 +9676,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 929296018}
+  - component: {fileID: 929296019}
   m_Layer: 6
   m_Name: TurretArt
   m_TagString: Untagged
@@ -9688,6 +9700,22 @@ Transform:
   m_Father: {fileID: 502710457}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &929296019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929296017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e67a410c2d1f3d640973da6014417a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers:
+  - {fileID: 790698095}
+  - {fileID: 295379909}
+  statusMaterialSolidColor: {fileID: 2100000, guid: 549e03e4ffa62924a86ed215c3a18c64, type: 2}
 --- !u!1 &944897463
 GameObject:
   m_ObjectHideFlags: 0
@@ -11350,6 +11378,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1090825098}
+  - component: {fileID: 1090825099}
   m_Layer: 6
   m_Name: TurretArt
   m_TagString: Untagged
@@ -11373,6 +11402,22 @@ Transform:
   m_Father: {fileID: 688873987}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &1090825099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090825097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e67a410c2d1f3d640973da6014417a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers:
+  - {fileID: 1711813854865836185}
+  - {fileID: 1711813855578582284}
+  statusMaterialSolidColor: {fileID: 2100000, guid: 549e03e4ffa62924a86ed215c3a18c64, type: 2}
 --- !u!1 &1091527256
 GameObject:
   m_ObjectHideFlags: 0
@@ -12171,9 +12216,7 @@ MonoBehaviour:
     detectionObject: {fileID: 672963758}
     visionObject: {fileID: 2144474582}
     unitMaterials:
-      renderers:
-      - {fileID: 415768655}
-      - {fileID: 1775589355}
+      materialSwapper: {fileID: 2029382832}
     movementType: 0
     heightAttackable: 0
     unitType: 1
@@ -14944,6 +14987,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1522974955}
+  - component: {fileID: 1522974956}
   m_Layer: 6
   m_Name: TurretArt
   m_TagString: Untagged
@@ -14967,6 +15011,22 @@ Transform:
   m_Father: {fileID: 158509297}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &1522974956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522974954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e67a410c2d1f3d640973da6014417a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers:
+  - {fileID: 1711813854615142998}
+  - {fileID: 1711813855360797332}
+  statusMaterialSolidColor: {fileID: 2100000, guid: 549e03e4ffa62924a86ed215c3a18c64, type: 2}
 --- !u!1 &1528804212
 GameObject:
   m_ObjectHideFlags: 0
@@ -17175,6 +17235,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1746201451}
+  - component: {fileID: 1746201452}
   m_Layer: 6
   m_Name: TurretArt
   m_TagString: Untagged
@@ -17198,6 +17259,22 @@ Transform:
   m_Father: {fileID: 2137932695}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &1746201452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746201450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e67a410c2d1f3d640973da6014417a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers:
+  - {fileID: 1711813856095320006}
+  - {fileID: 1711813855785521548}
+  statusMaterialSolidColor: {fileID: 2100000, guid: 549e03e4ffa62924a86ed215c3a18c64, type: 2}
 --- !u!1 &1763406971
 GameObject:
   m_ObjectHideFlags: 0
@@ -19467,9 +19544,7 @@ MonoBehaviour:
     detectionObject: {fileID: 944897465}
     visionObject: {fileID: 1836625908}
     unitMaterials:
-      renderers:
-      - {fileID: 1711813854865836185}
-      - {fileID: 1711813855578582284}
+      materialSwapper: {fileID: 1090825099}
     movementType: 0
     heightAttackable: 0
     unitType: 1
@@ -19584,6 +19659,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2029382831}
+  - component: {fileID: 2029382832}
   m_Layer: 6
   m_Name: TurretArt
   m_TagString: Untagged
@@ -19607,6 +19683,22 @@ Transform:
   m_Father: {fileID: 478127563}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &2029382832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2029382830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e67a410c2d1f3d640973da6014417a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers:
+  - {fileID: 415768655}
+  - {fileID: 1775589355}
+  statusMaterialSolidColor: {fileID: 2100000, guid: 549e03e4ffa62924a86ed215c3a18c64, type: 2}
 --- !u!1 &2032159620
 GameObject:
   m_ObjectHideFlags: 0
@@ -19816,9 +19908,7 @@ MonoBehaviour:
     detectionObject: {fileID: 1777450603}
     visionObject: {fileID: 129400840}
     unitMaterials:
-      renderers:
-      - {fileID: 1711813854615142998}
-      - {fileID: 1711813855360797332}
+      materialSwapper: {fileID: 1522974956}
     movementType: 0
     heightAttackable: 0
     unitType: 1

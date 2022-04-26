@@ -87,4 +87,9 @@ public class StatusEffectMaterialSwapping : MonoBehaviour
 
         statusMaterialHDRColor = newColor;
     }
+
+    private void OnDestroy()
+    {
+        Destroy(statusMaterialCopy);
+    }
 }
