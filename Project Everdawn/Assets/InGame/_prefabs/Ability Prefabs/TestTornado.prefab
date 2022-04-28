@@ -47,7 +47,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1224647179746862877}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 1224647179923901250}
   - component: {fileID: 2760993291048611903}
   - component: {fileID: 1224647179923901248}
+  - component: {fileID: 5896481383887817066}
   m_Layer: 0
   m_Name: TestTornado
   m_TagString: Player
@@ -131,6 +132,7 @@ MonoBehaviour:
   range: 120
   heightAttackable: 0
   typeAttackable: 1
+  playOnUnit: 0
   abilityControl: 0
   pauseAbility: 0
   stopOnMiss: 0
@@ -203,6 +205,10 @@ MonoBehaviour:
     explosionDamage: 0
     towerDamage: 0
     explosionRadius: 0
+  chainStats:
+    chains: 0
+    chainRadius: 0
+    chainCount: 0
   linearStats:
     isLinear: 0
     isVertical: 0
@@ -224,7 +230,6 @@ MonoBehaviour:
     size: 0
     summonPreview: {fileID: 0}
     timeToSummon: 6
-    currentSummonTime: 0
   applyResistanceStats:
     applyToSelf: 0
     applyToOthers: 0
@@ -267,6 +272,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5896481383887817066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224647179923901261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23a62381fc41c634ca6e68e5798b93c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particle: {fileID: 8442919319729617652, guid: 69ef7e418af93ea49aafecd1e653c503, type: 3}
 --- !u!1 &1224647180710323963
 GameObject:
   m_ObjectHideFlags: 0

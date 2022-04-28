@@ -190,6 +190,7 @@
     <Compile Include="Assets\_Scripts\Units\UnitEffects\UKnockbackStats.cs" />
     <Compile Include="Assets\MenuAssets\ScriptableObjects\Managers\SO_Definitions\SO_PlayerPrefsInterface.cs" />
     <Compile Include="Assets\_Scripts\Abilities\Projectile\Projectile.cs" />
+    <Compile Include="Assets\Temp Art Assets\Airstrike\Scripts\AirstrikeMovement.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathSplineTrack.cs" />
     <Compile Include="Assets\MenuAssets\DeckSaving\DeckDisplay.cs" />
     <Compile Include="Assets\MenuAssets\Scripts\CardListDisplay.cs" />
@@ -208,9 +209,11 @@
     <Compile Include="Assets\LeanTween\Framework\LeanTest.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\TestingZLegacy.cs" />
+    <Compile Include="Assets\Temp Art Assets\Freeze\Scripts\SpawnFreezeParticles.cs" />
     <Compile Include="Assets\_Scripts\Units\UnitEffects\RootedStats.cs" />
-    <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Events\VoidEvent.cs" />
+    <Compile Include="Assets\Temp Art Assets\Tornado\Scripts\SpawnTornadoParticles.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
+    <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Events\VoidEvent.cs" />
     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\UnityEvents\UnityCardEvent.cs" />
     <Compile Include="Assets\_Scripts\Units\UnitEffects\ResistStats.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathSpline2d.cs" />
@@ -253,12 +256,14 @@
     <Compile Include="Assets\_Scripts\Abilities\Effects\GrabStats.cs" />
     <Compile Include="Assets\_Scripts\Abilities\Projectile\ProjActor2D.cs" />
     <Compile Include="Assets\MenuAssets\StateMachines\Abstractions\Menu\MenuStateController.cs" />
+    <Compile Include="Assets\Temp Art Assets\aCommon\Scripts\DestroySelfOnDelay.cs" />
     <Compile Include="Assets\_Scripts\Units\UnitStats\DashStats.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\_Scripts\Abilities\Movement\MoveEffects\RetreatStats.cs" />
     <Compile Include="Assets\LeanTween\Framework\LTDescrOptional.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralEasingTypes.cs" />
+    <Compile Include="Assets\Temp Art Assets\Airstrike\Scripts\SpawnAirstrikePrefab.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralSequencer.cs" />
     <Compile Include="Assets\MenuAssets\GameEvents\Definitions\Void.cs" />
     <Compile Include="Assets\_Scripts\Abilities\Effects\PoisonStats.cs" />
