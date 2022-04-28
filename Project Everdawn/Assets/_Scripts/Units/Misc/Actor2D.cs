@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,7 +5,7 @@ public class Actor2D : MonoBehaviour
 {
     [SerializeField]
     GameObject followTarget;
-    //[SerializeField]
+    [SerializeField]
     Animator anim;
     //[SerializeField]
     NavMeshAgent agent;
@@ -15,7 +13,11 @@ public class Actor2D : MonoBehaviour
     GameObject ability;
     [SerializeField]
     bool isPreview;
-
+    /*
+    // added to support having an animation trigger (temporary, recommended future refactor) -Eagle
+    private bool previousIsCastingAbility = false;
+    private bool previousIsAttacking = false;
+    */
     float offset;
 
     public Animator Animator
@@ -30,16 +32,56 @@ public class Actor2D : MonoBehaviour
 
     private void Awake()
     {
+        // following code commented out to allow animator to be a serialized field -Eagle
+        /*
         if(GetComponent<Animator>()) {
             anim = GetComponent<Animator>();
             anim.SetBool("IsPreview", isPreview);
         }
+        */
         if(followTarget.GetComponent<NavMeshAgent>()) {
             agent = followTarget.GetComponent<NavMeshAgent>();
             offset = -agent.baseOffset;
         }
     }
+    /* removed for new animation code in AnimatorStateController -Eagle
+    private void Update()
+    {
+        // new animation code -Eagle
+        if (!isPreview && anim != null)
+        {
+            anim.SetBool("IsWalking", agent.velocity == Vector3.zero ? false : true);
 
+            Component damageable = followTarget.transform.parent.GetComponent(typeof(IDamageable));
+            Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
+
+            // restore this block when code is refactored to support individual attacks -Eagle
+            //if (previousIsCastingAbility == false && (unit as IDamageable).Stats.IsCastingAbility == true)
+            //{
+            //    anim.SetTrigger("Ability");
+            //}
+
+            //if (previousIsAttacking == false && (unit as IDamageable).Stats.IsAttacking == true)
+            //{
+            //    anim.SetTrigger("Attack");
+            //}
+            
+
+            // remove this block when code is refactored to support individual attacks -Eagle
+            if ((unit as IDamageable).Stats.IsCastingAbility == true)
+            {
+                anim.SetTrigger("Ability");
+            }
+            if ((unit as IDamageable).Stats.IsAttacking == true)
+            {
+                anim.SetTrigger("Attack");
+            }
+
+            previousIsCastingAbility = (unit as IDamageable).Stats.IsCastingAbility;
+            previousIsAttacking = (unit as IDamageable).Stats.IsAttacking;
+        }
+    }
+    
     private void FixedUpdate()
     {
         if (!isPreview && anim != null)
@@ -56,13 +98,12 @@ public class Actor2D : MonoBehaviour
                 && (unit as IDamageable).Stats.CanAct) ? true : false); //is in range, OR (is nearly done with attack and within vision)?
 
             //anim.SetBool("IsReady", ((unit as IDamageable).Stats.CurrAttackDelay/(unit as IDamageable).Stats.AttackDelay >= GameConstants.ATTACK_READY_PERCENTAGE && (unit as IDamageable).HitTargets.Contains((unit as IDamageable).Target)) ? true : false); //is nearly done with attack and within vision?
-            /*
-                We may need a seperate value for all units, as their animations for attacking might take longer, even tho we may want them to attack at similar speeds.
-                This way they can properly do their entire attack animation
-            */
+            
+                //We may need a seperate value for all units, as their animations for attacking might take longer, even tho we may want them to attack at similar speeds.
+                //This way they can properly do their entire attack animation
         }
     }
-
+    */
     private void LateUpdate()
     {
         if (followTarget != null)

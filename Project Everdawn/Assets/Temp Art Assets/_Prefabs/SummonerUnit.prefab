@@ -1,0 +1,2163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &40759890867238835
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4622149286806326734}
+  m_Layer: 0
+  m_Name: Mallearian_ R Finger0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4622149286806326734
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40759890867238835}
+  m_LocalRotation: {x: -0.6609695, y: 0.4602753, z: 0.20124996, w: 0.5574625}
+  m_LocalPosition: {x: -0.03210747, y: 0.00004821777, z: 0.02222187}
+  m_LocalScale: {x: 1.0000002, y: 1, z: 1.0000001}
+  m_Children:
+  - {fileID: 6788763648494506791}
+  m_Father: {fileID: 4416965520984440501}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -49.0429, y: 116.29861, z: -72.54942}
+--- !u!1 &47598231710367885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6874102837858432826}
+  m_Layer: 0
+  m_Name: Arkhrin_EyeRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6874102837858432826
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47598231710367885}
+  m_LocalRotation: {x: 0.026760267, y: -0.7066002, z: 0.026762526, w: 0.7066002}
+  m_LocalPosition: {x: -0.10375158, y: 0.05253891, z: -0.06100006}
+  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1}
+  m_Children: []
+  m_Father: {fileID: 307752014991710613}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 4.3379054, y: -89.99999, z: 0.00018344651}
+--- !u!1 &79486910775482546
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5811939004231645173}
+  m_Layer: 0
+  m_Name: Mallearian_ L Finger21
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5811939004231645173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79486910775482546}
+  m_LocalRotation: {x: -0.0000000080156415, y: -0.0000000022668174, z: -0.18693876, w: 0.98237157}
+  m_LocalPosition: {x: -0.04790245, y: 0, z: -0.000000076293944}
+  m_LocalScale: {x: 0.99999976, y: 0.9999998, z: 0.9999999}
+  m_Children:
+  - {fileID: 5983471140035349378}
+  m_Father: {fileID: 173097151745018133}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0.0000024399874, y: 0.0000029368432, z: -66.285515}
+--- !u!1 &157562007397506783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9136705183682957022}
+  m_Layer: 0
+  m_Name: Mallearian_ Spine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9136705183682957022
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157562007397506783}
+  m_LocalRotation: {x: -0.000002069184, y: 0.0000006940443, z: -0.0003981588, w: 0.99999994}
+  m_LocalPosition: {x: -0.09651512, y: -0.0001039505, z: 0.00000013398879}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8802999527483933102}
+  m_Father: {fileID: 9027135372947438098}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: -4.3559895, y: 3.9003744, z: -4.5967264}
+--- !u!1 &477711418894144636
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9103234877424830534}
+  m_Layer: 0
+  m_Name: SciFiBoStaffLAserBlade2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9103234877424830534
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477711418894144636}
+  m_LocalRotation: {x: 0.000000031476755, y: 0.00003675161, z: 0.99999964, w: 0.0008564725}
+  m_LocalPosition: {x: 0.31439024, y: 0.0012700326, z: -0.000000019073486}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5617629914905083921}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: -0.0042114183, y: 0.000008817036, z: 179.90184}
+--- !u!1 &693202287652885589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8977958321921803475}
+  m_Layer: 0
+  m_Name: Mallearian_ R Finger2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8977958321921803475
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693202287652885589}
+  m_LocalRotation: {x: -0.0008401859, y: -0.031365577, z: -0.039407577, w: 0.9987305}
+  m_LocalPosition: {x: -0.09424766, y: -0.0062130736, z: -0.017407188}
+  m_LocalScale: {x: 1.0000001, y: 0.99999994, z: 1}
+  m_Children:
+  - {fileID: 6601341856841277737}
+  m_Father: {fileID: 4416965520984440501}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: -0.23779628, y: -3.588249, z: -40.511726}
+--- !u!1 &896036331207894139
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3986282368351548013}
+  - component: {fileID: 7461492209678850965}
+  - component: {fileID: 3386473645645405019}
+  m_Layer: 0
+  m_Name: SM_MallearianBackPack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3986282368351548013
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896036331207894139}
+  m_LocalRotation: {x: 0.50019926, y: -0.49980065, z: -0.50019884, w: -0.49980104}
+  m_LocalPosition: {x: -0.09903518, y: -0.12762688, z: 0.00000015258789}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7700895233587050168}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &7461492209678850965
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896036331207894139}
+  m_Mesh: {fileID: 2837660816771147827, guid: 59a645142cce0d042864b4ae1aebf2a4, type: 3}
+--- !u!23 &3386473645645405019
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896036331207894139}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: af6b353905f8d7e4799f5442f6b26b0d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1166225575825970853
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 307752014991710613}
+  m_Layer: 0
+  m_Name: Mallearian_ Head
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &307752014991710613
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166225575825970853}
+  m_LocalRotation: {x: -0.000000052148952, y: 0.00000016423071, z: -0.059524786, w: 0.9982268}
+  m_LocalPosition: {x: -0.16940613, y: 0.0000000023841857, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2360178326362181554}
+  - {fileID: 8213263702230032585}
+  - {fileID: 3350370547711036241}
+  - {fileID: 5976358842066292731}
+  - {fileID: 9107488687701366425}
+  - {fileID: 6874102837858432826}
+  - {fileID: 3007907713150262291}
+  m_Father: {fileID: 6273653684196444629}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 20.182564, y: 6.794646, z: 9.217157}
+--- !u!1 &1469504532656741716
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5983471140035349378}
+  m_Layer: 0
+  m_Name: Mallearian_ L Finger22
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5983471140035349378
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469504532656741716}
+  m_LocalRotation: {x: 0.000000022084345, y: 0.000000012414889, z: -0.11640224, w: 0.99320215}
+  m_LocalPosition: {x: -0.04095352, y: -0.000000076293944, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5811939004231645173}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0.00000023451109, y: -0.0000016913671, z: -82.106155}
+--- !u!1 &1517991726444993899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6601341856841277737}
+  m_Layer: 0
+  m_Name: Mallearian_ R Finger21
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6601341856841277737
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1517991726444993899}
+  m_LocalRotation: {x: 0.000000018298099, y: -0.0000000034820071, z: -0.1869388, w: 0.98237157}
+  m_LocalPosition: {x: -0.04790245, y: 0.000000076293944, z: 0.000000038146972}
+  m_LocalScale: {x: 1.0000001, y: 0.9999998, z: 0.99999994}
+  m_Children:
+  - {fileID: 5259535564887219638}
+  m_Father: {fileID: 8977958321921803475}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -0.0000035094317, y: -0.0000022569743, z: -57.25425}
+--- !u!1 &1536561366556969000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8213263702230032585}
+  m_Layer: 0
+  m_Name: Arkhrin_EyeLidLowerLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8213263702230032585
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536561366556969000}
+  m_LocalRotation: {x: -0.39697632, y: 0.55875516, z: 0.6439993, w: 0.339805}
+  m_LocalPosition: {x: -0.10375169, y: 0.052539166, z: 0.061353147}
+  m_LocalScale: {x: 1.0000004, y: 0.9999999, z: 1.0000006}
+  m_Children: []
+  m_Father: {fileID: 307752014991710613}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: -81.67586, y: -65.3396, z: -177.64186}
+--- !u!1 &1965114094734881736
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5976358842066292731}
+  m_Layer: 0
+  m_Name: Arkhrin_EyeLidUpperLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5976358842066292731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965114094734881736}
+  m_LocalRotation: {x: -0.6218894, y: 0.26172143, z: 0.2781622, w: 0.6836529}
+  m_LocalPosition: {x: -0.10375158, y: 0.052539185, z: 0.061353147}
+  m_LocalScale: {x: 1, y: 0.9999997, z: 1.0000005}
+  m_Children: []
+  m_Father: {fileID: 307752014991710613}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: -84.819336, y: 7.560786, z: 37.372543}
+--- !u!1 &2006518540771648754
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3218445140980672541}
+  m_Layer: 0
+  m_Name: Mallearian_ L Calf
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3218445140980672541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006518540771648754}
+  m_LocalRotation: {x: 0, y: 0, z: 0.09911483, w: 0.995076}
+  m_LocalPosition: {x: -0.48072973, y: -0.0000000011920929, z: 0}
+  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
+  m_Children:
+  - {fileID: 4579429711120772009}
+  m_Father: {fileID: 1889734116644259784}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -0.0000009950239, y: 0.0000003590706, z: 32.24023}
+--- !u!1 &2090951572901187247
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8337734248046300040}
+  m_Layer: 0
+  m_Name: Mallearian_ R Finger11
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8337734248046300040
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090951572901187247}
+  m_LocalRotation: {x: 0.0000000023304525, y: -0.000000019306444, z: -0.17049251, w: 0.985359}
+  m_LocalPosition: {x: -0.04892082, y: 0.000000076293944, z: 0.000000038146972}
+  m_LocalScale: {x: 0.99999994, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1185372511120747124}
+  m_Father: {fileID: 5629073881530676079}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0.0000038541307, y: 0.0000021190017, z: -79.63294}
+--- !u!1 &2161616862206366927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5629073881530676079}
+  m_Layer: 0
+  m_Name: Mallearian_ R Finger1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5629073881530676079
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2161616862206366927}
+  m_LocalRotation: {x: 0.0003981057, y: 0.015135455, z: 0.0000060451216, w: 0.9998854}
+  m_LocalPosition: {x: -0.093757935, y: -0.0016775512, z: 0.018919868}
+  m_LocalScale: {x: 1, y: 0.99999994, z: 0.9999999}
+  m_Children:
+  - {fileID: 8337734248046300040}
+  m_Father: {fileID: 4416965520984440501}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0.045605123, y: 1.7344587, z: -35.99862}
+--- !u!1 &2180742508539271078
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3298819746730147161}
+  m_Layer: 0
+  m_Name: Mallearian_ L Finger11
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3298819746730147161
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2180742508539271078}
+  m_LocalRotation: {x: 0.0000000043058828, y: 0.000000003035614, z: -0.1704926, w: 0.98535895}
+  m_LocalPosition: {x: -0.048920896, y: 0, z: -0.000000038146972}
+  m_LocalScale: {x: 0.99999994, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4092902600166968492}
+  m_Father: {fileID: 1695638714914854592}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -0.00000052986167, y: 0.0000053736776, z: -65.9337}
+--- !u!1 &2264360417927702214
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1908422836422650434}
+  m_Layer: 0
+  m_Name: root
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1908422836422650434
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2264360417927702214}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8884990915629717381}
+  m_Father: {fileID: 2334023725546316246}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!1 &2410802220507299896
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4416965520984440501}
+  m_Layer: 0
+  m_Name: Mallearian_ R Hand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4416965520984440501
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2410802220507299896}
+  m_LocalRotation: {x: 0.39280796, y: -0.01392215, z: 0.010476427, w: 0.91945547}
+  m_LocalPosition: {x: -0.33312607, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1.0000001, z: 1}
+  m_Children:
+  - {fileID: 4622149286806326734}
+  - {fileID: 5629073881530676079}
+  - {fileID: 8977958321921803475}
+  - {fileID: 5617629914905083921}
+  m_Father: {fileID: 7207150266747349536}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 54.60247, y: -82.85663, z: -86.28848}
+--- !u!1 &2885545949386356454
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9107488687701366425}
+  m_Layer: 0
+  m_Name: Arkhrin_EyeLidUpperRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9107488687701366425
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2885545949386356454}
+  m_LocalRotation: {x: -0.6836531, y: -0.27816254, z: -0.2617214, w: 0.621889}
+  m_LocalPosition: {x: -0.10375158, y: 0.05253891, z: -0.06100006}
+  m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
+  m_Children: []
+  m_Father: {fileID: 307752014991710613}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: -84.8193, y: 172.43938, z: 142.62726}
+--- !u!1 &3111933031715568492
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2334023725546316246}
+  - component: {fileID: 8540006743268686764}
+  m_Layer: 0
+  m_Name: SummonerUnit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2334023725546316246
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3111933031715568492}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1908422836422650434}
+  - {fileID: 2993782768360790040}
+  - {fileID: 2042417542555759932}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &8540006743268686764
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3111933031715568492}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 59a645142cce0d042864b4ae1aebf2a4, type: 3}
+  m_Controller: {fileID: 9100000, guid: 21fc94ec590708b46835a56a8a4fca12, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &3230944042626655446
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5259535564887219638}
+  m_Layer: 0
+  m_Name: Mallearian_ R Finger22
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5259535564887219638
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3230944042626655446}
+  m_LocalRotation: {x: 0.000000003699966, y: -4.336324e-10, z: -0.11640233, w: 0.99320215}
+  m_LocalPosition: {x: -0.04095352, y: 0, z: 0.000000038146972}
+  m_LocalScale: {x: 1, y: 1.0000001, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6601341856841277737}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0.0000013156606, y: 0.00000045109493, z: -71.07491}
+--- !u!1 &3292292002182711542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3589267862319482109}
+  m_Layer: 0
+  m_Name: Mallearian_ R Foot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3589267862319482109
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3292292002182711542}
+  m_LocalRotation: {x: 0.044262186, y: -0.008959242, z: -0.083731614, w: 0.99546456}
+  m_LocalPosition: {x: -0.45075846, y: 0.000000009536743, z: 0}
+  m_LocalScale: {x: 1, y: 0.99999994, z: 1}
+  m_Children:
+  - {fileID: 4024845579103840102}
+  m_Father: {fileID: 1968542792599365759}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -0.19182086, y: -15.976549, z: -33.57597}
+--- !u!1 &3549062254522769428
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8802999527483933102}
+  m_Layer: 0
+  m_Name: Mallearian_ Spine1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8802999527483933102
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3549062254522769428}
+  m_LocalRotation: {x: 0.0000000036440766, y: 0.0000000014144383, z: -5.820767e-11, w: 1}
+  m_LocalPosition: {x: -0.13060753, y: -0.00010400295, z: -2.8920566e-10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7700895233587050168}
+  m_Father: {fileID: 9136705183682957022}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -3.4758763, y: -1.0421259, z: -3.9663274}
+--- !u!1 &3566198407632803187
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5014087045383655101}
+  m_Layer: 0
+  m_Name: Mallearian_ L Finger0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5014087045383655101
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3566198407632803187}
+  m_LocalRotation: {x: 0.66096956, y: -0.46027526, z: 0.20124994, w: 0.55746245}
+  m_LocalPosition: {x: -0.03210747, y: 0.00004821777, z: -0.02222187}
+  m_LocalScale: {x: 1.0000001, y: 1, z: 1}
+  m_Children:
+  - {fileID: 3356833765205127917}
+  m_Father: {fileID: 8393146612953506418}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 54.167118, y: -112.00829, z: -69.49965}
+--- !u!1 &3678719035839163648
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1968542792599365759}
+  m_Layer: 0
+  m_Name: Mallearian_ R Calf
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1968542792599365759
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3678719035839163648}
+  m_LocalRotation: {x: -0.0000000029685236, y: -0.000000007783111, z: 0.09910975, w: 0.99507654}
+  m_LocalPosition: {x: -0.48072982, y: 0.0000000011920929, z: -0.000000019073486}
+  m_LocalScale: {x: 0.9999999, y: 1, z: 1}
+  m_Children:
+  - {fileID: 3589267862319482109}
+  m_Father: {fileID: 6309593994864603367}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -0.0000058141427, y: 0.0000012399989, z: 35.707283}
+--- !u!1 &4141355259873462444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3624332205811056525}
+  m_Layer: 0
+  m_Name: Mallearian_ R Clavicle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3624332205811056525
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4141355259873462444}
+  m_LocalRotation: {x: 0.6627544, y: 0.00026284222, z: 0.7488367, w: -0.00029907012}
+  m_LocalPosition: {x: -0.12523986, y: -0.01280786, z: -0.031007275}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2336258727454398302}
+  m_Father: {fileID: 7700895233587050168}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: -0.045308575, y: 83.02056, z: -179.99428}
+--- !u!1 &4173887337285797999
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3356833765205127917}
+  m_Layer: 0
+  m_Name: Mallearian_ L Finger01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3356833765205127917
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4173887337285797999}
+  m_LocalRotation: {x: 0.0000000011059089, y: 0.000000014860066, z: -0.07421629, w: 0.99724215}
+  m_LocalPosition: {x: -0.036430053, y: 0.000000038146972, z: -0.000000076293944}
+  m_LocalScale: {x: 1, y: 0.99999994, z: 1}
+  m_Children:
+  - {fileID: 4481628263837317815}
+  m_Father: {fileID: 5014087045383655101}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0.00000061325466, y: 0.0000034663692, z: -24.068945}
+--- !u!1 &4275541635026133681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1132726773985640542}
+  m_Layer: 0
+  m_Name: Mallearian_ L Clavicle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1132726773985640542
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275541635026133681}
+  m_LocalRotation: {x: -0.6627545, y: -0.0002649321, z: 0.74883676, w: -0.0002972465}
+  m_LocalPosition: {x: -0.12523986, y: -0.012808036, z: 0.031007199}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7207111318933950995}
+  m_Father: {fileID: 7700895233587050168}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -0.07143518, y: -83.02867, z: -85.70677}
+--- !u!1 &4502223985808859571
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3497969013250846151}
+  m_Layer: 0
+  m_Name: Mallearian_ L ForearmTwist
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3497969013250846151
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4502223985808859571}
+  m_LocalRotation: {x: 0.70710796, y: 0.00000050576307, z: 0.00000050576136, w: 0.7071056}
+  m_LocalPosition: {x: -0.15105796, y: -0.00030128477, z: -0.0004411316}
+  m_LocalScale: {x: 0.99999964, y: 1.0000002, z: 0.9999999}
+  m_Children: []
+  m_Father: {fileID: 8410671190953051944}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 89.98021, y: 0.00008196254, z: 0}
+--- !u!1 &4812409433756251423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8393146612953506418}
+  m_Layer: 0
+  m_Name: Mallearian_ L Hand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8393146612953506418
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4812409433756251423}
+  m_LocalRotation: {x: -0.39280802, y: 0.013922149, z: 0.010476395, w: 0.91945547}
+  m_LocalPosition: {x: -0.3331261, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
+  m_Children:
+  - {fileID: 5014087045383655101}
+  - {fileID: 1695638714914854592}
+  - {fileID: 173097151745018133}
+  m_Father: {fileID: 8410671190953051944}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: -61.53313, y: 3.9715173, z: 42.381958}
+--- !u!1 &4935762462289249529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8884990915629717381}
+  m_Layer: 0
+  m_Name: Mallearian_
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8884990915629717381
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935762462289249529}
+  m_LocalRotation: {x: 0.0000000059526566, y: 0.000000016437884, z: 0.7071056, w: 0.707108}
+  m_LocalPosition: {x: -0, y: 0.027999999, z: 1.025945}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 9027135372947438098}
+  m_Father: {fileID: 1908422836422650434}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 4.142368, y: 1.1555351, z: 110.0306}
+--- !u!1 &5190398092272978371
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2042417542555759932}
+  - component: {fileID: 4120785302806778667}
+  m_Layer: 0
+  m_Name: SK_Mallearian
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2042417542555759932
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5190398092272978371}
+  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2334023725546316246}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &4120785302806778667
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5190398092272978371}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 3
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: b3d8a27d239ffde42827b4aefaaf8fcc, type: 2}
+  - {fileID: 2100000, guid: 295b9a5b99927f141891527782708a50, type: 2}
+  - {fileID: 2100000, guid: b312160539052c9448dee9a5c00fe8f9, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: 3865428196334789509, guid: 59a645142cce0d042864b4ae1aebf2a4, type: 3}
+  m_Bones:
+  - {fileID: 307752014991710613}
+  - {fileID: 5976358842066292731}
+  - {fileID: 8213263702230032585}
+  - {fileID: 2336258727454398302}
+  - {fileID: 4416965520984440501}
+  - {fileID: 9136705183682957022}
+  - {fileID: 7207111318933950995}
+  - {fileID: 1142876872043625866}
+  - {fileID: 7207150266747349536}
+  - {fileID: 5014087045383655101}
+  - {fileID: 3356833765205127917}
+  - {fileID: 1695638714914854592}
+  - {fileID: 4481628263837317815}
+  - {fileID: 173097151745018133}
+  - {fileID: 3298819746730147161}
+  - {fileID: 4092902600166968492}
+  - {fileID: 5811939004231645173}
+  - {fileID: 5983471140035349378}
+  - {fileID: 8802999527483933102}
+  - {fileID: 8410671190953051944}
+  - {fileID: 3350370547711036241}
+  - {fileID: 2360178326362181554}
+  - {fileID: 9107488687701366425}
+  - {fileID: 6874102837858432826}
+  - {fileID: 3218445140980672541}
+  - {fileID: 1132726773985640542}
+  - {fileID: 4579429711120772009}
+  - {fileID: 8393146612953506418}
+  - {fileID: 6273653684196444629}
+  - {fileID: 3007907713150262291}
+  - {fileID: 7700895233587050168}
+  - {fileID: 1889734116644259784}
+  - {fileID: 6309593994864603367}
+  - {fileID: 3624332205811056525}
+  - {fileID: 1968542792599365759}
+  - {fileID: 9027135372947438098}
+  - {fileID: 5259535564887219638}
+  - {fileID: 3497969013250846151}
+  - {fileID: 4130630454390622136}
+  - {fileID: 3589267862319482109}
+  - {fileID: 4024845579103840102}
+  - {fileID: 6601341856841277737}
+  - {fileID: 1185372511120747124}
+  - {fileID: 8337734248046300040}
+  - {fileID: 8977958321921803475}
+  - {fileID: 5603288134555726913}
+  - {fileID: 5629073881530676079}
+  - {fileID: 6788763648494506791}
+  - {fileID: 4622149286806326734}
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 9027135372947438098}
+  m_AABB:
+    m_Center: {x: 0.13422632, y: 0.13245316, z: -0.00000074505806}
+    m_Extent: {x: 0.9643984, y: 0.2969458, z: 0.6385361}
+  m_DirtyAABB: 0
+--- !u!1 &5229839134697424674
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5603288134555726913}
+  m_Layer: 0
+  m_Name: Mallearian_ R Finger02
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5603288134555726913
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5229839134697424674}
+  m_LocalRotation: {x: -0.0000000136564635, y: -0.000000042931664, z: -0.1825913, w: 0.9831889}
+  m_LocalPosition: {x: -0.043330915, y: -0.000000038146972, z: -0.000000076293944}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6788763648494506791}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -0.0000023384741, y: 0.0000009702035, z: -57.04147}
+--- !u!1 &5519097614527099593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6788763648494506791}
+  m_Layer: 0
+  m_Name: Mallearian_ R Finger01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6788763648494506791
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5519097614527099593}
+  m_LocalRotation: {x: -0.000000007430034, y: 5.529544e-10, z: -0.07421628, w: 0.99724215}
+  m_LocalPosition: {x: -0.036430128, y: 0.000000076293944, z: 0.000000076293944}
+  m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
+  m_Children:
+  - {fileID: 5603288134555726913}
+  m_Father: {fileID: 4622149286806326734}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -0.0000028077297, y: -0.00000043453988, z: -20.512388}
+--- !u!1 &5672347911191444159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8589336337139171248}
+  m_Layer: 0
+  m_Name: SciFiBoStaffLaserBlade1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8589336337139171248
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5672347911191444159}
+  m_LocalRotation: {x: -0.000008821485, y: -0.000000007514756, z: 0.0008518695, w: 0.99999964}
+  m_LocalPosition: {x: -0.31445923, y: 0.0012698687, z: 0.000000019073486}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5617629914905083921}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -0.001011708, y: -0.0000021049777, z: 0.097618535}
+--- !u!1 &5811176640031770406
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3007907713150262291}
+  m_Layer: 0
+  m_Name: Mallearian_ Ponytail1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3007907713150262291
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5811176640031770406}
+  m_LocalRotation: {x: -0.0000002973613, y: 0.0000023022635, z: -0.79400194, w: 0.6079153}
+  m_LocalPosition: {x: -0.0077542113, y: 0.03196841, z: 0.00000011384571}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 307752014991710613}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0.00018733478, y: 0.00018601543, z: -105.12216}
+--- !u!1 &5936073632162277586
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8410671190953051944}
+  m_Layer: 0
+  m_Name: Mallearian_ L Forearm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8410671190953051944
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5936073632162277586}
+  m_LocalRotation: {x: 0.000000008915431, y: 0.00000005298202, z: 0.4089395, w: 0.9125615}
+  m_LocalPosition: {x: -0.3600839, y: 0.000000019073486, z: -0.000000076293944}
+  m_LocalScale: {x: 1, y: 1, z: 1.0000001}
+  m_Children:
+  - {fileID: 3497969013250846151}
+  - {fileID: 8393146612953506418}
+  m_Father: {fileID: 7207111318933950995}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0.000003167852, y: -0.000004372858, z: 107.48594}
+--- !u!1 &5990953850925129117
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1695638714914854592}
+  m_Layer: 0
+  m_Name: Mallearian_ L Finger1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1695638714914854592
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5990953850925129117}
+  m_LocalRotation: {x: -0.0003981055, y: -0.015135439, z: 0.0000060600346, w: 0.9998854}
+  m_LocalPosition: {x: -0.093757935, y: -0.0016773987, z: -0.018919868}
+  m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
+  m_Children:
+  - {fileID: 3298819746730147161}
+  m_Father: {fileID: 8393146612953506418}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: -0.045605388, y: -1.734462, z: -36.067394}
+--- !u!1 &6019201251383429794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4024845579103840102}
+  m_Layer: 0
+  m_Name: Mallearian_ R Toe0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4024845579103840102
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6019201251383429794}
+  m_LocalRotation: {x: 0.0000000011112931, y: -0.000000009425419, z: -0.7071068, w: 0.7071067}
+  m_LocalPosition: {x: -0.11520229, y: 0.16038911, z: -0.006120243}
+  m_LocalScale: {x: 0.99999994, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3589267862319482109}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 6.4369745, y: -0.6790895, z: -90.41589}
+--- !u!1 &6057015752457516879
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3350370547711036241}
+  m_Layer: 0
+  m_Name: Arkhrin_EyeLidLowerRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3350370547711036241
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6057015752457516879}
+  m_LocalRotation: {x: 0.33980545, y: 0.64399964, z: 0.5587548, w: -0.39697582}
+  m_LocalPosition: {x: -0.10375159, y: 0.05253891, z: -0.06100006}
+  m_LocalScale: {x: 1.0000001, y: 0.99999994, z: 1.0000001}
+  m_Children: []
+  m_Father: {fileID: 307752014991710613}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: -81.67586, y: -114.66106, z: -2.3574698}
+--- !u!1 &6083128038715385658
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7207111318933950995}
+  m_Layer: 0
+  m_Name: Mallearian_ L UpperArm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7207111318933950995
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6083128038715385658}
+  m_LocalRotation: {x: 0.06794392, y: -0.36085495, z: 0.016660878, w: 0.9299945}
+  m_LocalPosition: {x: -0.10863035, y: -0.0000000047683715, z: -0.00000015258789}
+  m_LocalScale: {x: 1, y: 1.0000001, z: 0.99999994}
+  m_Children:
+  - {fileID: 8410671190953051944}
+  m_Father: {fileID: 1132726773985640542}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -24.639038, y: -44.887997, z: 2.7065566}
+--- !u!1 &6423141459423071147
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6765118655591147737}
+  m_Layer: 0
+  m_Name: SciFiBoStaff_Idle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6765118655591147737
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6423141459423071147}
+  m_LocalRotation: {x: 0.9861293, y: -0.16040853, z: 0.0055554067, w: -0.042276703}
+  m_LocalPosition: {x: -0.1640525, y: -0.125676, z: -0.108465135}
+  m_LocalScale: {x: 1.0000001, y: 1, z: 1.0000002}
+  m_Children: []
+  m_Father: {fileID: 7700895233587050168}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: -4.680443, y: 178.59027, z: -161.4642}
+--- !u!1 &6942671532932357908
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1142876872043625866}
+  m_Layer: 0
+  m_Name: Mallearian_ R ForearmTwist
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1142876872043625866
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6942671532932357908}
+  m_LocalRotation: {x: 0.70710737, y: -0.0000027406536, z: -0.00000010425645, w: 0.70710623}
+  m_LocalPosition: {x: -0.15116347, y: -0.00013683319, z: 0.00021860123}
+  m_LocalScale: {x: 1.0000011, y: 1, z: 0.9999994}
+  m_Children: []
+  m_Father: {fileID: 7207150266747349536}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90, y: -0.00044414226, z: 0}
+--- !u!1 &6969439036745603259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7207150266747349536}
+  m_Layer: 0
+  m_Name: Mallearian_ R Forearm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7207150266747349536
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6969439036745603259}
+  m_LocalRotation: {x: 0.000000015009105, y: 0.000000039383796, z: 0.4089395, w: 0.9125615}
+  m_LocalPosition: {x: -0.3600839, y: 0, z: -0.000000076293944}
+  m_LocalScale: {x: 1.0000001, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1142876872043625866}
+  - {fileID: 4416965520984440501}
+  m_Father: {fileID: 2336258727454398302}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0.00000120353, y: 0.000008480236, z: 34.023087}
+--- !u!1 &7159226343516455620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7700895233587050168}
+  m_Layer: 0
+  m_Name: Mallearian_ Spine2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7700895233587050168
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7159226343516455620}
+  m_LocalRotation: {x: -7.2785444e-11, y: 0.0000000046711186, z: -0.0000000035797711, w: 1}
+  m_LocalPosition: {x: -0.13060737, y: -0.00010399818, z: -2.884417e-10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1132726773985640542}
+  - {fileID: 6273653684196444629}
+  - {fileID: 3624332205811056525}
+  - {fileID: 6765118655591147737}
+  - {fileID: 3986282368351548013}
+  m_Father: {fileID: 8802999527483933102}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -3.4727669, y: -1.0053041, z: -3.7864478}
+--- !u!1 &7206900627827890818
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6309593994864603367}
+  m_Layer: 0
+  m_Name: Mallearian_ R Thigh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6309593994864603367
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7206900627827890818}
+  m_LocalRotation: {x: -0.014611693, y: 0.99639666, z: 0.0117059145, w: -0.082723826}
+  m_LocalPosition: {x: -0.000000076293944, y: -0.000000059604645, z: -0.0768834}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1968542792599365759}
+  m_Father: {fileID: 9027135372947438098}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 19.724632, y: -166.23834, z: -0.36416304}
+--- !u!1 &7342374382542562473
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2360178326362181554}
+  m_Layer: 0
+  m_Name: Arkhrin_EyeLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2360178326362181554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7342374382542562473}
+  m_LocalRotation: {x: 0.7064522, y: 0.030433023, z: -0.70645094, w: 0.030433076}
+  m_LocalPosition: {x: -0.1037517, y: 0.052538995, z: 0.061353147}
+  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1}
+  m_Children: []
+  m_Father: {fileID: 307752014991710613}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 4.93341, y: -90.00009, z: 180}
+--- !u!1 &7558413420511662845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4481628263837317815}
+  m_Layer: 0
+  m_Name: Mallearian_ L Finger02
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4481628263837317815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7558413420511662845}
+  m_LocalRotation: {x: 0.000000015540149, y: 0.000000012269936, z: -0.18259135, w: 0.9831889}
+  m_LocalPosition: {x: -0.043330915, y: 0.000000038146972, z: 0}
+  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3356833765205127917}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0.0000010807049, y: -0.0000036620568, z: -46.993156}
+--- !u!1 &7810425498761023870
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5617629914905083921}
+  m_Layer: 0
+  m_Name: SciFiBoStaffHandle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5617629914905083921
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7810425498761023870}
+  m_LocalRotation: {x: 0.37108105, y: 0.6404775, z: -0.29439965, w: 0.6044967}
+  m_LocalPosition: {x: -0.10006258, y: 0.045071878, z: -0.074552536}
+  m_LocalScale: {x: 1.0000002, y: 0.9999999, z: 0.9999999}
+  m_Children:
+  - {fileID: 8589336337139171248}
+  - {fileID: 9103234877424830534}
+  - {fileID: 7164207140314084169}
+  m_Father: {fileID: 4416965520984440501}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 55.66432, y: 99.78145, z: 12.222362}
+--- !u!1 &7944510327876867153
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4130630454390622136}
+  m_Layer: 0
+  m_Name: Mallearian_ L Toe0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4130630454390622136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7944510327876867153}
+  m_LocalRotation: {x: -0.0000000066266046, y: 0.0000000039101087, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -0.11520229, y: 0.1603891, z: 0.006120262}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4579429711120772009}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0.000030602092, y: 0.00018373394, z: -89.999916}
+--- !u!1 &8013387648455452655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4092902600166968492}
+  m_Layer: 0
+  m_Name: Mallearian_ L Finger12
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4092902600166968492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8013387648455452655}
+  m_LocalRotation: {x: -0.000000020783448, y: -0.0000000013149897, z: -0.11640222, w: 0.99320215}
+  m_LocalPosition: {x: -0.039599076, y: 0, z: 0.000000038146972}
+  m_LocalScale: {x: 1.0000001, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3298819746730147161}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0.0000007431291, y: -0.0000020008915, z: -69.62505}
+--- !u!1 &8048143961604585621
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 173097151745018133}
+  m_Layer: 0
+  m_Name: Mallearian_ L Finger2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &173097151745018133
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8048143961604585621}
+  m_LocalRotation: {x: 0.0008402003, y: 0.031365585, z: -0.039407555, w: 0.9987305}
+  m_LocalPosition: {x: -0.09424766, y: -0.006212921, z: 0.01740715}
+  m_LocalScale: {x: 0.99999994, y: 0.9999999, z: 1}
+  m_Children:
+  - {fileID: 5811939004231645173}
+  m_Father: {fileID: 8393146612953506418}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0.23779532, y: 3.5882478, z: -41.253044}
+--- !u!1 &8145316669326517775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4579429711120772009}
+  m_Layer: 0
+  m_Name: Mallearian_ L Foot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4579429711120772009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8145316669326517775}
+  m_LocalRotation: {x: -0.04426211, y: 0.008960397, z: -0.08373096, w: 0.99546456}
+  m_LocalPosition: {x: -0.45075846, y: 0, z: 0.000000019073486}
+  m_LocalScale: {x: 0.99999994, y: 0.99999976, z: 0.99999994}
+  m_Children:
+  - {fileID: 4130630454390622136}
+  m_Father: {fileID: 3218445140980672541}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 4.341867, y: 13.806587, z: -2.5400946}
+--- !u!1 &8291942029851238951
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7164207140314084169}
+  - component: {fileID: 244178720619044075}
+  m_Layer: 0
+  m_Name: SK_SciFiBoStaff_Action
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7164207140314084169
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8291942029851238951}
+  m_LocalRotation: {x: -0.00000011343434, y: -0.00000011343441, z: -0.7071068, w: 0.70710677}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5617629914905083921}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &244178720619044075
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8291942029851238951}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 3
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: c33c8d7cdb6c70645b10c87200d5389f, type: 2}
+  - {fileID: 2100000, guid: 739888e690450c243b8d14c83f0c6226, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: -1624176301590055022, guid: 59a645142cce0d042864b4ae1aebf2a4, type: 3}
+  m_Bones:
+  - {fileID: 9103234877424830534}
+  - {fileID: 5617629914905083921}
+  - {fileID: 8589336337139171248}
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 5617629914905083921}
+  m_AABB:
+    m_Center: {x: 0.0019462705, y: 0.000000007450581, z: 0.00000017881393}
+    m_Extent: {x: 1.057601, y: 0.028729457, z: 0.028729333}
+  m_DirtyAABB: 0
+--- !u!1 &8470187215779396530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1185372511120747124}
+  m_Layer: 0
+  m_Name: Mallearian_ R Finger12
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1185372511120747124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8470187215779396530}
+  m_LocalRotation: {x: -0.000000016592121, y: -0.000000005556996, z: -0.1164022, w: 0.9932022}
+  m_LocalPosition: {x: -0.03959923, y: 0, z: 0}
+  m_LocalScale: {x: 1.0000001, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8337734248046300040}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0.0000017622946, y: -0.00000087362343, z: -71.36902}
+--- !u!1 &8800782598733617731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9027135372947438098}
+  m_Layer: 0
+  m_Name: Mallearian_ Pelvis
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9027135372947438098
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8800782598733617731}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.49999934, w: 0.50000066}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1889734116644259784}
+  - {fileID: 6309593994864603367}
+  - {fileID: 9136705183682957022}
+  m_Father: {fileID: 8884990915629717381}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -89.19554, y: 90.000015, z: -0.00009325187}
+--- !u!1 &8880839446623852401
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2336258727454398302}
+  m_Layer: 0
+  m_Name: Mallearian_ R UpperArm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2336258727454398302
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8880839446623852401}
+  m_LocalRotation: {x: -0.06794392, y: 0.360855, z: 0.016660826, w: 0.9299945}
+  m_LocalPosition: {x: -0.10863032, y: 0.0000000047683715, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1.0000001}
+  m_Children:
+  - {fileID: 7207150266747349536}
+  m_Father: {fileID: 3624332205811056525}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -2.5844824, y: 46.44813, z: -9.581268}
+--- !u!1 &8952014436242927139
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6273653684196444629}
+  m_Layer: 0
+  m_Name: Mallearian_ Neck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6273653684196444629
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8952014436242927139}
+  m_LocalRotation: {x: -0.0000000077446325, y: -0.00000004329936, z: 0.016905148, w: 0.9998571}
+  m_LocalPosition: {x: -0.1295935, y: -0.002542553, z: 0.000000048458148}
+  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1}
+  m_Children:
+  - {fileID: 307752014991710613}
+  m_Father: {fileID: 7700895233587050168}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 21.986141, y: 0.8009565, z: -7.9071193}
+--- !u!1 &8953402481013344032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1889734116644259784}
+  m_Layer: 0
+  m_Name: Mallearian_ L Thigh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1889734116644259784
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8953402481013344032}
+  m_LocalRotation: {x: -0.014617602, y: 0.99639654, z: -0.011707801, w: 0.08272353}
+  m_LocalPosition: {x: 0.000000076293944, y: 0.0000001502037, z: 0.0768834}
+  m_LocalScale: {x: 1, y: 1, z: 0.99999994}
+  m_Children:
+  - {fileID: 3218445140980672541}
+  m_Father: {fileID: 9027135372947438098}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -5.9778004, y: 166.06949, z: -33.833817}
+--- !u!1 &9208416725013173444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2993782768360790040}
+  - component: {fileID: 5918057188447161331}
+  m_Layer: 0
+  m_Name: SK_Belt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2993782768360790040
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9208416725013173444}
+  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2334023725546316246}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &5918057188447161331
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9208416725013173444}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 3
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: b3d8a27d239ffde42827b4aefaaf8fcc, type: 2}
+  - {fileID: 2100000, guid: 295b9a5b99927f141891527782708a50, type: 2}
+  - {fileID: 2100000, guid: af6b353905f8d7e4799f5442f6b26b0d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: -9104943560034991989, guid: 59a645142cce0d042864b4ae1aebf2a4, type: 3}
+  m_Bones:
+  - {fileID: 7700895233587050168}
+  - {fileID: 1132726773985640542}
+  - {fileID: 8802999527483933102}
+  - {fileID: 9136705183682957022}
+  - {fileID: 9027135372947438098}
+  - {fileID: 307752014991710613}
+  - {fileID: 3218445140980672541}
+  - {fileID: 5014087045383655101}
+  - {fileID: 3356833765205127917}
+  - {fileID: 1695638714914854592}
+  - {fileID: 4481628263837317815}
+  - {fileID: 173097151745018133}
+  - {fileID: 3298819746730147161}
+  - {fileID: 5811939004231645173}
+  - {fileID: 4092902600166968492}
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 9027135372947438098}
+  m_AABB:
+    m_Center: {x: 0.050041854, y: 0.027176753, z: 0.013839699}
+    m_Extent: {x: 0.86563057, y: 0.179331, z: 0.22233027}
+  m_DirtyAABB: 0

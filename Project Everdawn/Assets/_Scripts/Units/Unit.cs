@@ -55,10 +55,8 @@ public class Unit : MonoBehaviour, IDamageable
 
     private List<Component> applyEffectsComponents = new List<Component>();
 
-    /*private NavMeshLink link;
-    private OffMeshLink link2;
-    public bool jumping; //set to true if the unit is on an off-mesh link
-    public Vector3 jumpEndpoint;*/
+    [HideInInspector]
+    public Animator animator;
 
     public Actor3D Agent
     {
@@ -84,6 +82,11 @@ public class Unit : MonoBehaviour, IDamageable
     public AttackStats AttackStats
     {
         get { return attackStats; }
+    }
+
+    public ChargeStats ChargeStats
+    {
+        get { return chargeStats; }
     }
 
     public DashStats DashStats
@@ -141,6 +144,14 @@ public class Unit : MonoBehaviour, IDamageable
     public bool ChargeAttack
     {
         get { return !chargeStats.IsCharging && !attackStats.IsFiring && !dashStats.IsDashing && !jumpStats.Jumping; }
+    }
+
+    private void Awake()
+    {
+        if (unitSprite.GetComponent<Animator>() != null)
+        {
+            animator = unitSprite.GetComponent<Animator>();
+        }
     }
 
     private void Start()

@@ -149,6 +149,7 @@ MonoBehaviour:
   range: 30
   heightAttackable: 0
   typeAttackable: 0
+  playOnUnit: 0
   abilityControl: 0
   pauseAbility: 0
   stopOnMiss: 0
@@ -221,6 +222,10 @@ MonoBehaviour:
     explosionDamage: 0
     towerDamage: 0
     explosionRadius: 0
+  chainStats:
+    chains: 0
+    chainRadius: 0
+    chainCount: 0
   linearStats:
     isLinear: 0
     isVertical: 0
@@ -238,11 +243,10 @@ MonoBehaviour:
   summonStats:
     isSummon: 1
     summonEffect: {fileID: 0}
-    summonUnit: {fileID: 4489671066153867563, guid: 3879c3dd76ec0e2478c336a460441018, type: 3}
+    summonUnit: {fileID: 4489671066153867563, guid: 590a6e6648da54e4fa645e656c6edaec, type: 3}
     size: 0
     summonPreview: {fileID: 7215423215100224405, guid: d14ed15cbdd88a24484e8515f90f602e, type: 3}
     timeToSummon: 0
-    currentSummonTime: 0
   applyResistanceStats:
     applyToSelf: 0
     applyToOthers: 0
