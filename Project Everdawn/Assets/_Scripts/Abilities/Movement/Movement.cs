@@ -101,14 +101,14 @@ public class Movement : Projectile
                 if(!NavMesh.SamplePosition(Unit.Agent.transform.position, out hit, 1f, 9)) { //if the dashing unit ended up in an obstacle
                     //MonoBehaviour.print("TESTS");
                     if(retreatStats.Retreats) {
-                        transform.position -= transform.forward * Speed * SpeedReduction * Time.deltaTime;
+                        transform.position -= Time.deltaTime * Speed * SpeedReduction * transform.forward;
                         if(ChosenTarget != null)
-                            ChosenTarget.Agent.transform.position -= transform.forward * Speed * SpeedReduction * Time.deltaTime;
+                            ChosenTarget.Agent.transform.position -= Time.deltaTime * Speed * SpeedReduction * transform.forward;
                     }
                     else {
-                        transform.position += transform.forward * Speed * SpeedReduction * Time.deltaTime;
+                        transform.position += Time.deltaTime * Speed * SpeedReduction * transform.forward;
                         if(ChosenTarget != null)
-                            ChosenTarget.Agent.transform.position += transform.forward * Speed * SpeedReduction * Time.deltaTime;
+                            ChosenTarget.Agent.transform.position += Time.deltaTime * Speed * SpeedReduction * transform.forward;
                     }
                 }
                 else {
@@ -141,15 +141,15 @@ public class Movement : Projectile
                         Vector3 direction = transform.position - LastKnownLocation;
                         Quaternion targetRotation = Quaternion.LookRotation(direction);
                         transform.rotation = targetRotation;
-                        transform.position -= transform.forward * Speed * SpeedReduction * Time.deltaTime;
+                        transform.position -= Time.deltaTime * Speed * SpeedReduction * transform.forward;
                         BoomerangStats.UpdateBoomerangStats();
                     }
                     else if(CustomPathStats.HasCustomPath)
                         CustomPathStats.UpdateStats(TargetLocation);
                     else {
                         //transform.position += transform.forward * Speed * SpeedReduction * Time.deltaTime;
-                        //below takes more operations, but may be safer. This might be needed for projectile as well
-                        transform.position += (TargetLocation - transform.position).normalized * Speed * SpeedReduction * Time.deltaTime;
+                        //below takes more operations, but may be safer as it accounts for the possiblity the projectile warps past its mark. This might be needed for projectile as well
+                        transform.position += Time.deltaTime * Speed * SpeedReduction * (TargetLocation - transform.position).normalized;
                     }
                 }
             }

@@ -70,20 +70,13 @@ public class GrenadeStats
             projectile.Radius = .1f; //setting it to zero will not work if targeting moving targets
             projectile.HitBox.enabled = false;
             
+            arcStart = go.transform.position;
             Vector3 arcEnd = projectile.TargetLocation;
-            if(isAirStrike) {
-                if(startLocation == GameConstants.AIR_STRIKE_LOCATION.BOTTOM)
-                    arcStart = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
-                else
-                    arcStart = new Vector3(GameManager.Instance.Ground.transform.localScale.x*-5 - 20, 0, 0);
-                arcStart = new Vector3(arcStart.x, 15, arcStart.z);
+            if(isAirStrike)
                 arcApex = arcStart + (arcEnd - arcStart)/6 + Vector3.up * Vector3.Distance(arcStart, arcEnd) * grenadeArcMultiplier;
-            }
-            else {
-                arcStart = go.transform.position;
+            else
                 arcApex = arcStart + (arcEnd - arcStart)/2 + Vector3.up * Vector3.Distance(arcStart, arcEnd) * grenadeArcMultiplier;
-                //this value arpApex is actually twice as high as the projectile would actually go, being fixed by the strange lerps below
-            }
+            //this value arpApex is actually twice as high as the projectile would actually go, being fixed by the strange lerps below
         }
     }
 

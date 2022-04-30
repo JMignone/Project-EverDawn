@@ -1,20 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &8888698667124379006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2863494440381147575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f56002cb7a8aeb5448da5a359b650304, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitStats: {fileID: 3925836232371597721}
-  agent: {fileID: 3925836231010811493}
-  animationAttackDelayStartTiming: 0.98
 --- !u!114 &6095759272867552200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31,6 +16,21 @@ MonoBehaviour:
   - {fileID: 2863494440185318831}
   - {fileID: 2863494440392713559}
   statusMaterialSolidColor: {fileID: 2100000, guid: 549e03e4ffa62924a86ed215c3a18c64, type: 2}
+--- !u!114 &8888698667124379006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2863494440381147575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56002cb7a8aeb5448da5a359b650304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitStats: {fileID: 3925836232371597721}
+  agent: {fileID: 3925836231010811493}
+  animationAttackDelayStartTiming: 0.98
 --- !u!1 &3925836231010811492
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,7 +126,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &3925836231010811493
 NavMeshAgent:
@@ -767,7 +767,7 @@ MonoBehaviour:
     maximumAttackAngle: 0
     moveSpeed: 7
     noRotation: 0
-    rotationSpeed: 120
+    rotationSpeed: 180
     summoningSicknessUI:
       summonSicknessDelay: 1
       summonProtectionDelay: 0
@@ -787,7 +787,6 @@ MonoBehaviour:
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
-    unitRange: 0
     effectStats:
       aoeStats:
         areaOfEffect: 0
@@ -881,7 +880,7 @@ MonoBehaviour:
     chargeDamage: 0
     chargeSpeed: 0
     chargeDelay: 0
-    currentDelay: 0
+    jumpWhileCharging: 0
   dashStats:
     dashes: 0
     isDashing: 0
@@ -889,7 +888,6 @@ MonoBehaviour:
     dashSpeed: 0
     dashRange: 0
     dashDelay: 0
-    currentDelay: 0
   shadowStats:
     shades: 0
     interruptsByDamage: 0
@@ -904,6 +902,9 @@ MonoBehaviour:
     noseDives: 0
     createAtLocation: {fileID: 0}
     speed: 0
+  jumpStats:
+    jumps: 0
+    maxJumpAngle: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -977,7 +978,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3925836232589105579}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1114,6 +1115,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6756716394742660048}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
+      propertyPath: abilityUI.abilityObject
+      value: 
+      objectReference: {fileID: 3925836231430602715}
+    - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityUI.abilitySprite
       value: 
       objectReference: {fileID: 4186208493931211825}
@@ -1203,11 +1208,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367458, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367458, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367458, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: m_LocalPosition.x

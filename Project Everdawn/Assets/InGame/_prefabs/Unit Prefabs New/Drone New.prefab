@@ -175,21 +175,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5416553521171533610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2215201489927340743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b9733be55522d64d981375ee8154541, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitStats: {fileID: 3415333900699297904}
-  agent: {fileID: 3415333901079641159}
-  animationAttackDelayStartTiming: 0.98
 --- !u!114 &3810346776559088775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,6 +208,21 @@ MonoBehaviour:
   - {fileID: 7677160727136699785}
   - {fileID: 7677240285763955961}
   statusMaterialSolidColor: {fileID: 2100000, guid: 549e03e4ffa62924a86ed215c3a18c64, type: 2}
+--- !u!114 &5416553521171533610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2215201489927340743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b9733be55522d64d981375ee8154541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitStats: {fileID: 3415333900699297904}
+  agent: {fileID: 3415333901079641159}
+  animationAttackDelayStartTiming: 0.98
 --- !u!1 &3415333899155088829
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,7 +459,6 @@ MonoBehaviour:
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
-    unitRange: 1
     effectStats:
       aoeStats:
         areaOfEffect: 0
@@ -551,7 +550,7 @@ MonoBehaviour:
     chargeDamage: 0
     chargeSpeed: 0
     chargeDelay: 0
-    currentDelay: 0
+    jumpWhileCharging: 0
   dashStats:
     dashes: 0
     isDashing: 0
@@ -559,7 +558,6 @@ MonoBehaviour:
     dashSpeed: 0
     dashRange: 0
     dashDelay: 0
-    currentDelay: 0
   shadowStats:
     shades: 0
     interruptsByDamage: 0
@@ -574,6 +572,9 @@ MonoBehaviour:
     noseDives: 0
     createAtLocation: {fileID: 0}
     speed: 0
+  jumpStats:
+    jumps: 0
+    maxJumpAngle: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -785,7 +786,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.5
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &3415333901079641159
 NavMeshAgent:

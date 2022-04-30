@@ -181,7 +181,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
 
         fireMousePosition = new Vector3(-1, -1, -1);
 
-        AbilityUI.StartStats();
+        AbilityUI.StartStats((Unit as Component).gameObject, abilityPreviewCanvas);
         if(!Unit.Stats.IsReady)
             GameFunctions.DisableAbilities((Unit as Component).gameObject);
 
@@ -343,8 +343,8 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             }
 
             //GameManager.removeAbililtyIndicators();
-
-            if(abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y && Unit.Stats.CanAct && abilityUI.CanFire) {
+            
+            if(abilityUI.CardCanvasDim.rect.height*abilityUI.CardCanvasScale < eventData.position.y && Unit.Stats.CanAct && abilityUI.CanFire) {
                 fireStartPosition = abilityPreviewCanvas.transform.position;
                 if(fireMousePosition == new Vector3(-1, -1, -1)) { //if the ability was not a summon or a movement, get the position
                     fireMousePosition = GameFunctions.getPosition(false, eventData.position);

@@ -1,20 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &8982474140442236518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2482311134981460445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f56002cb7a8aeb5448da5a359b650304, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitStats: {fileID: 3925836232371597721}
-  agent: {fileID: 3925836231010811493}
-  animationAttackDelayStartTiming: 0.92
 --- !u!114 &3823899821764936762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,6 +48,21 @@ MonoBehaviour:
   - {fileID: 8528233260801597283}
   - {fileID: 6726720626579979120}
   statusMaterialSolidColor: {fileID: 2100000, guid: 549e03e4ffa62924a86ed215c3a18c64, type: 2}
+--- !u!114 &8982474140442236518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2482311134981460445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56002cb7a8aeb5448da5a359b650304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitStats: {fileID: 3925836232371597721}
+  agent: {fileID: 3925836231010811493}
+  animationAttackDelayStartTiming: 0.92
 --- !u!1 &3925836231010811492
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,7 +819,6 @@ MonoBehaviour:
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
-    unitRange: 0
     effectStats:
       aoeStats:
         areaOfEffect: 0
@@ -908,7 +907,7 @@ MonoBehaviour:
     chargeDamage: 0
     chargeSpeed: 0
     chargeDelay: 0
-    currentDelay: 0
+    jumpWhileCharging: 0
   dashStats:
     dashes: 0
     isDashing: 0
@@ -916,7 +915,6 @@ MonoBehaviour:
     dashSpeed: 0
     dashRange: 0
     dashDelay: 0
-    currentDelay: 0
   shadowStats:
     shades: 0
     interruptsByDamage: 0
@@ -931,6 +929,9 @@ MonoBehaviour:
     noseDives: 0
     createAtLocation: {fileID: 0}
     speed: 0
+  jumpStats:
+    jumps: 0
+    maxJumpAngle: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -1034,6 +1035,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3925836231506596150}
     m_Modifications:
+    - target: {fileID: 407388191254426671, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 14209be1d3d916c4f8d158476fb2a6d1, type: 2}
+    - target: {fileID: 1041433816687205372, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 14209be1d3d916c4f8d158476fb2a6d1, type: 2}
     - target: {fileID: 1446888015778530702, guid: c39c2e60090e83641a924d6834138b13, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1090,10 +1099,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2407490153402979196, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2472257551218587549, guid: c39c2e60090e83641a924d6834138b13, type: 3}
       propertyPath: m_Name
       value: Freezer
       objectReference: {fileID: 0}
+    - target: {fileID: 5123630322865591416, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 14209be1d3d916c4f8d158476fb2a6d1, type: 2}
+    - target: {fileID: 5880900109345145036, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 14209be1d3d916c4f8d158476fb2a6d1, type: 2}
+    - target: {fileID: 6753606017110480621, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 14209be1d3d916c4f8d158476fb2a6d1, type: 2}
+    - target: {fileID: 8102067298554958374, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 14209be1d3d916c4f8d158476fb2a6d1, type: 2}
+    - target: {fileID: 8531954049442396451, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 14209be1d3d916c4f8d158476fb2a6d1, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c39c2e60090e83641a924d6834138b13, type: 3}
 --- !u!137 &6738626478448554157 stripped
@@ -1300,6 +1333,10 @@ PrefabInstance:
       propertyPath: abilityUI.cooldownMask
       value: 
       objectReference: {fileID: 6695935968405386273}
+    - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
+      propertyPath: abilityUI.abilityObject
+      value: 
+      objectReference: {fileID: 3925836231430602715}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityUI.abilitySprite
       value: 

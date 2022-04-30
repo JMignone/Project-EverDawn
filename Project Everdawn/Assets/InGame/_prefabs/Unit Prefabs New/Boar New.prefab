@@ -219,7 +219,6 @@ MonoBehaviour:
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
-    unitRange: 0
     effectStats:
       aoeStats:
         areaOfEffect: 0
@@ -308,7 +307,7 @@ MonoBehaviour:
     chargeDamage: 750
     chargeSpeed: 20
     chargeDelay: 2
-    currentDelay: 0
+    jumpWhileCharging: 1
   dashStats:
     dashes: 0
     isDashing: 0
@@ -316,7 +315,6 @@ MonoBehaviour:
     dashSpeed: 0
     dashRange: 0
     dashDelay: 0
-    currentDelay: 0
   shadowStats:
     shades: 0
     interruptsByDamage: 0
@@ -331,6 +329,9 @@ MonoBehaviour:
     noseDives: 0
     createAtLocation: {fileID: 0}
     speed: 0
+  jumpStats:
+    jumps: 0
+    maxJumpAngle: 45
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -726,21 +727,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6273811239031424001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5760504014998698031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5367e5a8cd8857e44bad59239cf2f9fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitStats: {fileID: 4300487081235283212}
-  agent: {fileID: 4300487081545407401}
-  animationAttackDelayStartTiming: 1.18
 --- !u!114 &2516418224956536516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -756,6 +742,21 @@ MonoBehaviour:
   renderers:
   - {fileID: 8267072656887636346}
   statusMaterialSolidColor: {fileID: 2100000, guid: 549e03e4ffa62924a86ed215c3a18c64, type: 2}
+--- !u!114 &6273811239031424001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5760504014998698031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5367e5a8cd8857e44bad59239cf2f9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitStats: {fileID: 4300487081235283212}
+  agent: {fileID: 4300487081545407401}
+  animationAttackDelayStartTiming: 1.18
 --- !u!1 &8932841558933548655
 GameObject:
   m_ObjectHideFlags: 0

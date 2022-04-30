@@ -499,14 +499,14 @@ public class Projectile : MonoBehaviour, IAbility
                 Vector3 direction = transform.position - lastKnownLocation;
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
                 transform.rotation = targetRotation;
-                transform.position -= transform.forward * speed * speedReduction * Time.deltaTime;
+                transform.position -= Time.deltaTime * speed * speedReduction * transform.forward;
                 boomerangStats.UpdateBoomerangStats();
             }
             else if(customPathStats.HasCustomPath)
                 customPathStats.UpdateStats(targetLocation);
             else {
                 //transform.position += transform.forward * speed * speedReduction * Time.deltaTime;
-                transform.position += (targetLocation - transform.position).normalized * speed * speedReduction * Time.deltaTime;
+                transform.position += Time.deltaTime * speed * speedReduction * (targetLocation - transform.position).normalized;
             }
         }
     }

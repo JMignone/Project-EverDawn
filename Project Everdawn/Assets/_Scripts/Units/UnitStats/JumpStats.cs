@@ -77,7 +77,7 @@ public class JumpStats
             direction.y = 0;
             direction = direction.normalized;
 
-            unit.Agent.transform.position += direction * unit.Stats.MoveSpeed * AdjustedSpeedMultiplier() * Time.deltaTime;
+            unit.Agent.transform.position += Time.deltaTime * unit.Stats.MoveSpeed * AdjustedSpeedMultiplier() * direction;
 
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             unit.Agent.transform.rotation = Quaternion.RotateTowards(unit.Agent.transform.rotation, targetRotation, unit.Stats.RotationSpeed*2 * Time.deltaTime); //the number is degrees/second, maybe differnt per unit
@@ -93,10 +93,10 @@ public class JumpStats
     public void DirectionalInfluence(Vector3 direction) {
         Vector3 origDirection = jumpEndPoint - unit.Agent.transform.position;
         origDirection.y = 0;
-        origDirection = origDirection.normalized * unit.Stats.MoveSpeed * AdjustedSpeedMultiplier() * Time.deltaTime;
+        origDirection = Time.deltaTime * unit.Stats.MoveSpeed * AdjustedSpeedMultiplier() * origDirection.normalized;
 
         //Vector3 newDirection = direction;   //this way sets the new jump to the direction of the knockback
-        Vector3 newDirection = (direction * Time.deltaTime) + origDirection;   //this way sets the new jump as a combination vector of the 2 directions
+        Vector3 newDirection = origDirection + (direction * Time.deltaTime);   //this way sets the new jump as a combination vector of the 2 directions
         
         Vector3 newEndPoint;
         if(newDirection == Vector3.zero)

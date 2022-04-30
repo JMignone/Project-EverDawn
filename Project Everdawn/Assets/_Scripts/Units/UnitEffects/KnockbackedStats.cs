@@ -89,7 +89,7 @@ public class KnockbackedStats
         if(isKnockbacked) {
             if(currentKnockbackDelay > 0) { //if we havnt reached the total duration yet
                 currentSpeed = initialSpeed * (currentKnockbackDelay/knockbackDuration);
-                unit.Agent.transform.position += direction * currentSpeed * Time.deltaTime;
+                unit.Agent.transform.position += Time.deltaTime * currentSpeed * direction;
                 currentKnockbackDelay -= Time.deltaTime;
             }
             else

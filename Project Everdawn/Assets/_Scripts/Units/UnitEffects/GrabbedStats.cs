@@ -93,7 +93,7 @@ public class GrabbedStats
             if(enemyCanAct && !stunned && Vector3.Distance(unitAgentPos, enemyAgentPos) > unit.Agent.HitBox.radius + enemyUnit.Agent.HitBox.radius - obstacleAdjustment) {
                 direction = enemyAgentPos - unitAgentPos;
                 direction.y = 0;
-                unit.Agent.transform.position += direction.normalized * totalDistance/grabDelay * Time.deltaTime;
+                unit.Agent.transform.position += Time.deltaTime * totalDistance/grabDelay * direction.normalized;
             }
             else if(!NavMesh.SamplePosition(unitAgentPos, out hit, 1f, 9)) { //if the grabbed unit ended up in an obstacle
                 //NavMesh.Raycast(enemyAgentPos, unitAgentPos, out hit, 1); //find where the navmesh starts
@@ -102,9 +102,9 @@ public class GrabbedStats
                 if(enemyUnit.Agent != null) {
                     direction = enemyAgentPos - unitAgentPos;
                     direction.y = 0;
-                    enemyUnit.Agent.transform.position += direction.normalized * totalDistance/grabDelay * Time.deltaTime;
+                    enemyUnit.Agent.transform.position += Time.deltaTime * totalDistance/grabDelay * direction.normalized;
                 }
-                unit.Agent.transform.position += direction.normalized * totalDistance/grabDelay * Time.deltaTime;
+                unit.Agent.transform.position += Time.deltaTime * totalDistance/grabDelay * direction.normalized;
                 /*
                     If somehow a weird interaction causes the unit to move in the direction outside the boundary, the unit will float away from the arena
                     forever, however I don't think there is any possible way for this to happen. Hopefully I am not wrong.

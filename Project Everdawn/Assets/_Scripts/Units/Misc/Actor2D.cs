@@ -114,7 +114,7 @@ public class Actor2D : MonoBehaviour
                 followTarget.transform.localPosition.z
             );
             transform.rotation = followTarget.transform.rotation;
-            transform.Rotate(0, 0, 0, Space.Self); // !! I feel like this could be a source of a problem in the future, if units are rotated a certain way when they are made. Note this !!
+            //transform.Rotate(0, 0, 0, Space.Self); // !! I feel like this could be a source of a problem in the future, if units are rotated a certain way when they are made. Note this !!
         }
     }
 

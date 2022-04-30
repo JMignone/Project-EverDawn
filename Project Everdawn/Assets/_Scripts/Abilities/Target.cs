@@ -180,7 +180,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
         abilityPreviews = new List<GameObject>();
         createAbilityPreviews();
 
-        AbilityUI.StartStats();
+        AbilityUI.StartStats((Unit as Component).gameObject, abilityPreviewCanvas);
         if(!Unit.Stats.IsReady)
             GameFunctions.DisableAbilities((unit as Component).gameObject);
         //target = null;

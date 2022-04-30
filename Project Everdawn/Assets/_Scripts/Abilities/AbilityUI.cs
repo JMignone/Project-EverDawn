@@ -13,6 +13,9 @@ public class AbilityUI
     private float currCooldownDelay;
 
     [SerializeField]
+    private Transform abilityObject;
+
+    [SerializeField]
     private Image abilitySprite;
 
     [SerializeField]
@@ -21,11 +24,15 @@ public class AbilityUI
     [SerializeField]
     private Image abilityCancel;
 
+    private Transform agentTranform;
+    private Transform abilityPreviewCanvas;
+
     private bool canDrag;
     private bool canFire;
     private bool offCooldown;
     private bool cantFire;
     private RectTransform cardCanvasDim;
+    private float cardCanvasScale;
 
     public float CooldownDelay
     {
@@ -62,6 +69,12 @@ public class AbilityUI
         set { cardCanvasDim = value; }
     }
 
+    public float CardCanvasScale
+    {
+        get { return cardCanvasScale; }
+        set { cardCanvasScale = value; }
+    }
+
     public bool CanDrag
     {
         get { return canDrag; }
@@ -88,8 +101,11 @@ public class AbilityUI
         get { return currCooldownDelay/cooldownDelay; }
     }
 
-    public void StartStats() {
+    public void StartStats(GameObject unit, Canvas previewCanvas) {
+        agentTranform = unit.transform.GetChild(0).transform;
+        abilityPreviewCanvas = previewCanvas.transform;
         cardCanvasDim = GameManager.Instance.Canvas.GetChild(0).GetComponent<RectTransform>();
+        cardCanvasScale = GameManager.Instance.Canvas.GetComponent<RectTransform>().localScale.x; //this is used to compensate for differing resolutions
         //abilityCancel = GameManager.Instance.Canvas.GetChild(3).GetComponent<Image>();
         abilityCancel = GameManager.Instance.AbilityCancel;
         offCooldown = true;
@@ -131,9 +147,8 @@ public class AbilityUI
     }
 
     //this just makes it so the icon does not rotate with the parent, note the 180, we may need to set this to 0 in the future
-    // added an extra .parent on each side of the function to account for the change in hierarchy of the CanvasAbilityIcon object. Will need to remove if we revert to the old version of the object -Eagle
     public void LateUpdateStats() {
-        abilitySprite.transform.parent.parent.parent.rotation = Quaternion.Euler(0.0f, 180.0f, abilitySprite.transform.parent.parent.parent.parent.parent.GetChild(0).rotation.z * -1.0f);
+        abilityObject.rotation = Quaternion.Euler(0.0f, 180.0f, agentTranform.rotation.z * -1.0f);
     }
 
     public void resetAbility() {
@@ -144,9 +159,8 @@ public class AbilityUI
     }
 
     //sets the ability previews to red to display that they are disabled
-    // added an extra .parent in the foreach loop. Will need to remove if we revert to the old version of the object -Eagle
     public void DisableAbilities() {
-        foreach(Transform child in abilitySprite.transform.parent.parent.parent.GetChild(2)) {
+        foreach(Transform child in abilityPreviewCanvas) {
             if(child.childCount > 1) //this means its a complicated summon preview
                 child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,0,0,50);
             else
@@ -154,9 +168,8 @@ public class AbilityUI
         }
     }
 
-    // added an extra .parent in the foreach loop. Will need to remove if we revert to the old version of the object -Eagle
     public void EnableAbilities() {
-        foreach(Transform child in abilitySprite.transform.parent.parent.parent.GetChild(2)) {
+        foreach(Transform child in abilityPreviewCanvas) {
             if(child.childCount > 1) //this means its a complicated summon preview
                 child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,255,255,100);
             else

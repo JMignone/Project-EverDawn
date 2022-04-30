@@ -69,6 +69,6 @@ public class NoseDiveStats
             MonoBehaviour.Destroy((unit as Component).gameObject);
         }
         else
-            unit.Agent.transform.position += (targetPosition - unit.Agent.transform.position).normalized * speed * Time.deltaTime;
+            unit.Agent.transform.position += Time.deltaTime * speed * (targetPosition - unit.Agent.transform.position).normalized;
     }
 }

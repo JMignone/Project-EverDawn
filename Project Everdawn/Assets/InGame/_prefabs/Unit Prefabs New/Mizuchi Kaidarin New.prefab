@@ -1,20 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &8539453274875572859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488179931036062290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f56002cb7a8aeb5448da5a359b650304, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitStats: {fileID: 1701868425468477454}
-  agent: {fileID: 1701868423733107991}
-  animationAttackDelayStartTiming: 1.41
 --- !u!114 &7896179954399297655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,6 +48,21 @@ MonoBehaviour:
   - {fileID: 5975981124104494316}
   - {fileID: 8786154647936547071}
   statusMaterialSolidColor: {fileID: 2100000, guid: 549e03e4ffa62924a86ed215c3a18c64, type: 2}
+--- !u!114 &8539453274875572859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488179931036062290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56002cb7a8aeb5448da5a359b650304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitStats: {fileID: 1701868425468477454}
+  agent: {fileID: 1701868423733107991}
+  animationAttackDelayStartTiming: 1.41
 --- !u!1 &892701636780433054
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,7 +546,6 @@ MonoBehaviour:
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
-    unitRange: 0
     effectStats:
       aoeStats:
         areaOfEffect: 0
@@ -638,7 +637,7 @@ MonoBehaviour:
     chargeDamage: 0
     chargeSpeed: 0
     chargeDelay: 0
-    currentDelay: 0
+    jumpWhileCharging: 0
   dashStats:
     dashes: 0
     isDashing: 0
@@ -646,7 +645,6 @@ MonoBehaviour:
     dashSpeed: 0
     dashRange: 0
     dashDelay: 0
-    currentDelay: 0
   shadowStats:
     shades: 0
     interruptsByDamage: 0
@@ -661,6 +659,9 @@ MonoBehaviour:
     noseDives: 0
     createAtLocation: {fileID: 0}
     speed: 0
+  jumpStats:
+    jumps: 0
+    maxJumpAngle: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -1182,6 +1183,10 @@ PrefabInstance:
       propertyPath: abilityUI.cooldownMask
       value: 
       objectReference: {fileID: 7472017327527494635}
+    - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
+      propertyPath: abilityUI.abilityObject
+      value: 
+      objectReference: {fileID: 18346142176097874}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityUI.abilitySprite
       value: 

@@ -333,7 +333,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 List<RaycastResult> raysastResults = new List<RaycastResult>();
                 EventSystem.current.RaycastAll(eventData, raysastResults);
                 foreach(RaycastResult raysastResult in raysastResults) {
-                    if(raysastResult.gameObject.name == "CooldownSprite") {
+                    if(raysastResult.gameObject.name == "IconMask") {
                         abilityClicked = true;
                         break;
                     }

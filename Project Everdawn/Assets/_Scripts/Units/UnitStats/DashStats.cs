@@ -82,7 +82,7 @@ public class DashStats
                 }
                 else if(isDashing && isMoving && chosenTarget != null) {
                     Vector3 direction = (chosenTarget.Agent.transform.position - unit.Agent.transform.position).normalized;
-                    unit.Agent.transform.position += direction * dashSpeed * Time.deltaTime;
+                    unit.Agent.transform.position += Time.deltaTime * dashSpeed * direction;
                     if(Vector3.Distance(unit.Agent.transform.position, chosenTarget.Agent.transform.position) < unit.Stats.Range + chosenTarget.Agent.Agent.radius) {
                         DashAttack();
                         unit.SetTarget((chosenTarget as Component).gameObject);

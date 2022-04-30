@@ -377,7 +377,6 @@ MonoBehaviour:
     unitType: 0
     unitGrouping: 0
     attackPriority: 0
-    unitRange: 0
     effectStats:
       aoeStats:
         areaOfEffect: 0
@@ -466,7 +465,7 @@ MonoBehaviour:
     chargeDamage: 100
     chargeSpeed: 20
     chargeDelay: 0.5
-    currentDelay: 0
+    jumpWhileCharging: 0
   dashStats:
     dashes: 0
     isDashing: 0
@@ -474,7 +473,6 @@ MonoBehaviour:
     dashSpeed: 85
     dashRange: 20
     dashDelay: 1
-    currentDelay: 0
   shadowStats:
     shades: 0
     interruptsByDamage: 0
@@ -498,6 +496,9 @@ MonoBehaviour:
     noseDives: 0
     createAtLocation: {fileID: 0}
     speed: 0
+  jumpStats:
+    jumps: 0
+    maxJumpAngle: 0
   hitTargets: []
   inRangeTargets: []
   enemyHitTargets: []
@@ -1570,6 +1571,10 @@ PrefabInstance:
       propertyPath: abilityUI.cooldownMask
       value: 
       objectReference: {fileID: 633053576098105055}
+    - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
+      propertyPath: abilityUI.abilityObject
+      value: 
+      objectReference: {fileID: 8440331531197001871}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityUI.abilitySprite
       value: 
