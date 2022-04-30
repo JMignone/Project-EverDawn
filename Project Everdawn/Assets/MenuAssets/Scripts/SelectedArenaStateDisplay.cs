@@ -14,7 +14,7 @@ public class SelectedArenaStateDisplay : MonoBehaviour
 
     private void SetArenaDisplayToCurrentArenaState()
     {
-        ArenaState state = (ArenaState)arenaStateController.currentState;
+        ArenaState state = (ArenaState)arenaStateController.CurrentState;
         arenaDisplay.BindArenaData(state.Arena);
     }
 }

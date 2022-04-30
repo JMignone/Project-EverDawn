@@ -1,9 +1,15 @@
 using UnityEngine;
 
+[System.Serializable]
 public abstract class BaseStateController : ScriptableObject
 {
     // Reference to currently operating state.
-    public BaseState currentState { get; private set; }
+    [SerializeField] protected BaseState currentState;
+
+    public BaseState CurrentState
+    {
+        get {return currentState;}
+    }
 
     public void ChangeState(BaseState newState) // Changes state
     {

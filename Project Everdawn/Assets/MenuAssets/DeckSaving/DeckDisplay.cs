@@ -6,7 +6,6 @@ public class DeckDisplay : MonoBehaviour
     [SerializeField] private DeckManager deckManager;
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private bool saveDeckOnUnload;
-    [SerializeField] private bool allowDeckMultiselection;
 
     [Space]
     
@@ -15,7 +14,6 @@ public class DeckDisplay : MonoBehaviour
     private List<GameObject> cardsBeingDisplayed = new List<GameObject>();
 
     private GameObject cardInstance;
-    private CardDisplay selectedCardDisplay;
 
     public List<GameObject> CardsBeingDisplayed
     {
@@ -69,29 +67,13 @@ public class DeckDisplay : MonoBehaviour
             SaveDeck();
         }
 
+        // still need to pool objects
         if(CardsBeingDisplayed != null && transform.childCount != 0) // Check that there are objects that have been instantiated and are in the list
         {
             for (int i = CardsBeingDisplayed.Count - 1; i >= 0; i--) // Reverse loop over objects in list and destroy them
             {
                 GameObject.Destroy(CardsBeingDisplayed[i]);
                 CardsBeingDisplayed.Remove(CardsBeingDisplayed[i]);
-            }
-        }
-    }
-
-    public void DeckChangeRequest(CardDisplay cd) // Used with event system
-    {
-        selectedCardDisplay = cd;
-    }
-
-    public void DeckChangeExecute(CardDisplay cd) // Used with event system
-    {
-        if(selectedCardDisplay != null)
-        {
-            cd.BindCardData(selectedCardDisplay.Card);
-            if(allowDeckMultiselection == false)
-            {
-                selectedCardDisplay = null; // Prevents only tapping bottom card once and being able to change all top cards without re-inputting any other actions - could be useful for testing down the line? add toggle?
             }
         }
     }

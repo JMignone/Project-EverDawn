@@ -9,17 +9,6 @@ public class AverageResourceDisplay : MonoBehaviour
     [SerializeField] private DeckManager deckManager;
     private float averageResource;
 
-    private void OnEnable()
-    {
-        UpdateAverageResourceDisplay();
-    }
-
-    // Switch to event triggered function later
-    private void Update()
-    {
-        UpdateAverageResourceDisplay();
-    }
-
     private List<int> GenerateCardCostsList(List<int> selectedCardIDList) // Converts a list of card IDs to a list of their resource costs
     {
         List<int> result = new List<int>();
@@ -42,7 +31,7 @@ public class AverageResourceDisplay : MonoBehaviour
         return result;
     }
 
-    private void UpdateAverageResourceDisplay() // Calculates the average resource using the currently selected deck in the deckManager
+    public void UpdateAverageResourceDisplay() // Calculates the average resource using the currently selected deck in the deckManager
     {
         List<int> cardList = new List<int>();
         for(int i = 0; i < deckDisplay.CardsBeingDisplayed.Count; i++)

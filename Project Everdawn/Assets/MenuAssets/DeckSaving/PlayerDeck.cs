@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class PlayerDeck
 {
     public string DeckName;
-    public List<int> CardsInDeck;
+    public List<int> CardsInDeck = new List<int>();
 
     public PlayerDeck Copy() // Returns clone of PlayerDeck
     {

@@ -50,21 +50,24 @@ public class DeckManager : ScriptableObject
             }
         }
     #endregion
-  
+
+    #region Lifecycle Methods
     [ContextMenu("Run Awake")]
     private void Awake()
     {
         DeleteOldDeck();
         PlayerDeckList pdl = LoadDeckList();
-        if(pdl == null)
+        if(pdl != null)
+        {
+            bool validConfiguration = ValidateDecks(deckList.playerDecks);
+            if(validConfiguration == false)
+            {
+                ResetDecks();
+            }
+        }
+        else
         {
             GenerateDecks(maxNumberOfDecks, deckList.playerDecks.Count, deckList.playerDecks);
-        }
-        CheckDecks();
-        bool cardsCheck = CheckCards(deckList.playerDecks);
-        if(cardsCheck == false)
-        {
-            ResetDecks();
         }
         LoadAsSelectedDeck(LoadDeckNumberFromPlayerPrefs());
     }
@@ -73,93 +76,62 @@ public class DeckManager : ScriptableObject
     {
         SaveDeckNumberToPlayerPrefs(selectedDeckNumber);
     }
+    #endregion
 
     #region Deck Checking and Generation Methods
-    [ContextMenu("Check for Decks")]
-    private void CheckDecks() // Checks that there are only as many decks as we'd like to allow; resets or generates them depending on case
+    private bool ValidateDecks(List<PlayerDeck> decks)
     {
         try
         {
-            if(deckList.playerDecks.Count < maxNumberOfDecks) // Check if there's too few decks; create if there are none, reset if there are some
+            if(decks.Count == maxNumberOfDecks) // Check there's the expected number of decks
             {
-                // Maybe just drop, this would reset everyone's decks if we decide to up the limit later
-                if(deckList.playerDecks.Count == 0)
+                //Debug.Log("Found " + decks.Count.ToString() + " decks.");
+                foreach(PlayerDeck deck in decks)
                 {
-                    //Debug.Log("No decks found; Generating decks");
-                    GenerateDecks(maxNumberOfDecks, deckList.playerDecks.Count, deckList.playerDecks);
-                }
-                else if(deckList.playerDecks.Count != 0)
-                {
-                    //Debug.Log("Too few decks found; Resetting to default");
-                    ResetDecks();
-                }
-            }
-            else if(deckList.playerDecks.Count > maxNumberOfDecks) // Check if there's too many decks; reset to defaults if so
-            {
-                //Remove Decks; reset them to default; throw error
-                //Debug.Log("More decks than allowed found; Resetting to default");
-                ResetDecks();
-            }
-            else if(deckList.playerDecks.Count == maxNumberOfDecks) // Currently just for debug purposes, if it's working as indended this shouldn't be necessary
-            {
-                // Do nothing, this should be the usual case
-                //Debug.Log("Number of Decks that exist is correct");
-            }
-        }
-        catch
-        {
-            throw;
-        }
-    }
-
-    private bool CheckCards(List<PlayerDeck> listToCheck)
-    {
-        try
-        {
-            for(int i = 0; i < listToCheck.Count - 1; i++)
-            {
-                //Debug.Log("Checking deck" + i.ToString());
-                if(listToCheck[i].CardsInDeck.Count == deckSize)
-                {
-                    foreach(int cardID in listToCheck[i].CardsInDeck)
+                    if(deck.CardsInDeck != null && deck.CardsInDeck.Count == deckSize) // Check each deck is not null and has the appropriate number of cards
                     {
-                        //Debug.Log("Found card with ID: " + cardID.ToString());
-                        if(cardID < 0)
+                        //Debug.Log("Found " + deck.CardsInDeck.Count.ToString() + " cards");
+                        foreach(int cardID in deck.CardsInDeck)
                         {
-                            return false;
-                        }
-                        else if(cardID >= 0)
-                        {
-                            continue;
+                            if(cardID >= 0) // Check each card in each deck has a valid ID
+                            {
+                                //Debug.Log("Found card with ID: " + cardID.ToString());
+                                continue;
+                            }
+                            else
+                            {
+                                Debug.Log("Found an invalid card ID");
+                                return false;
+                            }
                         }
                     }
-                }
-                else if(listToCheck[i].CardsInDeck.Count != deckSize)
-                {
-                    return false;
+                    else
+                    {
+                        Debug.Log("Found deck of incorrect size");
+                        return false;
+                    }
                 }
             }
-            return true;
+            else
+            {
+                Debug.Log("Found an invalid number of decks");
+                return false;
+            }
+            return true; // Returns true if all checks pass
         }
         catch
         {
-            throw;
+            Debug.Log("Encountered some kind of error, decks assumed to not be valid");
+            return false;
         }
     }
 
     private void GenerateDecks(int deckUpperLimit, int deckCount, List<PlayerDeck> targetList) // Adds the default deck according to 
     {
-        try
+        for(int i = 1; i <= deckUpperLimit - deckCount; i++)
         {
-            for(int i = 1; i <= deckUpperLimit - deckCount; i++)
-            {
-                targetList.Add(defaultDeck.Copy());
-                //Debug.Log(i.ToString() + " added");
-            }
-        }
-        catch
-        {
-            throw;
+            targetList.Add(defaultDeck.Copy());
+            //Debug.Log(i.ToString() + " added");
         }
     }
 
@@ -170,81 +142,39 @@ public class DeckManager : ScriptableObject
         GenerateDecks(maxNumberOfDecks, deckList.playerDecks.Count, deckList.playerDecks);
         SaveDeckList();
     }
-
-    private void ResetDeck(PlayerDeck pd) // Attempts to reset deck to default
-    {
-        try
-        {
-            pd = defaultDeck.Copy();
-        }
-        catch
-        {
-            throw;
-        }
-    }
-
-    private void CheckDeckSize(PlayerDeck pd) // WIP don't use
-    {
-        try
-        {
-            if(pd.CardsInDeck.Count != deckSize)
-            {
-                //Reset the deck; show error message; cancel any actions needed
-                ResetDeck(pd);
-            }
-        }
-        catch
-        {
-            throw;
-        }
-    }
     #endregion
 
     #region Deck Saving and Loading Methods
     public void SaveDeck(int deckNumber, PlayerDeck playerDeck) // Saves a deck's data to the given deckNumber
     {
-        try
+        int deckIndex = deckNumber - 1;
+        if(deckIndex >= 0 && deckIndex <= deckList.playerDecks.Count)
         {
-            int deckIndex = deckNumber - 1;
-            if(deckIndex >= 0 && deckIndex <= deckList.playerDecks.Count)
-            {
-                deckList.playerDecks[deckIndex] = playerDeck.Copy();
-                SaveDeckList();
-            }
-            else
-            {
-                //Debug.Log("Deck Number not found");
-            }
+            deckList.playerDecks[deckIndex] = playerDeck.Copy();
+            SaveDeckList();
         }
-        catch
+        else
         {
-            throw;
+            //Debug.Log("Deck Number not found");
         }
     }
 
     //This should be made private once we don't need it for loading the AI deck anymore
     public PlayerDeck LoadDeck(int deckNumber) // Loads a deck's data via the deck's number
     {
-        try
+        int deckIndex = deckNumber - 1;
+        PlayerDeck result = new PlayerDeck();
+        LoadDeckList();
+        if(deckIndex >= 0 && deckIndex <= deckList.playerDecks.Count)
         {
-            int deckIndex = deckNumber - 1;
-            PlayerDeck result = new PlayerDeck();
-            LoadDeckList();
-            if(deckIndex >= 0 && deckIndex <= deckList.playerDecks.Count)
-            {
-                result = deckList.playerDecks[deckIndex];
-                //selectedDeck = result.Copy();
-                return result;
-            }
-            else
-            {
-                //Debug.Log("Deck with key " + deckIndex.ToString() + " not found");
-                return null;
-            }
+            result = deckList.playerDecks[deckIndex];
+            //selectedDeck = result.Copy();
+            return result;
         }
-        catch
+        else
         {
-            throw;
+            //Debug.Log("Deck with key " + deckIndex.ToString() + " not found");
+            return null;
         }
     }
 
@@ -271,8 +201,12 @@ public class DeckManager : ScriptableObject
             bf.Serialize(file, pdl); // Serialize the file
             file.Close(); // Close the file stream
         }
-        catch(IOException)
+        catch(IOException e) when (e.Data != null)
         {
+            if (e.Source != null)
+            {
+                Debug.Log("IOException source: {0}" + e.Data.ToString());
+            }
             throw;
         }
     }
@@ -298,8 +232,12 @@ public class DeckManager : ScriptableObject
             deckList = pdl.Copy();
             return pdl;
         }
-        catch
+        catch(IOException e) when (e.Data != null)
         {
+            if (e.Source != null)
+            {
+                Debug.Log("IOException source: {0}" + e.Data.ToString());
+            }
             throw;
         }
     }
@@ -320,34 +258,33 @@ public class DeckManager : ScriptableObject
         SaveSelectedDeckAs(selectedDeckNumber);
         LoadAsSelectedDeck(deckNumber);
     }
+
+    public void ChangeSelectedDeckName(string deckName)
+    {
+        selectedDeck.DeckName = deckName;
+        SaveSelectedDeckAs(selectedDeckNumber);
+    }
     #endregion
 
     #region Data Type Conversion Methods
     public List<SO_Card> ConvertIntListToCardList(List<int> cardIDs) // Converts an int list to a SO_Card list
     {
-        try
+        List<SO_Card> result = new List<SO_Card>();
+        if(cardIDs != null)
         {
-            List<SO_Card> result = new List<SO_Card>();
-            if(cardIDs != null)
+            for(int i = 0; i <= cardIDs.Count - 1; i++)
             {
-                for(int i = 0; i <= cardIDs.Count - 1; i++)
-                {
-                    result.Add(cardDatabase.cardList[cardIDs[i]]);
-                }
-                return result;
+                result.Add(cardDatabase.cardList[cardIDs[i]]);
             }
-            else
-            {
-                for(int i = 0; i <= deckSize - 1; i++)
-                {
-                    result.Add(cardDatabase.cardList[i]);
-                }
-                return result;
-            }
+            return result;
         }
-        catch
+        else
         {
-            throw;
+            for(int i = 0; i <= deckSize - 1; i++)
+            {
+                result.Add(cardDatabase.cardList[i]);
+            }
+            return result;
         }
     }
 
@@ -379,7 +316,7 @@ public class DeckManager : ScriptableObject
         }
         else
         {
-            result = 1;
+            result = 1; // Return 1 by default
         }
         //Debug.Log("Loading " + result.ToString() + " as selected deck from before shutdown");
         return result;
@@ -403,6 +340,13 @@ public class DeckManager : ScriptableObject
     private void InspectorLoadDeck()
     {
         LoadAsSelectedDeck(selectedDeckNumber);
+    }
+
+    [ContextMenu("Validate Decks")]
+    private void InspectorValidateDecks()
+    {
+        bool result = ValidateDecks(deckList.playerDecks);
+        Debug.Log(result.ToString());
     }
     #endregion
 }

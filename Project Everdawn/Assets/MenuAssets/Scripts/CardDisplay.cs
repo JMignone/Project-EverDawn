@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+[System.Serializable]
 public class CardDisplay : MonoBehaviour
 {
     [Header("Card")]
@@ -16,7 +17,7 @@ public class CardDisplay : MonoBehaviour
     [Header("Click Event Settings")]
     [SerializeField] private CardDisplayEvent cardDisplayEvent;
 
-    void Awake()
+    private void Awake()
     {
         BindCardData(Card);
     }
@@ -42,7 +43,6 @@ public class CardDisplay : MonoBehaviour
     {
         if(cardDisplayEvent != null)
         {
-            Debug.Log("test");
             cardDisplayEvent.Raise(this);
         }
     }
