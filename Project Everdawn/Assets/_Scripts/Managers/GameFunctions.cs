@@ -224,10 +224,13 @@ public static class GameFunctions
         }
         
         if(isGrenade && projectile.GrenadeStats.IsAirStrike) {
-            if(projectile.GrenadeStats.StartLocation == GameConstants.AIR_STRIKE_LOCATION.BOTTOM)
+            if(projectile.GrenadeStats.StartLocation == GameConstants.AIR_STRIKE_LOCATION.BOTTOM) {
                 startPosition = new Vector3(0, 15, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
+                if(tag == "Enemy");
+                    startPosition.z *= -1;
+            }
             else
-                startPosition = new Vector3((GameManager.Instance.Ground.transform.localScale.x*5 + 20)*Mathf.Sign(startPosition.x), 15, startPosition.z);
+                startPosition = new Vector3((GameManager.Instance.Ground.transform.localScale.x*5 + 20)*Mathf.Sign(startPosition.x), 15, 0);
         }
         
         GameObject go = GameObject.Instantiate(prefab, startPosition, targetRotation, GameManager.GetUnitsFolder());
@@ -255,8 +258,11 @@ public static class GameFunctions
             endPosition += direction.normalized * radius;
             
         if(isGrenade && projectile.GrenadeStats.IsAirStrike) {
-            if(projectile.GrenadeStats.StartLocation == GameConstants.AIR_STRIKE_LOCATION.BOTTOM)
-                startPosition = new Vector3(0, 0, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
+            if(projectile.GrenadeStats.StartLocation == GameConstants.AIR_STRIKE_LOCATION.BOTTOM) {
+                startPosition = new Vector3(0, 15, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
+                if(tag == "Enemy");
+                    startPosition.z *= -1;
+            }
             else
                 startPosition = new Vector3((GameManager.Instance.Ground.transform.localScale.x*5 + 20)*Mathf.Sign(startPosition.x), 0, 0);
         }

@@ -265,6 +265,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4489671066153867476}
     m_Modifications:
+    - target: {fileID: 2796575115973403864, guid: 5b523abdc1fc14248a12142e71435bab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5028950967710317734, guid: 5b523abdc1fc14248a12142e71435bab, type: 3}
       propertyPath: m_Name
       value: Insurgent New
@@ -389,6 +393,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4489671066153867476}
     m_Modifications:
+    - target: {fileID: 2796575115973403864, guid: 5b523abdc1fc14248a12142e71435bab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5028950967710317734, guid: 5b523abdc1fc14248a12142e71435bab, type: 3}
       propertyPath: m_Name
       value: Insurgent New (1)

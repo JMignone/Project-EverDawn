@@ -184,13 +184,12 @@ MonoBehaviour:
     detectionObject: {fileID: 0}
     visionObject: {fileID: 0}
     unitMaterials:
-      renderers: []
+      materialSwapper: {fileID: 0}
     movementType: 0
     heightAttackable: 0
     unitType: 0
     unitGrouping: 1
     attackPriority: 0
-    unitRange: 0
     effectStats:
       aoeStats:
         areaOfEffect: 0
@@ -313,6 +312,10 @@ PrefabInstance:
     - target: {fileID: 3925836232371597723, guid: e1386823d41144c45aacb7e394419c53, type: 3}
       propertyPath: m_Name
       value: Monsoon Gunner New
+      objectReference: {fileID: 0}
+    - target: {fileID: 6160463880244275178, guid: e1386823d41144c45aacb7e394419c53, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1386823d41144c45aacb7e394419c53, type: 3}
@@ -437,6 +440,10 @@ PrefabInstance:
     - target: {fileID: 3925836232371597723, guid: e1386823d41144c45aacb7e394419c53, type: 3}
       propertyPath: m_Name
       value: Monsoon Gunner New (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6160463880244275178, guid: e1386823d41144c45aacb7e394419c53, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1386823d41144c45aacb7e394419c53, type: 3}

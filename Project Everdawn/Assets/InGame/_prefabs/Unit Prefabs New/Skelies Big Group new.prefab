@@ -325,6 +325,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skelly New (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8687623084184292484, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
 --- !u!4 &830526924467432515 stripped
@@ -386,6 +390,10 @@ PrefabInstance:
     - target: {fileID: 5726148247449163227, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
       propertyPath: m_Name
       value: Skelly New (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8687623084184292484, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
@@ -449,6 +457,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skelly New (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 8687623084184292484, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
 --- !u!4 &1695421544793834028 stripped
@@ -510,6 +522,10 @@ PrefabInstance:
     - target: {fileID: 5726148247449163227, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
       propertyPath: m_Name
       value: Skelly New (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8687623084184292484, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
@@ -573,6 +589,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skelly New (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 8687623084184292484, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
 --- !u!4 &2692661840018561873 stripped
@@ -634,6 +654,10 @@ PrefabInstance:
     - target: {fileID: 5726148247449163227, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
       propertyPath: m_Name
       value: Skelly New (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8687623084184292484, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
@@ -697,6 +721,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skelly New (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 8687623084184292484, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
 --- !u!4 &5739414302428268517 stripped
@@ -758,6 +786,10 @@ PrefabInstance:
     - target: {fileID: 5726148247449163227, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
       propertyPath: m_Name
       value: Skelly New (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8687623084184292484, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
@@ -821,6 +853,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skelly New (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8687623084184292484, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
 --- !u!4 &5396904036478626189 stripped
@@ -882,6 +918,10 @@ PrefabInstance:
     - target: {fileID: 5726148247449163227, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
       propertyPath: m_Name
       value: Skelly New
+      objectReference: {fileID: 0}
+    - target: {fileID: 8687623084184292484, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
@@ -945,6 +985,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skelly New (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8687623084184292484, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
 --- !u!4 &6795720400205514227 stripped
@@ -1007,6 +1051,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skelly New (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 8687623084184292484, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
 --- !u!4 &6418073450963000825 stripped
@@ -1068,6 +1116,10 @@ PrefabInstance:
     - target: {fileID: 5726148247449163227, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
       propertyPath: m_Name
       value: Skelly New (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8687623084184292484, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
@@ -1192,6 +1244,10 @@ PrefabInstance:
     - target: {fileID: 5726148247449163227, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
       propertyPath: m_Name
       value: Skelly New (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8687623084184292484, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}

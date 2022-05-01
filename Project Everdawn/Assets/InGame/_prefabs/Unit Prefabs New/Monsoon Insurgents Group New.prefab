@@ -184,13 +184,12 @@ MonoBehaviour:
     detectionObject: {fileID: 0}
     visionObject: {fileID: 0}
     unitMaterials:
-      renderers: []
+      materialSwapper: {fileID: 0}
     movementType: 0
     heightAttackable: 0
     unitType: 0
     unitGrouping: 1
     attackPriority: 0
-    unitRange: 0
     effectStats:
       aoeStats:
         areaOfEffect: 0
@@ -266,6 +265,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4489671066153867476}
     m_Modifications:
+    - target: {fileID: 2796575115973403864, guid: cd41b4d0c134e3744a640e5c175e82e7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5028950967710317734, guid: cd41b4d0c134e3744a640e5c175e82e7, type: 3}
       propertyPath: m_Name
       value: Monsoon Insurgent New
@@ -328,6 +331,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4489671066153867476}
     m_Modifications:
+    - target: {fileID: 2796575115973403864, guid: cd41b4d0c134e3744a640e5c175e82e7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5028950967710317734, guid: cd41b4d0c134e3744a640e5c175e82e7, type: 3}
       propertyPath: m_Name
       value: Monsoon Insurgent New (2)
