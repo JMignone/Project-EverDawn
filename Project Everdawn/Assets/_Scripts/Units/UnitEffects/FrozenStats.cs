@@ -79,7 +79,7 @@ public class FrozenStats
             }
             unit.SetTarget(null);
             unit.Stats.IsCastingAbility = false; //normally this is done automatically, but some abilitys use the 'abilityOverride', so we will need to set it
-            GameFunctions.DisableAbilities((unit as Component).gameObject);
+            GameFunctions.DisableAbilities(unit);
         }   
     }
 
@@ -91,6 +91,6 @@ public class FrozenStats
         {
             unit.UnitSprite.Animator.enabled = true;
         }
-        GameFunctions.EnableAbilities((unit as Component).gameObject);
+        GameFunctions.EnableAbilities(unit);
     }
 }

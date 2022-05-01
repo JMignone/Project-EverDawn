@@ -153,7 +153,7 @@ public class GrabbedStats
             unit.Agent.Agent.enabled = false;
             unit.SetTarget(null);
             unit.Stats.IsCastingAbility = false; //normally this is done automatically, but some abilitys use the 'abilityOverride', so we will need to set it
-            GameFunctions.DisableAbilities((unit as Component).gameObject);
+            GameFunctions.DisableAbilities(unit);
         }
     }
 
@@ -162,7 +162,7 @@ public class GrabbedStats
         stunned = false;
         obstacleDetected = false;
         unit.Agent.Agent.enabled = true;
-        GameFunctions.EnableAbilities((unit as Component).gameObject);
+        GameFunctions.EnableAbilities(unit);
 
         if(enemyController && enemyUnit != null)
             enemyUnit.Stats.IsCastingAbility = false;

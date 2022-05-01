@@ -70,8 +70,6 @@ public class BaseStats
     private Image healthBar;
     [SerializeField]
     private Image armorBar;
-    [SerializeField]
-    private Image abilityIndicator;
     //[SerializeField]
     private int indicatorNum;
     [SerializeField]
@@ -257,10 +255,6 @@ public class BaseStats
         get { return armorBar; }
     }
 
-    public Image AbilityIndicator
-    {
-        get { return abilityIndicator; }
-    }
 
     public int IndicatorNum
     {
@@ -401,11 +395,6 @@ public class BaseStats
     public void UpdateStats(bool chargeAttack, int inRange, Actor3D unitAgent, List<GameObject> hitTargets, GameObject target, GameObject unit) {
         UpdateHealth();
 
-        if(indicatorNum > 0 && Damageable)
-            abilityIndicator.enabled = true;
-        else
-            abilityIndicator.enabled = false;
-
         summoningSicknessUI.UpdateStats();
         EffectStats.UpdateStats();
 
@@ -497,11 +486,6 @@ public class BaseStats
 
     public void UpdateBuildingStats() {
         UpdateHealth();
-
-        if(indicatorNum > 0 && Damageable)
-            abilityIndicator.enabled = true;
-        else
-            abilityIndicator.enabled = false;
 
         summoningSicknessUI.UpdateStats();
         EffectStats.UpdateStats();

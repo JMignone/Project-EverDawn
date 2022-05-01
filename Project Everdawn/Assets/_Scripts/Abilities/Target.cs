@@ -139,7 +139,11 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
     public AbilityUI AbilityUI
     {
         get { return abilityUI; }
-        //set { abilityUI = value; }
+    }
+
+    public Canvas AbilityPreviewCanvas
+    {
+        get { return abilityPreviewCanvas; }
     }
 
     public bool PauseFiring
@@ -182,7 +186,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
 
         AbilityUI.StartStats((Unit as Component).gameObject, abilityPreviewCanvas);
         if(!Unit.Stats.IsReady)
-            GameFunctions.DisableAbilities((unit as Component).gameObject);
+            GameFunctions.DisableAbilities(Unit);
         //target = null;
 
         if(transform.parent.tag == "Player")

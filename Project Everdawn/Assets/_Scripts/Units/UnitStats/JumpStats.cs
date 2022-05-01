@@ -67,7 +67,7 @@ public class JumpStats
                     jumpEndPoint.x = jumpStartPoint.x - offset;
             }
 
-            GameFunctions.DisableAbilities((unit as Component).gameObject);
+            GameFunctions.DisableAbilities(unit);
         }
     }
 
@@ -85,7 +85,7 @@ public class JumpStats
         else {
             unit.Agent.Agent.CompleteOffMeshLink();
             unit.Agent.Agent.Warp(unit.Agent.transform.position);
-            GameFunctions.EnableAbilities((unit as Component).gameObject);
+            GameFunctions.EnableAbilities(unit);
             jumping = false;
         }
     }
@@ -135,7 +135,7 @@ public class JumpStats
         if(jumping) {
             unit.Agent.Agent.CompleteOffMeshLink();
             unit.Agent.Agent.Warp(unit.Agent.transform.position);
-            GameFunctions.EnableAbilities((unit as Component).gameObject);
+            GameFunctions.EnableAbilities(unit);
             jumping = false;
         }
     }

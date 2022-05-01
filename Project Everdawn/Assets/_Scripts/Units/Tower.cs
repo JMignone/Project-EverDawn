@@ -146,11 +146,6 @@ public class Tower : MonoBehaviour, IDamageable
         stats.EffectStats.StartStats(unit);
         attackStats.StartAttackStats(unit);
 
-        stats.IsHoveringAbility = false;
-        stats.AbilityIndicator.enabled = false;
-        stats.AbilityIndicator.rectTransform.sizeDelta = new Vector2(2*agent.HitBox.radius + 1, 2*agent.HitBox.radius + 1); 
-        // + 1 is better for the knob UI, if we get our own UI image, we may want to remove it
-
         if(stats.AttackChargeLimiter == 0)
             stats.AttackChargeLimiter = GameConstants.ATTACK_CHARGE_LIMITER;
         if(stats.AttackReadyPercentage == 0)

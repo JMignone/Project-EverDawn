@@ -85,7 +85,7 @@ public class SummoningSicknessUI
             }
             else {
                 sSCanvas.enabled = false;
-                GameFunctions.EnableAbilities((unit as Component).gameObject);
+                GameFunctions.EnableAbilities(unit);
                 stopUpdate = true;
             }
         }

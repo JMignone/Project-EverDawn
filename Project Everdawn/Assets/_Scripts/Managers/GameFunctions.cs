@@ -226,7 +226,7 @@ public static class GameFunctions
         if(isGrenade && projectile.GrenadeStats.IsAirStrike) {
             if(projectile.GrenadeStats.StartLocation == GameConstants.AIR_STRIKE_LOCATION.BOTTOM) {
                 startPosition = new Vector3(0, 15, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
-                if(tag == "Enemy");
+                if(tag == "Enemy")
                     startPosition.z *= -1;
             }
             else
@@ -260,7 +260,7 @@ public static class GameFunctions
         if(isGrenade && projectile.GrenadeStats.IsAirStrike) {
             if(projectile.GrenadeStats.StartLocation == GameConstants.AIR_STRIKE_LOCATION.BOTTOM) {
                 startPosition = new Vector3(0, 15, GameManager.Instance.Ground.transform.localScale.z*-5 - 10);
-                if(tag == "Enemy");
+                if(tag == "Enemy")
                     startPosition.z *= -1;
             }
             else
@@ -427,7 +427,8 @@ public static class GameFunctions
         else {
             go.tag = tag;
             unit.Agent.transform.tag = tag;
-            unit.UnitSprite.Ability.transform.tag = tag;
+            if(unit.UnitSprite.Ability != null)
+                unit.UnitSprite.Ability.transform.tag = tag;
             if(tag == "Enemy")
                 unit.Stats.HealthBar.color = new Color32(219,37,37,255);
         }
@@ -438,10 +439,13 @@ public static class GameFunctions
     }
 
     //sets the ability previews to red to display that they are disabled, DOESNT ACTUALLY DISABLE, ONLY VISUAL
-    public static void DisableAbilities(GameObject go) {
-        if(go.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors to red
-            (go.transform.GetChild(1).GetChild(5).GetChild(1).GetComponent(typeof(ICaster)) as ICaster).AbilityUI.CantFire = true;
-            foreach(Transform child in go.transform.GetChild(1).GetChild(5).GetChild(2)) {
+    public static void DisableAbilities(IDamageable unit) {
+        GameObject canvasAbility = unit.Stats.CanvasAbility;
+        if(canvasAbility != null) { //if the unit has an ability, set its image colors back to green
+            ICaster ability = (canvasAbility.transform.GetChild(0).GetComponent(typeof(ICaster)) as ICaster);
+
+            ability.AbilityUI.CantFire = true;
+            foreach(Transform child in ability.AbilityPreviewCanvas.transform) {
                 if(child.childCount > 1) //this means its a complicated summon preview
                     child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,0,0,50);
                 else
@@ -450,11 +454,14 @@ public static class GameFunctions
         }
     }
 
-    public static void EnableAbilities(GameObject go) {
-        if(go.transform.GetChild(1).GetChild(5).childCount > 1) { //if the unit has an ability, set its image colors back to green
-            (go.transform.GetChild(1).GetChild(5).GetChild(1).GetComponent(typeof(ICaster)) as ICaster).AbilityUI.CantFire = false;
-            if((go.transform.GetChild(1).GetChild(5).GetChild(1).GetComponent(typeof(ICaster)) as ICaster).AbilityUI.OffCooldown) {
-                foreach(Transform child in go.transform.GetChild(1).GetChild(5).GetChild(2)) {
+    public static void EnableAbilities(IDamageable unit) {
+        GameObject canvasAbility = unit.Stats.CanvasAbility;
+        if(canvasAbility != null) { //if the unit has an ability, set its image colors back to green
+            ICaster ability = (canvasAbility.transform.GetChild(0).GetComponent(typeof(ICaster)) as ICaster);
+
+            ability.AbilityUI.CantFire = false;
+            if(ability.AbilityUI.OffCooldown) {
+                foreach(Transform child in ability.AbilityPreviewCanvas.transform) {
                     if(child.childCount > 1) //this means its a complicated summon preview
                         child.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color32(255,255,255,100);
                     else

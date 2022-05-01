@@ -115,13 +115,13 @@ public class KnockbackedStats
             currentSpeed = speed;
             unit.SetTarget(null);
             unit.Stats.IsCastingAbility = false; //normally this is done automatically, but some abilitys use the 'abilityOverride' AND it doesnt set isCastingAbility via just getting destroyed, so we will need to set it
-            GameFunctions.DisableAbilities((unit as Component).gameObject);
+            GameFunctions.DisableAbilities(unit);
 
         }
     }
 
     public void unKnockback() {
         isKnockbacked = false;
-        GameFunctions.EnableAbilities((unit as Component).gameObject);
+        GameFunctions.EnableAbilities(unit);
     }
 }
