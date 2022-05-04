@@ -1,2 +1,0 @@
-C:\Users\Jonathan\Documents\GitHub\Project-Luna\New Unity Project\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
-C:\Users\Jonathan\Documents\GitHub\Project-Luna\New Unity Project\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
