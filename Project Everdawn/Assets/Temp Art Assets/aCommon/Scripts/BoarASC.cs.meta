@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Project Everdawn/Assets/Temp Art Assets/aCommon/Scripts/BoarASC.cs.meta
 guid: 5367e5a8cd8857e44bad59239cf2f9fe
+========
+guid: 83d7b4840463d6d41bc02630328abb3a
+>>>>>>>> New-Assets-1:Project Everdawn/Assets/Temp Art Assets/aCommon/Scripts/AttackParticleController.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

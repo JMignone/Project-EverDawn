@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Project Everdawn/Assets/Temp Art Assets/SummonerUnit/Textures/T_MallearianBody_A_BaseColor.png.meta
 guid: 595675facf4fd8246891ab73a9fbea5a
+========
+guid: 3fd3856ca2692a14dbc7bd5bfed512c5
+>>>>>>>> New-Assets-1:Project Everdawn/Assets/Temp Art Assets/CurvedAbilityUnit/Textures/Sword_Cyber_Greenway_Emission_Purple.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -65,7 +69,11 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
+<<<<<<<< HEAD:Project Everdawn/Assets/Temp Art Assets/SummonerUnit/Textures/T_MallearianBody_A_BaseColor.png.meta
     maxTextureSize: 256
+========
+    maxTextureSize: 512
+>>>>>>>> New-Assets-1:Project Everdawn/Assets/Temp Art Assets/CurvedAbilityUnit/Textures/Sword_Cyber_Greenway_Emission_Purple.png.meta
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -77,7 +85,11 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
+<<<<<<<< HEAD:Project Everdawn/Assets/Temp Art Assets/SummonerUnit/Textures/T_MallearianBody_A_BaseColor.png.meta
     maxTextureSize: 256
+========
+    maxTextureSize: 512
+>>>>>>>> New-Assets-1:Project Everdawn/Assets/Temp Art Assets/CurvedAbilityUnit/Textures/Sword_Cyber_Greenway_Emission_Purple.png.meta
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -89,7 +101,11 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+<<<<<<<< HEAD:Project Everdawn/Assets/Temp Art Assets/SummonerUnit/Textures/T_MallearianBody_A_BaseColor.png.meta
     maxTextureSize: 256
+========
+    maxTextureSize: 512
+>>>>>>>> New-Assets-1:Project Everdawn/Assets/Temp Art Assets/CurvedAbilityUnit/Textures/Sword_Cyber_Greenway_Emission_Purple.png.meta
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1

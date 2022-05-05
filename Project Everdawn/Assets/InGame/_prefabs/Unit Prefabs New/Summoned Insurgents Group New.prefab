@@ -184,12 +184,13 @@ MonoBehaviour:
     detectionObject: {fileID: 0}
     visionObject: {fileID: 0}
     unitMaterials:
-      materialSwapper: {fileID: 0}
+      renderers: []
     movementType: 0
     heightAttackable: 0
     unitType: 0
     unitGrouping: 1
     attackPriority: 0
+    unitRange: 0
     effectStats:
       aoeStats:
         areaOfEffect: 0
@@ -265,14 +266,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4489671066153867476}
     m_Modifications:
-    - target: {fileID: 2796575115973403864, guid: ffc6e5ea07d054e47b58ddce6ff09430, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2796575116556131562, guid: ffc6e5ea07d054e47b58ddce6ff09430, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5028950967710317734, guid: ffc6e5ea07d054e47b58ddce6ff09430, type: 3}
       propertyPath: m_Name
       value: Insurgent Summoned New (1)
@@ -397,14 +390,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4489671066153867476}
     m_Modifications:
-    - target: {fileID: 2796575115973403864, guid: ffc6e5ea07d054e47b58ddce6ff09430, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2796575116556131562, guid: ffc6e5ea07d054e47b58ddce6ff09430, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5028950967710317734, guid: ffc6e5ea07d054e47b58ddce6ff09430, type: 3}
       propertyPath: m_Name
       value: Insurgent Summoned New

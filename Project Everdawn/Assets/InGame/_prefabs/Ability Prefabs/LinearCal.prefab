@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 5725336417940768624}
   - component: {fileID: 8780803185062951949}
   - component: {fileID: 5725336417940768626}
+  - component: {fileID: 7357841236860319373}
   m_Layer: 0
   m_Name: LinearCal
   m_TagString: Player
@@ -177,6 +178,7 @@ MonoBehaviour:
   range: 80
   heightAttackable: 0
   typeAttackable: 0
+  playOnUnit: 0
   abilityControl: 0
   pauseAbility: 0
   stopOnMiss: 0
@@ -249,6 +251,10 @@ MonoBehaviour:
     explosionDamage: 0
     towerDamage: 0
     explosionRadius: 0
+  chainStats:
+    chains: 0
+    chainRadius: 0
+    chainCount: 0
   linearStats:
     isLinear: 1
     isVertical: 1
@@ -270,7 +276,6 @@ MonoBehaviour:
     size: 0
     summonPreview: {fileID: 0}
     timeToSummon: 0
-    currentSummonTime: 0
   applyResistanceStats:
     applyToSelf: 0
     applyToOthers: 0
@@ -313,6 +318,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7357841236860319373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5725336417940768639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7766bd23672b4741b0bf5d2acfbc509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horizontalParticles: {fileID: 7129995351166960804, guid: 32732df6b224a914e8f8996ebc259e9a, type: 3}
+  verticalParticles: {fileID: 7129995351166960804, guid: 02faf2442a7efe240a6826cde6cb7ef9, type: 3}
 --- !u!1 &5725336418419813167
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,7 +379,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5725336418419813167}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

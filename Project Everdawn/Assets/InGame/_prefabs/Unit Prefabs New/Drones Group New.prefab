@@ -185,12 +185,13 @@ MonoBehaviour:
     detectionObject: {fileID: 0}
     visionObject: {fileID: 0}
     unitMaterials:
-      materialSwapper: {fileID: 0}
+      renderers: []
     movementType: 1
     heightAttackable: 0
     unitType: 0
     unitGrouping: 1
     attackPriority: 0
+    unitRange: 0
     effectStats:
       aoeStats:
         areaOfEffect: 0
@@ -376,10 +377,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Drone New (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 3579881040544042115, guid: b71863ee0200a3941b2c6a9baf00e761, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b71863ee0200a3941b2c6a9baf00e761, type: 3}
 --- !u!4 &4148264098656466177 stripped
@@ -442,10 +439,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Drone New
       objectReference: {fileID: 0}
-    - target: {fileID: 3579881040544042115, guid: b71863ee0200a3941b2c6a9baf00e761, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b71863ee0200a3941b2c6a9baf00e761, type: 3}
 --- !u!4 &1951846897990805524 stripped
@@ -507,10 +500,6 @@ PrefabInstance:
     - target: {fileID: 3415333900699297907, guid: b71863ee0200a3941b2c6a9baf00e761, type: 3}
       propertyPath: m_Name
       value: Drone New (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3579881040544042115, guid: b71863ee0200a3941b2c6a9baf00e761, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b71863ee0200a3941b2c6a9baf00e761, type: 3}

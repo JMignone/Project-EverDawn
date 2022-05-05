@@ -183,12 +183,13 @@ MonoBehaviour:
     detectionObject: {fileID: 0}
     visionObject: {fileID: 0}
     unitMaterials:
-      materialSwapper: {fileID: 0}
+      renderers: []
     movementType: 0
     heightAttackable: 0
     unitType: 0
     unitGrouping: 1
     attackPriority: 0
+    unitRange: 0
     effectStats:
       aoeStats:
         areaOfEffect: 0
@@ -264,10 +265,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4489671066153867476}
     m_Modifications:
-    - target: {fileID: 609765236675681181, guid: 99fc6b8077083c54391b4ceb6cf11a9b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4300487081235283211, guid: 99fc6b8077083c54391b4ceb6cf11a9b, type: 3}
       propertyPath: m_RootOrder
       value: 1

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Project Everdawn/Assets/Temp Art Assets/aCommon/Scripts/AttackParticleController.cs.meta
 guid: 83d7b4840463d6d41bc02630328abb3a
+========
+guid: 4b9733be55522d64d981375ee8154541
+>>>>>>>> New-Assets-1:Project Everdawn/Assets/Temp Art Assets/aCommon/Scripts/AnimatorStateController.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

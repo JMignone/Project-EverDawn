@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Project Everdawn/Assets/InGame/_prefabs/Tower Prefabs.meta
 guid: 43c68ddbb86886845874a1cb49ce3bac
+========
+guid: 0476ac6cad8dd3e49895e14fff54ca50
+>>>>>>>> New-Assets-1:Project Everdawn/Assets/InGame/_prefabs/Unit Prefabs New.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

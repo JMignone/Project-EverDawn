@@ -104,10 +104,10 @@ public class UnitMaterials
         }
         */
 
+        statusHDRColor = new Vector4(statusHDRColor.x + .1569f, statusHDRColor.y, statusHDRColor.z + .4706f, 1);
+
         if (hovered == false)
         {
-            statusHDRColor = new Vector4(statusHDRColor.x + .1569f, statusHDRColor.y, statusHDRColor.z + .4706f, 1);
-
             materialSwapper.ChangeHDRColor(statusHDRColor);
         }
     }
@@ -123,10 +123,10 @@ public class UnitMaterials
         }
         */
 
+        statusHDRColor = new Vector4(statusHDRColor.x - .1569f, statusHDRColor.y, statusHDRColor.z - .4706f, 1);
+
         if (hovered == false)
         {
-            statusHDRColor = new Vector4(statusHDRColor.x - .1569f, statusHDRColor.y, statusHDRColor.z - .4706f, 1);
-
             materialSwapper.ChangeHDRColor(statusHDRColor);
         }
     }
@@ -142,10 +142,10 @@ public class UnitMaterials
         }
         */
 
+        statusHDRColor = new Vector4(statusHDRColor.x + .0784f, statusHDRColor.y + .451f, statusHDRColor.z + .39216f, 1);
+
         if (hovered == false)
         {
-            statusHDRColor = new Vector4(statusHDRColor.x + .0784f, statusHDRColor.y + .451f, statusHDRColor.z + .39216f, 1);
-
             materialSwapper.ChangeHDRColor(statusHDRColor);
         }
     }
@@ -161,10 +161,10 @@ public class UnitMaterials
         }
         */
 
+        statusHDRColor = new Vector4(statusHDRColor.x - .0784f, statusHDRColor.y - .451f, statusHDRColor.z - .39216f, 1);
+
         if (hovered == false)
         {
-            statusHDRColor = new Vector4(statusHDRColor.x - .0784f, statusHDRColor.y - .451f, statusHDRColor.z - .39216f, 1);
-
             materialSwapper.ChangeHDRColor(statusHDRColor);
         }
     }
