@@ -180,17 +180,15 @@ MonoBehaviour:
     canvasAbility: {fileID: 0}
     healthBar: {fileID: 0}
     armorBar: {fileID: 0}
-    abilityIndicator: {fileID: 0}
     detectionObject: {fileID: 0}
     visionObject: {fileID: 0}
     unitMaterials:
-      renderers: []
+      materialSwapper: {fileID: 0}
     movementType: 0
     heightAttackable: 0
     unitType: 0
     unitGrouping: 1
     attackPriority: 0
-    unitRange: 0
     effectStats:
       aoeStats:
         areaOfEffect: 0
@@ -266,6 +264,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4489671066153867476}
     m_Modifications:
+    - target: {fileID: 2796575115973403864, guid: 5b523abdc1fc14248a12142e71435bab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5028950967710317734, guid: 5b523abdc1fc14248a12142e71435bab, type: 3}
       propertyPath: m_Name
       value: Insurgent New
@@ -328,6 +330,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4489671066153867476}
     m_Modifications:
+    - target: {fileID: 456612466278251461, guid: 43ad37edfab6be04998f4c2d2b9da219, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7301237269475668352, guid: 43ad37edfab6be04998f4c2d2b9da219, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -390,6 +396,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4489671066153867476}
     m_Modifications:
+    - target: {fileID: 2796575115973403864, guid: 5b523abdc1fc14248a12142e71435bab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5028950967710317734, guid: 5b523abdc1fc14248a12142e71435bab, type: 3}
       propertyPath: m_Name
       value: Insurgent New (1)

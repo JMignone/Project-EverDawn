@@ -103,7 +103,8 @@ public class SummonStats
         (damageable as IDamageable).Stats.CurrHealth = (damageable as IDamageable).Stats.MaxHealth * percentHealth;
         (damageable as IDamageable).Stats.MaxHealth = (damageable as IDamageable).Stats.MaxHealth * percentHealth;
 
-        cal.Caster.UnitSummon = summonGo;
+        if(cal.Caster != null)
+            cal.Caster.UnitSummon = summonGo;
         //Debug.Log("SUMMMONED AT " + percentHealth + " HP");
     }
 

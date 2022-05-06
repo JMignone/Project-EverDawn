@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 4489671066153867476}
   - component: {fileID: 6931314265539079310}
   m_Layer: 0
-  m_Name: Skelly Group New
+  m_Name: Spawner Building Death Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,7 +133,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1429671960267128442}
-  - {fileID: 7362624056659610181}
   - {fileID: 6656807473660485861}
   - {fileID: 5112094236579976447}
   m_Father: {fileID: 0}
@@ -266,7 +265,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1139482532155942412, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1139482532155942412, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
       propertyPath: m_LocalPosition.x
@@ -332,7 +331,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1139482532155942412, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1139482532155942412, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
       propertyPath: m_LocalPosition.x
@@ -384,70 +383,4 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1139482532155942412, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
   m_PrefabInstance: {fileID: 6030876750560888553}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &7637272369066404937
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 4489671066153867476}
-    m_Modifications:
-    - target: {fileID: 1139482532155942412, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139482532155942412, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139482532155942412, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139482532155942412, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139482532155942412, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139482532155942412, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139482532155942412, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139482532155942412, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139482532155942412, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139482532155942412, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139482532155942412, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5726148247449163227, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
-      propertyPath: m_Name
-      value: Skelly New
-      objectReference: {fileID: 0}
-    - target: {fileID: 8687623084184292484, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
---- !u!4 &7362624056659610181 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1139482532155942412, guid: 39433d3508175e44c9b0c6dc434aa606, type: 3}
-  m_PrefabInstance: {fileID: 7637272369066404937}
   m_PrefabAsset: {fileID: 0}

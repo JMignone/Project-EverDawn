@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 113c740906cddbd48a19c1f37869854d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 8987721114132922266, guid: b4772f018f429f248b81151c35ca58ab, type: 3}
+  prefab: {fileID: 8987721114132922266, guid: f287524c785bec54baa690797665c1be, type: 3}
   zOffset: -200
   projectileScript: {fileID: 8128849533423555259}
 --- !u!1 &8128849534177328871

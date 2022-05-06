@@ -182,7 +182,7 @@ MonoBehaviour:
     dashDamage: 480
     dashSpeed: 25
     dashRange: 20
-    dashDelay: 1.5
+    dashDelay: 1
   shadowStats:
     shades: 0
     interruptsByDamage: 0

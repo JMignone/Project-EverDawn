@@ -87,6 +87,7 @@ MonoBehaviour:
   abilityUI:
     cooldownDelay: 0
     currCooldownDelay: 0
+    abilityObject: {fileID: 0}
     abilitySprite: {fileID: 665771126181773525}
     cooldownMask: {fileID: 665771126156630032}
     abilityCancel: {fileID: 0}
@@ -145,6 +146,7 @@ MonoBehaviour:
   abilityUI:
     cooldownDelay: 0
     currCooldownDelay: 0
+    abilityObject: {fileID: 0}
     abilitySprite: {fileID: 0}
     cooldownMask: {fileID: 0}
     abilityCancel: {fileID: 0}
@@ -202,7 +204,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &665771124876367460
 MonoBehaviour:
   m_ObjectHideFlags: 0

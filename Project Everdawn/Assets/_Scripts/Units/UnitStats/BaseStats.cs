@@ -409,7 +409,7 @@ public class BaseStats
     
         if(IsReady) {
             if(healthDecay > 0)
-                currHealth -= healthDecay*maxHealth * Time.deltaTime ; // lowers hp by 5% of maxHp every second ?? should this line be at the top ??
+                currHealth -= healthDecay*maxHealth * Time.deltaTime ; // lowers hp by % of maxHp every second ?? should this line be at the top before updating the healthbar ??
             
             if(leavesArena) {
                 if(leaveTimer > 0)

@@ -216,6 +216,11 @@ public class Building : MonoBehaviour, IDamageable
                     lookAtTarget();
             }
         }
+        else if(deathStats.DeathSkill) {
+            if(!deathStats.IsDying)
+                deathStats.StartStats(gameObject);
+            deathStats.FireDeathSkill();
+        }
         else {
             print(gameObject.name + " has died!");
             stats.ResetKillFlags(gameObject, target);
