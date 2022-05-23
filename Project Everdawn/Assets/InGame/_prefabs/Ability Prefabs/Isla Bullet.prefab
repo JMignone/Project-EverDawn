@@ -85,7 +85,7 @@ MonoBehaviour:
     areaOfEffect: 0
     unitCentered: 0
     explosionEffect: {fileID: 0}
-    explosionRadius: 10
+    explosionRadius: 0
   critStats:
     critOnFrozen: 1
     critOnSlow: 1
@@ -95,14 +95,14 @@ MonoBehaviour:
     critOnStun: 1
   freezeStats:
     canFreeze: 0
-    freezeDuration: 4
+    freezeDuration: 0
   slowStats:
     canSlow: 0
-    slowDuration: 3
+    slowDuration: 0
     slowIntensity: 0.5
   rootStats:
     canRoot: 0
-    rootDuration: 1
+    rootDuration: 0
   poisonStats:
     canPoison: 0
     poisonDamage: 0
@@ -110,19 +110,19 @@ MonoBehaviour:
     poisonTick: 0
   knockbackStats:
     canKnockback: 0
-    knockbackDuration: 1
-    initialSpeed: 20
+    knockbackDuration: 0
+    initialSpeed: 0
   pullStats:
     canPull: 0
     radius: 0
-    speed: 50
+    speed: 0
   grabStats:
     canGrab: 0
     abilityControlOverride: 0
     obstaclesBlockGrab: 0
-    pullDuration: 0.5
+    pullDuration: 0
     speed: 0
-    stunDuration: 1.5
+    stunDuration: 0
   strengthStats:
     canStrength: 0
     strengthDuration: 0

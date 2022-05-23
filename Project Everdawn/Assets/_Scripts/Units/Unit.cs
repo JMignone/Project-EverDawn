@@ -399,6 +399,10 @@ public class Unit : MonoBehaviour, IDamageable
                 Component unit = this.GetComponent(typeof(IDamageable));
                 projectile.Hit(unit);
             }
+            else if(other.CompareTag("CreateAtLocation")) { //Did we get hit by a skill shot?
+                CreateAtLocation cal = other.transform.parent.parent.GetComponent<CreateAtLocation>();
+                cal.Hit(agent.HitBox);
+            }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
                 if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {
@@ -472,16 +476,14 @@ public class Unit : MonoBehaviour, IDamageable
                 if(unit) {
                     //Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                     if(other.CompareTag("Range")) { //Are we in their Range detection object?
-                        if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
-                            //do we need the above line? this implies that the unit might already be targeting it. Maybe its because this unit changed itself somehow
-                            if((unit as IDamageable).InRangeTargets.Contains(gameObject))
-                                (unit as IDamageable).InRangeTargets.Remove(gameObject);
-                            if((unit as IDamageable).Target == gameObject)
-                                (unit as IDamageable).ReTarget();
+                        //do we need the above line? this implies that the unit might already be targeting it. Maybe its because this unit changed itself somehow
+                        if((unit as IDamageable).InRangeTargets.Contains(gameObject))
+                            (unit as IDamageable).InRangeTargets.Remove(gameObject);
+                        if((unit as IDamageable).Target == gameObject)
+                            (unit as IDamageable).ReTarget();
 
-                            if((unit as IDamageable).InRangeTargets.Count == 0)
-                                (unit as IDamageable).Stats.IncRange = false;
-                        }
+                        if((unit as IDamageable).InRangeTargets.Count == 0)
+                            (unit as IDamageable).Stats.IncRange = false;
                     }
                     else if(other.CompareTag("Vision")) { //Are we in their vision detection object?
                         if((unit as IDamageable).HitTargets.Contains(gameObject))

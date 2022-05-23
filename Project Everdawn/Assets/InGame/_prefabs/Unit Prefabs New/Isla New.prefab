@@ -951,11 +951,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityDelays.Array.size
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityPrefabs.Array.size
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityDelays.Array.data[0]
@@ -967,14 +967,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityDelays.Array.data[2]
-      value: 0.3
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityDelays.Array.data[3]
-      value: 0.75
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityDelays.Array.data[4]
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
+      propertyPath: abilityDelays.Array.data[5]
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
+      propertyPath: abilityDelays.Array.data[6]
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
+      propertyPath: abilityDelays.Array.data[7]
       value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
@@ -995,6 +1007,18 @@ PrefabInstance:
       objectReference: {fileID: 7096565871633278338, guid: ec9b3549065f7734bbb33b6a1df7c205, type: 3}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 7096565871633278338, guid: ec9b3549065f7734bbb33b6a1df7c205, type: 3}
+    - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
+      propertyPath: abilityPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 7096565871633278338, guid: ec9b3549065f7734bbb33b6a1df7c205, type: 3}
+    - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
+      propertyPath: abilityPrefabs.Array.data[5]
+      value: 
+      objectReference: {fileID: 7096565871633278338, guid: ec9b3549065f7734bbb33b6a1df7c205, type: 3}
+    - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
+      propertyPath: abilityPrefabs.Array.data[6]
       value: 
       objectReference: {fileID: 7096565871633278338, guid: ec9b3549065f7734bbb33b6a1df7c205, type: 3}
     - target: {fileID: 665771124876367457, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}

@@ -12,6 +12,7 @@ public static class GameConstants
 
     public static float FLY_ZONE_HEIGHT = 20; //The distance of the fly zone above the ground
     public static float SAMPLE_POSITION_RADIUS = 30f; //The radius used for the Unity function SamplePostion
+    public static float SAMPLE_POSITION_ABILITY_RADIUS = 4.5f; //The radius used for the Unity function SamplePostion for abilites
 
     public enum MOVEMENT_TYPE {
         GROUND,

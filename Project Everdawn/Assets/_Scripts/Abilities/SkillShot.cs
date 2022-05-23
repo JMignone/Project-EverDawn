@@ -356,6 +356,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 }
                 fireStartPosition.y = 0;
                 fireDirection = fireMousePosition - fireStartPosition;
+                fireDirection.y = 0;
 
                 isFiring = true;
                 Unit.Stats.IsCastingAbility = true;
@@ -420,6 +421,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                     fireMousePosition = closestTargetPosition;
 
                 fireDirection = fireMousePosition - fireStartPosition;
+                fireDirection.y = 0;
 
                 isFiring = true;
                 Unit.Stats.IsCastingAbility = true;
@@ -465,6 +467,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 rangeIncrease = Vector3.Distance(abilityPreviewCanvas.transform.position, fireMousePosition) - Vector3.Distance(fireStartPosition, fireMousePosition);
                 startPos = abilityPreviewCanvas.transform.position;
                 fireDirection = fireMousePosition - (abilityPreviewCanvas.transform.position+3*abilityPreviewCanvas.transform.forward);
+                fireDirection.y = 0;
             }
 
             if(targetOverride != null) {
@@ -528,8 +531,12 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 position = GameFunctions.adjustForBoundary(position);
             else if(move.PassObstacles == GameConstants.PASS_OBSTACLES.PASS) { //if the movment is able to pass through obstacles
                 position = GameFunctions.adjustForBoundary(position);
-                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, areaMask))
+                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 4.5f, areaMask)) //4.5 is set such that the unit cannot make an aggregious jump, it will only extend its jump distance by a little bit
                     position = hit.position;
+                else {
+                    UnityEngine.AI.NavMesh.Raycast(Unit.Agent.transform.position, position, out hit, 1);
+                    position = hit.position;
+                }
                 Vector3 newDirection = abilityPreviewCanvas.transform.position - position;
                 newDirection.y = 0;
                 Quaternion rotation = Quaternion.LookRotation(newDirection);
@@ -574,8 +581,12 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             UnityEngine.AI.NavMeshHit hit;
             if(move.PassObstacles == GameConstants.PASS_OBSTACLES.PASS) { //if the movment is able to pass through obstacles
                 position = GameFunctions.adjustForBoundary(position);
-                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, areaMask))
+                if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 4.5f, areaMask))  //4.5 is set such that the unit cannot make an aggregious jump, it will only extend its jump distance by a little bit
                     position = hit.position;
+                else {
+                    UnityEngine.AI.NavMesh.Raycast(Unit.Agent.transform.position, position, out hit, 1);
+                    position = hit.position;
+                }
             }
             else if(move.PassObstacles == GameConstants.PASS_OBSTACLES.HALF) {
                 if(!UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 1f, areaMask)) {
@@ -613,7 +624,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             int areaMask = cal.SummonStats.AreaMask();
 
             UnityEngine.AI.NavMeshHit hit;
-            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, areaMask))
+            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 4.5f, areaMask))
                 position = hit.position;
             if(preview.transform.childCount > 1)
                 preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(position); //this moves the summon part of the preview

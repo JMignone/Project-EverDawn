@@ -103,8 +103,14 @@ public class AttackStats
                     totalDamage += cal.LinearStats.ExplosionDamage;
                 }
             }
-            unit.Stats.BaseDamage = totalDamage;
-            //this is to assist with the killFlags, but still isnt perfect. What about a unit that has a super long string of projectiles that takes long to cast?
+            
+            float totalDelay = 0.01f;
+            foreach(float delay in abilityDelays)
+                totalDelay += delay;
+            totalDelay -= abilityDelays[abilityDelays.Count-1];
+
+            unit.Stats.BaseDamage = totalDamage/Mathf.Ceil(totalDelay);
+            //the delay division is in place such that units that take a long time to fire its strings of projectiles dont cause it to start its killFlag when it dould take long for the string to actually kill its target
         }
             
     }

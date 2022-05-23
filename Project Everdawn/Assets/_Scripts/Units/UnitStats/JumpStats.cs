@@ -72,7 +72,7 @@ public class JumpStats
     }
 
     public void Jump() {
-        if(Vector3.Distance(jumpEndPoint, unit.Agent.transform.position) > .5) { //unit.Agent.Agent.radius/3) { //agents that are too large loop back anfd forth, just hardcode the limit to be small
+        if(Vector3.Distance(jumpEndPoint, unit.Agent.transform.position) > .25) { //unit.Agent.Agent.radius/3) { //agents that are too large loop back anfd forth, just hardcode the limit to be small
             Vector3 direction = jumpEndPoint - unit.Agent.transform.position;
             direction.y = 0;
             direction = direction.normalized;

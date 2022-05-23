@@ -415,15 +415,13 @@ public class Building : MonoBehaviour, IDamageable
                 if(unit) {
                     //Component unit = damageable.gameObject.GetComponent(typeof(IDamageable)); //The unit to update
                     if(other.CompareTag("Range")) { //Are we in their Range detection object?
-                        if(GameFunctions.CanAttack(unit.tag, gameObject.tag, gameObject.GetComponent(typeof(IDamageable)), (unit as IDamageable).Stats)) {
-                            if((unit as IDamageable).InRangeTargets.Contains(gameObject))
-                                (unit as IDamageable).InRangeTargets.Remove(gameObject);
-                            if((unit as IDamageable).Target == gameObject)
-                                (unit as IDamageable).SetTarget(null);
+                        if((unit as IDamageable).InRangeTargets.Contains(gameObject))
+                            (unit as IDamageable).InRangeTargets.Remove(gameObject);
+                        if((unit as IDamageable).Target == gameObject)
+                            (unit as IDamageable).SetTarget(null);
 
-                            if((unit as IDamageable).InRangeTargets.Count == 0)
-                                (unit as IDamageable).Stats.IncRange = false;
-                        }
+                        if((unit as IDamageable).InRangeTargets.Count == 0)
+                            (unit as IDamageable).Stats.IncRange = false;
                     }
                     else if(other.CompareTag("Vision")) { //Are we in their vision detection object?
                         if((unit as IDamageable).HitTargets.Contains(gameObject))

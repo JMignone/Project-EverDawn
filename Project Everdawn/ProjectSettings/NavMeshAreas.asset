@@ -10,7 +10,7 @@ NavMeshProjectSettings:
   - name: Not Walkable
     cost: 1
   - name: Jump
-    cost: 1
+    cost: 1.1
   - name: Flying
     cost: 1
   - name: Small Building

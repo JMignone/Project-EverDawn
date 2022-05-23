@@ -112,8 +112,8 @@ public static class GameFunctions
         Component targetComponent;
         SphereCollider targetSc;
 
-        if( (tag == GameConstants.PLAYER_TAG && stats.DetectionObject.transform.position.z > 0) || 
-        (tag != GameConstants.PLAYER_TAG && stats.DetectionObject.transform.position.z < 0)) {
+        if( (tag == GameConstants.PLAYER_TAG && stats.DetectionObject.transform.position.z > 20) || 
+        (tag != GameConstants.PLAYER_TAG && stats.DetectionObject.transform.position.z < -20)) {
 
             stats.TowerPosOffset = 0;
             float dist = 10000; //Arbitrary large number
@@ -155,8 +155,8 @@ public static class GameFunctions
                         }
                         else if(towers.Count != 3 && stats.DetectionObject.transform.position.x*targetSc.transform.position.x >= 0) {
                             if(!hitTarget.CompareTag(tag)) { //and its not on the same team (sanity check, shouldnt ever occur)
-                                if(towers.Count == 1)
-                                    stats.TowerPosOffset = 22 * Mathf.Sign(stats.DetectionObject.transform.position.x);
+                                //if(towers.Count == 1)
+                                    stats.TowerPosOffset = GameManager.Instance.TowerOffset * Mathf.Sign(stats.DetectionObject.transform.position.x);
                                 return hitTarget;
                             }
                         }
@@ -281,7 +281,7 @@ public static class GameFunctions
 
 
     public static void FireCAL(GameObject prefab, Vector3 startPosition, Vector3 mousePosition, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, float rangeIncrease = 0, ICaster skillshot = null) {
-        Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
         float distance = Vector3.Distance(startPosition, mousePosition);
         Vector3 endPosition = mousePosition;
         CreateAtLocation cal = prefab.GetComponent<CreateAtLocation>();
@@ -314,7 +314,7 @@ public static class GameFunctions
     }
 
     public static void FireCAL(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, ICaster targeter = null) {
-        Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
         float distance = Vector3.Distance(startPosition, chosenTarget.transform.position);
         Vector3 endPosition = chosenTarget.transform.position;
         CreateAtLocation cal = prefab.GetComponent<CreateAtLocation>();

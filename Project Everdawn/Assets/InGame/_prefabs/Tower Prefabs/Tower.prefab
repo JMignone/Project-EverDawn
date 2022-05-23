@@ -271,7 +271,6 @@ MonoBehaviour:
     canvasAbility: {fileID: 0}
     healthBar: {fileID: 8723552957679635970}
     armorBar: {fileID: 8723552958672127393}
-    abilityIndicator: {fileID: 6642466809617883397}
     detectionObject: {fileID: 6642466809310676291}
     visionObject: {fileID: 6642466808765897390}
     unitMaterials:
@@ -810,7 +809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 6642466809269632379}
-  anim: {fileID: 0}
+  anim: {fileID: 6642466810125007330}
   ability: {fileID: 0}
   isPreview: 1
 --- !u!95 &6642466810125007330

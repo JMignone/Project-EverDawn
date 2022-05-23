@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private List<GameObject> objects;
     [SerializeField]
     private List<GameObject> towerObjects;
+    private float towerOffset;
     [SerializeField]
     private List<PlayerStats> players;
     [SerializeField]
@@ -61,6 +62,11 @@ public class GameManager : MonoBehaviour
     public List<GameObject> TowerObjects
     {
         get { return towerObjects; }
+    }
+
+    public float TowerOffset
+    {
+        get { return towerOffset; }
     }
 
     public List<PlayerStats> Players
@@ -126,6 +132,13 @@ public class GameManager : MonoBehaviour
                     Instance.Objects.RemoveAt(i);
             }
         }
+
+        foreach(GameObject towerGo in Instance.TowerObjects) {
+            if(towerGo.transform.position.x > towerOffset) {
+                towerOffset = towerGo.transform.position.x;
+                break;
+            }
+        }
     }
 
     //updates the timer
@@ -187,16 +200,14 @@ public class GameManager : MonoBehaviour
         foreach (GameObject go in Instance.Objects) { //  The trigger exit doesnt get trigger if the object suddenly dies, so we need this do do it manually 
             IDamageable component = (go.GetComponent(typeof(IDamageable)) as IDamageable);
             if(go.GetComponent(typeof(IDamageable))) {
-                if(component.HitTargets.Contains(objectToRemove)) { //if an object has this now dead unit as a hit target ...
+                if(component.HitTargets.Contains(objectToRemove)) //if an object has this now dead unit as a hit target ...
                     component.HitTargets.Remove(objectToRemove);    //remove it from their possible targets
-                    if(component.Target == objectToRemove)          //if an object has this now dead unit as a target ...
-                        component.Target = null;                    //make target null
-                    if(component.InRangeTargets.Contains(objectToRemove))
-                        component.InRangeTargets.Remove(objectToRemove); 
-
-                    if(component.InRangeTargets.Count == 0)
-                        component.Stats.IncRange = false;
-                }
+                if(component.Target == objectToRemove)          //if an object has this now dead unit as a target ...
+                    component.Target = null;                    //make target null
+                if(component.InRangeTargets.Contains(objectToRemove))
+                    component.InRangeTargets.Remove(objectToRemove); 
+                if(component.InRangeTargets.Count == 0)
+                    component.Stats.IncRange = false;
             }
         }
 

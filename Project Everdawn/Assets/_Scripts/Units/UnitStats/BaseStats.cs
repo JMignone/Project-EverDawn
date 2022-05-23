@@ -539,7 +539,7 @@ public class BaseStats
             }
             else
                 enemyUnit.Stats.WasSoonToBeKilled = true; 
-            //we set the enemy unit to only have the was bool set as our unit also had it set. We shouldnt have 2 units about to kill eachother set their flags
+            //we set the enemy unit to only have the 'was' bool set as our unit also had it set. We shouldnt have 2 units about to kill eachother set their flags
         }
     }
 
@@ -566,7 +566,7 @@ public class BaseStats
                     }
                 }
 
-                Collider[] colliders = Physics.OverlapSphere(target.transform.GetChild(0).position, target.transform.GetChild(0).GetComponent<SphereCollider>().radius);
+                Collider[] colliders = Physics.OverlapSphere(enemyUnit.Agent.transform.position, enemyUnit.Agent.HitBox.radius);
                 foreach(Collider collider in colliders) {
                     Component enemy = collider.transform.parent.parent.GetComponent(typeof(IDamageable));
                     if(enemy) {

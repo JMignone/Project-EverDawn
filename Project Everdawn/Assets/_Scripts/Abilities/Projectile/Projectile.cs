@@ -450,14 +450,14 @@ public class Projectile : MonoBehaviour, IAbility
             lastKnownLocation = unit.Agent.transform.position;
             lastKnownLocation.y = 0;
         }
-        
+            
         if(chosenTarget != null && !chosenTarget.Unit.Stats.Targetable) {
             chosenTarget.Unit.Projectiles.Remove(gameObject);
             chosenTarget = null;
         }
         if(chosenTarget != null && !boomerangStats.GoingBack) {//this is only used if the projectile was fired at a specified target. Must check if its a boomerang and already going back
             targetLocation = chosenTarget.Agent.transform.position;
-            
+                
             Vector3 direction = targetLocation - transform.position;
             if(direction != Vector3.zero) {
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
@@ -465,12 +465,17 @@ public class Projectile : MonoBehaviour, IAbility
             }
         }
         locationStats.UpdateStats();
+        if(selfDestructStats.StartExplosion) {//if currently exploding
+            selfDestructStats.Explode(gameObject);
+            if(!selfDestructStats.StartExplosion)
+                Destroy(gameObject);
+        }
         if(lingeringStats.CurrentlyLingering) //if currently lingering
             lingeringStats.UpdateLingeringStats(gameObject);
         float speedReduction = 1; //a multiply used by boomerang projectiles to slow down near the end of flight
         if(boomerangStats.IsBoomerang)
             speedReduction = boomerangStats.SpeedReduction(gameObject, targetLocation, lastKnownLocation);
-        if(!lingeringStats.CurrentlyLingering || (lingeringStats.LingerDuringFlight && lingeringStats.IsInFlight)) { //if the projectile doesnt linger or lingers during flight
+        if(!lingeringStats.CurrentlyLingering || (lingeringStats.LingerDuringFlight && lingeringStats.IsInFlight) || selfDestructStats.StartExplosion) { //if the projectile doesnt linger or lingers during flight
             if(Vector3.Distance(transform.position, targetLocation) <= radius || 
             ( (Vector3.Distance(transform.position, lastKnownLocation) <= radius) && boomerangStats.IsBoomerang && boomerangStats.GoingBack ) ){ //if the projectile is at the end of its flight
                 if(grenadeStats.IsGrenade)
@@ -480,7 +485,8 @@ public class Projectile : MonoBehaviour, IAbility
                 bool tempGoingBack = boomerangStats.GoingBack; //Used in case a projectile is boomerang and lingering at the end. We must save going back before changing it
                 if(boomerangStats.IsBoomerang && !boomerangStats.GoingBack) {
                     boomerangStats.GoingBack = true;
-                    targetLocation = boomerangStats.StartLocation; // !! the target location should be the unit this time !!
+                    boomerangStats.StartLocation = targetLocation;
+                    //targetLocation = boomerangStats.StartLocation; // !! the target location should be the unit this time !!
                 }
                 if( (lingeringStats.Lingering && lingeringStats.LingerAtEnd) && !(boomerangStats.IsBoomerang && !tempGoingBack) ) { //if the projectile lingers and lingers at the end
                     lingeringStats.CurrentlyLingering = true;
@@ -489,11 +495,11 @@ public class Projectile : MonoBehaviour, IAbility
                     hitBox.enabled = false;
                 }
                 else {
-                    if(!boomerangStats.IsBoomerang || (boomerangStats.GoingBack && (Vector3.Distance(transform.position, lastKnownLocation) <= radius) )) //make sure its not a boomerang that just started going back
+                    if(!selfDestructStats.StartExplosion && (!boomerangStats.IsBoomerang || (boomerangStats.GoingBack && (Vector3.Distance(transform.position, lastKnownLocation) <= radius) ))) //make sure its not a boomerang that just started going back
                         Destroy(gameObject);
                 }
             }
-            if(grenadeStats.IsGrenade)
+            else if(grenadeStats.IsGrenade)
                 grenadeStats.UpdateGrenadeStats(gameObject, targetLocation, speed);
             else if(boomerangStats.IsBoomerang && boomerangStats.GoingBack) {
                 Vector3 direction = transform.position - lastKnownLocation;
@@ -549,7 +555,7 @@ public class Projectile : MonoBehaviour, IAbility
                         lingeringStats.CurrentLingeringTime = 0;
                         hitBox.enabled = false;
                     }
-                    else
+                    else if(!selfDestructStats.StartExplosion)
                         Destroy(gameObject);
                 }
             }

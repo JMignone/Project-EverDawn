@@ -50,8 +50,8 @@ MonoBehaviour:
   radius: 2
   speed: 100
   range: 40
-  baseDamage: 204
-  towerDamage: 100
+  baseDamage: 102
+  towerDamage: 51
   heightAttackable: 0
   typeAttackable: 0
   canPierce: 1

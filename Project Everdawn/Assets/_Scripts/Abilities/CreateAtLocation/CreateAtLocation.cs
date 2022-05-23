@@ -119,6 +119,8 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     [SerializeField]
     private Actor3D chosenTarget;
 
+    private List<Collider> colliders = new List<Collider>();
+
     public SphereCollider HitBox
     {
         get { return hitBox; }
@@ -298,13 +300,16 @@ public class CreateAtLocation : MonoBehaviour, IAbility
 
     private void Start() 
     {
-        hitBox.radius = radius;
+        if(hitBox)
+            hitBox.radius = radius;
         slowStats.StartSlowStats();
         pullStats.StartPullStats(gameObject);
         strengthStats.StartStrengthStats();
         
-        if(selfDestructStats.SelfDestructs)
+        if(selfDestructStats.SelfDestructs) {
             selfDestructStats.ExplosionRadius = radius;
+            selfDestructStats.ExplosionTimer = 0;
+        }
         hasExploded = false;
         if(lingeringStats.Lingering) {
             lingeringStats.StartLingeringStats(gameObject);
@@ -343,7 +348,7 @@ public class CreateAtLocation : MonoBehaviour, IAbility
 
     private void FixedUpdate() {
         if(selfDestructStats.SelfDestructs && !hasExploded)
-            selfDestructStats.Explode(gameObject);
+            selfDestructStats.Explode(gameObject, colliders);
         if(linearStats.IsLinear && !hasExploded)
             linearStats.Explode(gameObject);
         if(teleportStats.IsWarp && !hasExploded)
@@ -361,6 +366,10 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         else if(!lingeringStats.Lingering) {
             Destroy(gameObject);
         }
+    }
+
+    public void Hit(Collider collider) {
+        colliders.Add(collider);
     }
 
     public void ApplyAffects(Component damageable) {
