@@ -476,8 +476,8 @@ public class Projectile : MonoBehaviour, IAbility
         if(boomerangStats.IsBoomerang)
             speedReduction = boomerangStats.SpeedReduction(gameObject, targetLocation, lastKnownLocation);
         if(!lingeringStats.CurrentlyLingering || (lingeringStats.LingerDuringFlight && lingeringStats.IsInFlight) || selfDestructStats.StartExplosion) { //if the projectile doesnt linger or lingers during flight
-            if(Vector3.Distance(transform.position, targetLocation) <= radius || 
-            ( (Vector3.Distance(transform.position, lastKnownLocation) <= radius) && boomerangStats.IsBoomerang && boomerangStats.GoingBack ) ){ //if the projectile is at the end of its flight
+            if( (Vector3.Distance(transform.position, targetLocation) <= radius && !boomerangStats.GoingBack ) || 
+            ( Vector3.Distance(transform.position, lastKnownLocation) <= radius && boomerangStats.GoingBack ) ){ //if the projectile is at the end of its flight
                 if(grenadeStats.IsGrenade)
                     grenadeStats.Explode(gameObject);
                 else if(selfDestructStats.SelfDestructs)
@@ -486,7 +486,23 @@ public class Projectile : MonoBehaviour, IAbility
                 if(boomerangStats.IsBoomerang && !boomerangStats.GoingBack) {
                     boomerangStats.GoingBack = true;
                     boomerangStats.StartLocation = targetLocation;
-                    //targetLocation = boomerangStats.StartLocation; // !! the target location should be the unit this time !!
+                    
+                    Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
+                    foreach(Collider collider in colliders) {
+                        if(!collider.CompareTag(tag) && collider.name == "Agent") {
+                            Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
+
+                            if(GameFunctions.WillHit(heightAttackable, typeAttackable, damageable)) {
+                                SetHit = true;
+
+                                float damage = baseDamage*damageMultiplier;
+                                if(towerDamage > 0 && damageable.GetComponent<Tower>())
+                                    damage = towerDamage*damageMultiplier;
+
+                                GameFunctions.Attack(damageable, damage, critStats);
+                            }
+                        }
+                    }
                 }
                 if( (lingeringStats.Lingering && lingeringStats.LingerAtEnd) && !(boomerangStats.IsBoomerang && !tempGoingBack) ) { //if the projectile lingers and lingers at the end
                     lingeringStats.CurrentlyLingering = true;

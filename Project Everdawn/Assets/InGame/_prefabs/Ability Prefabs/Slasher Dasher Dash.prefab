@@ -49,7 +49,7 @@ MonoBehaviour:
   unitSprite: {fileID: 4332999101628587706}
   radius: 1.5
   speed: 100
-  range: 17
+  range: 18
   baseDamage: 0
   towerDamage: 0
   heightAttackable: 0
@@ -154,10 +154,13 @@ MonoBehaviour:
   selfDestructStats:
     selfDestructs: 0
     onTarget: 0
+    noAffects: 0
+    onlyExplodeOnHit: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 0
     towerDamage: 0
     explosionRadius: 0
+    explosionTimer: 0
   grenadeStats:
     isGrenade: 0
     isAirStrike: 0

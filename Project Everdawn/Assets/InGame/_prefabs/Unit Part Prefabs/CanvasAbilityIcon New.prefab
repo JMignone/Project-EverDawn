@@ -96,6 +96,7 @@ MonoBehaviour:
   autoTarget: 0
   setTarget: 0
   onlyCircle: 0
+  enableMirror: 0
   abilityPreviewLine: {fileID: 21300000, guid: d24184dab2f7f3d418f3a20dc032fa78, type: 3}
   abilityPreviewLinear: {fileID: 21300000, guid: 3d46296629f72914da3ffeb630c82832, type: 3}
   abilityPreviewBomb: {fileID: 21300000, guid: 68c0303b57e53ce4188ea1bbcf918c1a, type: 3}
@@ -204,7 +205,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &665771124876367460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,7 +348,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 6.25, y: 6.25}
+  m_SizeDelta: {x: 7, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &665771126383347267
 CanvasRenderer:

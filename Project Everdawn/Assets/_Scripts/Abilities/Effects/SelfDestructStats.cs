@@ -89,7 +89,6 @@ public class SelfDestructStats
                 damageZone.transform.localScale = new Vector3(explosionRadius*2, .1f, explosionRadius*2);
 
             if(explosionDamage > 0) { //have this here incase we want to have a selfdestruct effect but just for show, perhaps for a lingering damage projectile
-                
                 if(customColliders == null) {
                     Collider[] colliders = Physics.OverlapSphere(position, explosionRadius);
 

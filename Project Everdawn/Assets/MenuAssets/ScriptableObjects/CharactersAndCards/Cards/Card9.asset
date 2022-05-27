@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 9
   character: {fileID: 0}
-  cardName: Miles
+  cardName: Li
   menuBackgroundImage: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
   cardImage: {fileID: 21300000, guid: 562b10a21bc6a404f8494b39532cfe82, type: 3}
   cardLore: 

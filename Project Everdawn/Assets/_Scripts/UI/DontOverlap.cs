@@ -12,7 +12,7 @@ public class DontOverlap : MonoBehaviour
 
     private void Start()
     {
-        canvas = transform.GetChild(1).GetComponent<Canvas>();
+        canvas = transform.GetChild(0).GetComponent<Canvas>();
         origPos = canvas.transform.localPosition;
         col = GetComponent<CapsuleCollider>();
     }

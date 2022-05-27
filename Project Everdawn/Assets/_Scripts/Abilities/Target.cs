@@ -146,6 +146,11 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
         get { return abilityPreviewCanvas; }
     }
 
+    public bool Mirrored
+    {
+        get { return false; }
+    }
+
     public bool PauseFiring
     {
         get { return pauseFiring; }

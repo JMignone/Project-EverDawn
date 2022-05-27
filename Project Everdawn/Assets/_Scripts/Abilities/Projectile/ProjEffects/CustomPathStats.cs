@@ -74,6 +74,15 @@ public class CustomPathStats
     public void StartStats(GameObject go, Vector3 targetLocation) {
         if(hasCustomPath) {
             proj = go;
+
+            if((proj.GetComponent(typeof(Projectile)) as Projectile).Caster.Mirrored) {
+                arcMultiplierToLastPoint *= -1;
+                foreach(Point point in lerpPoints) {
+                    point.P = new Vector3(point.P.x, point.P.y, -point.P.z);
+                    point.arcMultiplier *= -1;
+                }
+            }
+
             angle = Vector3.SignedAngle((targetLocation - go.transform.position).normalized, Vector3.forward, Vector3.up) * Mathf.Deg2Rad;
             arcStart = go.transform.position;
             if(lerpPoints.Count != 0) {
@@ -140,5 +149,15 @@ public class CustomPathStats
         public float speed;
         [SerializeField] [Min(.1f)]
         public float arcMultiplier;
+
+        public Vector3 P {
+            get { return point; }
+            set { point = value; }
+        }
+
+        public float ArcMultiplier {
+            get { return arcMultiplier; }
+            set { arcMultiplier = value; }
+        }
     }
 }

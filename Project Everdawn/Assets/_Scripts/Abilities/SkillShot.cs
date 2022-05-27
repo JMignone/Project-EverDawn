@@ -64,6 +64,11 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     [SerializeField]
     private bool onlyCircle;
 
+    [Tooltip("If checked, the preview mirror depending on the angle from the center")]
+    [SerializeField]
+    private bool enableMirror;
+    private bool mirrored;
+
     [SerializeField]
     private Sprite abilityPreviewLine;
 
@@ -136,6 +141,11 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     public Canvas AbilityPreviewCanvas
     {
         get { return abilityPreviewCanvas; }
+    }
+
+    public bool Mirrored
+    {
+        get { return mirrored; }
     }
 
     public bool PauseFiring
@@ -257,7 +267,26 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             direction.y = 0;
             position.y = .1f;
 
-            Quaternion rotation = Quaternion.LookRotation(direction);
+            Quaternion rotation;
+            //if(enableMirror && Vector3.Cross((Vector3.zero - Unit.Agent.transform.position).normalized, direction).y < 0) {
+            if(enableMirror) { 
+                if(transform.parent.tag == "Player" && position.x > 0) {
+                    rotation = Quaternion.LookRotation(direction, Vector3.down);
+                    mirrored = true;
+                }
+                else if(transform.parent.tag == "Enemy" && position.x < 0) {
+                    rotation = Quaternion.LookRotation(direction, Vector3.down);
+                    mirrored = true;
+                }
+                else {
+                    rotation = Quaternion.LookRotation(direction);
+                    mirrored = false;
+                }
+            }
+            else {
+                rotation = Quaternion.LookRotation(direction);
+                mirrored = false;
+            }
             abilityPreviewCanvas.transform.rotation = Quaternion.Lerp(rotation, abilityPreviewCanvas.transform.rotation, 0f);
 
             foreach(GameObject preview in abilityPreviews) {
@@ -293,8 +322,29 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             direction.y = 0;
             position.y = .1f;
 
-            Quaternion rotation = Quaternion.LookRotation(direction);
+            Quaternion rotation;
+            //if(enableMirror && Vector3.Cross((Vector3.zero - Unit.Agent.transform.position).normalized, direction).y < 0) {
+            if(enableMirror) { 
+                if(transform.parent.tag == "Player" && position.x > 0) {
+                    rotation = Quaternion.LookRotation(direction, Vector3.down);
+                    mirrored = true;
+                }
+                else if(transform.parent.tag == "Enemy" && position.x < 0) {
+                    rotation = Quaternion.LookRotation(direction, Vector3.down);
+                    mirrored = true;
+                }
+                else {
+                    rotation = Quaternion.LookRotation(direction);
+                    mirrored = false;
+                }
+            }
+            else {
+                rotation = Quaternion.LookRotation(direction);
+                mirrored = false;
+            }
             abilityPreviewCanvas.transform.rotation = Quaternion.Lerp(rotation, abilityPreviewCanvas.transform.rotation, 0f);
+
+
 
             foreach(GameObject preview in abilityPreviews) {
                 if(preview.GetComponent<SphereCollider>() || preview.GetComponent<BoxCollider>()) {

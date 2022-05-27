@@ -3,6 +3,7 @@ using UnityEngine;
 
 public interface ICaster
 {
+    bool Mirrored { get; }
     bool PauseFiring { get; set; }
     bool ExitOverride { get; set; }
     int SkipOverride { get; set; }

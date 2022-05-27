@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 16
   character: {fileID: 0}
-  cardName: Droids
+  cardName: Enforcers
   menuBackgroundImage: {fileID: 21300000, guid: cd94accd73c0f464a999ea3bb8246d85, type: 3}
   cardImage: {fileID: 21300000, guid: cd94accd73c0f464a999ea3bb8246d85, type: 3}
   cardLore: 

@@ -155,7 +155,7 @@ public static class GameFunctions
                         }
                         else if(towers.Count != 3 && stats.DetectionObject.transform.position.x*targetSc.transform.position.x >= 0) {
                             if(!hitTarget.CompareTag(tag)) { //and its not on the same team (sanity check, shouldnt ever occur)
-                                //if(towers.Count == 1)
+                                if(targetSc.transform.position.x == 0)
                                     stats.TowerPosOffset = GameManager.Instance.TowerOffset * Mathf.Sign(stats.DetectionObject.transform.position.x);
                                 return hitTarget;
                             }

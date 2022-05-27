@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 17
   character: {fileID: 0}
-  cardName: Blinders
+  cardName: Luernas
   menuBackgroundImage: {fileID: 21300000, guid: 01bb2584276799e4494e18c6c80967ac, type: 3}
   cardImage: {fileID: 21300000, guid: 01bb2584276799e4494e18c6c80967ac, type: 3}
   cardLore: 

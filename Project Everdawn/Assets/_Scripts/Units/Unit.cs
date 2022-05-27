@@ -399,10 +399,6 @@ public class Unit : MonoBehaviour, IDamageable
                 Component unit = this.GetComponent(typeof(IDamageable));
                 projectile.Hit(unit);
             }
-            else if(other.CompareTag("CreateAtLocation")) { //Did we get hit by a skill shot?
-                CreateAtLocation cal = other.transform.parent.parent.GetComponent<CreateAtLocation>();
-                cal.Hit(agent.HitBox);
-            }
             else if(other.CompareTag("AbilityHighlight")) { //Our we getting previewed for an ability?
                 AbilityPreview ability = other.GetComponent<AbilityPreview>();
                 if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, this.GetComponent(typeof(IDamageable)))) {

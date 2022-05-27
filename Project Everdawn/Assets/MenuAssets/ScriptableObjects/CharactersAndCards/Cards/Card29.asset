@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 29
   character: {fileID: 0}
-  cardName: More Skelies
+  cardName: Phoenix Hatchlings Flock
   menuBackgroundImage: {fileID: 21300000, guid: bbca06bd9e3e6e3418c5e1e256518389, type: 3}
   cardImage: {fileID: 21300000, guid: bbca06bd9e3e6e3418c5e1e256518389, type: 3}
   cardLore: 

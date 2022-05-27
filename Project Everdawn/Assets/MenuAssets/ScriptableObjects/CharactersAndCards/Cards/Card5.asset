@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 5
   character: {fileID: 0}
-  cardName: Monsoon Gunners
+  cardName: Monsoon Rangers
   menuBackgroundImage: {fileID: 21300000, guid: 526f2e41c56666847a887ac31f5fff5b, type: 3}
   cardImage: {fileID: 21300000, guid: 526f2e41c56666847a887ac31f5fff5b, type: 3}
   cardLore: 
