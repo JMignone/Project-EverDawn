@@ -225,6 +225,9 @@ MonoBehaviour:
         outSideResistance: 0
         isStunned: 0
         stunDelay: 0
+      knockupedStats:
+        knockupResistance: 0
+        isKnockuped: 0
       critStats:
         critOnFrozen: 1
         critOnSlow: 1
@@ -257,8 +260,8 @@ MonoBehaviour:
     dashes: 1
     dashDamage: 300
     dashSpeed: 85
-    dashRange: 15
-    dashDelay: 0.75
+    dashRange: 17.5
+    dashDelay: 0.85
     continueIfTargetDead: 0
     StartWithAbility: 1
     startPrefabs:

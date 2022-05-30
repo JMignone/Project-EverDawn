@@ -33,6 +33,9 @@ public class ResistEffects //this type of resistance persists as long as the pro
     private bool resistStun;
 
     [SerializeField]
+    private bool resistKnockup;
+
+    [SerializeField]
     private bool resistDamage;
 
     [SerializeField]
@@ -84,6 +87,11 @@ public class ResistEffects //this type of resistance persists as long as the pro
         else if(resistStun)
             unit.Stats.EffectStats.StunnedStats.CantBeStunned = true;
 
+        if(unit.Stats.EffectStats.KnockupedStats.KnockupResistance >= 1)
+            resistKnockup = false;
+        else if(resistKnockup)
+            unit.Stats.EffectStats.KnockupedStats.KnockupResistance += 1;
+
         if(resistDamage)
             unit.Stats.EffectStats.ResistStats.CantBeDamaged();
 
@@ -118,6 +126,9 @@ public class ResistEffects //this type of resistance persists as long as the pro
 
         if(resistStun)
             unit.Stats.EffectStats.StunnedStats.CantBeStunned = false;
+
+        if(resistKnockup)
+            unit.Stats.EffectStats.KnockupedStats.KnockupResistance -= 1;
 
         if(resistDamage)
             unit.Stats.EffectStats.ResistStats.CanBeDamaged();

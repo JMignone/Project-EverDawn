@@ -456,7 +456,7 @@ public static class GameFunctions
 
     public static void EnableAbilities(IDamageable unit) {
         GameObject canvasAbility = unit.Stats.CanvasAbility;
-        if(canvasAbility != null) { //if the unit has an ability, set its image colors back to green
+        if(canvasAbility != null && unit.Stats.CanAct) { //if the unit has an ability, set its image colors back to green
             ICaster ability = (canvasAbility.transform.GetChild(0).GetComponent(typeof(ICaster)) as ICaster);
 
             ability.AbilityUI.CantFire = false;

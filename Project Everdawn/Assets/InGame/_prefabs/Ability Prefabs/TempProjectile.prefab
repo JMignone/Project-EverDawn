@@ -136,6 +136,10 @@ MonoBehaviour:
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0.6
+  chainStats:
+    chains: 0
+    chainRadius: 0
+    chainCount: 0
   lingeringStats:
     lingering: 0
     lingerAtEnd: 0
@@ -150,10 +154,13 @@ MonoBehaviour:
   selfDestructStats:
     selfDestructs: 1
     onTarget: 0
+    noAffects: 0
+    onlyExplodeOnHit: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 50
     towerDamage: 0
     explosionRadius: 5
+    explosionTimer: 0
   grenadeStats:
     isGrenade: 0
     isAirStrike: 0
@@ -171,6 +178,8 @@ MonoBehaviour:
     resistPull: 0
     resistBlind: 0
     resistStun: 0
+    resistDamage: 0
+    resistTarget: 0
   applyResistanceStats:
     applyToSelf: 0
     applyToOthers: 0
@@ -179,15 +188,15 @@ MonoBehaviour:
     untargetable: 0
     rtDuration: 0
     resistFreeze: 0
-    rfDuration: 5
+    rfDuration: 0
     resistSlow: 0
-    rsDuration: 5
+    rsDuration: 0
     resistRoot: 0
-    rrDuration: 5
+    rrDuration: 0
     resistPoison: 0
-    rpDuration: 5
+    rpDuration: 0
     resistKnockback: 0
-    rkDuration: 5
+    rkDuration: 0
     resistGrab: 0
     rgDuration: 0
     resistPull: 0

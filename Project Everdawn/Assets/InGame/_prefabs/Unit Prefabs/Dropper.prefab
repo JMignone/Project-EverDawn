@@ -181,8 +181,8 @@ MonoBehaviour:
   unitSprite: {fileID: 5028950967714293468}
   target: {fileID: 0}
   stats:
-    currHealth: 700
-    maxHealth: 700
+    currHealth: 1000
+    maxHealth: 1000
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
@@ -279,6 +279,9 @@ MonoBehaviour:
         outSideResistance: 0
         isStunned: 0
         stunDelay: 0
+      knockupedStats:
+        knockupResistance: 0
+        isKnockuped: 0
       critStats:
         critOnFrozen: 1
         critOnSlow: 1

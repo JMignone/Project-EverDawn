@@ -88,8 +88,10 @@ public class DashStats
             dashGo.transform.SetParent((unit as Component).gameObject.transform.GetChild(1));
             dashGo.transform.localPosition = Vector3.zero;
 
-            startDelays.Add(dashDelay);
-            dashDelay = 0;
+            if(StartWithAbility) {
+                startDelays.Add(dashDelay);
+                dashDelay = 0;
+            }
         }
     }
 
@@ -148,7 +150,7 @@ public class DashStats
     }
 
     public void StartDash(GameObject go) {
-        if(go == unit.Target && unit.Stats.CanAct && !unit.Stats.IsAttacking && !isDashing && !unit.Stats.IsCastingAbility
+        if(go == unit.Target && unit.Stats.CanAct && !unit.Stats.IsAttacking && !isDashing && !unit.Stats.IsCastingAbility && !unit.JumpStats.Jumping
            && Vector3.Distance(new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z), new Vector3(go.transform.GetChild(0).position.x, 0, go.transform.GetChild(0).position.z)) >= dashRange) {
             isDashing = true;
             unit.Agent.Agent.ResetPath();

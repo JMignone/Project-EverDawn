@@ -32,6 +32,8 @@ public class EffectStats
     [SerializeField]
     private StunnedStats stunnedStats;
     [SerializeField]
+    private KnockupedStats knockupedStats;
+    [SerializeField]
     private ResistStats resistStats;
     [SerializeField]
     private CritStats critStats;
@@ -101,6 +103,11 @@ public class EffectStats
         get { return stunnedStats; }
     }
 
+    public KnockupedStats KnockupedStats
+    {
+        get { return knockupedStats; }
+    }
+
     public ResistStats ResistStats
     {
         get { return resistStats; }
@@ -123,6 +130,7 @@ public class EffectStats
         strengthenedStats.StartStrengthenedStats(go);
         blindedStats.StartStats(go);
         stunnedStats.StartStats(go);
+        knockupedStats.StartStats(go);
         aoeStats.StartStats(go);
         resistStats.StartResistStats(go);
     }
@@ -138,6 +146,7 @@ public class EffectStats
         strengthenedStats.UpdateStrengthenedStats();
         blindedStats.UpdateStats();
         stunnedStats.UpdateStats();
+        knockupedStats.UpdateStats();
         resistStats.UpdateResistanceStats();
     }
 
@@ -149,6 +158,8 @@ public class EffectStats
         if(grabbedStats.IsGrabbed)
             return false;
         if(stunnedStats.IsStunned)
+            return false;
+        if(knockupedStats.IsKnockuped)
             return false;
         return true;
     }

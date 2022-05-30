@@ -154,10 +154,13 @@ MonoBehaviour:
   selfDestructStats:
     selfDestructs: 1
     onTarget: 1
+    noAffects: 0
+    onlyExplodeOnHit: 0
     explosionEffect: {fileID: 8690222435761223237, guid: 6da804001015963439247141d19a1ee2, type: 3}
     explosionDamage: 350
     towerDamage: 0
     explosionRadius: 5
+    explosionTimer: 0
   grenadeStats:
     isGrenade: 0
     isAirStrike: 0
@@ -185,15 +188,15 @@ MonoBehaviour:
     untargetable: 0
     rtDuration: 0
     resistFreeze: 0
-    rfDuration: 5
+    rfDuration: 0
     resistSlow: 0
-    rsDuration: 5
+    rsDuration: 0
     resistRoot: 0
-    rrDuration: 5
+    rrDuration: 0
     resistPoison: 0
-    rpDuration: 5
+    rpDuration: 0
     resistKnockback: 0
-    rkDuration: 5
+    rkDuration: 0
     resistGrab: 0
     rgDuration: 0
     resistPull: 0

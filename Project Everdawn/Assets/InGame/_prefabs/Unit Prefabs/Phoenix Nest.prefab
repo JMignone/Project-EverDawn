@@ -117,7 +117,7 @@ MonoBehaviour:
     baseDamage: 0
     towerDamage: 0
     attackDelay: 4
-    currAttackDelay: 0
+    currAttackDelay: 3.75
     attackChargeLimiter: 0
     attackReadyPercentage: 0
     maximumAttackAngle: 0
@@ -203,6 +203,9 @@ MonoBehaviour:
         outSideResistance: 0
         isStunned: 0
         stunDelay: 0
+      knockupedStats:
+        knockupResistance: 0
+        isKnockuped: 0
       critStats:
         critOnFrozen: 1
         critOnSlow: 1

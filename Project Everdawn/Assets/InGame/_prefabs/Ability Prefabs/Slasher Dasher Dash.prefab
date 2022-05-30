@@ -47,9 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBox: {fileID: 4332999102053800178}
   unitSprite: {fileID: 4332999101628587706}
-  radius: 1.5
+  radius: 1
   speed: 100
-  range: 18
+  range: 20
   baseDamage: 0
   towerDamage: 0
   heightAttackable: 0
@@ -133,6 +133,11 @@ MonoBehaviour:
   stunStats:
     canStun: 0
     stunDuration: 0
+  knockupStats:
+    canKnockup: 0
+    towardsUnit: 0
+    distance: 0
+    duration: 0
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0
@@ -178,6 +183,7 @@ MonoBehaviour:
     resistPull: 1
     resistBlind: 0
     resistStun: 0
+    resistKnockup: 0
     resistDamage: 0
     resistTarget: 0
   applyResistanceStats:
@@ -205,6 +211,8 @@ MonoBehaviour:
     rbDuration: 0
     resistStun: 0
     rstunDuration: 0
+    resistKnockup: 0
+    rkuDuration: 0
   passObstacles: 2
   landInsideTarget: 0
   highlightEnemies: 0

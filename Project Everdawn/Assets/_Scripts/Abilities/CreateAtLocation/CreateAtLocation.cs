@@ -91,6 +91,9 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     private StunStats stunStats;
 
     [SerializeField]
+    private KnockupStats knockupStats;
+
+    [SerializeField]
     private LingeringStats lingeringStats;
 
     [SerializeField]
@@ -382,6 +385,8 @@ public class CreateAtLocation : MonoBehaviour, IAbility
             (damageable as IDamageable).Stats.EffectStats.BlindedStats.Blind(blindStats.BlindDuration);
         if(stunStats.CanStun)
             (damageable as IDamageable).Stats.EffectStats.StunnedStats.Stun(stunStats.StunDuration);
+        if(knockupStats.CanKnockup)
+            (damageable as IDamageable).Stats.EffectStats.KnockupedStats.Knockup(knockupStats.Distance, knockupStats.Duration, knockupStats.TowardsUnit, Unit);
         applyResistanceStats.ApplyResistance((damageable as IDamageable));
     }
 }

@@ -156,9 +156,6 @@ public class Unit : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        //link = null;
-        //link2 = null;
-
         agent.Agent.stoppingDistance = 0; //Set to be zero, incase someone forgets or accidently changes this value to be a big number
         agent.Agent.speed = stats.MoveSpeed;
         agent.Agent.angularSpeed = stats.RotationSpeed;
@@ -224,7 +221,6 @@ public class Unit : MonoBehaviour, IDamageable
             }
         }*/
 
-        
 
         if(applyEffectsComponents.Count > 0) {
             foreach(Component component in applyEffectsComponents) {

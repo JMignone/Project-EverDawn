@@ -308,7 +308,7 @@ MonoBehaviour:
     attackChargeLimiter: 0
     attackReadyPercentage: 0
     maximumAttackAngle: 0
-    moveSpeed: 7
+    moveSpeed: 9
     noRotation: 0
     rotationSpeed: 120
     summoningSicknessUI:
@@ -390,6 +390,9 @@ MonoBehaviour:
         outSideResistance: 0
         isStunned: 0
         stunDelay: 0
+      knockupedStats:
+        knockupResistance: 0
+        isKnockuped: 0
       critStats:
         critOnFrozen: 1
         critOnSlow: 1

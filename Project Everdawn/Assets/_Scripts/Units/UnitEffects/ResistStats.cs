@@ -39,6 +39,9 @@ public class ResistStats
     private bool resistedStun;
     private float rstunDuration;
 
+    private bool resistedKnockup;
+    private float rkuDuration;
+
     private IDamageable unit;
 
     public bool ResistedDamage
@@ -184,13 +187,12 @@ public class ResistStats
     }
 
     public void ResistDamage(float duration) {
-        if(!resistedDamage) {
-            resistedDamage = true;
+        resistedDamage = true;
+        if(rdDuration < duration)
             rdDuration = duration;
 
-            unit.Stats.IndicatorNum = 0;
-            unit.Stats.UnitMaterials.RemoveAbilityHover();
-        }
+        unit.Stats.IndicatorNum = 0;
+        unit.Stats.UnitMaterials.RemoveAbilityHover();
     }
 
     //another type of damage resistance
@@ -217,83 +219,80 @@ public class ResistStats
     }
 
     public void ResistTarget(float duration) {
-        if(!resistedTarget) {
-            resistedTarget = true;
+        resistedTarget = true;
+        if(rtDuration < duration)
             rtDuration = duration;
-            unit.Stats.Vanish((unit as Component).gameObject, unit.Agent); //unit.EnemyHitTargets.ToArray());
-        }
+        unit.Stats.Vanish((unit as Component).gameObject, unit.Agent); //unit.EnemyHitTargets.ToArray());
     }
 
     public void ResistFreeze(float duration) {
-        if(!resistedFreeze) {
-            resistedFreeze = true;
+        resistedFreeze = true;
+        if(rfDuration < duration)
             rfDuration = duration;
-            unit.Stats.EffectStats.FrozenStats.OutSideResistance = true;
-        }
+        unit.Stats.EffectStats.FrozenStats.OutSideResistance = true;
     }
 
     public void ResistSlow(float duration) {
-        if(!resistedSlow) {
-            resistedSlow = true;
+        resistedSlow = true;
+        if(rsDuration < duration)
             rsDuration = duration;
-            unit.Stats.EffectStats.SlowedStats.OutSideResistance = true;
-        }
+        unit.Stats.EffectStats.SlowedStats.OutSideResistance = true;
     }
 
     public void ResistRoot(float duration) {
-        if(!resistedRoot) {
-            resistedRoot = true;
+        resistedRoot = true;
+        if(rrDuration < duration)
             rrDuration = duration;
-            unit.Stats.EffectStats.RootedStats.OutSideResistance = true;
-        }
+        unit.Stats.EffectStats.RootedStats.OutSideResistance = true;
     }
 
     public void ResistPoison(float duration) {
-        if(!resistedPoison) {
-            resistedPoison = true;
+        resistedPoison = true;
+        if(rpDuration < duration)
             rpDuration = duration;
-            unit.Stats.EffectStats.PoisonedStats.OutSideResistance = true;
-        }
+        unit.Stats.EffectStats.PoisonedStats.OutSideResistance = true;
     }
 
     public void ResistKnockback(float duration) {
-        if(!resistedKnockback) {
-            resistedKnockback = true;
+        resistedKnockback = true;
+        if(rkDuration < duration)
             rkDuration = duration;
-            unit.Stats.EffectStats.KnockbackedStats.OutSideResistance = true;
-        }
+        unit.Stats.EffectStats.KnockbackedStats.OutSideResistance = true;
     }
 
     public void ResistGrab(float duration) {
-        if(!resistedGrab) {
-            resistedGrab = true;
+        resistedGrab = true;
+        if(rgDuration < duration)
             rgDuration = duration;
-            unit.Stats.EffectStats.GrabbedStats.OutSideResistance = true;
-        }
+        unit.Stats.EffectStats.GrabbedStats.OutSideResistance = true;
     }
 
     public void ResistPull(float duration) {
-        if(!resistedPull) {
-            resistedPull = true;
+        resistedPull = true;
+        if(rpullDuration < duration)
             rpullDuration = duration;
-            unit.Stats.EffectStats.PulledStats.OutSideResistance = true;
-        }
+        unit.Stats.EffectStats.PulledStats.OutSideResistance = true;
     }
 
     public void ResistBlind(float duration) {
-        if(!resistedBlind) {
-            resistedBlind = true;
+        resistedBlind = true;
+        if(rbDuration < duration)
             rbDuration = duration;
-            unit.Stats.EffectStats.BlindedStats.OutSideResistance = true;
-        }
+        unit.Stats.EffectStats.BlindedStats.OutSideResistance = true;
     }
 
     public void ResistStun(float duration) {
-        if(!resistedStun) {
-            resistedStun = true;
+        resistedStun = true;
+        if(rstunDuration < duration)
             rstunDuration = duration;
-            unit.Stats.EffectStats.StunnedStats.OutSideResistance = true;
-        }
+        unit.Stats.EffectStats.StunnedStats.OutSideResistance = true;
+    }
+
+    public void ResistKnockup(float duration) {
+        resistedKnockup = true;
+        if(rkuDuration < duration)
+            rkuDuration = duration;
+        unit.Stats.EffectStats.KnockupedStats.OutSideResistance = true;
     }
 
     public void UpdateResistanceStats() {
@@ -394,6 +393,14 @@ public class ResistStats
             else {
                 resistedStun = false;
                 unit.Stats.EffectStats.StunnedStats.OutSideResistance = false;
+            }
+        }
+        if(resistedKnockup) {
+            if(rkuDuration > 0)
+                rkuDuration -= Time.deltaTime;
+            else {
+                resistedKnockup = false;
+                unit.Stats.EffectStats.KnockupedStats.OutSideResistance = false;
             }
         }
     }
