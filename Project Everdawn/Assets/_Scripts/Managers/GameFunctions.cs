@@ -204,8 +204,8 @@ public static class GameFunctions
                 areaMask = 8;
         }
 
-        if(distance > (range - radius)) {
-            endPosition = startPosition + (direction.normalized * (range - radius));
+        if(distance > range) {
+            endPosition = startPosition + (direction.normalized * range);
             if(isMovement)
                 endPosition -= direction.normalized * radius;
         }

@@ -386,7 +386,7 @@ public class BaseStats
     public bool CanAct { get { return effectStats.CanAct() && summoningSicknessUI.IsReady; } }
 
     public float SpeedMultiplier() {
-        if(effectStats.RootedStats.IsRooted || effectStats.FrozenStats.IsFrozen || effectStats.StunnedStats.IsStunned)
+        if(effectStats.RootedStats.IsRooted || effectStats.FrozenStats.IsFrozen || effectStats.StunnedStats.IsStunned || effectStats.KnockbackedStats.IsKnockbacked)
             return 0;
         else
             return effectStats.SlowedStats.CurrentSlowIntensity;
@@ -469,6 +469,8 @@ public class BaseStats
                 }
                 ResetKillFlags(unit, target);
             }
+            else if(IsCastingAbility)
+                isAttacking = false;
             /*
             else if(inVision && !IsCastingAbility && chargeAttack) { //if the target is within vision
                 isAttacking = false;

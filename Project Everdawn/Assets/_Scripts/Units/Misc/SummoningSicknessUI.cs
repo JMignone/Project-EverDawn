@@ -55,6 +55,11 @@ public class SummoningSicknessUI
         unit = go;
         if(summonSicknessDelay > 0)
             unit.Agent.HitBox.enabled = false;
+        if((unit as Component).gameObject.GetComponent<Tower>()) {
+            sSCanvas.enabled = false;
+            GameFunctions.EnableAbilities(unit);
+            stopUpdate = true;
+        }
     }
 
     public void UpdateStats() {
@@ -87,6 +92,7 @@ public class SummoningSicknessUI
                 sSCanvas.enabled = false;
                 GameFunctions.EnableAbilities(unit);
                 stopUpdate = true;
+                unit.DashStats.checkDash();
             }
         }
     }

@@ -464,6 +464,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
             currentDelay = 0;
             unit.Stats.IsCastingAbility = false;
             Unit.Stats.CurrAttackDelay = Unit.Stats.AttackDelay * attackReadyPercentage;
+            Unit.DashStats.checkDash();
         }
         else if(currentDelay < abilityDelays[currentProjectileIndex] || pauseFiring) //if we havnt reached the delay yet
             currentDelay += Time.deltaTime * unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
@@ -474,8 +475,10 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
             skipOverride = 0;
             currentProjectileIndex = 0;
             currentDelay = 0;
-            if(!abilityControl)
+            if(!abilityControl) {
                 unit.Stats.IsCastingAbility = false;
+                Unit.DashStats.checkDash();
+            }
             if(setTarget)
                 Unit.SetTarget((target.Unit as Component).gameObject);
             Unit.Stats.CurrAttackDelay = Unit.Stats.AttackDelay * attackReadyPercentage;

@@ -48,7 +48,8 @@ public class KnockupedStats
     public void UpdateStats() {
         if(isKnockuped) {
             if(currentTime < duration) {
-                Debug.DrawRay(startLocation, direction, Color.green);
+                Debug.DrawRay(startLocation, direction*Vector3.Distance(startLocation, endLocation), Color.green);
+                Debug.DrawRay(endLocation, Vector3.up*10, Color.green);
                 unit.Agent.transform.position = Vector3.Lerp(startLocation, endLocation, currentTime/duration);
                 currentTime += Time.deltaTime;
             }
@@ -59,7 +60,7 @@ public class KnockupedStats
         }
     }
 
-    public void Knockup(float distance, float duration, bool towardsUnit, IDamageable unit) {
+    public void Knockup(float distance, float duration, bool towardsUnit, IDamageable enemyUnit) {
         if(knockupResistance < 1 && !outSideResistance) {
             if(unit.Stats.EffectStats.KnockbackedStats.IsKnockbacked)
                 unit.Stats.EffectStats.KnockbackedStats.unKnockback();
@@ -71,10 +72,10 @@ public class KnockupedStats
             unit.Stats.EffectStats.ResistStats.ResistPull(duration);
 
             Vector3 sourcePosition;
-            if(unit.Equals(null))
+            if(enemyUnit.Equals(null))
                 direction = Vector3.zero;
             else {
-                sourcePosition = unit.Agent.transform.position;
+                sourcePosition = enemyUnit.Agent.transform.position;
                 if(towardsUnit)
                     direction = sourcePosition - unit.Agent.transform.position;
                 else
@@ -88,7 +89,8 @@ public class KnockupedStats
                 areaMask = 8;
 
             startLocation = unit.Agent.transform.position;
-            endLocation = GameFunctions.adjustForBoundary(distance * direction);
+            
+            endLocation = GameFunctions.adjustForBoundary(distance * direction + startLocation);
             UnityEngine.AI.NavMeshHit hit;
             if(UnityEngine.AI.NavMesh.SamplePosition(endLocation, out hit, 4.5f, areaMask)) //4.5 is set such that the unit cannot make an aggregious jump, it will only extend its jump distance by a little bit
                 endLocation = hit.position;
@@ -97,17 +99,19 @@ public class KnockupedStats
                 endLocation = hit.position;
             }
 
+            unit.JumpStats.CancelJump();
             isKnockuped = true;
             this.duration = duration;
             unit.SetTarget(null);
             unit.Agent.Agent.enabled = false;
             unit.Stats.IsCastingAbility = false; //normally this is done automatically, but some abilitys use the 'abilityOverride' AND it doesnt set isCastingAbility via just getting destroyed, so we will need to set it
-            GameFunctions.DisableAbilities(unit);  
+            GameFunctions.DisableAbilities(unit);
         }
     }
 
     public void unKnockup() {
         isKnockuped = false;
+        currentTime = 0;
         unit.Agent.Agent.enabled = true;
         GameFunctions.EnableAbilities(unit);
     }

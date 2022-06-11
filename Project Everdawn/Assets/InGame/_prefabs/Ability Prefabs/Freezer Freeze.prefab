@@ -131,6 +131,7 @@ MonoBehaviour:
   range: 40
   heightAttackable: 0
   typeAttackable: 0
+  playOnUnit: 0
   abilityControl: 0
   pauseAbility: 0
   stopOnMiss: 0
@@ -185,6 +186,11 @@ MonoBehaviour:
   stunStats:
     canStun: 0
     stunDuration: 0
+  knockupStats:
+    canKnockup: 0
+    towardsUnit: 0
+    distance: 0
+    duration: 0
   lingeringStats:
     lingering: 0
     lingerAtEnd: 0
@@ -199,10 +205,17 @@ MonoBehaviour:
   selfDestructStats:
     selfDestructs: 1
     onTarget: 0
+    noAffects: 0
+    onlyExplodeOnHit: 0
     explosionEffect: {fileID: 8690222435761223237, guid: 6da804001015963439247141d19a1ee2, type: 3}
-    explosionDamage: 150
+    explosionDamage: 140
     towerDamage: 0
     explosionRadius: 13
+    explosionTimer: 0
+  chainStats:
+    chains: 0
+    chainRadius: 0
+    chainCount: 0
   linearStats:
     isLinear: 0
     isVertical: 0
@@ -224,7 +237,6 @@ MonoBehaviour:
     size: 0
     summonPreview: {fileID: 0}
     timeToSummon: 0
-    currentSummonTime: 0
   applyResistanceStats:
     applyToSelf: 0
     applyToOthers: 0
@@ -250,6 +262,8 @@ MonoBehaviour:
     rbDuration: 0
     resistStun: 0
     rstunDuration: 0
+    resistKnockup: 0
+    rkuDuration: 0
   chosenTarget: {fileID: 0}
 --- !u!54 &1224647179923901248
 Rigidbody:

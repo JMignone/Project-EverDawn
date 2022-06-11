@@ -153,8 +153,8 @@ public class EffectStats
     public bool CanAct() {
         if(frozenStats.IsFrozen)
             return false;
-        if(knockbackedStats.IsKnockbacked)
-            return false;
+        //if(knockbackedStats.IsKnockbacked)
+        //    return false;
         if(grabbedStats.IsGrabbed)
             return false;
         if(stunnedStats.IsStunned)

@@ -112,6 +112,8 @@ MonoBehaviour:
     canKnockback: 0
     knockbackDuration: 0
     initialSpeed: 0
+    angleOverride: 0
+    angle: 0
   pullStats:
     canPull: 0
     radius: 0
@@ -133,6 +135,11 @@ MonoBehaviour:
   stunStats:
     canStun: 0
     stunDuration: 0
+  knockupStats:
+    canKnockup: 0
+    towardsUnit: 0
+    distance: 0
+    duration: 0
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0.01
@@ -178,6 +185,7 @@ MonoBehaviour:
     resistPull: 0
     resistBlind: 0
     resistStun: 0
+    resistKnockup: 0
     resistDamage: 0
     resistTarget: 0
   applyResistanceStats:
@@ -205,6 +213,8 @@ MonoBehaviour:
     rbDuration: 0
     resistStun: 0
     rstunDuration: 0
+    resistKnockup: 0
+    rkuDuration: 0
 --- !u!54 &7096565871633278351
 Rigidbody:
   m_ObjectHideFlags: 0

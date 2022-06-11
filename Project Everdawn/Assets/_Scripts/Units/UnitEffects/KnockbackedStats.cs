@@ -97,11 +97,15 @@ public class KnockbackedStats
         }
     }
 
-    public void Knockback(float duration, float speed, Vector3 sourcePosition) {
+    public void Knockback(float duration, float speed, Vector3 sourcePosition, Vector3? dir = null) {
         if(knockbackResistance < 1 && !outSideResistance) {
-            direction = unit.Agent.transform.position - sourcePosition;
-            direction.y = 0;
-            direction = direction.normalized;
+            if(dir == null) {
+                direction = unit.Agent.transform.position - sourcePosition;
+                direction.y = 0;
+                direction = direction.normalized;
+            }
+            else
+                direction = (Vector3) dir;
 
             if(unit.JumpStats.Jumping) {
                 unit.JumpStats.DirectionalInfluence(direction * speed * 10000);
@@ -113,15 +117,15 @@ public class KnockbackedStats
             currentKnockbackDelay = duration * (1 - knockbackResistance);
             initialSpeed = speed;
             currentSpeed = speed;
-            unit.SetTarget(null);
-            unit.Stats.IsCastingAbility = false; //normally this is done automatically, but some abilitys use the 'abilityOverride' AND it doesnt set isCastingAbility via just getting destroyed, so we will need to set it
-            GameFunctions.DisableAbilities(unit);
+            //unit.SetTarget(null);
+            //unit.Stats.IsCastingAbility = false; //normally this is done automatically, but some abilitys use the 'abilityOverride' AND it doesnt set isCastingAbility via just getting destroyed, so we will need to set it
+            //GameFunctions.DisableAbilities(unit);
 
         }
     }
 
     public void unKnockback() {
         isKnockbacked = false;
-        GameFunctions.EnableAbilities(unit);
+        //GameFunctions.EnableAbilities(unit);
     }
 }

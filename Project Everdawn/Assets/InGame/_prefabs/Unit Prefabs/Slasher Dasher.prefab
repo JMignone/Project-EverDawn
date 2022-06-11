@@ -127,8 +127,8 @@ MonoBehaviour:
   unitSprite: {fileID: 4300487081921077863}
   target: {fileID: 0}
   stats:
-    currHealth: 1600
-    maxHealth: 1600
+    currHealth: 1400
+    maxHealth: 1400
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
@@ -258,19 +258,21 @@ MonoBehaviour:
     jumpWhileCharging: 0
   dashStats:
     dashes: 1
-    dashDamage: 300
+    dashDamage: 250
+    towerDamage: 100
     dashSpeed: 85
     dashRange: 17.5
+    continousRange: 1
+    innerRange: 15
     dashDelay: 0.85
-    continueIfTargetDead: 0
+    continueIfTargetDead: 1
     StartWithAbility: 1
     startPrefabs:
     - {fileID: 1549152128178500471, guid: 79f1e3324bbd4464fbfe1aa45f6f5ef1, type: 3}
     startDelays:
     - 0.25
     EndWithAbility: 0
-    endPrefabs:
-    - {fileID: 1224647179923901261, guid: 3fb6596eef0cc384fbf22129a7d470b8, type: 3}
+    endPrefabs: []
     endDelays:
     - 0
   shadowStats:

@@ -19,7 +19,7 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: 2bf9a6bf71e6ded4387234c4c4d1d40d, type: 3}
   cardLore: 
   affiliation: []
-  resourceCost: 5
+  resourceCost: 6
   spawnZoneRestrictions: 0
   prefab:
   - {fileID: 3925836232371597723, guid: c07bb530cfb7d594fa433e453754af49, type: 3}

@@ -424,12 +424,15 @@ public class Projectile : MonoBehaviour, IAbility
         if(unit != null && !unit.Equals(null)) {
             resistEffects.StopResistance(unit);
 
-            if(abilityControl && !grabStats.AbilityControlOverride)
+            if(abilityControl && !grabStats.AbilityControlOverride) {
                 unit.Stats.IsCastingAbility = false;
+                unit.DashStats.checkDash();
+            }
 
             if(caster != null) {
                 caster.PauseFiring = false;
                 caster.ExitOverride = stopOnMiss && !hit;
+                
                 if(skipLastOnMiss && !hit)
                     caster.SkipOverride = skipNumber;
 
@@ -440,6 +443,7 @@ public class Projectile : MonoBehaviour, IAbility
 
         if(chosenTarget != null)
             chosenTarget.Unit.Projectiles.Remove(gameObject);
+            
     }
 
     private void OnDestroy()
@@ -489,6 +493,7 @@ public class Projectile : MonoBehaviour, IAbility
                 if(boomerangStats.IsBoomerang && !boomerangStats.GoingBack) {
                     boomerangStats.GoingBack = true;
                     boomerangStats.StartLocation = targetLocation;
+                    //boomerangStats.StartLocation = transform.position;
                     
                     Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
                     foreach(Collider collider in colliders) {
@@ -503,6 +508,7 @@ public class Projectile : MonoBehaviour, IAbility
                                     damage = towerDamage*damageMultiplier;
 
                                 GameFunctions.Attack(damageable, damage, critStats);
+                                ApplyAffects(damageable);
                             }
                         }
                     }
@@ -582,26 +588,27 @@ public class Projectile : MonoBehaviour, IAbility
     }
 
     public void ApplyAffects(Component damageable) {
+        IDamageable enemyUnit = (damageable as IDamageable);
         if(freezeStats.CanFreeze)
-            (damageable as IDamageable).Stats.EffectStats.FrozenStats.Freeze(freezeStats.FreezeDuration);
+            enemyUnit.Stats.EffectStats.FrozenStats.Freeze(freezeStats.FreezeDuration);
         if(slowStats.CanSlow)
-            (damageable as IDamageable).Stats.EffectStats.SlowedStats.Slow(slowStats.SlowDuration, slowStats.SlowIntensity);
+            enemyUnit.Stats.EffectStats.SlowedStats.Slow(slowStats.SlowDuration, slowStats.SlowIntensity);
         if(rootStats.CanRoot)
-            (damageable as IDamageable).Stats.EffectStats.RootedStats.Root(RootStats.RootDuration);
+            enemyUnit.Stats.EffectStats.RootedStats.Root(RootStats.RootDuration);
         if(poisonStats.CanPoison)
-            (damageable as IDamageable).Stats.EffectStats.PoisonedStats.Poison(poisonStats.PoisonDuration, poisonStats.PoisonTick, poisonStats.PoisonDamage);
+            enemyUnit.Stats.EffectStats.PoisonedStats.Poison(poisonStats.PoisonDuration, poisonStats.PoisonTick, poisonStats.PoisonDamage);
         if(knockbackStats.CanKnockback)
-            (damageable as IDamageable).Stats.EffectStats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position);
+            enemyUnit.Stats.EffectStats.KnockbackedStats.Knockback(knockbackStats.KnockbackDuration, knockbackStats.InitialSpeed, gameObject.transform.position, knockbackStats.Direction(transform.position, enemyUnit.Agent.transform.position, transform.forward, boomerangStats.GoingBack));
         if(grabStats.CanGrab)
-            (damageable as IDamageable).Stats.EffectStats.GrabbedStats.Grab(grabStats.Speed, grabStats.PullDuration, grabStats.StunDuration, grabStats.ObstaclesBlockGrab, grabStats.AbilityControlOverride, unit);
+            enemyUnit.Stats.EffectStats.GrabbedStats.Grab(grabStats.Speed, grabStats.PullDuration, grabStats.StunDuration, grabStats.ObstaclesBlockGrab, grabStats.AbilityControlOverride, unit);
         if(strengthStats.CanStrength)
-            (damageable as IDamageable).Stats.EffectStats.StrengthenedStats.Strengthen(strengthStats.StrengthDuration, StrengthStats.StrengthIntensity);
+            enemyUnit.Stats.EffectStats.StrengthenedStats.Strengthen(strengthStats.StrengthDuration, StrengthStats.StrengthIntensity);
         if(blindStats.CanBlind)
-            (damageable as IDamageable).Stats.EffectStats.BlindedStats.Blind(blindStats.BlindDuration);
+            enemyUnit.Stats.EffectStats.BlindedStats.Blind(blindStats.BlindDuration);
         if(stunStats.CanStun)
-            (damageable as IDamageable).Stats.EffectStats.StunnedStats.Stun(stunStats.StunDuration);
+            enemyUnit.Stats.EffectStats.StunnedStats.Stun(stunStats.StunDuration);
         if(knockupStats.CanKnockup)
-            (damageable as IDamageable).Stats.EffectStats.KnockupedStats.Knockup(knockupStats.Distance, knockupStats.Duration, knockupStats.TowardsUnit, Unit);
-        applyResistanceStats.ApplyResistance((damageable as IDamageable));
+            enemyUnit.Stats.EffectStats.KnockupedStats.Knockup(knockupStats.Distance, knockupStats.Duration, knockupStats.TowardsUnit, Unit);
+        applyResistanceStats.ApplyResistance(enemyUnit);
     }
 }

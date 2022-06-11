@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1617986699832550645}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 6, z: 0}
-  m_LocalScale: {x: 2.5, y: 0.25, z: 2.5}
+  m_LocalScale: {x: 10, y: 0.25, z: 10}
   m_Children: []
   m_Father: {fileID: 7096565872282865272}
   m_RootOrder: 0
@@ -128,9 +128,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBox: {fileID: 7096565872914647090}
   unitSprite: {fileID: 7096565872282865274}
-  radius: 2.5
+  radius: 5
   speed: 50
-  range: 35
+  range: 25
   baseDamage: 375
   towerDamage: 150
   heightAttackable: 0
@@ -178,9 +178,9 @@ MonoBehaviour:
     canFreeze: 0
     freezeDuration: 0
   slowStats:
-    canSlow: 0
-    slowDuration: 0
-    slowIntensity: 0
+    canSlow: 1
+    slowDuration: 0.75
+    slowIntensity: 0.5
   rootStats:
     canRoot: 0
     rootDuration: 0
@@ -190,9 +190,13 @@ MonoBehaviour:
     poisonDuration: 0
     poisonTick: 0
   knockbackStats:
-    canKnockback: 0
-    knockbackDuration: 0
-    initialSpeed: 0
+    canKnockback: 1
+    knockbackDuration: 0.33
+    initialSpeed: 30
+    angleOverride: 1
+    angle: 0
+    boomerangOverride: 1
+    speedChange: 0
   pullStats:
     canPull: 0
     radius: 0
@@ -214,9 +218,14 @@ MonoBehaviour:
   stunStats:
     canStun: 0
     stunDuration: 0
+  knockupStats:
+    canKnockup: 0
+    towardsUnit: 0
+    distance: 0
+    duration: 0
   boomerangStats:
     isBoomerang: 1
-    percentToSlow: 0.33
+    percentToSlow: 0.25
   chainStats:
     chains: 0
     chainRadius: 0
@@ -235,10 +244,13 @@ MonoBehaviour:
   selfDestructStats:
     selfDestructs: 0
     onTarget: 0
+    noAffects: 0
+    onlyExplodeOnHit: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 0
     towerDamage: 0
     explosionRadius: 0
+    explosionTimer: 0
   grenadeStats:
     isGrenade: 0
     isAirStrike: 0
@@ -256,6 +268,7 @@ MonoBehaviour:
     resistPull: 0
     resistBlind: 0
     resistStun: 0
+    resistKnockup: 0
     resistDamage: 0
     resistTarget: 0
   applyResistanceStats:
@@ -283,6 +296,8 @@ MonoBehaviour:
     rbDuration: 0
     resistStun: 0
     rstunDuration: 0
+    resistKnockup: 0
+    rkuDuration: 0
 --- !u!54 &7096565871633278351
 Rigidbody:
   m_ObjectHideFlags: 0

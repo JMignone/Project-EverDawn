@@ -18,10 +18,19 @@ public class DashStats
     private float dashDamage;
 
     [SerializeField] [Min(0)]
+    private float towerDamage;
+
+    [SerializeField] [Min(0)]
     private float dashSpeed;
 
     [SerializeField] [Min(0)]
     private float dashRange;
+
+    [Tooltip("If true, the dasher will check after casting an ability and on spawning if a potential target is within a certain threshold where it can still dash despite not being close enough")]
+    [SerializeField]
+    private bool continousRange;
+    [SerializeField] [Min(0)]
+    private float innerRange;
 
     [Tooltip("Determines the amount of time before starting to dash")]
     [SerializeField] [Min(0)]
@@ -84,8 +93,11 @@ public class DashStats
             dashBox.center = new Vector3(0, 0, 0);
             dashBox.enabled = true;
 
+            if(towerDamage == 0)
+                towerDamage = dashDamage;
+
             dashGo.SetActive(true);
-            dashGo.transform.SetParent((unit as Component).gameObject.transform.GetChild(1));
+            dashGo.transform.SetParent(unit.UnitSprite.transform);
             dashGo.transform.localPosition = Vector3.zero;
 
             if(StartWithAbility) {
@@ -129,7 +141,10 @@ public class DashStats
                     Vector3 direction = (lastKnownLocation - unit.Agent.transform.position).normalized;
                     unit.Agent.transform.position += Time.deltaTime * dashSpeed * direction;
                     if(Vector3.Distance(unit.Agent.transform.position, lastKnownLocation) < unit.Stats.Range + targetRadius) {
-                        DashAttack();
+                        if(!chosenTarget.Equals(null))
+                            DashAttack();
+                        else
+                            unit.Stats.Appear((unit as Component).gameObject, unit.ShadowStats, unit.Agent);
                         if(EndWithAbility) {
                             isEndFiring = true;
                             fireDirection = direction;
@@ -150,8 +165,7 @@ public class DashStats
     }
 
     public void StartDash(GameObject go) {
-        if(go == unit.Target && unit.Stats.CanAct && !unit.Stats.IsAttacking && !isDashing && !unit.Stats.IsCastingAbility && !unit.JumpStats.Jumping
-           && Vector3.Distance(new Vector3(unit.Agent.transform.position.x, 0, unit.Agent.transform.position.z), new Vector3(go.transform.GetChild(0).position.x, 0, go.transform.GetChild(0).position.z)) >= dashRange) {
+        if(go == unit.Target && unit.Stats.CanAct && !unit.Stats.IsAttacking && !isDashing && !unit.Stats.IsCastingAbility && !unit.JumpStats.Jumping) {
             isDashing = true;
             unit.Agent.Agent.ResetPath();
         }
@@ -168,13 +182,47 @@ public class DashStats
     }
 
     private void DashAttack() {
+        float damage = dashDamage;
+        if((chosenTarget as Component).gameObject.GetComponent<Tower>())
+            damage = towerDamage;
         if(unit.Stats.EffectStats.AOEStats.AreaOfEffect)
-            unit.Stats.EffectStats.AOEStats.Explode((unit as Component).gameObject, (chosenTarget as Component).gameObject, dashDamage * unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+            unit.Stats.EffectStats.AOEStats.Explode((unit as Component).gameObject, (chosenTarget as Component).gameObject, damage * unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
         else {
-            GameFunctions.Attack((chosenTarget as Component), dashDamage * unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity, unit.Stats.EffectStats.CritStats);
+            GameFunctions.Attack((chosenTarget as Component), damage * unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity, unit.Stats.EffectStats.CritStats);
             unit.Stats.ApplyAffects((chosenTarget as Component));
         }
         unit.Stats.Appear((unit as Component).gameObject, unit.ShadowStats, unit.Agent);
+    }
+
+    public void checkDash() {
+        if(continousRange) {
+            GameObject closestTarget = null;
+            float closestDist = 9999;
+            float dist;
+
+            Collider[] colliders = Physics.OverlapSphere(unit.Agent.transform.position, dashRange);
+            foreach(Collider collider in colliders) {
+                if(!collider.CompareTag((unit as Component).gameObject.tag) && collider.name == "Agent") {
+                    Component damageableGo = collider.transform.parent.GetComponent(typeof(IDamageable));
+                    IDamageable damageable = collider.transform.parent.GetComponent(typeof(IDamageable)) as IDamageable;
+                    if(GameFunctions.CanAttack((unit as Component).gameObject.tag, damageableGo.tag, damageableGo, unit.Stats)) {
+                        dist = Vector3.Distance(unit.Agent.transform.position, damageable.Agent.transform.position) - damageable.Agent.HitBox.radius;
+                        if(dist < innerRange)
+                            return;
+                        if(dist >= innerRange && dist < dashRange) {
+                            if(dist < closestDist) {
+                                closestDist = dist;
+                                closestTarget = damageableGo.gameObject;
+                            }
+                        }
+                    }
+                }
+            }
+            if(closestTarget != null) {
+                unit.SetTarget(closestTarget);
+                StartDash(closestTarget);
+            }
+        }
     }
 
     private void FireStart() {
@@ -195,6 +243,12 @@ public class DashStats
                 }
             }
             else { //if we completed the last delay
+                if(!chosenTarget.Equals(null) && Vector3.Distance(unit.Agent.transform.position, chosenTarget.Agent.transform.position) 
+                > dashRange + chosenTarget.Agent.HitBox.radius){
+                    StopDash();
+                    return;
+                }
+
                 currentProjectileIndex = 0;
                 abilityDelay = 0;
                 isStartFiring = false;

@@ -192,6 +192,9 @@ MonoBehaviour:
         outSideResistance: 0
         isStunned: 0
         stunDelay: 0
+      knockupedStats:
+        knockupResistance: 0
+        isKnockuped: 0
       critStats:
         critOnFrozen: 1
         critOnSlow: 1
@@ -222,11 +225,20 @@ MonoBehaviour:
     jumpWhileCharging: 0
   dashStats:
     dashes: 0
-    isDashing: 0
     dashDamage: 0
+    towerDamage: 0
     dashSpeed: 0
     dashRange: 0
+    continousRange: 0
+    innerRange: 0
     dashDelay: 0
+    continueIfTargetDead: 0
+    StartWithAbility: 0
+    startPrefabs: []
+    startDelays: []
+    EndWithAbility: 0
+    endPrefabs: []
+    endDelays: []
   shadowStats:
     shades: 0
     interruptsByDamage: 0
@@ -374,7 +386,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4300487081545407402}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 2.25
+  m_Radius: 1.5
   m_Speed: 3
   m_Acceleration: 100
   avoidancePriority: 40

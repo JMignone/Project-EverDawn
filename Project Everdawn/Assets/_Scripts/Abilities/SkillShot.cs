@@ -420,7 +420,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     public void OnPointerClick(PointerEventData pointerEventData) {
         if(!isDragging && abilityUI.CanFire && Unit.Stats.CanAct && autoTag != "None") { //if the abililty can be clicked
             Collider[] colliders = Physics.OverlapSphere(Unit.Agent.transform.position, maxRange);
-            Component testComponent = abilityPrefabs[0].GetComponent(typeof(IAbility));
+            IAbility testComponent = abilityPrefabs[0].GetComponent(typeof(IAbility)) as IAbility;
 
             Vector3 closestTargetPosition = new Vector3(-1, -1, -1);
             if(colliders.Length > 0) {
@@ -439,7 +439,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                                 continue;
                         }
                         
-                        if(GameFunctions.WillHit((testComponent as IAbility).HeightAttackable, (testComponent as IAbility).TypeAttackable, damageable)) {
+                        if(GameFunctions.WillHit(testComponent.HeightAttackable, testComponent.TypeAttackable, damageable)) {
                             distance = Vector3.Distance(Unit.Agent.transform.position, collider.transform.position);
                             if(distance < closestDistance) {
                                 closestDistance = distance;
@@ -493,6 +493,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             currentDelay = 0;
             Unit.Stats.IsCastingAbility = false;
             Unit.Stats.CurrAttackDelay = Unit.Stats.AttackDelay * attackReadyPercentage;
+            Unit.DashStats.checkDash();
         }
         else if(currentDelay < abilityDelays[currentProjectileIndex] || pauseFiring) //if we havnt reached the delay yet
             currentDelay += Time.deltaTime * Unit.Stats.EffectStats.SlowedStats.CurrentSlowIntensity;
@@ -503,8 +504,10 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             skipOverride = 0;
             currentProjectileIndex = 0;
             currentDelay = 0;
-            if(!abilityControl)
+            if(!abilityControl) {
                 Unit.Stats.IsCastingAbility = false;
+                Unit.DashStats.checkDash();
+            }
             if(setTarget && targetOverride != null)
                 Unit.SetTarget((targetOverride.Unit as Component).gameObject);
             Unit.Stats.CurrAttackDelay = Unit.Stats.AttackDelay * attackReadyPercentage;
@@ -674,8 +677,12 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             int areaMask = cal.SummonStats.AreaMask();
 
             UnityEngine.AI.NavMeshHit hit;
-            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 4.5f, areaMask))
+            if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, 8.5f, areaMask))
                 position = hit.position;
+            else {
+                UnityEngine.AI.NavMesh.Raycast(Unit.Agent.transform.position, position, out hit, 1);
+                position = hit.position;
+            }
             if(preview.transform.childCount > 1)
                 preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(position); //this moves the summon part of the preview
             else

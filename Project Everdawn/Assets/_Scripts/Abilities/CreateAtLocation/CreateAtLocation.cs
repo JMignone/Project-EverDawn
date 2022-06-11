@@ -335,6 +335,7 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     {
         if(unit != null && !unit.Equals(null) && abilityControl && !grabStats.AbilityControlOverride) {
             unit.Stats.IsCastingAbility = false;
+            unit.DashStats.checkDash();
 
             if(caster != null) {
                 caster.PauseFiring = false;

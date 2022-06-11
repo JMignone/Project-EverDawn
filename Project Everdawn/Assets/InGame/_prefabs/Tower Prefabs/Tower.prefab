@@ -302,7 +302,7 @@ MonoBehaviour:
         currentSlowDelay: 0
         currentSlowIntensity: 0
       rootedStats:
-        cantBeRooted: 0
+        cantBeRooted: 1
         isRooted: 0
       poisonedStats:
         cantBePoisoned: 0
@@ -341,6 +341,9 @@ MonoBehaviour:
         outSideResistance: 0
         isStunned: 0
         stunDelay: 0
+      knockupedStats:
+        knockupResistance: 1
+        isKnockuped: 0
       critStats:
         critOnFrozen: 0
         critOnSlow: 0
