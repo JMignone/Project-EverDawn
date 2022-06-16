@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 2760993291048611903}
   - component: {fileID: 1224647179923901248}
   m_Layer: 0
-  m_Name: Freezer Freeze
+  m_Name: TestKnockup
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBox: {fileID: 1224647180710323965}
   radius: 13
-  range: 40
+  range: 80
   heightAttackable: 0
   typeAttackable: 0
   playOnUnit: 0
@@ -140,8 +140,8 @@ MonoBehaviour:
   hideRange: 0
   hidePreview: 0
   freezeStats:
-    canFreeze: 1
-    freezeDuration: 4
+    canFreeze: 0
+    freezeDuration: 0
   critStats:
     critOnFrozen: 1
     critOnSlow: 1
@@ -187,10 +187,10 @@ MonoBehaviour:
     canStun: 0
     stunDuration: 0
   knockupStats:
-    canKnockup: 0
-    towardsUnit: 0
-    distance: 0
-    duration: 0
+    canKnockup: 1
+    towardsUnit: 1
+    distance: 30
+    duration: 3
   lingeringStats:
     lingering: 0
     lingerAtEnd: 0
@@ -208,7 +208,7 @@ MonoBehaviour:
     noAffects: 0
     onlyExplodeOnHit: 0
     explosionEffect: {fileID: 8690222435761223237, guid: 6da804001015963439247141d19a1ee2, type: 3}
-    explosionDamage: 140
+    explosionDamage: 50
     towerDamage: 0
     explosionRadius: 13
     explosionTimer: 0
@@ -239,11 +239,11 @@ MonoBehaviour:
     timeToSummon: 0
   applyResistanceStats:
     applyToSelf: 0
-    applyToOthers: 0
-    resistDamage: 0
-    rdDuration: 0
-    untargetable: 0
-    rtDuration: 0
+    applyToOthers: 1
+    resistDamage: 1
+    rdDuration: 3
+    untargetable: 1
+    rtDuration: 3
     resistFreeze: 0
     rfDuration: 0
     resistSlow: 0

@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b3502398de43fb45a495109caba68e7, type: 3}
-  m_Name: Card31
+  m_Name: Card36
   m_EditorClassIdentifier: 
-  cardID: 31
+  cardID: 36
   character: {fileID: 0}
-  cardName: Ali'Ikai
-  menuBackgroundImage: {fileID: 21300000, guid: 2bf9a6bf71e6ded4387234c4c4d1d40d, type: 3}
-  cardImage: {fileID: 21300000, guid: 2bf9a6bf71e6ded4387234c4c4d1d40d, type: 3}
+  cardName: Noodle Knockuper
+  menuBackgroundImage: {fileID: 21300000, guid: c7d1cc4a489ed7349b5ecca75b08ade4, type: 3}
+  cardImage: {fileID: 21300000, guid: c7d1cc4a489ed7349b5ecca75b08ade4, type: 3}
   cardLore: 
   affiliation: []
-  resourceCost: 6
+  resourceCost: 7
   spawnZoneRestrictions: 0
   prefab:
-  - {fileID: 3925836232371597723, guid: c07bb530cfb7d594fa433e453754af49, type: 3}
-  previewPrefab: {fileID: 881476954545742613, guid: df1d7f3dfdcb35b45ad36e2c97e1c911, type: 3}
+  - {fileID: 4300487081235283213, guid: c754db052e9f07447b99997ddc88799c, type: 3}
+  previewPrefab: {fileID: 7317817158688808453, guid: 8412b4f1e9fca97498d12d4ace3e5328, type: 3}
   previewDelays:
   - 0
   unitIndex: 0

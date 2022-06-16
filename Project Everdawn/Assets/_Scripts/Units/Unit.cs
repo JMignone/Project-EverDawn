@@ -39,6 +39,9 @@ public class Unit : MonoBehaviour, IDamageable
     private NoseDiveStats noseDiveStats;
 
     [SerializeField]
+    private CoPilotStats coPilotStats;
+
+    [SerializeField]
     private JumpStats jumpStats;
 
     [SerializeField]
@@ -170,6 +173,7 @@ public class Unit : MonoBehaviour, IDamageable
         shadowStats.StartShadowStats(unit);
         noseDiveStats.StartStats(unit);
         jumpStats.StartStats(unit);
+        coPilotStats.StartStats(unit);
 
         if(stats.AttackChargeLimiter == 0)
             stats.AttackChargeLimiter = GameConstants.ATTACK_CHARGE_LIMITER;
@@ -241,6 +245,7 @@ public class Unit : MonoBehaviour, IDamageable
             chargeStats.UpdateChargeStats();
             dashStats.UpdateDashStats();
             shadowStats.UpdateShadowStats();
+            coPilotStats.UpdateStats();
 
             Attack();
 
@@ -514,44 +519,9 @@ public class Unit : MonoBehaviour, IDamageable
     }
 
     /*
-    void Jump() {
-        if(!agent.Agent.isOnNavMesh)
-            agent.transform.position += jumpDirection * stats.MoveSpeed * Time.deltaTime;
-        else
-           jumping = false;
-    }
-
-
-    void AcquireOffmeshLink() {
-        if(link == null && link2 == null) {
-            link2 = agent.Agent.currentOffMeshLinkData.offMeshLink;
-            if(link2 == null) {
-                Debug.Log(agent.Agent.currentOffMeshLinkData.startPos);
-                Debug.Log(agent.Agent.currentOffMeshLinkData.endPos);
-                link = (NavMeshLink) agent.Agent.navMeshOwner;
-                //link.costModifier = 1000;
-                link.costModifier = -1;
-                DumpToConsole(link);
-            }
-            else
-                link2.costOverride = 1000.0f;
-        }
-    }
-   
-    void ReleaseOffmeshLink() {
-        if(link != null) {
-            link.costModifier = -1;
-            //link = null;
-        }
-        else if(link2 != null) {
-            link2.costOverride = -1;
-            //link2 = null;
-        }
-    }*/
-
     public static void DumpToConsole(object obj)
     {
         var output = JsonUtility.ToJson(obj, true);
         Debug.Log(output);
-    }
+    }*/
 }

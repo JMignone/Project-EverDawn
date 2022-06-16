@@ -288,7 +288,6 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 mirrored = false;
             }
             abilityPreviewCanvas.transform.rotation = Quaternion.Lerp(rotation, abilityPreviewCanvas.transform.rotation, 0f);
-
             foreach(GameObject preview in abilityPreviews) {
                 if(preview.GetComponent<SphereCollider>() || preview.GetComponent<BoxCollider>()) {
                     GameObject go = abilityPrefabs.Find(go => go.name == preview.name);
@@ -654,7 +653,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             }
 
             position.y = .1f;
-            previewImageTransform.position = position;
+            preview.transform.position = position;
         }
         fireMousePosition = position;
     }
@@ -687,6 +686,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 preview.transform.GetChild(0).GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(position); //this moves the summon part of the preview
             else
                 preview.GetComponent<RectTransform>().position = position; //this moves the other parts, perhaps an explosion around the summon
+            fireMousePosition = position;
         }
         else {
             UnityEngine.AI.NavMeshHit hit;
@@ -711,7 +711,6 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             }
             preview.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
         }
-        fireMousePosition = position;
     }
 
     public void createAbilityPreviews() {

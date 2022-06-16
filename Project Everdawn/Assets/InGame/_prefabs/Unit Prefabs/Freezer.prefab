@@ -778,6 +778,9 @@ MonoBehaviour:
         outSideResistance: 0
         isStunned: 0
         stunDelay: 0
+      knockupedStats:
+        knockupResistance: 0
+        isKnockuped: 0
       critStats:
         critOnFrozen: 1
         critOnSlow: 1
@@ -801,7 +804,6 @@ MonoBehaviour:
     delayCap: 0
   chargeStats:
     charges: 0
-    isCharging: 0
     chargeDamage: 0
     chargeSpeed: 0
     chargeDelay: 0
@@ -809,8 +811,11 @@ MonoBehaviour:
   dashStats:
     dashes: 0
     dashDamage: 0
+    towerDamage: 0
     dashSpeed: 0
     dashRange: 0
+    continousRange: 0
+    innerRange: 0
     dashDelay: 0
     continueIfTargetDead: 0
     StartWithAbility: 0
@@ -833,6 +838,12 @@ MonoBehaviour:
     noseDives: 0
     createAtLocation: {fileID: 0}
     speed: 0
+  coPilotStats:
+    hasCoPilot: 0
+    range: 0
+    delay: 0
+    abilityPrefabs: []
+    abilityDelays: []
   jumpStats:
     jumps: 0
     maxJumpAngle: 0
@@ -868,6 +879,30 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 65acb392f18cee34d9c50994c3c528e9, type: 2}
+    - target: {fileID: 407388191254426671, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_AABB.m_Center.x
+      value: -0.008786768
+      objectReference: {fileID: 0}
+    - target: {fileID: 407388191254426671, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_AABB.m_Center.y
+      value: 0.10568701
+      objectReference: {fileID: 0}
+    - target: {fileID: 407388191254426671, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_AABB.m_Center.z
+      value: 0.9328202
+      objectReference: {fileID: 0}
+    - target: {fileID: 407388191254426671, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 0.3552971
+      objectReference: {fileID: 0}
+    - target: {fileID: 407388191254426671, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 0.07432173
+      objectReference: {fileID: 0}
+    - target: {fileID: 407388191254426671, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 0.4236447
+      objectReference: {fileID: 0}
     - target: {fileID: 407388191254426671, guid: c39c2e60090e83641a924d6834138b13, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -956,6 +991,30 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 69d31a3bfce7135498f152eb18885ca4, type: 2}
+    - target: {fileID: 8102067298554958374, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_AABB.m_Center.x
+      value: 0.00030258298
+      objectReference: {fileID: 0}
+    - target: {fileID: 8102067298554958374, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_AABB.m_Center.y
+      value: 0.01088104
+      objectReference: {fileID: 0}
+    - target: {fileID: 8102067298554958374, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_AABB.m_Center.z
+      value: 0.6042946
+      objectReference: {fileID: 0}
+    - target: {fileID: 8102067298554958374, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 0.15051356
+      objectReference: {fileID: 0}
+    - target: {fileID: 8102067298554958374, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 0.12548302
+      objectReference: {fileID: 0}
+    - target: {fileID: 8102067298554958374, guid: c39c2e60090e83641a924d6834138b13, type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 0.48898584
+      objectReference: {fileID: 0}
     - target: {fileID: 8102067298554958374, guid: c39c2e60090e83641a924d6834138b13, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -1184,14 +1243,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityDelays.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
-      propertyPath: abilityPrefabs.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
+      propertyPath: abilityPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityDelays.Array.data[0]
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
+      propertyPath: abilityDelays.Array.data[1]
       value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
@@ -1209,7 +1272,7 @@ PrefabInstance:
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityPrefabs.Array.data[1]
       value: 
-      objectReference: {fileID: 1224647179923901261, guid: 58043f3f428f8a54db221019bac136a8, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 665771124876367457, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: m_Name
       value: CanvasAbilityIcon New

@@ -606,6 +606,9 @@ MonoBehaviour:
         outSideResistance: 0
         isStunned: 0
         stunDelay: 0
+      knockupedStats:
+        knockupResistance: 0
+        isKnockuped: 0
       critStats:
         critOnFrozen: 1
         critOnSlow: 1
@@ -640,8 +643,11 @@ MonoBehaviour:
   dashStats:
     dashes: 0
     dashDamage: 0
+    towerDamage: 0
     dashSpeed: 0
     dashRange: 0
+    continousRange: 0
+    innerRange: 0
     dashDelay: 0
     continueIfTargetDead: 0
     StartWithAbility: 0
@@ -664,6 +670,12 @@ MonoBehaviour:
     noseDives: 0
     createAtLocation: {fileID: 0}
     speed: 0
+  coPilotStats:
+    hasCoPilot: 0
+    range: 0
+    delay: 0
+    abilityPrefabs: []
+    abilityDelays: []
   jumpStats:
     jumps: 0
     maxJumpAngle: 0

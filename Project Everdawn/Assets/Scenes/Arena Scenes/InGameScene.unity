@@ -1564,7 +1564,7 @@ MonoBehaviour:
   timeLeft: 181
   textTimer: {fileID: 1922791558}
   abilityCancel: {fileID: 63724459}
-  testSetup: 0
+  testSetup: 1
 --- !u!137 &252252623 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 8863154458508733288, guid: a5a623240585a6b40933086f92f1970a, type: 3}
@@ -12289,7 +12289,6 @@ MonoBehaviour:
     delayCap: 0
   chargeStats:
     charges: 0
-    isCharging: 0
     chargeDamage: 0
     chargeSpeed: 0
     chargeDelay: 0
@@ -12324,6 +12323,15 @@ MonoBehaviour:
     noseDives: 0
     createAtLocation: {fileID: 0}
     speed: 0
+  coPilotStats:
+    hasCoPilot: 1
+    range: 25
+    delay: 2
+    abilityPrefabs:
+    - {fileID: 1549152128178500471, guid: bb73fa4f4c0d5024dbe51eccd61d8525, type: 3}
+    abilityDelays:
+    - 0
+    - 0
   jumpStats:
     jumps: 0
     maxJumpAngle: 0

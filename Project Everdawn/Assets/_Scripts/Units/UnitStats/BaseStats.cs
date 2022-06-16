@@ -699,7 +699,9 @@ public class BaseStats
     public void ApplyAffects(Component damageable) {
         if(effectStats.SlowStats.CanSlow)
             (damageable as IDamageable).Stats.effectStats.SlowedStats.Slow(effectStats.SlowStats.SlowDuration, effectStats.SlowStats.SlowIntensity);
-        if(effectStats.KnockbackStats.CanKnockback)
+        if(effectStats.KnockbackStats.CanKnockback) {
             (damageable as IDamageable).Stats.effectStats.KnockbackedStats.Knockback(effectStats.KnockbackStats.KnockbackDuration, effectStats.KnockbackStats.InitialSpeed, effectStats.KnockbackStats.UnitPosition);
+            (damageable as IDamageable).Stats.EffectStats.StunnedStats.Stun(effectStats.KnockbackStats.KnockbackDuration);
+        }
     }
 }

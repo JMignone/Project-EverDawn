@@ -642,7 +642,7 @@ GameObject:
   - component: {fileID: 3925836232371597721}
   - component: {fileID: 3925836232371597726}
   m_Layer: 0
-  m_Name: Boomeranger
+  m_Name: Ali'Ikai
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

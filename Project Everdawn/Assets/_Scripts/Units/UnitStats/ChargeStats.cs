@@ -10,7 +10,6 @@ public class ChargeStats
     [Tooltip("Makes the unit charge fast after moving for a short time")]
     [SerializeField]
     private bool charges;
-    [SerializeField]
     private bool isCharging;
 
     [SerializeField]
