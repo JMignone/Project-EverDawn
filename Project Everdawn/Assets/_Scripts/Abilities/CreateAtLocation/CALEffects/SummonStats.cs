@@ -98,13 +98,13 @@ public class SummonStats
         Vector3 position = cal.TargetLocation;
 
         GameObject summonGo = GameFunctions.SpawnUnit(summonUnit, GameManager.GetUnitsFolder(), position, cal.gameObject.tag);
-        Component damageable = summonGo.GetComponent(typeof(IDamageable));
+        IDamageable damageable = summonGo.GetComponent(typeof(IDamageable)) as IDamageable;
 
-        (damageable as IDamageable).Stats.CurrHealth = (damageable as IDamageable).Stats.MaxHealth * percentHealth;
-        (damageable as IDamageable).Stats.MaxHealth = (damageable as IDamageable).Stats.MaxHealth * percentHealth;
+        damageable.Stats.CurrHealth = damageable.Stats.MaxHealth * percentHealth;
+        damageable.Stats.MaxHealth = damageable.Stats.MaxHealth * percentHealth;
 
         if(cal.Caster != null)
-            cal.Caster.UnitSummon = summonGo;
+            cal.Caster.UnitSummon = damageable;
         //Debug.Log("SUMMMONED AT " + percentHealth + " HP");
     }
 

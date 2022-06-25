@@ -148,13 +148,13 @@ public class Projectile : MonoBehaviour, IAbility
     [SerializeField]
     private ApplyResistanceStats applyResistanceStats; //what resistances the projectile gives to its target or the user for a duration
 
-    private Vector3 targetLocation;
-    private Actor3D chosenTarget;
-
     private ICaster caster;
     private IDamageable unit;
     //Currently only used for boomerang, but may be needed for others. This variable gets updated wiith the location of the unit until it dies
     private Vector3 lastKnownLocation;
+
+    private Vector3 targetLocation;
+    private IDamageable chosenTarget;
 
     public SphereCollider HitBox
     {
@@ -353,7 +353,7 @@ public class Projectile : MonoBehaviour, IAbility
         set { lastKnownLocation = value; }
     }
 
-    public Actor3D ChosenTarget
+    public IDamageable ChosenTarget
     {
         get { return chosenTarget; }
         set { chosenTarget = value; }
@@ -416,8 +416,8 @@ public class Projectile : MonoBehaviour, IAbility
         if(chosenTarget == null && !onlyDamageIfTargeted)
             blockable = true;
 
-        if(chosenTarget != null)
-            chosenTarget.Unit.Projectiles.Add(gameObject);
+        if(!chosenTarget.Equals(null))
+            chosenTarget.Projectiles.Add(gameObject);
     }
 
     protected void StopStats() {
@@ -441,8 +441,8 @@ public class Projectile : MonoBehaviour, IAbility
             }
         }
 
-        if(chosenTarget != null)
-            chosenTarget.Unit.Projectiles.Remove(gameObject);
+        if(!chosenTarget.Equals(null))
+            chosenTarget.Projectiles.Remove(gameObject);
             
     }
 
@@ -458,12 +458,14 @@ public class Projectile : MonoBehaviour, IAbility
             lastKnownLocation.y = 0;
         }
             
-        if(chosenTarget != null && !chosenTarget.Unit.Stats.Targetable) {
-            chosenTarget.Unit.Projectiles.Remove(gameObject);
+        if(!chosenTarget.Equals(null) && !chosenTarget.Stats.Targetable) {
+            chosenTarget.Projectiles.Remove(gameObject);
             chosenTarget = null;
         }
-        if(chosenTarget != null && !boomerangStats.GoingBack) {//this is only used if the projectile was fired at a specified target. Must check if its a boomerang and already going back
-            targetLocation = chosenTarget.Agent.transform.position;
+
+        if(!chosenTarget.Equals(null) && !boomerangStats.GoingBack) {//this is only used if the projectile was fired at a specified target. Must check if its a boomerang and already going back
+            //targetLocation = chosenTarget.Agent.transform.position;
+            targetLocation = chosenTarget.Stats.TargetLocation;
                 
             Vector3 direction = targetLocation - transform.position;
             if(direction != Vector3.zero) {
@@ -543,13 +545,13 @@ public class Projectile : MonoBehaviour, IAbility
     }
 
     public void Hit(Component damageable) {
-        if((blockable || (damageable as IDamageable).Agent == chosenTarget) && !(hit && !canPierce && !chainStats.Chains)) { //if the projectile is blockable, or this is infact the chosen target
+        if((blockable || (damageable as IDamageable) == chosenTarget) && !(hit && !canPierce && !chainStats.Chains)) { //if the projectile is blockable, or this is infact the chosen target
         
             if(GameFunctions.WillHit(heightAttackable, typeAttackable, damageable)) {
                 hit = true;
 
                 if(overridesTarget && caster != null)
-                    caster.SetNewTarget((damageable as IDamageable).Agent);
+                    caster.SetNewTarget((damageable as IDamageable));
 
                 if(aoeStats.AreaOfEffect)
                     aoeStats.Explode(gameObject);
@@ -564,10 +566,10 @@ public class Projectile : MonoBehaviour, IAbility
 
                 Actor3D newTarget = chainStats.FindTarget(gameObject, damageable.gameObject, this, unit);
                 if(newTarget != null) {
-                    if(chosenTarget != null)
-                        chosenTarget.Unit.Projectiles.Remove(gameObject);
+                    if(!chosenTarget.Equals(null))
+                        chosenTarget.Projectiles.Remove(gameObject);
                     newTarget.Unit.Projectiles.Add(gameObject);
-                    chosenTarget = newTarget;
+                    chosenTarget = newTarget.Unit;
                     hitBox.enabled = false;
                     hitBox.enabled = true;
                 }

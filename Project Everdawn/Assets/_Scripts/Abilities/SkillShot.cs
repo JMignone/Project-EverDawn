@@ -95,9 +95,9 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
     //an amount of abilities to skip starting from the last ability
     private int skipOverride;
     //gives abilities the power to enable targets for the future abilities of the skill shot
-    private Actor3D targetOverride;
+    private IDamageable targetOverride;
     //stores the summoned unit incase we need to divert things to it.
-    private GameObject unitSummon;
+    private IDamageable unitSummon;
 
     public IDamageable Unit
     {
@@ -166,7 +166,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         set { skipOverride = value; }
     }
 
-    public GameObject UnitSummon
+    public IDamageable UnitSummon
     {
         get { return unitSummon; }
         set { unitSummon = value; }
@@ -270,11 +270,11 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             Quaternion rotation;
             //if(enableMirror && Vector3.Cross((Vector3.zero - Unit.Agent.transform.position).normalized, direction).y < 0) {
             if(enableMirror) { 
-                if(transform.parent.tag == "Player" && position.x > 0) {
+                if(transform.parent.tag == "Player" && Unit.Agent.transform.position.x > 0) {
                     rotation = Quaternion.LookRotation(direction, Vector3.down);
                     mirrored = true;
                 }
-                else if(transform.parent.tag == "Enemy" && position.x < 0) {
+                else if(transform.parent.tag == "Enemy" && Unit.Agent.transform.position.x < 0) {
                     rotation = Quaternion.LookRotation(direction, Vector3.down);
                     mirrored = true;
                 }
@@ -324,11 +324,11 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
             Quaternion rotation;
             //if(enableMirror && Vector3.Cross((Vector3.zero - Unit.Agent.transform.position).normalized, direction).y < 0) {
             if(enableMirror) { 
-                if(transform.parent.tag == "Player" && position.x > 0) {
+                if(transform.parent.tag == "Player" && Unit.Agent.transform.position.x > 0) {
                     rotation = Quaternion.LookRotation(direction, Vector3.down);
                     mirrored = true;
                 }
-                else if(transform.parent.tag == "Enemy" && position.x < 0) {
+                else if(transform.parent.tag == "Enemy" && Unit.Agent.transform.position.x < 0) {
                     rotation = Quaternion.LookRotation(direction, Vector3.down);
                     mirrored = true;
                 }
@@ -429,7 +429,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                     if(!collider.CompareTag(autoTag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
                         //make sure we are not targeting ourselves
-                        if(unit != null) {
+                        if(!unit.Equals(null)) {
                             if((unit as Component).gameObject == damageable.gameObject)
                                 continue;
                         }
@@ -507,8 +507,8 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 Unit.Stats.IsCastingAbility = false;
                 Unit.DashStats.checkDash();
             }
-            if(setTarget && targetOverride != null)
-                Unit.SetTarget((targetOverride.Unit as Component).gameObject);
+            if(setTarget && !targetOverride.Equals(null))
+                Unit.SetTarget((targetOverride as Component).gameObject);
             Unit.Stats.CurrAttackDelay = Unit.Stats.AttackDelay * attackReadyPercentage;
             targetOverride = null;
         }
@@ -522,7 +522,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 fireDirection.y = 0;
             }
 
-            if(targetOverride != null) {
+            if(!targetOverride.Equals(null)) {
                 if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
                     GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPos, targetOverride, fireDirection, Unit, transform.parent.tag, 1, this);
                 else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
@@ -1232,7 +1232,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
         fireDirection = newDirection;
     }
 
-    public void SetNewTarget(Actor3D newTarget) {
+    public void SetNewTarget(IDamageable newTarget) {
         targetOverride = newTarget;
     }
 

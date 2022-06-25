@@ -244,10 +244,10 @@ public static class GameFunctions
         proj.Caster = skillshot;
     }
 
-    public static void FireProjectile(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, ICaster targeter = null) {
+    public static void FireProjectile(GameObject prefab, Vector3 startPosition, IDamageable chosenTarget, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, ICaster targeter = null) {
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        float distance = Vector3.Distance(startPosition, chosenTarget.transform.position);
-        Vector3 endPosition = chosenTarget.transform.position;
+        float distance = Vector3.Distance(startPosition, chosenTarget.Agent.transform.position);
+        Vector3 endPosition = chosenTarget.Agent.transform.position;
         Projectile projectile = prefab.GetComponent<Projectile>();
 
         float radius = projectile.Radius;
@@ -313,10 +313,10 @@ public static class GameFunctions
         goCal.Caster = skillshot;
     }
 
-    public static void FireCAL(GameObject prefab, Vector3 startPosition, Actor3D chosenTarget, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, ICaster targeter = null) {
+    public static void FireCAL(GameObject prefab, Vector3 startPosition, IDamageable chosenTarget, Vector3 direction, IDamageable unit, string tag, float damageMultiplier = 1.0f, ICaster targeter = null) {
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        float distance = Vector3.Distance(startPosition, chosenTarget.transform.position);
-        Vector3 endPosition = chosenTarget.transform.position;
+        float distance = Vector3.Distance(startPosition, chosenTarget.Agent.transform.position);
+        Vector3 endPosition = chosenTarget.Agent.transform.position;
         CreateAtLocation cal = prefab.GetComponent<CreateAtLocation>();
 
         /* The CAL should hit the target regardless of how far its target runs after initiation

@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3420525628730851509}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 0.25, z: 2}
   m_Children: []
   m_Father: {fileID: 7096565872282865272}
@@ -193,6 +193,10 @@ MonoBehaviour:
     canKnockback: 0
     knockbackDuration: 0
     initialSpeed: 0
+    angleOverride: 0
+    angle: 0
+    boomerangOverride: 0
+    speedChange: 0
   pullStats:
     canPull: 0
     radius: 0
@@ -214,6 +218,11 @@ MonoBehaviour:
   stunStats:
     canStun: 0
     stunDuration: 0
+  knockupStats:
+    canKnockup: 0
+    towardsUnit: 0
+    distance: 0
+    duration: 0
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0.01
@@ -235,10 +244,13 @@ MonoBehaviour:
   selfDestructStats:
     selfDestructs: 0
     onTarget: 0
+    noAffects: 0
+    onlyExplodeOnHit: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 0
     towerDamage: 0
     explosionRadius: 0
+    explosionTimer: 0
   grenadeStats:
     isGrenade: 0
     isAirStrike: 0
@@ -256,6 +268,7 @@ MonoBehaviour:
     resistPull: 0
     resistBlind: 0
     resistStun: 0
+    resistKnockup: 0
     resistDamage: 0
     resistTarget: 0
   applyResistanceStats:
@@ -283,6 +296,8 @@ MonoBehaviour:
     rbDuration: 0
     resistStun: 0
     rstunDuration: 0
+    resistKnockup: 0
+    rkuDuration: 0
 --- !u!54 &7096565871633278351
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1234272230791581845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4429822093034716889}
+  m_Layer: 0
+  m_Name: targetLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4429822093034716889
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234272230791581845}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3721191469884645679}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3415333899155088829
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +257,7 @@ MonoBehaviour:
     armorBar: {fileID: 8065820590973420900}
     detectionObject: {fileID: 3415333899756128975}
     visionObject: {fileID: 3415333900789519347}
+    targetLocation: {fileID: 4429822093034716889}
     unitMaterials:
       materialSwapper: {fileID: 989226092798678666}
     movementType: 1
@@ -295,6 +326,9 @@ MonoBehaviour:
         outSideResistance: 0
         isStunned: 0
         stunDelay: 0
+      knockupedStats:
+        knockupResistance: 0
+        isKnockuped: 0
       critStats:
         critOnFrozen: 1
         critOnSlow: 1
@@ -308,7 +342,7 @@ MonoBehaviour:
     continueType: 0
     abilityPrefabs: []
     abilityDelays: []
-    currentDelay: 0
+    startLocation: {fileID: 0}
   buildUpStats:
     buildsUp: 0
     retainOnRetarget: 0
@@ -318,18 +352,26 @@ MonoBehaviour:
     delayCap: 0
   chargeStats:
     charges: 0
-    isCharging: 0
     chargeDamage: 0
     chargeSpeed: 0
     chargeDelay: 0
     jumpWhileCharging: 0
   dashStats:
     dashes: 0
-    isDashing: 0
     dashDamage: 0
+    towerDamage: 0
     dashSpeed: 0
     dashRange: 0
+    continousRange: 0
+    innerRange: 0
     dashDelay: 0
+    continueIfTargetDead: 0
+    StartWithAbility: 0
+    startPrefabs: []
+    startDelays: []
+    EndWithAbility: 0
+    endPrefabs: []
+    endDelays: []
   shadowStats:
     shades: 0
     interruptsByDamage: 0
@@ -344,6 +386,12 @@ MonoBehaviour:
     noseDives: 0
     createAtLocation: {fileID: 0}
     speed: 0
+  coPilotStats:
+    hasCoPilot: 0
+    range: 0
+    delay: 0
+    abilityPrefabs: []
+    abilityDelays: []
   jumpStats:
     jumps: 0
     maxJumpAngle: 0
@@ -693,9 +741,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c3adc479f253174a87c53cdaaec808b, type: 3}
---- !u!1 &3721191469885144397 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3263854550177170345, guid: 7c3adc479f253174a87c53cdaaec808b, type: 3}
+--- !u!137 &3721191469879865387 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3263854550163574479, guid: 7c3adc479f253174a87c53cdaaec808b, type: 3}
+  m_PrefabInstance: {fileID: 2229239512845647588}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3721191469884645679 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3263854550177406923, guid: 7c3adc479f253174a87c53cdaaec808b, type: 3}
+  m_PrefabInstance: {fileID: 2229239512845647588}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3721191469875646187 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3263854550167793679, guid: 7c3adc479f253174a87c53cdaaec808b, type: 3}
   m_PrefabInstance: {fileID: 2229239512845647588}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &3721191469884645677 stripped
@@ -703,14 +761,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3263854550177406921, guid: 7c3adc479f253174a87c53cdaaec808b, type: 3}
   m_PrefabInstance: {fileID: 2229239512845647588}
   m_PrefabAsset: {fileID: 0}
---- !u!137 &3721191469879865387 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 3263854550163574479, guid: 7c3adc479f253174a87c53cdaaec808b, type: 3}
-  m_PrefabInstance: {fileID: 2229239512845647588}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &3721191469875646187 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3263854550167793679, guid: 7c3adc479f253174a87c53cdaaec808b, type: 3}
+--- !u!1 &3721191469885144397 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3263854550177170345, guid: 7c3adc479f253174a87c53cdaaec808b, type: 3}
   m_PrefabInstance: {fileID: 2229239512845647588}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5391103953206783460
@@ -939,11 +992,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
   m_PrefabInstance: {fileID: 5956935008789129237}
   m_PrefabAsset: {fileID: 0}
---- !u!223 &3579881040858346634 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 7135111395446791327, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
-  m_PrefabInstance: {fileID: 5956935008789129237}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3579881040544042113 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7135111394721948820, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
@@ -966,3 +1014,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!223 &3579881040858346634 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 7135111395446791327, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
+  m_PrefabInstance: {fileID: 5956935008789129237}
+  m_PrefabAsset: {fileID: 0}

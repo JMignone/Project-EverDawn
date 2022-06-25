@@ -112,6 +112,10 @@ MonoBehaviour:
     canKnockback: 0
     knockbackDuration: 0
     initialSpeed: 0
+    angleOverride: 0
+    angle: 0
+    boomerangOverride: 0
+    speedChange: 0
   pullStats:
     canPull: 0
     radius: 0
@@ -133,6 +137,11 @@ MonoBehaviour:
   stunStats:
     canStun: 0
     stunDuration: 0
+  knockupStats:
+    canKnockup: 0
+    towardsUnit: 0
+    distance: 0
+    duration: 0
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0.01
@@ -178,6 +187,7 @@ MonoBehaviour:
     resistPull: 0
     resistBlind: 0
     resistStun: 0
+    resistKnockup: 0
     resistDamage: 0
     resistTarget: 0
   applyResistanceStats:
@@ -205,6 +215,8 @@ MonoBehaviour:
     rbDuration: 0
     resistStun: 0
     rstunDuration: 0
+    resistKnockup: 0
+    rkuDuration: 0
 --- !u!54 &1549152128178500474
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -247,7 +259,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1549152128233905959}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1549152128836475021}

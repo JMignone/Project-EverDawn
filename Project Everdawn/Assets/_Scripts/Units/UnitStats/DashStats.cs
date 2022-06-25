@@ -114,7 +114,7 @@ public class DashStats
             else {
                 if(!isMoving && !isStartFiring) {
                     if(Vector3.Distance(unit.Agent.transform.position, (unit.Target.GetComponent(typeof(IDamageable)) as IDamageable).Agent.transform.position) 
-                    > dashRange + (unit.Target.GetComponent(typeof(IDamageable)) as IDamageable).Agent.HitBox.radius){
+                    > dashRange + (unit.Target.GetComponent(typeof(IDamageable)) as IDamageable).Agent.HitBox.radius + 2.5f){
                         StopDash();
                         return;
                     }
@@ -235,16 +235,16 @@ public class DashStats
                 else {
                     Vector3 direction = (lastKnownLocation - unit.Agent.transform.position).normalized;
                     if(startPrefabs[currentProjectileIndex].GetComponent<Projectile>())
-                        GameFunctions.FireProjectile(startPrefabs[currentProjectileIndex], unit.Agent.transform.position, chosenTarget.Agent, direction, null, playerTag, 1);
+                        GameFunctions.FireProjectile(startPrefabs[currentProjectileIndex], unit.Agent.transform.position, chosenTarget, direction, null, playerTag, 1);
                     else if(startPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                        GameFunctions.FireCAL(startPrefabs[currentProjectileIndex], unit.Agent.transform.position, chosenTarget.Agent, direction, null, playerTag, 1);
+                        GameFunctions.FireCAL(startPrefabs[currentProjectileIndex], unit.Agent.transform.position, chosenTarget, direction, null, playerTag, 1);
                     abilityDelay = 0;
                     currentProjectileIndex++;
                 }
             }
             else { //if we completed the last delay
                 if(!chosenTarget.Equals(null) && Vector3.Distance(unit.Agent.transform.position, chosenTarget.Agent.transform.position) 
-                > dashRange + chosenTarget.Agent.HitBox.radius){
+                > dashRange + chosenTarget.Agent.HitBox.radius + 2.5f){
                     StopDash();
                     return;
                 }

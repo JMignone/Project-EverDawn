@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1557415119363801824
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3374378015616816113}
+  m_Layer: 0
+  m_Name: targetLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3374378015616816113
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557415119363801824}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 5.24, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7572011817745609933}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1757805357123652091
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,6 +386,7 @@ MonoBehaviour:
     armorBar: {fileID: 3811471854496814537}
     detectionObject: {fileID: 6233150844581326293}
     visionObject: {fileID: 6233150846021740420}
+    targetLocation: {fileID: 3374378015616816113}
     unitMaterials:
       materialSwapper: {fileID: 7352718426397882744}
     movementType: 0
@@ -424,6 +455,9 @@ MonoBehaviour:
         outSideResistance: 0
         isStunned: 0
         stunDelay: 0
+      knockupedStats:
+        knockupResistance: 0
+        isKnockuped: 0
       critStats:
         critOnFrozen: 1
         critOnSlow: 1
@@ -442,7 +476,7 @@ MonoBehaviour:
     abilityDelays:
     - 0.1
     - 0
-    currentDelay: 0
+    startLocation: {fileID: 0}
   buildUpStats:
     buildsUp: 0
     retainOnRetarget: 0
@@ -529,7 +563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 6233150844194078992}
-  anim: {fileID: 0}
+  anim: {fileID: 6711830381282769880}
   ability: {fileID: 0}
   isPreview: 0
 --- !u!1 &6233150846021740422
@@ -627,6 +661,25 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 30
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &6711830381282769880
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573727757993340932}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &6409639380737493787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -893,6 +946,11 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 6279294796945732928, guid: 5e6b6348e17c4b64e83df3bf93eb6849, type: 3}
   m_PrefabInstance: {fileID: 4498171176600154963}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &7572011817745609933 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6303217016722311070, guid: 5e6b6348e17c4b64e83df3bf93eb6849, type: 3}
+  m_PrefabInstance: {fileID: 4498171176600154963}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &7588495207874040420 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 6278993103566217527, guid: 5e6b6348e17c4b64e83df3bf93eb6849, type: 3}
@@ -1004,9 +1062,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
---- !u!224 &1082880492446488343 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
+--- !u!223 &1082880492446488363 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 7135111395446791327, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
   m_PrefabInstance: {fileID: 7782827158187772852}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1082880492794408736 stripped
@@ -1031,8 +1089,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!223 &1082880492446488363 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 7135111395446791327, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
+--- !u!224 &1082880492446488343 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
   m_PrefabInstance: {fileID: 7782827158187772852}
   m_PrefabAsset: {fileID: 0}

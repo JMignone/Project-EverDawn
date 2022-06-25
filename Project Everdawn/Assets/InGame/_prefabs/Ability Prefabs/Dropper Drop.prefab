@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1224647179746862877}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1224647181420748983}
@@ -165,6 +165,10 @@ MonoBehaviour:
     canKnockback: 1
     knockbackDuration: 1
     initialSpeed: 10
+    angleOverride: 0
+    angle: 0
+    boomerangOverride: 0
+    speedChange: 0
   pullStats:
     canPull: 0
     radius: 0
@@ -184,8 +188,13 @@ MonoBehaviour:
     canBlind: 0
     blindDuration: 0
   stunStats:
-    canStun: 0
-    stunDuration: 0
+    canStun: 1
+    stunDuration: 1
+  knockupStats:
+    canKnockup: 0
+    towardsUnit: 0
+    distance: 0
+    duration: 0
   lingeringStats:
     lingering: 0
     lingerAtEnd: 0
@@ -200,10 +209,13 @@ MonoBehaviour:
   selfDestructStats:
     selfDestructs: 1
     onTarget: 0
+    noAffects: 0
+    onlyExplodeOnHit: 0
     explosionEffect: {fileID: 8690222435761223237, guid: 6da804001015963439247141d19a1ee2, type: 3}
     explosionDamage: 230
     towerDamage: 0
     explosionRadius: 9
+    explosionTimer: 0
   chainStats:
     chains: 0
     chainRadius: 0
@@ -254,7 +266,8 @@ MonoBehaviour:
     rbDuration: 0
     resistStun: 0
     rstunDuration: 0
-  chosenTarget: {fileID: 0}
+    resistKnockup: 0
+    rkuDuration: 0
 --- !u!54 &1224647179923901248
 Rigidbody:
   m_ObjectHideFlags: 0

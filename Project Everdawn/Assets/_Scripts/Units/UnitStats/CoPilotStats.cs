@@ -100,9 +100,9 @@ public class CoPilotStats
                 else {
                     Vector3 direction = (chosenTarget.Agent.transform.position - unit.Agent.transform.position).normalized;
                     if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
-                        GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], unit.Agent.transform.position, chosenTarget.Agent, direction, unit, playerTag, 1);
+                        GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], unit.Agent.transform.position, chosenTarget, direction, unit, playerTag, 1);
                     else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                        GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], unit.Agent.transform.position, chosenTarget.Agent, direction, unit, playerTag, 1);
+                        GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], unit.Agent.transform.position, chosenTarget, direction, unit, playerTag, 1);
                     currentProjectileIndex++;
                 }
             }

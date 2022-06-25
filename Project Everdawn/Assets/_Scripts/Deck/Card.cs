@@ -25,6 +25,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     [SerializeField]
     private Text cost;
     [SerializeField]
+    private Image mask;
+    [SerializeField]
     private bool canDrag;
     [SerializeField]
     private GameObject cardPlayer;
@@ -256,6 +258,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             transparentCardName.text = cardInfo.Name;
             transparentCost.text = cardInfo.Cost.ToString();
         }
+        else
+            mask.fillAmount = 1 - playerInfo.CurrResource/cardInfo.Cost;
 
         if(isDragging && playerInfo.NumDragging == 1 && playerInfo.SelectedCardId != cardInfo.CardId)
             playerInfo.SelectNewCard(cardInfo.CardId);

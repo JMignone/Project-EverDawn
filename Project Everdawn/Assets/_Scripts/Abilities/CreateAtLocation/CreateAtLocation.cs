@@ -115,12 +115,11 @@ public class CreateAtLocation : MonoBehaviour, IAbility
     [SerializeField]
     private ApplyResistanceStats applyResistanceStats; //what resistances the projectile gives to its target or the user for a duration
 
-    private Vector3 targetLocation;
     private ICaster caster;
     private IDamageable unit;
 
-    [SerializeField]
-    private Actor3D chosenTarget;
+    private Vector3 targetLocation;
+    private IDamageable chosenTarget;
 
     public SphereCollider HitBox
     {
@@ -272,7 +271,7 @@ public class CreateAtLocation : MonoBehaviour, IAbility
         set { targetLocation = value; }
     }
 
-    public Actor3D ChosenTarget
+    public IDamageable ChosenTarget
     {
         get { return chosenTarget; }
         set { chosenTarget = value; }

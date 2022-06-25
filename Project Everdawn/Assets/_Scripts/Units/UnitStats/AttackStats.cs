@@ -28,9 +28,11 @@ public class AttackStats
     [Tooltip("Determines the amount of time waited before firing each shot. Number of delays must be 1 more than the number of projectiles")]
     [SerializeField]
     private List<float> abilityDelays;
-
-    [SerializeField]
     private float currentDelay;
+
+    [Tooltip("The location the projectile spawns at")]
+    [SerializeField]
+    private Transform startLocation;
 
     private bool isFiring;
     private int currentProjectileIndex;
@@ -167,6 +169,10 @@ public class AttackStats
             else { //if we completed a delay
                 unit.Stats.Appear((unit as Component).gameObject, unit.ShadowStats, unit.Agent); //if the unit is invisible, make it appear
 
+                Vector3 startPosition = unit.Agent.transform.position;
+                if(startLocation != null)
+                    startPosition = startLocation.position;
+
                 if(currentProjectileIndex == 0 && AttacksLocation && !targetDied) 
                     firstTargetLocation = target.Agent.transform.position;
                 else if(currentProjectileIndex == 0 && AttacksLocation && targetDied)
@@ -174,29 +180,31 @@ public class AttackStats
 
                 Vector3 fireDirection;
                 if(AttacksLocation)
-                    fireDirection = firstTargetLocation - unit.Agent.transform.position;
+                    fireDirection = firstTargetLocation - startPosition;
                 else if(targetDied)
-                    fireDirection = lastTargetLocation - unit.Agent.transform.position;
+                    fireDirection = lastTargetLocation - startPosition;
                 else
-                    fireDirection = target.Agent.transform.position - unit.Agent.transform.position;
+                    fireDirection = target.Agent.transform.position - startPosition;
+                fireDirection.y = 0;
+                fireDirection = fireDirection.normalized;
 
                 if(AttacksLocation || (targetDied && SameLocation) ) { //if the unit fires at the location rather than the target itself
                     if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
-                        GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], unit.Agent.transform.position, firstTargetLocation, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                        GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPosition, firstTargetLocation, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                     else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                        GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], unit.Agent.transform.position, firstTargetLocation, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                        GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], startPosition, firstTargetLocation, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                 }
                 else if(AttacksPast) {
                     if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
-                        GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], unit.Agent.transform.position, target.Agent.transform.position, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                        GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPosition, target.Agent.transform.position, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                     else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                        GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], unit.Agent.transform.position, target.Agent.transform.position, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                        GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], startPosition, target.Agent.transform.position, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                 }
                 else {
                     if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
-                        GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], unit.Agent.transform.position, target.Agent, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                        GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPosition, target, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                     else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())
-                        GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], unit.Agent.transform.position, target.Agent, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
+                        GameFunctions.FireCAL(abilityPrefabs[currentProjectileIndex], startPosition, target, fireDirection, unit, (unit as Component).gameObject.tag, unit.Stats.EffectStats.StrengthenedStats.CurrentStrengthIntensity);
                 }
                 currentDelay = 0;
                 currentProjectileIndex++;

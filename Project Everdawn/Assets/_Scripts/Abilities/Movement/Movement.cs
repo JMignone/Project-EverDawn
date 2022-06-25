@@ -51,8 +51,8 @@ public class Movement : Projectile
         if(avoidTargetedProjectiles) {
             foreach(GameObject go in Unit.Projectiles) {
                 go.GetComponent<Projectile>().ChosenTarget = null;
-                if(Caster.UnitSummon != null)
-                    go.GetComponent<Projectile>().ChosenTarget = Caster.UnitSummon.transform.GetChild(0).GetComponent<Actor3D>();
+                if(!Caster.UnitSummon.Equals(null))
+                    go.GetComponent<Projectile>().ChosenTarget = Caster.UnitSummon;
             }
             Unit.Projectiles.Clear();
         }
@@ -77,7 +77,7 @@ public class Movement : Projectile
         Unit.Agent.transform.position = new Vector3(transform.position.x, Unit.Agent.transform.position.y, transform.position.z);
         Unit.Agent.transform.rotation = transform.rotation;
             
-        if(ChosenTarget != null && !BoomerangStats.GoingBack) { //this is only used if the projectile was fired at a specified target. Must check if its a boomerang and already going back
+        if(!ChosenTarget.Equals(null) && !BoomerangStats.GoingBack) { //this is only used if the projectile was fired at a specified target. Must check if its a boomerang and already going back
             TargetLocation = ChosenTarget.Agent.transform.position;
             
             Vector3 direction = TargetLocation - transform.position;
@@ -86,7 +86,7 @@ public class Movement : Projectile
                 transform.rotation = targetRotation;
             }
             if(!landInsideTarget)
-                TargetLocation -= direction.normalized * (Unit.Agent.Agent.radius + ChosenTarget.Agent.radius);
+                TargetLocation -= direction.normalized * (Unit.Agent.Agent.radius + ChosenTarget.Agent.Agent.radius);
         }
         LocationStats.UpdateStats();
         if(LingeringStats.CurrentlyLingering) //if currently lingering
@@ -102,12 +102,12 @@ public class Movement : Projectile
                     //MonoBehaviour.print("TESTS");
                     if(retreatStats.Retreats) {
                         transform.position -= Time.deltaTime * Speed * SpeedReduction * transform.forward;
-                        if(ChosenTarget != null)
+                        if(!ChosenTarget.Equals(null))
                             ChosenTarget.Agent.transform.position -= Time.deltaTime * Speed * SpeedReduction * transform.forward;
                     }
                     else {
                         transform.position += Time.deltaTime * Speed * SpeedReduction * transform.forward;
-                        if(ChosenTarget != null)
+                        if(!ChosenTarget.Equals(null))
                             ChosenTarget.Agent.transform.position += Time.deltaTime * Speed * SpeedReduction * transform.forward;
                     }
                 }

@@ -77,6 +77,8 @@ public class BaseStats
     [SerializeField]
     private SphereCollider visionObject;
     [SerializeField]
+    private Transform targetLocation;
+    [SerializeField]
     private UnitMaterials unitMaterials;
 
     [Header("Unit Enums")]
@@ -265,13 +267,16 @@ public class BaseStats
     public SphereCollider DetectionObject
     {
         get { return detectionObject; }
-        //set { detectionObject = value; }
     }
 
     public SphereCollider VisionObject
     {
         get { return visionObject; }
-        //set { visionObject = value; }
+    }
+
+    public Vector3 TargetLocation
+    {
+        get { return targetLocation.position; }
     }
 
     public GameConstants.MOVEMENT_TYPE MovementType

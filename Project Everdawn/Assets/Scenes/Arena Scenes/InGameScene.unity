@@ -243,7 +243,7 @@ Transform:
   m_Children:
   - {fileID: 628627542}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &63724457
 GameObject:
@@ -887,7 +887,7 @@ Transform:
   m_Children:
   - {fileID: 144641549}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &184756737
 GameObject:
@@ -1064,7 +1064,7 @@ Transform:
   - {fileID: 1736855562}
   - {fileID: 753308204}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &191693128
 GameObject:
@@ -1274,38 +1274,6 @@ PrefabInstance:
       objectReference: {fileID: 184756738}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54e466b045fd0fe4b8ffb9df03b19928, type: 3}
---- !u!1 &214987952
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 214987953}
-  m_Layer: 0
-  m_Name: AA Shaped -CR Bridge
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &214987953
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214987952}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 227008010}
-  - {fileID: 1074732862}
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &215059887
 GameObject:
   m_ObjectHideFlags: 0
@@ -1523,8 +1491,8 @@ Transform:
   m_Children:
   - {fileID: 1234678785}
   - {fileID: 2032159623}
-  m_Father: {fileID: 214987953}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &227008011
 MonoBehaviour:
@@ -1903,7 +1871,7 @@ Transform:
   - {fileID: 798979439}
   - {fileID: 1119950269}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &335821902
 MonoBehaviour:
@@ -2368,7 +2336,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &379497129
 GameObject:
@@ -5822,7 +5790,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1074732861}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5833,8 +5801,8 @@ Transform:
   - {fileID: 726659700}
   - {fileID: 2006328529}
   - {fileID: 8419212717849324548}
-  m_Father: {fileID: 214987953}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1076359873
 GameObject:
@@ -10610,7 +10578,7 @@ RectTransform:
   - {fileID: 604918354}
   - {fileID: 1060645353}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -10814,7 +10782,7 @@ Transform:
   - {fileID: 191693132}
   - {fileID: 1091527257}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2140046819
 MonoBehaviour:
@@ -12279,7 +12247,7 @@ MonoBehaviour:
     abilityDelays:
     - 0
     - 0
-    currentDelay: 0
+    startLocation: {fileID: 0}
   buildUpStats:
     buildsUp: 0
     retainOnRetarget: 0

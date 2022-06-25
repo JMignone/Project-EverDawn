@@ -92,7 +92,8 @@ public class SummoningSicknessUI
                 sSCanvas.enabled = false;
                 GameFunctions.EnableAbilities(unit);
                 stopUpdate = true;
-                unit.DashStats.checkDash();
+                if((unit as Component).GetComponent<Unit>())
+                    unit.DashStats.checkDash();
             }
         }
     }

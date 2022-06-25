@@ -187,7 +187,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7745593707249709068}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7745593706646091686}
@@ -354,6 +354,10 @@ MonoBehaviour:
     canKnockback: 0
     knockbackDuration: 0
     initialSpeed: 0
+    angleOverride: 0
+    angle: 0
+    boomerangOverride: 0
+    speedChange: 0
   pullStats:
     canPull: 0
     radius: 0
@@ -375,9 +379,18 @@ MonoBehaviour:
   stunStats:
     canStun: 0
     stunDuration: 0
+  knockupStats:
+    canKnockup: 0
+    towardsUnit: 0
+    distance: 0
+    duration: 0
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 5
+  chainStats:
+    chains: 0
+    chainRadius: 0
+    chainCount: 0
   lingeringStats:
     lingering: 0
     lingerAtEnd: 0
@@ -392,10 +405,13 @@ MonoBehaviour:
   selfDestructStats:
     selfDestructs: 0
     onTarget: 0
+    noAffects: 0
+    onlyExplodeOnHit: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 0
     towerDamage: 0
     explosionRadius: 2.5
+    explosionTimer: 0
   grenadeStats:
     isGrenade: 0
     isAirStrike: 0
@@ -413,6 +429,9 @@ MonoBehaviour:
     resistPull: 1
     resistBlind: 0
     resistStun: 0
+    resistKnockup: 0
+    resistDamage: 0
+    resistTarget: 0
   applyResistanceStats:
     applyToSelf: 0
     applyToOthers: 0
@@ -438,9 +457,13 @@ MonoBehaviour:
     rbDuration: 0
     resistStun: 0
     rstunDuration: 0
+    resistKnockup: 0
+    rkuDuration: 0
   passObstacles: 1
   landInsideTarget: 0
   highlightEnemies: 0
+  hideUnit: 0
+  avoidTargetedProjectiles: 0
   retreatStats:
     retreats: 0
     distance: 0

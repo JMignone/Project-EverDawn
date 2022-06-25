@@ -62,7 +62,7 @@ MonoBehaviour:
   skipLastOnMiss: 0
   skipNumber: 0
   overridesTarget: 0
-  onlyDamageIfTargeted: 0
+  onlyDamageIfTargeted: 1
   hideRange: 0
   hidePreview: 0
   customPathStats:
@@ -94,8 +94,8 @@ MonoBehaviour:
     critOnBlind: 1
     critOnStun: 1
   freezeStats:
-    canFreeze: 0
-    freezeDuration: 0
+    canFreeze: 1
+    freezeDuration: 4
   slowStats:
     canSlow: 0
     slowDuration: 0
@@ -267,7 +267,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 621579187178769070}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 621579187784486148}

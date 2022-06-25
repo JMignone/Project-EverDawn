@@ -16,6 +16,36 @@ MonoBehaviour:
   - {fileID: 1236235104742114318}
   - {fileID: 1236235106107021572}
   statusMaterialSolidColor: {fileID: 2100000, guid: 549e03e4ffa62924a86ed215c3a18c64, type: 2}
+--- !u!1 &1909869880231937294
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1961401170183489237}
+  m_Layer: 0
+  m_Name: targetLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1961401170183489237
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909869880231937294}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.385, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1236235106112719236}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3925836231010811492
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,6 +499,7 @@ MonoBehaviour:
     armorBar: {fileID: 1388760341355096940}
     detectionObject: {fileID: 3925836231993521891}
     visionObject: {fileID: 3925836231725190131}
+    targetLocation: {fileID: 1961401170183489237}
     unitMaterials:
       materialSwapper: {fileID: 5979464699466938161}
     movementType: 0
@@ -537,6 +568,9 @@ MonoBehaviour:
         outSideResistance: 0
         isStunned: 0
         stunDelay: 0
+      knockupedStats:
+        knockupResistance: 0
+        isKnockuped: 0
       critStats:
         critOnFrozen: 1
         critOnSlow: 1
@@ -550,7 +584,7 @@ MonoBehaviour:
     continueType: 0
     abilityPrefabs: []
     abilityDelays: []
-    currentDelay: 0
+    startLocation: {fileID: 1961401170183489237}
   buildUpStats:
     buildsUp: 0
     retainOnRetarget: 0
@@ -560,7 +594,6 @@ MonoBehaviour:
     delayCap: 0
   chargeStats:
     charges: 0
-    isCharging: 0
     chargeDamage: 0
     chargeSpeed: 0
     chargeDelay: 0
@@ -568,8 +601,11 @@ MonoBehaviour:
   dashStats:
     dashes: 0
     dashDamage: 0
+    towerDamage: 0
     dashSpeed: 0
     dashRange: 0
+    continousRange: 0
+    innerRange: 0
     dashDelay: 0
     continueIfTargetDead: 0
     StartWithAbility: 0
@@ -592,6 +628,12 @@ MonoBehaviour:
     noseDives: 0
     createAtLocation: {fileID: 0}
     speed: 0
+  coPilotStats:
+    hasCoPilot: 0
+    range: 0
+    delay: 0
+    abilityPrefabs: []
+    abilityDelays: []
   jumpStats:
     jumps: 0
     maxJumpAngle: 0
@@ -721,14 +763,19 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: bf9385f8ea603464c8f1daf08d711f69, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
+--- !u!137 &1236235106107021572 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 228281755519758848, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
+  m_PrefabInstance: {fileID: 1300687395088591620}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1236235106112719236 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 228281755522704000, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
+  m_PrefabInstance: {fileID: 1300687395088591620}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &1236235104742114318 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 228281756301717258, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
-  m_PrefabInstance: {fileID: 1300687395088591620}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1236235106102912964 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 228281755515538624, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
   m_PrefabInstance: {fileID: 1300687395088591620}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1236235106112719290 stripped
@@ -736,14 +783,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 228281755522704062, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
   m_PrefabInstance: {fileID: 1300687395088591620}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1236235106102912964 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 228281755515538624, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
+  m_PrefabInstance: {fileID: 1300687395088591620}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1236235106112296420 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 228281755522940640, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
-  m_PrefabInstance: {fileID: 1300687395088591620}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &1236235106107021572 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 228281755519758848, guid: 970e7a16fd81f8248a24d400ce84557e, type: 3}
   m_PrefabInstance: {fileID: 1300687395088591620}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3925836231040451564
@@ -976,11 +1023,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7135111395446791331, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
   m_PrefabInstance: {fileID: 3925836232468972412}
   m_PrefabAsset: {fileID: 0}
---- !u!223 &6160463879896391651 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 7135111395446791327, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
-  m_PrefabInstance: {fileID: 3925836232468972412}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6160463880244275176 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7135111394721948820, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
@@ -1003,3 +1045,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!223 &6160463879896391651 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 7135111395446791327, guid: 7b1df821d3a78ec44bd74662072756e4, type: 3}
+  m_PrefabInstance: {fileID: 3925836232468972412}
+  m_PrefabAsset: {fileID: 0}

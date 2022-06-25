@@ -42,7 +42,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
     private int currentProjectileIndex;
     private Vector2 pointerPosition;
     private Vector3 fireStartPosition;
-    private Actor3D target;
+    private IDamageable target;
     private Vector3 fireDirection;
 
     [SerializeField]
@@ -100,7 +100,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
     //an amount of abilities to skip starting from the last ability
     private int skipOverride;
     //stores the summoned unit incase we need to divert things to it.
-    private GameObject unitSummon;
+    private IDamageable unitSummon;
 
     public IDamageable Unit
     {
@@ -169,7 +169,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
         set { skipOverride = value; }
     }
 
-    public GameObject UnitSummon
+    public IDamageable UnitSummon
     {
         get { return unitSummon; }
         set { unitSummon = value; }
@@ -261,11 +261,11 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
             float distance = Vector3.Distance(fireStartPosition, position);
             if(distance > (maxRange - 3))
                 position = fireStartPosition + (direction.normalized * (maxRange - 3));
-            Actor3D potentialTarget = FindTarget(position);
+            IDamageable potentialTarget = FindTarget(position);
             target = potentialTarget;
 
-            if(potentialTarget != null && trackTarget)
-                position = potentialTarget.transform.position;
+            if(potentialTarget.Equals(null) && trackTarget)
+                position = potentialTarget.Agent.transform.position;
             position.y = .1f;
 
             Quaternion rotation = Quaternion.LookRotation(direction);
@@ -308,11 +308,11 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
             float distance = Vector3.Distance(fireStartPosition, position);
             if(distance > (maxRange - 3))
                 position = fireStartPosition + (direction.normalized * (maxRange - 3));
-            Actor3D potentialTarget = FindTarget(position);
+            IDamageable potentialTarget = FindTarget(position);
             target = potentialTarget;
 
-            if(potentialTarget != null && trackTarget)
-                position = potentialTarget.transform.position;
+            if(!potentialTarget.Equals(null) && trackTarget)
+                position = potentialTarget.Agent.transform.position;
             position.y = .1f;
 
             Quaternion rotation = Quaternion.LookRotation(direction);
@@ -354,11 +354,11 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
 
             //GameManager.removeAbililtyIndicators();
 
-            if(abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y && target != null && unit.Stats.CanAct && abilityUI.CanFire) {
+            if(abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y && !target.Equals(null) && unit.Stats.CanAct && abilityUI.CanFire) {
                 fireStartPosition = abilityPreviewCanvas.transform.position;
                 fireStartPosition.y = 0;
 
-                fireDirection = target.transform.position - fireStartPosition;
+                fireDirection = target.Agent.transform.position - fireStartPosition;
 
                 isFiring = true;
                 unit.Stats.IsCastingAbility = true;
@@ -374,7 +374,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
             Collider[] colliders = Physics.OverlapSphere(unit.Agent.transform.position, maxRange);
             Component testComponent = abilityPrefabs[0].GetComponent(typeof(IAbility));
 
-            Actor3D closestTarget = null;
+            IDamageable closestTarget = null;
             if(colliders.Length > 0) {
                 float closestDistance = 9999;
                 float distance;
@@ -382,7 +382,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
                     if(!collider.CompareTag(autoTag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
                         //make sure we are not targeting ourselves
-                        if(unit != null) {
+                        if(!unit.Equals(null)) {
                             if((unit as Component).gameObject == damageable.gameObject)
                                 continue;
                         }
@@ -395,18 +395,18 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
                             distance = Vector3.Distance(unit.Agent.transform.position, collider.transform.position);
                             if(distance < closestDistance) {
                                 closestDistance = distance;
-                                closestTarget = collider.gameObject.GetComponent<Actor3D>();
+                                closestTarget = (damageable as IDamageable);
                             }
                         }
                     }
                 }
             }
-            if(closestTarget != null) {
+            if(!closestTarget.Equals(null)) {
                 fireStartPosition = abilityPreviewCanvas.transform.position;
                 fireStartPosition.y = 0;
 
                 target = closestTarget;
-                fireDirection = closestTarget.transform.position - fireStartPosition;
+                fireDirection = closestTarget.Agent.transform.position - fireStartPosition;
 
                 isFiring = true;
                 unit.Stats.IsCastingAbility = true;
@@ -417,11 +417,11 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
         }
     }
 
-    private Actor3D FindTarget(Vector3 position) {
+    private IDamageable FindTarget(Vector3 position) {
         Collider[] colliders = Physics.OverlapSphere(position, 3);
         Component testComponent = abilityPrefabs[0].GetComponent(typeof(IAbility));
 
-        Actor3D chosenTarget = null;
+        IDamageable chosenTarget = null;
         if(colliders.Length > 0) {
             float closestDistance = 9999;
             float distance;
@@ -429,7 +429,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
                 if(!collider.CompareTag(transform.parent.tag) && collider.name == "Agent") {
                     Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
                     //make sure we are not targeting ourselves
-                    if(unit != null) {
+                    if(unit.Equals(null)) {
                         if((unit as Component).gameObject == damageable.gameObject)
                             continue;
                     }
@@ -442,7 +442,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
                         distance = Vector3.Distance(unit.Agent.transform.position, collider.transform.position);
                         if(distance < closestDistance) {
                             closestDistance = distance;
-                            chosenTarget = collider.gameObject.GetComponent<Actor3D>();
+                            chosenTarget = (damageable as IDamageable);
                         }
                     }
                 }
@@ -480,7 +480,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
                 Unit.DashStats.checkDash();
             }
             if(setTarget)
-                Unit.SetTarget((target.Unit as Component).gameObject);
+                Unit.SetTarget((target as Component).gameObject);
             Unit.Stats.CurrAttackDelay = Unit.Stats.AttackDelay * attackReadyPercentage;
             target = null;
         }
@@ -875,7 +875,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
         //pass
     }
     //this should only be used by skillshot
-    public void SetNewTarget(Actor3D newTarget) {
+    public void SetNewTarget(IDamageable newTarget) {
         //pass
     }
 }

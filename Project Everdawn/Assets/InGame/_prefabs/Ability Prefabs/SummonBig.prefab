@@ -124,7 +124,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2595308171515326313}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2595308173060237507}
@@ -230,6 +230,7 @@ MonoBehaviour:
   range: 100
   heightAttackable: 0
   typeAttackable: 0
+  playOnUnit: 0
   abilityControl: 0
   pauseAbility: 0
   stopOnMiss: 0
@@ -263,6 +264,10 @@ MonoBehaviour:
     canKnockback: 0
     knockbackDuration: 0
     initialSpeed: 0
+    angleOverride: 0
+    angle: 0
+    boomerangOverride: 0
+    speedChange: 0
   pullStats:
     canPull: 0
     radius: 0
@@ -284,6 +289,11 @@ MonoBehaviour:
   stunStats:
     canStun: 0
     stunDuration: 0
+  knockupStats:
+    canKnockup: 0
+    towardsUnit: 0
+    distance: 0
+    duration: 0
   lingeringStats:
     lingering: 0
     lingerAtEnd: 0
@@ -298,10 +308,17 @@ MonoBehaviour:
   selfDestructStats:
     selfDestructs: 0
     onTarget: 0
+    noAffects: 0
+    onlyExplodeOnHit: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 100
     towerDamage: 0
     explosionRadius: 5.45
+    explosionTimer: 0
+  chainStats:
+    chains: 0
+    chainRadius: 0
+    chainCount: 0
   linearStats:
     isLinear: 0
     isVertical: 0
@@ -323,7 +340,6 @@ MonoBehaviour:
     size: 2
     summonPreview: {fileID: 4409346719447776896, guid: 545779cf297333045a5ad086e79fd511, type: 3}
     timeToSummon: 3
-    currentSummonTime: 0
   applyResistanceStats:
     applyToSelf: 0
     applyToOthers: 0
@@ -349,7 +365,8 @@ MonoBehaviour:
     rbDuration: 0
     resistStun: 0
     rstunDuration: 0
-  chosenTarget: {fileID: 0}
+    resistKnockup: 0
+    rkuDuration: 0
 --- !u!54 &2595308172099207988
 Rigidbody:
   m_ObjectHideFlags: 0
