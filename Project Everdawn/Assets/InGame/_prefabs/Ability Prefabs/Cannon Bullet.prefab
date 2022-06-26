@@ -50,7 +50,7 @@ MonoBehaviour:
   radius: 2
   speed: 75
   range: 30
-  baseDamage: 66
+  baseDamage: 80
   towerDamage: 0
   heightAttackable: 0
   typeAttackable: 0
@@ -145,6 +145,7 @@ MonoBehaviour:
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0.01
+    damageChange: 0
   chainStats:
     chains: 0
     chainRadius: 0

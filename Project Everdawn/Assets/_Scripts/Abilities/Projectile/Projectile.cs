@@ -498,6 +498,7 @@ public class Projectile : MonoBehaviour, IAbility
                     //boomerangStats.StartLocation = transform.position;
 
                     baseDamage += boomerangStats.DamageChange;
+                    towerDamage += boomerangStats.TowerDamageChange;
 
                     knockbackStats.InitialSpeed += knockbackStats.SpeedChange; //a very unique stat that only Ali'Ikai uses
                     knockbackStats.KnockbackDuration *= 1.5f;

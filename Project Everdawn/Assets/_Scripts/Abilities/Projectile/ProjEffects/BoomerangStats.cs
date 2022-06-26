@@ -21,6 +21,8 @@ public class BoomerangStats
     [Tooltip("How much the projectiles damage should change when starting to come back")]
     [SerializeField]
     private float damageChange;
+    [SerializeField]
+    private float towerDamageChange;
 
     public bool IsBoomerang
     {
@@ -54,6 +56,11 @@ public class BoomerangStats
     public float DamageChange
     {
         get { return damageChange; }
+    }
+
+    public float TowerDamageChange
+    {
+        get { return towerDamageChange; }
     }
 
     public void StartBoomerangStats(GameObject go) {

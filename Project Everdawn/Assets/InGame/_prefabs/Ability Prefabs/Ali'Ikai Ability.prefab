@@ -131,8 +131,8 @@ MonoBehaviour:
   radius: 5
   speed: 50
   range: 25
-  baseDamage: 375
-  towerDamage: 150
+  baseDamage: 260
+  towerDamage: 100
   heightAttackable: 0
   typeAttackable: 0
   canPierce: 1
@@ -226,6 +226,8 @@ MonoBehaviour:
   boomerangStats:
     isBoomerang: 1
     percentToSlow: 0.25
+    damageChange: 100
+    towerDamageChange: 50
   chainStats:
     chains: 0
     chainRadius: 0
