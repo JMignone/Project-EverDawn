@@ -51,7 +51,7 @@ public class Movement : Projectile
         if(avoidTargetedProjectiles) {
             foreach(GameObject go in Unit.Projectiles) {
                 go.GetComponent<Projectile>().ChosenTarget = null;
-                if(!Caster.UnitSummon.Equals(null))
+                if(Caster.UnitSummon != null && !Caster.UnitSummon.Equals(null))
                     go.GetComponent<Projectile>().ChosenTarget = Caster.UnitSummon;
             }
             Unit.Projectiles.Clear();
@@ -60,7 +60,7 @@ public class Movement : Projectile
 
     private void OnDestroy()
     {
-        if(!Unit.Equals(null)) {
+        if(Unit != null && !Unit.Equals(null)) {
             Unit.Agent.Agent.enabled = true;
             if(hideUnit)
                 Unit.Stats.UnitMaterials.MakeOpaque();
@@ -70,14 +70,14 @@ public class Movement : Projectile
     
     private bool targetReached;
     private void FixedUpdate() {
-        if(Unit.Equals(null) || !Unit.Stats.CanAct) {
+        if(Unit == null || Unit.Equals(null) || !Unit.Stats.CanAct) {
             Destroy(gameObject);
             return;
         }
         Unit.Agent.transform.position = new Vector3(transform.position.x, Unit.Agent.transform.position.y, transform.position.z);
         Unit.Agent.transform.rotation = transform.rotation;
             
-        if(!ChosenTarget.Equals(null) && !BoomerangStats.GoingBack) { //this is only used if the projectile was fired at a specified target. Must check if its a boomerang and already going back
+        if(ChosenTarget != null && !ChosenTarget.Equals(null) && !BoomerangStats.GoingBack) { //this is only used if the projectile was fired at a specified target. Must check if its a boomerang and already going back
             TargetLocation = ChosenTarget.Agent.transform.position;
             
             Vector3 direction = TargetLocation - transform.position;
@@ -102,12 +102,12 @@ public class Movement : Projectile
                     //MonoBehaviour.print("TESTS");
                     if(retreatStats.Retreats) {
                         transform.position -= Time.deltaTime * Speed * SpeedReduction * transform.forward;
-                        if(!ChosenTarget.Equals(null))
+                        if(ChosenTarget != null && !ChosenTarget.Equals(null))
                             ChosenTarget.Agent.transform.position -= Time.deltaTime * Speed * SpeedReduction * transform.forward;
                     }
                     else {
                         transform.position += Time.deltaTime * Speed * SpeedReduction * transform.forward;
-                        if(!ChosenTarget.Equals(null))
+                        if(ChosenTarget != null && !ChosenTarget.Equals(null))
                             ChosenTarget.Agent.transform.position += Time.deltaTime * Speed * SpeedReduction * transform.forward;
                     }
                 }

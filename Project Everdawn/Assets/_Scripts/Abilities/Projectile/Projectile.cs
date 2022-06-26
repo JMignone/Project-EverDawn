@@ -416,7 +416,7 @@ public class Projectile : MonoBehaviour, IAbility
         if(chosenTarget == null && !onlyDamageIfTargeted)
             blockable = true;
 
-        if(!chosenTarget.Equals(null))
+        if(chosenTarget != null && !chosenTarget.Equals(null))
             chosenTarget.Projectiles.Add(gameObject);
     }
 
@@ -441,7 +441,7 @@ public class Projectile : MonoBehaviour, IAbility
             }
         }
 
-        if(!chosenTarget.Equals(null))
+        if(chosenTarget != null && !chosenTarget.Equals(null))
             chosenTarget.Projectiles.Remove(gameObject);
             
     }
@@ -458,12 +458,12 @@ public class Projectile : MonoBehaviour, IAbility
             lastKnownLocation.y = 0;
         }
             
-        if(!chosenTarget.Equals(null) && !chosenTarget.Stats.Targetable) {
+        if(chosenTarget != null && !chosenTarget.Equals(null) && !chosenTarget.Stats.Targetable) {
             chosenTarget.Projectiles.Remove(gameObject);
             chosenTarget = null;
         }
 
-        if(!chosenTarget.Equals(null) && !boomerangStats.GoingBack) {//this is only used if the projectile was fired at a specified target. Must check if its a boomerang and already going back
+        if(chosenTarget != null && !chosenTarget.Equals(null) && !boomerangStats.GoingBack) {//this is only used if the projectile was fired at a specified target. Must check if its a boomerang and already going back
             //targetLocation = chosenTarget.Agent.transform.position;
             targetLocation = chosenTarget.Stats.TargetLocation;
                 
@@ -496,7 +496,12 @@ public class Projectile : MonoBehaviour, IAbility
                     boomerangStats.GoingBack = true;
                     boomerangStats.StartLocation = targetLocation;
                     //boomerangStats.StartLocation = transform.position;
-                    
+
+                    baseDamage += boomerangStats.DamageChange;
+
+                    knockbackStats.InitialSpeed += knockbackStats.SpeedChange; //a very unique stat that only Ali'Ikai uses
+                    knockbackStats.KnockbackDuration *= 1.5f;
+
                     Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
                     foreach(Collider collider in colliders) {
                         if(!collider.CompareTag(tag) && collider.name == "Agent") {

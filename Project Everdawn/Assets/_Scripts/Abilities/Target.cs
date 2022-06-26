@@ -264,7 +264,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
             IDamageable potentialTarget = FindTarget(position);
             target = potentialTarget;
 
-            if(potentialTarget.Equals(null) && trackTarget)
+            if((potentialTarget == null || potentialTarget.Equals(null)) && trackTarget)
                 position = potentialTarget.Agent.transform.position;
             position.y = .1f;
 
@@ -311,7 +311,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
             IDamageable potentialTarget = FindTarget(position);
             target = potentialTarget;
 
-            if(!potentialTarget.Equals(null) && trackTarget)
+            if(potentialTarget != null && !potentialTarget.Equals(null) && trackTarget)
                 position = potentialTarget.Agent.transform.position;
             position.y = .1f;
 
@@ -354,7 +354,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
 
             //GameManager.removeAbililtyIndicators();
 
-            if(abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y && !target.Equals(null) && unit.Stats.CanAct && abilityUI.CanFire) {
+            if(abilityUI.CardCanvasDim.rect.height < Input.mousePosition.y && target != null && !target.Equals(null) && unit.Stats.CanAct && abilityUI.CanFire) {
                 fireStartPosition = abilityPreviewCanvas.transform.position;
                 fireStartPosition.y = 0;
 
@@ -382,7 +382,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
                     if(!collider.CompareTag(autoTag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
                         //make sure we are not targeting ourselves
-                        if(!unit.Equals(null)) {
+                        if(unit != null && !unit.Equals(null)) {
                             if((unit as Component).gameObject == damageable.gameObject)
                                 continue;
                         }
@@ -401,7 +401,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
                     }
                 }
             }
-            if(!closestTarget.Equals(null)) {
+            if(closestTarget != null && !closestTarget.Equals(null)) {
                 fireStartPosition = abilityPreviewCanvas.transform.position;
                 fireStartPosition.y = 0;
 
@@ -429,7 +429,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
                 if(!collider.CompareTag(transform.parent.tag) && collider.name == "Agent") {
                     Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
                     //make sure we are not targeting ourselves
-                    if(unit.Equals(null)) {
+                    if(unit == null || unit.Equals(null)) {
                         if((unit as Component).gameObject == damageable.gameObject)
                             continue;
                     }

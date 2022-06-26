@@ -429,7 +429,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                     if(!collider.CompareTag(autoTag) && collider.name == "Agent") {
                         Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
                         //make sure we are not targeting ourselves
-                        if(!unit.Equals(null)) {
+                        if(unit != null && !unit.Equals(null)) {
                             if((unit as Component).gameObject == damageable.gameObject)
                                 continue;
                         }
@@ -507,7 +507,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 Unit.Stats.IsCastingAbility = false;
                 Unit.DashStats.checkDash();
             }
-            if(setTarget && !targetOverride.Equals(null))
+            if(setTarget && targetOverride != null && !targetOverride.Equals(null))
                 Unit.SetTarget((targetOverride as Component).gameObject);
             Unit.Stats.CurrAttackDelay = Unit.Stats.AttackDelay * attackReadyPercentage;
             targetOverride = null;
@@ -522,7 +522,7 @@ public class SkillShot : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler
                 fireDirection.y = 0;
             }
 
-            if(!targetOverride.Equals(null)) {
+            if(targetOverride != null && !targetOverride.Equals(null)) {
                 if(abilityPrefabs[currentProjectileIndex].GetComponent<Projectile>())
                     GameFunctions.FireProjectile(abilityPrefabs[currentProjectileIndex], startPos, targetOverride, fireDirection, Unit, transform.parent.tag, 1, this);
                 else if(abilityPrefabs[currentProjectileIndex].GetComponent<CreateAtLocation>())

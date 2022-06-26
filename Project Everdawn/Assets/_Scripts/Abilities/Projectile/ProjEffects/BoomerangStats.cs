@@ -18,6 +18,10 @@ public class BoomerangStats
     [SerializeField] [Range(0.01f,1)]
     private float percentToSlow; //a number from 0 to 1
 
+    [Tooltip("How much the projectiles damage should change when starting to come back")]
+    [SerializeField]
+    private float damageChange;
+
     public bool IsBoomerang
     {
         get { return isBoomerang; }
@@ -45,6 +49,11 @@ public class BoomerangStats
     public float PercentToSlow
     {
         get { return percentToSlow; }
+    }
+
+    public float DamageChange
+    {
+        get { return damageChange; }
     }
 
     public void StartBoomerangStats(GameObject go) {

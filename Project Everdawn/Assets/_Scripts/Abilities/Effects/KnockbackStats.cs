@@ -24,9 +24,9 @@ public class KnockbackStats
     [Tooltip("Direction will reverse if a boomerang projectile is coming back. (ONLY WORKS IF ANGLEOVERRIDE IS SET)")]
     [SerializeField]
     private bool boomerangOverride;
-    [Tooltip("Magnitude that the knockback speed changes when boomerang starts coming back (ONLY WORKS IF ANGLEOVERRIDE IS SET)")]
+    [Tooltip("Magnitude that the knockback speed changes when boomerang starts coming back (ONLY WORKS IF ANGLEOVERRIDE AND BOOMERANG OVERRIDE IS SET)")]
     [SerializeField]
-    private bool speedChange;
+    private float speedChange;
 
     public bool CanKnockback
     {
@@ -36,11 +36,18 @@ public class KnockbackStats
     public float KnockbackDuration
     {
         get { return knockbackDuration; }
+        set { knockbackDuration = value; }
     }
 
     public float InitialSpeed
     {
         get { return initialSpeed; }
+        set { initialSpeed = value; }
+    }
+
+    public float SpeedChange
+    {
+        get { return speedChange; }
     }
 
     public Vector3? Direction(Vector3 Pos, Vector3 unitPos, Vector3 direction, bool goingBack) {
@@ -50,14 +57,11 @@ public class KnockbackStats
         float newAngle = angle;
         if(Vector3.Cross((Pos - unitPos).normalized, direction).y < 0){
             newAngle = -angle;
-            Debug.Log("ASDASD");
         }
         
         if(boomerangOverride && goingBack) {
             newAngle += 180.0f;
         }
-
-         Debug.Log(newAngle);
 
         Vector3 newDir = Quaternion.AngleAxis(newAngle, Vector3.up) * direction;
         newDir.y = 0;
