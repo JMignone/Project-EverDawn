@@ -70,12 +70,14 @@ public class Movement : Projectile
     
     private bool targetReached;
     private void FixedUpdate() {
+        
         if(Unit == null || Unit.Equals(null) || !Unit.Stats.CanAct) {
             Destroy(gameObject);
             return;
         }
         Unit.Agent.transform.position = new Vector3(transform.position.x, Unit.Agent.transform.position.y, transform.position.z);
         Unit.Agent.transform.rotation = transform.rotation;
+        HitBox.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
             
         if(ChosenTarget != null && !ChosenTarget.Equals(null) && !BoomerangStats.GoingBack) { //this is only used if the projectile was fired at a specified target. Must check if its a boomerang and already going back
             TargetLocation = ChosenTarget.Agent.transform.position;
@@ -91,10 +93,17 @@ public class Movement : Projectile
         LocationStats.UpdateStats();
         if(LingeringStats.CurrentlyLingering) //if currently lingering
             LingeringStats.UpdateLingeringStats(gameObject);
+
         float SpeedReduction = 1; //a multiply used by boomerang projectiles to slow down near the end of flight
         if(BoomerangStats.IsBoomerang)
             SpeedReduction = BoomerangStats.SpeedReduction(gameObject, TargetLocation, LastKnownLocation);
-        if(!LingeringStats.CurrentlyLingering || (LingeringStats.LingerDuringFlight && LingeringStats.IsInFlight)) { //if the projectile isnt lingering or lingers during flight
+
+        if(BoomerangStats.StartDelay && BoomerangStats.ReturnDelay > 0) { //StartDelay is only true when a boomerang reaches the first destination
+            BoomerangStats.ReturnDelay -= Time.deltaTime;
+            if(BoomerangStats.ReturnDelay <= 0)
+                BoomerangStats.Explode(gameObject);
+        }
+        else if(!LingeringStats.CurrentlyLingering || (LingeringStats.LingerDuringFlight && LingeringStats.IsInFlight)) { //if the projectile isnt lingering or lingers during flight
             if(targetReached || (Vector3.Distance(transform.position, TargetLocation) <= Radius || ( (Vector3.Distance(transform.position, LastKnownLocation) <= Radius) && BoomerangStats.IsBoomerang && BoomerangStats.GoingBack ) ) ){ //if the projectile is at the end of its flight
                 targetReached = true;
                 NavMeshHit hit;
@@ -116,11 +125,11 @@ public class Movement : Projectile
                         GrenadeStats.Explode(gameObject);
                     else if(SelfDestructStats.SelfDestructs)
                         SelfDestructStats.Explode(gameObject);
+
                     bool tempGoingBack = BoomerangStats.GoingBack; //Used in case a projectile is boomerang and lingering at the end. We must save going back before changing it
-                    if(BoomerangStats.IsBoomerang && !BoomerangStats.GoingBack) { //remember a proj CANNOT be both a grenade and a boomerang
-                        BoomerangStats.GoingBack = true;
-                        TargetLocation = BoomerangStats.StartLocation; // !! the target location should be the Unit this time !!
-                    }
+                    if(BoomerangStats.IsBoomerang && !BoomerangStats.GoingBack) //remember a proj CANNOT be both a grenade and a boomerang
+                        BoomerangStats.SetBack(gameObject);
+
                     if( (LingeringStats.Lingering && LingeringStats.LingerAtEnd) && !(BoomerangStats.IsBoomerang && !tempGoingBack) ) { //if the projectile lingers and lingers at the end
                         LingeringStats.CurrentlyLingering = true;
                         LingeringStats.IsInFlight = false;
@@ -142,7 +151,7 @@ public class Movement : Projectile
                         Quaternion targetRotation = Quaternion.LookRotation(direction);
                         transform.rotation = targetRotation;
                         transform.position -= Time.deltaTime * Speed * SpeedReduction * transform.forward;
-                        BoomerangStats.UpdateBoomerangStats();
+                        BoomerangStats.SpeedModifier += Time.deltaTime;
                     }
                     else if(CustomPathStats.HasCustomPath)
                         CustomPathStats.UpdateStats(TargetLocation);

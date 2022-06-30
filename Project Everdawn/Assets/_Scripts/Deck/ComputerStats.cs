@@ -252,7 +252,7 @@ public class ComputerStats
             if(UnityEngine.AI.NavMesh.SamplePosition(position, out hit, GameConstants.SAMPLE_POSITION_RADIUS, navMask))
                 position = hit.position;
         }
-        position.y = 1;
+        position.y = .1f;
         
         location.z += 10;
         if(location.z > groundScale.z*10/2)

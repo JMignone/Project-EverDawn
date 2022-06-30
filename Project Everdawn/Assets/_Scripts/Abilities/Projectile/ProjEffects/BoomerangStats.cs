@@ -18,6 +18,11 @@ public class BoomerangStats
     [SerializeField] [Range(0.01f,1)]
     private float percentToSlow; //a number from 0 to 1
 
+    [Tooltip("A number from [0-inf), how long should the projectile wait before coming back")]
+    [SerializeField] [Min(0)]
+    private float returnDelay;
+    private bool startDelay;
+
     [Tooltip("How much the projectiles damage should change when starting to come back")]
     [SerializeField]
     private float damageChange;
@@ -53,25 +58,43 @@ public class BoomerangStats
         get { return percentToSlow; }
     }
 
-    public float DamageChange
+    public float SpeedModifier
     {
-        get { return damageChange; }
+        get { return speedModifier; }
+        set { speedModifier = value; }
     }
 
-    public float TowerDamageChange
+    public float ReturnDelay
     {
-        get { return towerDamageChange; }
+        get { return returnDelay; }
+        set { returnDelay = value; }
     }
 
-    public void StartBoomerangStats(GameObject go) {
+    public bool StartDelay
+    {
+        get { return startDelay; }
+        set { startDelay = value; }
+    }
+
+    public void StartStats(GameObject go) {
         goingBack = false;
         startLocation = go.transform.position;
         speedModifier = 1; //this value is to increase the speed as the projectile goes back to prevent it from chasing the unit if the unit gets knocked away
     }
 
-    public void UpdateBoomerangStats() 
-    {
-        speedModifier += Time.deltaTime;
+    public void SetBack(GameObject go) {
+        Projectile ability = (go.GetComponent(typeof(Projectile)) as Projectile);
+
+        goingBack = true;
+        startDelay = true;
+        startLocation = ability.TargetLocation;
+        //startLocation = transform.position;
+
+        ability.BaseDamage += damageChange;
+        ability.TowerDamage += towerDamageChange;
+
+        ability.KnockbackStats.InitialSpeed += ability.KnockbackStats.SpeedChange; //a very unique stat that only Ali'Ikai uses
+        ability.KnockbackStats.KnockbackDuration *= 1.5f;
     }
 
     public float SpeedReduction(GameObject go, Vector3 reboundLocation, Vector3 lastKnownLocation) {
@@ -92,6 +115,30 @@ public class BoomerangStats
             return Math.Max(1 - ( (distance - totalDistance*percentToSlow) / (totalDistance - totalDistance*percentToSlow) ), .1f) * speedModifier;
         else //else maintain normal speed
             return speedModifier;
+    }
+
+    public void Explode(GameObject go) {
+        Projectile ability = (go.GetComponent(typeof(Projectile)) as Projectile);
+
+        Vector3 position = new Vector3(go.transform.position.x, 0, go.transform.position.z);
+        Collider[] colliders = Physics.OverlapSphere(position, ability.Radius);
+        
+        foreach(Collider collider in colliders) {
+            if(!collider.CompareTag(go.tag) && collider.name == "Agent") {
+                Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
+
+                if(GameFunctions.WillHit(ability.HeightAttackable, ability.TypeAttackable, damageable)) {
+                    ability.SetHit = true;
+
+                    float damage = ability.BaseDamage*ability.DamageMultiplier;
+                    if(ability.TowerDamage > 0 && damageable.GetComponent<Tower>())
+                        damage = ability.TowerDamage*ability.DamageMultiplier;
+
+                    GameFunctions.Attack(damageable, damage, ability.CritStats);
+                    ability.ApplyAffects(damageable);
+                }
+            }
+        }
     }
 
 }

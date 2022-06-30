@@ -389,7 +389,7 @@ public class Projectile : MonoBehaviour, IAbility
     protected void StartStats() {
         hitBox.radius = radius;
 
-        boomerangStats.StartBoomerangStats(gameObject);
+        boomerangStats.StartStats(gameObject);
         grenadeStats.StartGrenadeStats(gameObject);
         lingeringStats.StartLingeringStats(gameObject);
         slowStats.StartSlowStats();
@@ -452,7 +452,7 @@ public class Projectile : MonoBehaviour, IAbility
     }
 
     private void FixedUpdate() {
-        hitBox.transform.position = new Vector3(hitBox.transform.position.x, 0, hitBox.transform.position.z);
+        hitBox.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         if(unit != null && !unit.Equals(null)) { //This is currently only used for boomerang
             lastKnownLocation = unit.Agent.transform.position;
             lastKnownLocation.y = 0;
@@ -479,48 +479,31 @@ public class Projectile : MonoBehaviour, IAbility
             if(!selfDestructStats.StartExplosion)
                 Destroy(gameObject);
         }
+
         if(lingeringStats.CurrentlyLingering) //if currently lingering
             lingeringStats.UpdateLingeringStats(gameObject);
+
         float speedReduction = 1; //a multiply used by boomerang projectiles to slow down near the end of flight
         if(boomerangStats.IsBoomerang)
             speedReduction = boomerangStats.SpeedReduction(gameObject, targetLocation, lastKnownLocation);
-        if(!lingeringStats.CurrentlyLingering || (lingeringStats.LingerDuringFlight && lingeringStats.IsInFlight) || selfDestructStats.StartExplosion) { //if the projectile doesnt linger or lingers during flight
+
+        if(boomerangStats.StartDelay && boomerangStats.ReturnDelay > 0) { //StartDelay is only true when a boomerang reaches the first destination
+            boomerangStats.ReturnDelay -= Time.deltaTime;
+            if(boomerangStats.ReturnDelay <= 0)
+                boomerangStats.Explode(gameObject);
+        }
+        else if(!lingeringStats.CurrentlyLingering || (lingeringStats.LingerDuringFlight && lingeringStats.IsInFlight) || selfDestructStats.StartExplosion) { //if the projectile doesnt linger or lingers during flight
             if( (Vector3.Distance(transform.position, targetLocation) <= radius && !boomerangStats.GoingBack ) || 
             ( Vector3.Distance(transform.position, lastKnownLocation) <= radius && boomerangStats.GoingBack ) ){ //if the projectile is at the end of its flight
                 if(grenadeStats.IsGrenade)
                     grenadeStats.Explode(gameObject);
                 else if(selfDestructStats.SelfDestructs)
                     selfDestructStats.Explode(gameObject);
+
                 bool tempGoingBack = boomerangStats.GoingBack; //Used in case a projectile is boomerang and lingering at the end. We must save going back before changing it
-                if(boomerangStats.IsBoomerang && !boomerangStats.GoingBack) {
-                    boomerangStats.GoingBack = true;
-                    boomerangStats.StartLocation = targetLocation;
-                    //boomerangStats.StartLocation = transform.position;
+                if(boomerangStats.IsBoomerang && !boomerangStats.GoingBack)
+                    boomerangStats.SetBack(gameObject);
 
-                    baseDamage += boomerangStats.DamageChange;
-                    towerDamage += boomerangStats.TowerDamageChange;
-
-                    knockbackStats.InitialSpeed += knockbackStats.SpeedChange; //a very unique stat that only Ali'Ikai uses
-                    knockbackStats.KnockbackDuration *= 1.5f;
-
-                    Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
-                    foreach(Collider collider in colliders) {
-                        if(!collider.CompareTag(tag) && collider.name == "Agent") {
-                            Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
-
-                            if(GameFunctions.WillHit(heightAttackable, typeAttackable, damageable)) {
-                                SetHit = true;
-
-                                float damage = baseDamage*damageMultiplier;
-                                if(towerDamage > 0 && damageable.GetComponent<Tower>())
-                                    damage = towerDamage*damageMultiplier;
-
-                                GameFunctions.Attack(damageable, damage, critStats);
-                                ApplyAffects(damageable);
-                            }
-                        }
-                    }
-                }
                 if( (lingeringStats.Lingering && lingeringStats.LingerAtEnd) && !(boomerangStats.IsBoomerang && !tempGoingBack) ) { //if the projectile lingers and lingers at the end
                     lingeringStats.CurrentlyLingering = true;
                     lingeringStats.IsInFlight = false;
@@ -539,7 +522,7 @@ public class Projectile : MonoBehaviour, IAbility
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
                 transform.rotation = targetRotation;
                 transform.position -= Time.deltaTime * speed * speedReduction * transform.forward;
-                boomerangStats.UpdateBoomerangStats();
+                boomerangStats.SpeedModifier += Time.deltaTime;
             }
             else if(customPathStats.HasCustomPath)
                 customPathStats.UpdateStats(targetLocation);

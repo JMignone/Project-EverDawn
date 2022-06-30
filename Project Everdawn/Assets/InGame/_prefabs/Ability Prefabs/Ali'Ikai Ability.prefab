@@ -196,7 +196,7 @@ MonoBehaviour:
     angleOverride: 1
     angle: 0
     boomerangOverride: 1
-    speedChange: 15
+    speedChange: 10
   pullStats:
     canPull: 0
     radius: 0
@@ -225,7 +225,8 @@ MonoBehaviour:
     duration: 0
   boomerangStats:
     isBoomerang: 1
-    percentToSlow: 0.25
+    percentToSlow: 1
+    returnDelay: 0.25
     damageChange: 100
     towerDamageChange: 50
   chainStats:

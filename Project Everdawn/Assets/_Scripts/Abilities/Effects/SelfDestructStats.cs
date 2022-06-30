@@ -82,9 +82,10 @@ public class SelfDestructStats
             if(onTarget)
                 position = ability.TargetLocation;
             else
-                position = new Vector3(go.transform.position.x, 0, go.transform.position.z);
+                position = go.transform.position;
+            position.y = 0;
             
-            GameObject damageZone = MonoBehaviour.Instantiate(explosionEffect, position, go.transform.rotation);
+            GameObject damageZone = MonoBehaviour.Instantiate(explosionEffect, position, Quaternion.identity);
             //if(damageZone.GetComponent<SphereCollider>())
                 damageZone.transform.localScale = new Vector3(explosionRadius*2, .1f, explosionRadius*2);
 

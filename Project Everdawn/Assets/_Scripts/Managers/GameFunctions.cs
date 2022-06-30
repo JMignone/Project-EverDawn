@@ -212,8 +212,10 @@ public static class GameFunctions
         else if(distance < range && !isGrenade && !selfDestructs && !isMovement)
             endPosition = startPosition + (direction.normalized * range);
 
-        if(!isMovement && startPosition == unit.Agent.transform.position)
-            startPosition += direction.normalized * radius;
+        if(!isMovement) {
+            if(unit != null && startPosition == unit.Agent.transform.position)
+                startPosition += direction.normalized * radius;
+        }
         else {
             endPosition += direction.normalized * radius;
             NavMeshHit hit;
@@ -252,8 +254,10 @@ public static class GameFunctions
 
         float radius = projectile.Radius;
         bool isGrenade = projectile.GrenadeStats.IsGrenade;
-        if(!prefab.GetComponent<Movement>() && startPosition == unit.Agent.transform.position)
-            startPosition += direction.normalized * radius;
+        if(!prefab.GetComponent<Movement>()) {
+            if(unit != null && startPosition == unit.Agent.transform.position)
+                startPosition += direction.normalized * radius;
+        }
         else
             endPosition += direction.normalized * radius;
             
