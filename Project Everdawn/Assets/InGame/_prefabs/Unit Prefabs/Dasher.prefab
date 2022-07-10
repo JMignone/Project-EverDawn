@@ -678,8 +678,8 @@ MonoBehaviour:
   unitSprite: {fileID: 3925836231506596151}
   target: {fileID: 0}
   stats:
-    currHealth: 750
-    maxHealth: 750
+    currHealth: 710
+    maxHealth: 710
     currArmor: 0
     maxArmor: 0
     healthDecay: 0
@@ -1294,7 +1294,7 @@ PrefabInstance:
       objectReference: {fileID: 6316855971725279602}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityUI.cooldownDelay
-      value: 9.5
+      value: 9.2
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityDelays.Array.size
@@ -1310,7 +1310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityUI.currCooldownDelay
-      value: 9.5
+      value: 9.2
       objectReference: {fileID: 0}
     - target: {fileID: 665771124876367449, guid: 7c0260dfe921d4744b2913314ea38cf9, type: 3}
       propertyPath: abilityPrefabs.Array.data[0]

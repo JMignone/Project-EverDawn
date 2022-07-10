@@ -3060,7 +3060,6 @@ GameObject:
   - component: {fileID: 1110840990}
   - component: {fileID: 1110840993}
   - component: {fileID: 1110840992}
-  - component: {fileID: 1110840991}
   m_Layer: 0
   m_Name: Arena Half 2
   m_TagString: Untagged
@@ -3082,20 +3081,6 @@ Transform:
   m_Father: {fileID: 358972996}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &1110840991
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110840989}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1110840992
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3442,7 +3427,6 @@ GameObject:
   - component: {fileID: 1239139668}
   - component: {fileID: 1239139671}
   - component: {fileID: 1239139670}
-  - component: {fileID: 1239139669}
   m_Layer: 0
   m_Name: FlyZone
   m_TagString: Untagged
@@ -3464,20 +3448,6 @@ Transform:
   m_Father: {fileID: 633363739}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &1239139669
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1239139667}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1239139670
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5697,7 +5667,6 @@ GameObject:
   - component: {fileID: 1880309471}
   - component: {fileID: 1880309470}
   - component: {fileID: 1880309469}
-  - component: {fileID: 1880309468}
   - component: {fileID: 1880309467}
   - component: {fileID: 1880309466}
   m_Layer: 0
@@ -5765,20 +5734,6 @@ MonoBehaviour:
   m_VoxelSize: 1.1
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 23800000, guid: f05970188e6162547a1b9629920909f7, type: 2}
---- !u!64 &1880309468
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1880309465}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1880309469
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6129,7 +6084,6 @@ GameObject:
   - component: {fileID: 1931410518}
   - component: {fileID: 1931410521}
   - component: {fileID: 1931410520}
-  - component: {fileID: 1931410519}
   m_Layer: 0
   m_Name: Arena Half 1
   m_TagString: Untagged
@@ -6151,20 +6105,6 @@ Transform:
   m_Father: {fileID: 358972996}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &1931410519
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1931410517}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1931410520
 MeshRenderer:
   m_ObjectHideFlags: 0

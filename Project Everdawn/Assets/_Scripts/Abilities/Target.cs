@@ -264,7 +264,7 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
             IDamageable potentialTarget = FindTarget(position);
             target = potentialTarget;
 
-            if((potentialTarget == null || potentialTarget.Equals(null)) && trackTarget)
+            if(!(potentialTarget == null || potentialTarget.Equals(null)) && trackTarget)
                 position = potentialTarget.Agent.transform.position;
             position.y = .1f;
 
@@ -428,13 +428,10 @@ public class Target : MonoBehaviour, ICaster, IBeginDragHandler, IDragHandler, I
             foreach(Collider collider in colliders) {
                 if(!collider.CompareTag(transform.parent.tag) && collider.name == "Agent") {
                     Component damageable = collider.transform.parent.GetComponent(typeof(IDamageable));
+
                     //make sure we are not targeting ourselves
-                    if(unit == null || unit.Equals(null)) {
-                        if((unit as Component).gameObject == damageable.gameObject)
-                            continue;
-                    }
-                    else {
-                        if((building as Component).gameObject == damageable.gameObject)
+                    if(Unit != null && !Unit.Equals(null)) {
+                        if((Unit as Component).gameObject == damageable.gameObject)
                             continue;
                     }
 

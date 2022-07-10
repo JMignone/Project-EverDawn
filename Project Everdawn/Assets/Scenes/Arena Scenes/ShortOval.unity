@@ -1400,7 +1400,6 @@ GameObject:
   - component: {fileID: 417436202}
   - component: {fileID: 417436205}
   - component: {fileID: 417436204}
-  - component: {fileID: 417436203}
   m_Layer: 0
   m_Name: FlyZone
   m_TagString: Untagged
@@ -1423,20 +1422,6 @@ Transform:
   m_Father: {fileID: 1411019722}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &417436203
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 417436201}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &417436204
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2271,7 +2256,6 @@ GameObject:
   - component: {fileID: 742912117}
   - component: {fileID: 742912120}
   - component: {fileID: 742912119}
-  - component: {fileID: 742912118}
   m_Layer: 0
   m_Name: Arena Half 1
   m_TagString: Untagged
@@ -2293,20 +2277,6 @@ Transform:
   m_Father: {fileID: 594303743}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &742912118
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 742912116}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &742912119
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2367,7 +2337,6 @@ GameObject:
   - component: {fileID: 773174085}
   - component: {fileID: 773174088}
   - component: {fileID: 773174087}
-  - component: {fileID: 773174086}
   m_Layer: 0
   m_Name: Arena Half 2
   m_TagString: Untagged
@@ -2389,20 +2358,6 @@ Transform:
   m_Father: {fileID: 594303743}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &773174086
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 773174084}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &773174087
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4312,6 +4267,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 94301b84ef133fa40a4246f85bb4a402, type: 3}
       propertyPath: m_Name
       value: ArenaBorderSkyFloor
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 94301b84ef133fa40a4246f85bb4a402, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 94301b84ef133fa40a4246f85bb4a402, type: 3}
       propertyPath: m_NavMeshLayer
@@ -6662,7 +6621,6 @@ GameObject:
   - component: {fileID: 2076744825}
   - component: {fileID: 2076744830}
   - component: {fileID: 2076744829}
-  - component: {fileID: 2076744828}
   - component: {fileID: 2076744827}
   - component: {fileID: 2076744826}
   m_Layer: 0
@@ -6745,20 +6703,6 @@ MonoBehaviour:
   m_VoxelSize: 1.1
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 23800000, guid: cd689522b98a30345aa6147a888fad8f, type: 2}
---- !u!64 &2076744828
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2076744824}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &2076744829
 MeshRenderer:
   m_ObjectHideFlags: 0

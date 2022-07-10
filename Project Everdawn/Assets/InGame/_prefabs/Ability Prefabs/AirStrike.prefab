@@ -51,7 +51,7 @@ MonoBehaviour:
   radius: 10
   speed: 75
   range: 100
-  baseDamage: 750
+  baseDamage: 700
   towerDamage: 300
   heightAttackable: 0
   typeAttackable: 0
@@ -113,6 +113,10 @@ MonoBehaviour:
     canKnockback: 0
     knockbackDuration: 0
     initialSpeed: 0
+    angleOverride: 0
+    angle: 0
+    boomerangOverride: 0
+    speedChange: 0
   pullStats:
     canPull: 0
     radius: 0
@@ -134,9 +138,17 @@ MonoBehaviour:
   stunStats:
     canStun: 0
     stunDuration: 0
+  knockupStats:
+    canKnockup: 0
+    towardsUnit: 0
+    distance: 0
+    duration: 0
   boomerangStats:
     isBoomerang: 0
     percentToSlow: 0
+    returnDelay: 0
+    damageChange: 0
+    towerDamageChange: 0
   chainStats:
     chains: 0
     chainRadius: 0
@@ -155,10 +167,13 @@ MonoBehaviour:
   selfDestructStats:
     selfDestructs: 0
     onTarget: 0
+    noAffects: 0
+    onlyExplodeOnHit: 0
     explosionEffect: {fileID: 0}
     explosionDamage: 0
     towerDamage: 0
     explosionRadius: 0
+    explosionTimer: 0
   grenadeStats:
     isGrenade: 1
     isAirStrike: 1
@@ -176,6 +191,7 @@ MonoBehaviour:
     resistPull: 0
     resistBlind: 0
     resistStun: 0
+    resistKnockup: 0
     resistDamage: 0
     resistTarget: 0
   applyResistanceStats:
@@ -203,6 +219,8 @@ MonoBehaviour:
     rbDuration: 0
     resistStun: 0
     rstunDuration: 0
+    resistKnockup: 0
+    rkuDuration: 0
 --- !u!54 &8128849533423555258
 Rigidbody:
   m_ObjectHideFlags: 0

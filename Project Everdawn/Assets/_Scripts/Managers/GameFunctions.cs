@@ -91,7 +91,7 @@ public static class GameFunctions
                 if(targetComponent) {
                     if((targetComponent as IDamageable).Stats.Targetable && GameFunctions.CanAttack(tag, hitTarget.tag, targetComponent, stats)) {
                         targetSc = (targetComponent as IDamageable).Stats.DetectionObject;
-                        float newDist = Vector3.Distance(stats.DetectionObject.transform.position, targetSc.transform.position);
+                        float newDist = Vector3.Distance(stats.DetectionObject.transform.position, targetSc.transform.position) - (targetComponent as IDamageable).Agent.HitBox.radius;
 
                         if(dist > newDist) { //if we found a closer target
                             if(!hitTarget.CompareTag(tag)){ //and its not on the same team (sanity check, shouldnt ever occur)
@@ -125,7 +125,7 @@ public static class GameFunctions
                 if(targetComponent) {
                     if((targetComponent as IDamageable).Stats.Targetable && GameFunctions.CanAttack(tag, hitTarget.tag, targetComponent, stats)) {
                         targetSc = (targetComponent as IDamageable).Stats.DetectionObject;
-                        float newDist = Vector3.Distance(stats.DetectionObject.transform.position, targetSc.transform.position);
+                        float newDist = Vector3.Distance(stats.DetectionObject.transform.position, targetSc.transform.position) - (targetComponent as IDamageable).Agent.HitBox.radius;
 
                         if(dist > newDist) { //if we found a closer target
                             if(!hitTarget.CompareTag(tag)){ //and its not on the same team (sanity check, shouldnt ever occur)

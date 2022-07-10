@@ -192,7 +192,7 @@ MonoBehaviour:
     visionRange: 24
     baseDamage: 150
     towerDamage: 0
-    attackDelay: 1.5
+    attackDelay: 2
     currAttackDelay: 0
     attackChargeLimiter: 0
     attackReadyPercentage: 0

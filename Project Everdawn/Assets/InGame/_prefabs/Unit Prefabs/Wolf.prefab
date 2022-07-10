@@ -110,7 +110,7 @@ MonoBehaviour:
     armorBar: {fileID: 7370929208453041644}
     detectionObject: {fileID: 4300487082722879881}
     visionObject: {fileID: 4300487081709656634}
-    targetLocation: {fileID: 0}
+    targetLocation: {fileID: 3935267109875407230}
     unitMaterials:
       materialSwapper: {fileID: 674043161102313612}
     movementType: 0
